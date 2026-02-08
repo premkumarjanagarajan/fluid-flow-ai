@@ -466,23 +466,37 @@ Create `specs/_project/reverse-engineering/code-quality-assessment.md`:
 ```markdown
 # Code Quality Assessment
 
-## Test Coverage
-- **Overall**: [Percentage or Good/Fair/Poor/None]
-- **Unit Tests**: [Status]
-- **Integration Tests**: [Status]
-
 ## Code Quality Indicators
-- **Linting**: [Configured/Not configured]
-- **Code Style**: [Consistent/Inconsistent]
-- **Documentation**: [Good/Fair/Poor]
+- **Linting**: [Configured/Not configured — list tools and config files]
+- **Code Style**: [Consistent/Inconsistent — note formatters like Prettier, Black, etc.]
+- **Documentation**: [Good/Fair/Poor — inline comments, JSDoc, docstrings]
+- **Type Safety**: [Strong/Partial/None — TypeScript strict mode, mypy, etc.]
 
 ## Technical Debt
 - [Issue description and location]
 
 ## Patterns and Anti-patterns
-- **Good Patterns**: [List]
+- **Good Patterns**: [List with locations]
 - **Anti-patterns**: [List with locations]
 ```
+
+## Step 10b: Generate Test Coverage Analysis (Baseline)
+
+**Purpose**: Produce a comprehensive baseline of the project's test coverage state, correlated with business risk and production data.
+
+1. Load **Phase 1** instructions from `test-coverage-analysis.md`
+2. Execute Phase 1 Steps 1-6:
+   - Step 1: Repository Discovery & Technology Assessment
+   - Step 2: Current Coverage Assessment (run actual coverage commands)
+   - Step 3: Test Pyramid Analysis
+   - Step 4: Production-Correlated Coverage Gap Analysis
+   - Step 5: Test Quality Assessment
+   - Step 6: Business Flow Coverage Matrix
+3. Cross-reference with other RE artifacts:
+   - `business-overview.md` — to identify critical business flows
+   - `architecture.md` and `c4-architecture.md` — to understand component boundaries
+   - `code-structure.md` — for file inventory and complexity indicators
+4. Generate the Phase 1 output artifact at `specs/_project/reverse-engineering/test-coverage-analysis.md` using the template in `test-coverage-analysis.md`
 
 ## Step 11: Create Timestamp File
 
@@ -510,6 +524,7 @@ Create `specs/_project/reverse-engineering/reverse-engineering-timestamp.md`:
 - [x] technology-stack.md
 - [x] dependencies.md
 - [x] code-quality-assessment.md
+- [x] test-coverage-analysis.md
 ```
 
 ## Step 12: Update State Tracking

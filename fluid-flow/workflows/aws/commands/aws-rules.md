@@ -471,6 +471,25 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 5. **Wait for Explicit Approval**: Ask: "**Build and test instructions complete. Ready to proceed to Operations stage?**" - DO NOT PROCEED until user confirms
 6. **MANDATORY**: Log user's response in audit.md with complete raw input
 
+## Test Coverage Delta & Improvement Plan (CONDITIONAL - Post-Implementation)
+
+**Execute IF**:
+- Baseline exists at `specs/_project/reverse-engineering/test-coverage-analysis.md`
+
+**Skip IF**:
+- No test coverage baseline exists (greenfield project or test-coverage-analysis.md not generated)
+
+**Purpose**: Compare current coverage against the Phase 1 baseline and generate a feature-level improvement plan.
+
+**Execution**:
+1. **MANDATORY**: Log start of coverage analysis in audit.md
+2. Load **Phase 2** instructions (Steps 7-11) from `../../shared/stages/test-coverage-analysis.md`
+3. Load the Phase 1 baseline from `specs/_project/reverse-engineering/test-coverage-analysis.md`
+4. Re-run coverage commands to get current metrics (post-implementation)
+5. Execute Phase 2 (delta report, improvement plan, test templates, quality gates, continuous improvement loop)
+6. Generate the Phase 2 output artifact at `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md`
+7. **MANDATORY**: Log the coverage delta summary in `specs/{BRANCH_NAME}/audit.md`
+
 ## Reverse Engineering Update (ALWAYS EXECUTE AS FINAL CONSTRUCTION STEP)
 
 **Execute IF**:
@@ -479,7 +498,7 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 **Skip IF**:
 - No reverse engineering artifacts (greenfield project)
 
-**Purpose**: Keep all reverse engineering artifacts — including the C4 architecture model — up to date after every implementation cycle. This is the **final step** of the Construction phase and must not be skipped.
+**Purpose**: Keep all reverse engineering artifacts — including the C4 architecture model and test coverage analysis — up to date after every implementation cycle. This is the **final step** of the Construction phase and must not be skipped.
 
 **Execution**:
 1. **MANDATORY**: Log start of RE update in audit.md
@@ -493,7 +512,8 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
    - `component-inventory.md` - Update package counts and categories
    - `technology-stack.md` - Update languages, frameworks, and tools
    - `dependencies.md` - Update internal and external dependency maps
-   - `code-quality-assessment.md` - Update test coverage and quality indicators
+   - `code-quality-assessment.md` - Update quality indicators and technical debt
+   - `test-coverage-analysis.md` - Update baseline coverage metrics, gap analysis, and business flow coverage with post-implementation data
 4. Update `reverse-engineering-timestamp.md` with feature reference and change summary
 5. **MANDATORY**: Log the update summary in `specs/{BRANCH_NAME}/audit.md`
 

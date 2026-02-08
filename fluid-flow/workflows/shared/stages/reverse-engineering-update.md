@@ -22,6 +22,7 @@ Read all current artifacts from `specs/_project/reverse-engineering/`:
 - `technology-stack.md`
 - `dependencies.md`
 - `code-quality-assessment.md`
+- `test-coverage-analysis.md`
 - `reverse-engineering-timestamp.md`
 
 ## Step 2: Identify Changes
@@ -86,9 +87,17 @@ For each change identified, update ONLY the affected sections of the relevant ar
 - Update existing dependency relationships if they changed
 
 ### code-quality-assessment.md
-- Update test coverage indicators
 - Note any new patterns or anti-patterns introduced
 - Update technical debt notes
+
+### test-coverage-analysis.md
+- Update coverage metrics (line, branch, function, statement) by re-running coverage commands
+- Update coverage-by-module table for new or modified modules
+- Update test pyramid distribution if new test types were added
+- Update coverage gap analysis: re-assess priorities based on new coverage data
+- Update business flow coverage matrix if new flows were introduced or existing flows were better covered
+- Update test quality assessment if new tests were added
+- **Note**: The feature-level coverage delta is captured separately in `specs/{branch}/construction/coverage-improvement-plan.md` (Phase 2 of test-coverage-analysis)
 
 ## Step 4: Update Timestamp
 
@@ -117,6 +126,7 @@ Update `specs/_project/reverse-engineering/reverse-engineering-timestamp.md`:
 - [x] technology-stack.md [Updated/Unchanged]
 - [x] dependencies.md [Updated/Unchanged]
 - [x] code-quality-assessment.md [Updated/Unchanged]
+- [x] test-coverage-analysis.md [Updated/Unchanged]
 ```
 
 ## Step 5: Log Update

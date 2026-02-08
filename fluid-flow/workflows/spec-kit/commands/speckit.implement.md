@@ -161,7 +161,21 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Confirm the implementation follows the technical plan
    - Report final status with summary of completed work
 
-11. **Reverse Engineering Update** (CONDITIONAL - Post-Implementation):
+11. **Test Coverage Delta & Improvement Plan** (CONDITIONAL - Post-Implementation):
+   - **Execute IF**: Baseline exists at `specs/_project/reverse-engineering/test-coverage-analysis.md`
+   - **Skip IF**: No test coverage baseline exists (greenfield project or test-coverage-analysis.md not generated)
+   - Load **Phase 2** instructions (Steps 7-11) from `../../shared/stages/test-coverage-analysis.md`
+   - Load the Phase 1 baseline from `specs/_project/reverse-engineering/test-coverage-analysis.md`
+   - Re-run coverage commands to get current metrics (post-implementation)
+   - Execute Phase 2:
+     - Step 7: Generate Coverage Delta Report (compare baseline vs current)
+     - Step 8: Generate Coverage Improvement Plan (quick wins, high-value, systematic)
+     - Step 9: Generate Test Templates (for top priority gaps)
+     - Step 10: Quality Gate Recommendations
+     - Step 11: Continuous Coverage Improvement Loop
+   - Generate the Phase 2 output artifact at `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md`
+
+12. **Reverse Engineering Update** (CONDITIONAL - Post-Implementation):
    - **Execute IF**: Reverse engineering artifacts exist at `specs/_project/reverse-engineering/`
    - **Skip IF**: No reverse engineering artifacts (greenfield project)
    - Load all steps from `../../shared/stages/reverse-engineering-update.md`
@@ -174,7 +188,8 @@ You **MUST** consider the user input before proceeding (if not empty).
      - `component-inventory.md` - Update package counts and categories
      - `technology-stack.md` - Update languages, frameworks, and tools
      - `dependencies.md` - Update internal and external dependency maps
-     - `code-quality-assessment.md` - Update test coverage and quality indicators
+     - `code-quality-assessment.md` - Update quality indicators and technical debt
+     - `test-coverage-analysis.md` - Update baseline coverage metrics, gap analysis, and business flow coverage with post-implementation data
    - Update `reverse-engineering-timestamp.md` with feature reference and change summary
    - Log the update summary in `specs/{BRANCH_NAME}/audit.md`
 
