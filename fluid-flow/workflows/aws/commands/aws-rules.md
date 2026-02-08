@@ -471,7 +471,7 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 5. **Wait for Explicit Approval**: Ask: "**Build and test instructions complete. Ready to proceed to Operations stage?**" - DO NOT PROCEED until user confirms
 6. **MANDATORY**: Log user's response in audit.md with complete raw input
 
-## Reverse Engineering Update (CONDITIONAL - Post-Implementation)
+## Reverse Engineering Update (ALWAYS EXECUTE AS FINAL CONSTRUCTION STEP)
 
 **Execute IF**:
 - Reverse engineering artifacts exist at `specs/_project/reverse-engineering/`
@@ -479,11 +479,23 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 **Skip IF**:
 - No reverse engineering artifacts (greenfield project)
 
+**Purpose**: Keep all reverse engineering artifacts — including the C4 architecture model — up to date after every implementation cycle. This is the **final step** of the Construction phase and must not be skipped.
+
 **Execution**:
 1. **MANDATORY**: Log start of RE update in audit.md
 2. Load all steps from `../../shared/stages/reverse-engineering-update.md`
-3. Execute incremental update of `specs/_project/reverse-engineering/` artifacts based on changes made during this feature's implementation
-4. **MANDATORY**: Log the update summary in `specs/{BRANCH_NAME}/audit.md`
+3. Execute incremental update of ALL `specs/_project/reverse-engineering/` artifacts based on changes made during this feature's implementation, including:
+   - `business-overview.md` - Update business transactions and component descriptions
+   - `architecture.md` - Update architecture diagrams and integration points
+   - `c4-architecture.md` - Update C4 model at all affected levels (System Context, Container, Component, Code) to reflect new or changed containers, components, relationships, and deployment topology
+   - `code-structure.md` - Update file inventory and design patterns
+   - `api-documentation.md` - Update API endpoints and data models
+   - `component-inventory.md` - Update package counts and categories
+   - `technology-stack.md` - Update languages, frameworks, and tools
+   - `dependencies.md` - Update internal and external dependency maps
+   - `code-quality-assessment.md` - Update test coverage and quality indicators
+4. Update `reverse-engineering-timestamp.md` with feature reference and change summary
+5. **MANDATORY**: Log the update summary in `specs/{BRANCH_NAME}/audit.md`
 
 ---
 

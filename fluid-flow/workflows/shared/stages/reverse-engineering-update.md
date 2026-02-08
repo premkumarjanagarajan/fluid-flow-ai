@@ -15,6 +15,7 @@ description: Incremental update of reverse engineering artifacts after implement
 Read all current artifacts from `specs/_project/reverse-engineering/`:
 - `business-overview.md`
 - `architecture.md`
+- `c4-architecture.md`
 - `code-structure.md`
 - `api-documentation.md`
 - `component-inventory.md`
@@ -52,6 +53,14 @@ For each change identified, update ONLY the affected sections of the relevant ar
 - Update component descriptions for modified components
 - Update data flow diagrams if new flows were introduced
 - Update integration points if new external APIs or services were added
+
+### c4-architecture.md
+- **Level 1 (System Context)**: Update if new external systems or actors were introduced, or if the system boundary changed
+- **Level 2 (Container)**: Add new containers (services, databases, queues) introduced by the feature; update relationships and communication protocols between containers
+- **Level 3 (Component)**: Add new components to affected container diagrams; update component responsibilities and relationships if refactored; add new component diagrams if entirely new containers were introduced
+- **Level 4 (Code)**: Update only if architecturally critical classes/interfaces were added or significantly changed; do not update for minor code changes
+- **Supplementary views**: Update dynamic diagrams if key business transaction flows changed; update deployment diagrams if infrastructure topology changed
+- **Consistency check**: Ensure element names in C4 diagrams still match names used in `architecture.md`, `component-inventory.md`, and `code-structure.md`
 
 ### code-structure.md
 - Add new source files to the files inventory
@@ -101,6 +110,7 @@ Update `specs/_project/reverse-engineering/reverse-engineering-timestamp.md`:
 ## Artifacts Status
 - [x] business-overview.md [Updated/Unchanged]
 - [x] architecture.md [Updated/Unchanged]
+- [x] c4-architecture.md [Updated/Unchanged]
 - [x] code-structure.md [Updated/Unchanged]
 - [x] api-documentation.md [Updated/Unchanged]
 - [x] component-inventory.md [Updated/Unchanged]

@@ -356,3 +356,29 @@ Review the summary in specs/{BRANCH_NAME}/construction/build-and-test/build-and-
 
 ---
 ```
+
+---
+
+## Step 11: Reverse Engineering Update (CONDITIONAL - Post-Implementation)
+
+**Execute IF**: Reverse engineering artifacts exist at `specs/_project/reverse-engineering/`
+
+**Skip IF**: No reverse engineering artifacts (greenfield project)
+
+**Purpose**: Keep all reverse engineering artifacts — including the C4 architecture model — up to date after every implementation cycle. This is the **final step** of the Construction phase and must not be skipped when artifacts exist.
+
+**Execution**:
+1. **MANDATORY**: Log start of RE update in audit.md
+2. Load all steps from `../../shared/stages/reverse-engineering-update.md`
+3. Execute incremental update of ALL `specs/_project/reverse-engineering/` artifacts based on changes made during this feature's implementation, including:
+   - `business-overview.md` - Update business transactions and component descriptions
+   - `architecture.md` - Update architecture diagrams and integration points
+   - `c4-architecture.md` - Update C4 model at all affected levels (System Context, Container, Component, Code) to reflect new or changed containers, components, relationships, and deployment topology
+   - `code-structure.md` - Update file inventory and design patterns
+   - `api-documentation.md` - Update API endpoints and data models
+   - `component-inventory.md` - Update package counts and categories
+   - `technology-stack.md` - Update languages, frameworks, and tools
+   - `dependencies.md` - Update internal and external dependency maps
+   - `code-quality-assessment.md` - Update test coverage and quality indicators
+4. Update `reverse-engineering-timestamp.md` with feature reference and change summary
+5. **MANDATORY**: Log the update summary in `specs/{BRANCH_NAME}/audit.md`

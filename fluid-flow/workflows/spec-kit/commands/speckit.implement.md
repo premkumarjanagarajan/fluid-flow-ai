@@ -68,6 +68,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Check if `specs/_project/reverse-engineering/` exists
    - If found, load and reference these artifacts during implementation:
      - `architecture.md` - Ensure implementation aligns with existing architecture
+     - `c4-architecture.md` - Reference C4 model for system context, containers, and component boundaries
      - `code-structure.md` - Follow existing code patterns and conventions
      - `technology-stack.md` - Use consistent technologies
      - `dependencies.md` - Understand existing dependencies
@@ -164,7 +165,17 @@ You **MUST** consider the user input before proceeding (if not empty).
    - **Execute IF**: Reverse engineering artifacts exist at `specs/_project/reverse-engineering/`
    - **Skip IF**: No reverse engineering artifacts (greenfield project)
    - Load all steps from `../../shared/stages/reverse-engineering-update.md`
-   - Execute incremental update of `specs/_project/reverse-engineering/` artifacts based on changes made during this feature's implementation
+   - Execute incremental update of ALL `specs/_project/reverse-engineering/` artifacts based on changes made during this feature's implementation, including:
+     - `business-overview.md` - Update business transactions and component descriptions
+     - `architecture.md` - Update architecture diagrams and integration points
+     - `c4-architecture.md` - Update C4 model at all affected levels (System Context, Container, Component, Code) to reflect new or changed containers, components, relationships, and deployment topology
+     - `code-structure.md` - Update file inventory and design patterns
+     - `api-documentation.md` - Update API endpoints and data models
+     - `component-inventory.md` - Update package counts and categories
+     - `technology-stack.md` - Update languages, frameworks, and tools
+     - `dependencies.md` - Update internal and external dependency maps
+     - `code-quality-assessment.md` - Update test coverage and quality indicators
+   - Update `reverse-engineering-timestamp.md` with feature reference and change summary
    - Log the update summary in `specs/{BRANCH_NAME}/audit.md`
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.

@@ -163,7 +163,7 @@ Create `specs/{BRANCH_NAME}/audit.md`:
 2. Load all steps from `../stages/reverse-engineering.md`
 3. Execute reverse engineering:
    - Analyze all packages and components
-   - Generate business overview, architecture documentation, code structure, API docs, component inventory, technology stack, dependencies, code quality assessment
+   - Generate business overview, architecture documentation, C4 architecture model, code structure, API docs, component inventory, technology stack, dependencies, code quality assessment
    - Write ALL artifacts to `specs/_project/reverse-engineering/`
 4. **Wait for Explicit Approval**: Present detailed completion message - DO NOT PROCEED until user confirms
 5. **MANDATORY**: Log user's response in audit.md with complete raw input
