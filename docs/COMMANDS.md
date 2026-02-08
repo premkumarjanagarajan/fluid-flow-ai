@@ -27,11 +27,12 @@ This document provides a complete reference for every command and stage in Fluid
 ## Spec-Kit Commands
 
 All Spec-Kit commands follow a consistent pattern:
-1. Load shared memory files (AI operating contract, content validation, review gates, ISO 9001)
+1. Load shared memory files (AI operating contract, content validation, review gates, ISO 9001, ADR integrity gate, continuous learning, overconfidence prevention)
 2. Load security rules if the change affects security, data, identity, or infrastructure
-3. Read and update `state.md` and `audit.md`
-4. Execute the command logic
-5. Write artifacts to `specs/{BRANCH_NAME}/`
+3. Load ISO 50001 energy management if the change affects infrastructure, performance, or energy (SEU-related)
+4. Read and update `state.md` and `audit.md`
+5. Execute the command logic
+6. Write artifacts to `specs/{BRANCH_NAME}/`
 
 ---
 
