@@ -10,10 +10,16 @@ description: Execute the implementation plan by processing and executing all tas
 - Load `../../shared/memory/review/ai-self-review.md` for Self Review Guidelines
 - Load `../../shared/memory/review/human-gate.md` for Human Gate Guidelines
 - Load `../../shared/memory/iso/iso9001-quality-management.md` for quality management
+- Load `../../shared/memory/architecture/adr-integrity-gate.md` for ADR integrity gate
+- Load `../../shared/memory/meta/continuous-learning.md` for continuous learning
+- Load `../../shared/memory/overconfidence-prevention.md` for overconfidence prevention
 
 **Load when changes affect security, data, identity, or infrastructure:**
 - Load `../../shared/memory/security/iso27001/compliance.md` for ISO 27001 compliance
 - Load `../../shared/memory/security/*.md` for all security rules
+
+**Load when changes affect infrastructure, performance, or energy (SEU-related):**
+- Load `../../shared/memory/iso/iso50001-energy-management.md` for ISO 50001 energy management
 
 ## MANDATORY: State and Audit Logging
 - Read and update `specs/{BRANCH_NAME}/state.md` with stage progress at start and completion of this command

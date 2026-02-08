@@ -138,8 +138,11 @@ Memory files are loaded at workflow start and referenced throughout execution. T
 | Category | Files | Purpose |
 |----------|-------|---------|
 | **Operating Contract** | `ai-operating-contract.md` | Defines AI role, decision authority, overconfidence guardrail |
+| **Overconfidence Prevention** | `overconfidence-prevention.md` | Prevents confidence without evidence, question generation philosophy |
 | **Content Validation** | `content-validation.md` | Mermaid validation, character escaping, fallback rules |
 | **Review Gates** | `ai-self-review.md`, `human-gate.md` | Self-review checklist, human approval requirements |
+| **Architecture** | `architecture/adr-integrity-gate.md` | ADR identification, compliance checking, extension rules |
+| **Continuous Learning** | `meta/continuous-learning.md` | Systemic issue detection, rule/ADR improvement proposals |
 | **Security** | `security/*.md` | ISO 27001, threat modelling, secrets, network boundaries, data classification |
 | **Quality** | `iso/iso9001-quality-management.md` | Process discipline, traceability, continuous improvement |
 | **Energy** | `iso/iso50001-energy-management.md` | Energy management for infrastructure-related work |

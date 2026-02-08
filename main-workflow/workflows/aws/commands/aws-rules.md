@@ -78,8 +78,9 @@ The AI model intelligently assesses what stages are needed based on:
 - Load `../../../Instructions/technology/dotnet/general.md` for C# guidelines
 - Load `../../../Instructions/technology/csharp/general.md` for dotnet guidelines
 - Load `../../../Instructions/technology/terraform/general.md` for terraform guidelines
-- Load `../memory/common/architecture/adr-integrity-gate.md` for architecture integrity gate.
-- Load `../memory/common/meta/continuous-learning.md` for continuos learning.
+- Load `../../shared/memory/architecture/adr-integrity-gate.md` for architecture integrity gate.
+- Load `../../shared/memory/meta/continuous-learning.md` for continuous learning.
+- Load `../../shared/memory/overconfidence-prevention.md` for overconfidence prevention.
 - Load `../../shared/memory/review/ai-self-review.md` for Self Review Guidelines.
 - Load `../../shared/memory/review/human-gate.md` for Human Gate Guidelines.
 
@@ -92,7 +93,7 @@ The AI model intelligently assesses what stages are needed based on:
 - ISO9001 rules are mandatory and cannot be skipped
 - ISO50001 rules are mandatory for SEU-related systems
 - Load `../../shared/memory/iso/iso9001-quality-management.md` for all software delivery
-- Load `../memory/iso/iso50001-energy-management.md` for infrastructure, performance, or SEU-related work
+- Load `../../shared/memory/iso/iso50001-energy-management.md` for infrastructure, performance, or SEU-related work
 
 ## MANDATORY: Content Validation
 **CRITICAL**: Before creating ANY file, you MUST validate content according to `../../shared/memory/content-validation.md` rules:

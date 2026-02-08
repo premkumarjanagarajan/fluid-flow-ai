@@ -62,8 +62,17 @@ fluid-flow-pro/
         │   │   │   ├── ai-self-review.md         # AI self-review checklist
         │   │   │   └── human-gate.md             # Human approval gate rules
         │   │   │
+        │   │   ├── architecture/
+        │   │   │   └── adr-integrity-gate.md         # ADR integrity enforcement
+        │   │   │
+        │   │   ├── meta/
+        │   │   │   └── continuous-learning.md         # Continuous improvement rules
+        │   │   │
+        │   │   ├── overconfidence-prevention.md       # Overconfidence guardrails
+        │   │   │
         │   │   ├── iso/
-        │   │   │   └── iso9001-quality-management.md  # ISO 9001 quality principles
+        │   │   │   ├── iso9001-quality-management.md  # ISO 9001 quality principles
+        │   │   │   └── iso50001-energy-management.md  # ISO 50001 energy management
         │   │   │
         │   │   └── security/
         │   │       ├── authz-authn.md            # Authentication and authorisation
@@ -140,22 +149,15 @@ fluid-flow-pro/
             │   └── onboarding-update.md          # Onboarding update stage
             │
             ├── memory/                           # AWS-specific memory files
-            │   ├── common/
-            │   │   ├── depth-levels.md           # Adaptive depth level definitions
-            │   │   ├── error-handling.md         # Error handling patterns
-            │   │   ├── overconfidence-prevention.md  # Overconfidence guardrails
-            │   │   ├── process-overview.md       # Workflow process overview
-            │   │   ├── question-format-guide.md  # Question formatting rules
-            │   │   ├── session-continuity.md     # Session resumption guidance
-            │   │   ├── terminology.md            # Domain terminology
-            │   │   ├── welcome-message.md        # AWS-specific welcome content
-            │   │   ├── workflow-changes.md       # Workflow change tracking
-            │   │   ├── architecture/
-            │   │   │   └── adr-integrity-gate.md # ADR integrity enforcement
-            │   │   └── meta/
-            │   │       └── continuous-learning.md # Continuous improvement rules
-            │   └── iso/
-            │       └── iso50001-energy-management.md  # ISO 50001 energy management
+            │   └── common/
+            │       ├── depth-levels.md           # Adaptive depth level definitions
+            │       ├── error-handling.md         # Error handling patterns
+            │       ├── process-overview.md       # Workflow process overview
+            │       ├── question-format-guide.md  # Question formatting rules
+            │       ├── session-continuity.md     # Session resumption guidance
+            │       ├── terminology.md            # Domain terminology
+            │       ├── welcome-message.md        # AWS-specific welcome content
+            │       └── workflow-changes.md       # Workflow change tracking
             │
             └── operations/                       # Operations phase definitions
                 ├── failure-modes.md              # Failure mode analysis

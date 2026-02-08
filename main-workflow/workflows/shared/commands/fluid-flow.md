@@ -32,10 +32,16 @@ Final accountability always rests with humans.
 - Load `../../fluid-flow/workflows/shared/memory/review/ai-self-review.md` for Self Review Guidelines
 - Load `../../fluid-flow/workflows/shared/memory/review/human-gate.md` for Human Gate Guidelines
 - Load `../../fluid-flow/workflows/shared/memory/iso/iso9001-quality-management.md` for quality management
+- Load `../../fluid-flow/workflows/shared/memory/architecture/adr-integrity-gate.md` for ADR integrity gate
+- Load `../../fluid-flow/workflows/shared/memory/meta/continuous-learning.md` for continuous learning
+- Load `../../fluid-flow/workflows/shared/memory/overconfidence-prevention.md` for overconfidence prevention
 
 **Load when changes affect security, data, identity, or infrastructure:**
 - Load `../../fluid-flow/workflows/shared/memory/security/iso27001/compliance.md` for ISO 27001 compliance
 - Load `../../fluid-flow/workflows/shared/memory/security/*.md` for all security rules
+
+**Load when changes affect infrastructure, performance, or energy (SEU-related):**
+- Load `../../fluid-flow/workflows/shared/memory/iso/iso50001-energy-management.md` for ISO 50001 energy management
 
 ## MANDATORY: Custom Welcome Message
 **CRITICAL**: When starting ANY software development request, you MUST display the welcome message.

@@ -95,6 +95,18 @@ The AI must stop and request clarification if:
 
 Proceeding under uncertainty is not allowed.
 
+### ADR Integrity Gate
+
+All architectural decisions must be evaluated against existing Architecture Decision Records (ADRs). For each relevant ADR, the AI must state whether the solution complies, extends, or violates it. If an ADR must be extended or violated, the AI must propose an update and escalate for human approval. Implementation does not proceed until the conflict is resolved.
+
+**File**: `shared/memory/architecture/adr-integrity-gate.md`
+
+### Continuous Learning
+
+If repeated friction, workarounds, or conflicts are detected, the AI must highlight systemic issues, propose updates to ADRs, principles, or rules, and avoid repeating known suboptimal patterns.
+
+**File**: `shared/memory/meta/continuous-learning.md`
+
 ---
 
 ## ISO Compliance
