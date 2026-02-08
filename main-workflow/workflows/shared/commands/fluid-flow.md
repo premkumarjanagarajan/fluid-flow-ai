@@ -53,8 +53,8 @@ The shared entry point orchestrates three stages before routing to a workflow:
 1. **Branch Creation** (ALWAYS)
 2. **Workspace Detection** (ALWAYS)
 3. **Reverse Engineering** (CONDITIONAL - Brownfield, run-once per project)
-4. **Complexity Assessment** (ALWAYS)
-5. **Workflow Routing** (ALWAYS - routes to Spec-Kit or AWS AI-DLC)
+4. **Workflow Selection** (ALWAYS - user chooses Spec-Kit or AWS AI-DLC)
+5. **Workflow Routing** (ALWAYS - routes to the chosen workflow)
 
 ---
 
@@ -90,13 +90,13 @@ Create `specs/{BRANCH_NAME}/state.md`:
 - **Branch**: {BRANCH_NAME}
 - **Created**: [ISO timestamp]
 - **Current Stage**: Entry Point - Branch Creation
-- **Workflow**: Pending (awaiting complexity assessment)
+- **Workflow**: Pending (awaiting user selection)
 
 ## Entry Point Progress
 - [ ] Branch Creation
 - [ ] Workspace Detection
 - [ ] Reverse Engineering (if brownfield)
-- [ ] Complexity Assessment
+- [ ] Workflow Selection
 - [ ] Workflow Routing
 
 ## Workspace State
@@ -171,27 +171,39 @@ Create `specs/{BRANCH_NAME}/audit.md`:
 
 ---
 
-## Stage 4: Complexity Assessment (ALWAYS EXECUTE)
+## Stage 4: Workflow Selection (ALWAYS EXECUTE)
 
-**Purpose**: Evaluate the complexity of the request and recommend the appropriate workflow.
+**Purpose**: Present the available workflows and let the user choose which one to follow.
 
-1. **MANDATORY**: Log start of complexity assessment in audit.md
-2. Load all steps from `../stages/complexity-assessment.md`
-3. Load context:
-   - User's original request (from audit.md)
-   - Workspace detection findings (from `specs/{BRANCH_NAME}/workspace-detection.md`)
-   - Reverse engineering artifacts (from `specs/_project/reverse-engineering/` if they exist)
-4. Execute complexity assessment per `../stages/complexity-assessment.md`
-5. Present recommendation with reasoning to user
-6. **Wait for Human Confirmation**: User may accept or override the recommendation
-7. **MANDATORY**: Log the decision in audit.md and state.md
-8. Mark checkbox in state.md: `[x] Complexity Assessment`
+1. **MANDATORY**: Log start of workflow selection in audit.md
+2. Present the following choice to the user:
+
+   ```markdown
+   ## Choose Your Workflow
+
+   Which workflow would you like to use for this feature?
+
+   **1. Spec-Kit** — Lightweight specification-driven workflow.
+      Best for: standard features, bug fixes, enhancements, CRUD operations,
+      and work that doesn't require deep infrastructure or compliance design.
+
+   **2. AWS AI-DLC** — Full Architecture Decision Lifecycle.
+      Best for: complex infrastructure changes, multi-service integrations,
+      projects requiring ADRs, NFR analysis, and formal architecture design.
+
+   Please reply with **1** or **2** (or the workflow name).
+   ```
+
+3. **Wait for User Response**: Do NOT proceed until the user has made their choice
+4. **MANDATORY**: Log the user's choice in audit.md with complete raw input
+5. Update `specs/{BRANCH_NAME}/state.md` with the selected workflow
+6. Mark checkbox in state.md: `[x] Workflow Selection`
 
 ---
 
 ## Stage 5: Workflow Routing (ALWAYS EXECUTE)
 
-Based on the confirmed workflow choice:
+Based on the user's chosen workflow:
 
 ### If Spec-Kit was chosen:
 
@@ -227,8 +239,7 @@ Based on the confirmed workflow choice:
 ## Key Principles
 
 - **Single Entry Point**: All development work starts here
-- **Adaptive Routing**: Simple work goes to Spec-Kit, complex work goes to AWS AI-DLC
-- **Human Control**: User can override the AI's workflow recommendation
+- **User-Driven Routing**: User directly chooses Spec-Kit or AWS AI-DLC for each feature
 - **Standardized Branching**: All features use `###-feature-name` numbered branches
 - **Standardized Artifacts**: All features write to `specs/{branch}/`
 - **Project-Level RE**: Reverse engineering runs once, stored at `specs/_project/`, updated after implementations

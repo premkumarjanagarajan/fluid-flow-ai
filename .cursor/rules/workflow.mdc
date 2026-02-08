@@ -46,13 +46,13 @@ You MUST output this exact block to the user so they can verify the workflow tri
 ## Step 2: Load the Full Workflow (MANDATORY — TOOL CALL)
 
 Immediately after displaying the gate confirmation, you MUST use the Read tool to load:
-`../../fluid-flow/workflows/shared/commands/fluid-flow.md`
+`../../main-workflow/workflows/shared/commands/fluid-flow.md`
 
 This file contains the complete workflow with all stages:
 1. Branch Creation
 2. Workspace Detection
 3. Reverse Engineering (conditional)
-4. Complexity Assessment
+4. Workflow Selection (user choice)
 5. Workflow Routing
 
 **Read this file NOW. Do not summarize it from memory. Do not skip it.**
@@ -66,8 +66,8 @@ Follow every instruction in the loaded workflow file sequentially. The workflow 
 - Displaying the welcome message
 - Creating a feature branch
 - Running workspace detection
-- Performing complexity assessment
-- Routing to the correct sub-workflow (Spec-Kit or AWS AI-DLC)
+- Presenting the workflow choice to the user (Spec-Kit or AWS AI-DLC)
+- Routing to the chosen sub-workflow
 
 **Do NOT jump ahead. Do NOT skip stages. Do NOT start coding until the workflow tells you to.**
 
