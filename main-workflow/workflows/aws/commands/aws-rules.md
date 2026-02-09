@@ -62,14 +62,16 @@ The AI model intelligently assesses what stages are needed based on:
 3. Complexity and scope of change
 4. Risk and impact assessment
 
-## MANDATORY: Rule Details Loading
-**CRITICAL**: When performing any phase, you MUST read and use relevant content from the rule detail files relative to this file's location.
+## MANDATORY: Shared Memory Loading
+**CRITICAL**: At workflow start, load the shared memory manifest and follow ALL instructions within it:
+- Load `../../shared/memory/load-shared-memory.md` -- resolve and load every file listed, using paths relative to the manifest's location
 
-**Common Rules**: ALWAYS load common rules at workflow start:
-- Load `../../shared/memory/ai-operating-contract.md` for AI operating contract
+## MANDATORY: AWS-Specific Rule Loading
+**CRITICAL**: In addition to shared memory, load these AWS workflow-specific files:
+
+**Common Rules**: ALWAYS load at workflow start:
 - Load `../memory/common/process-overview.md` for workflow overview
 - Load `../memory/common/session-continuity.md` for session resumption guidance
-- Load `../../shared/memory/content-validation.md` for content validation requirements
 - Load `../memory/common/question-format-guide.md` for question formatting rules
 - Reference these throughout the workflow execution
 
@@ -79,25 +81,9 @@ The AI model intelligently assesses what stages are needed based on:
 - Load `../../../Instructions/technology/dotnet/general.md` for C# guidelines
 - Load `../../../Instructions/technology/csharp/general.md` for dotnet guidelines
 - Load `../../../Instructions/technology/terraform/general.md` for terraform guidelines
-- Load `../../shared/memory/architecture/adr-integrity-gate.md` for architecture integrity gate.
-- Load `../../shared/memory/meta/continuous-learning.md` for continuous learning.
-- Load `../../shared/memory/overconfidence-prevention.md` for overconfidence prevention.
-- Load `../../shared/memory/review/ai-self-review.md` for Self Review Guidelines.
-- Load `../../shared/memory/review/human-gate.md` for Human Gate Guidelines.
-
-
-## MANDATORY: Security Rules
-- Load `../../shared/memory/security/iso27001/compliance.md` for any system affecting security, data, identity, or infrastructure
-- Load `../../shared/memory/security/*.md` when changes affect security, data, identity, or infrastructure
-
-## MANDATORY: Other ISO standards
-- ISO9001 rules are mandatory and cannot be skipped
-- ISO50001 rules are mandatory for SEU-related systems
-- Load `../../shared/memory/iso/iso9001-quality-management.md` for all software delivery
-- Load `../../shared/memory/iso/iso50001-energy-management.md` for infrastructure, performance, or SEU-related work
 
 ## MANDATORY: Content Validation
-**CRITICAL**: Before creating ANY file, you MUST validate content according to `../../shared/memory/content-validation.md` rules:
+**CRITICAL**: Before creating ANY file, you MUST validate content according to the content-validation rules loaded from the shared memory manifest:
 - Validate Mermaid diagram syntax
 - Escape special characters properly
 - Provide text alternatives for complex visual content
