@@ -66,13 +66,9 @@ The AI model intelligently assesses what stages are needed based on:
 **CRITICAL**: At workflow start, load the shared memory manifest and follow ALL instructions within it:
 - Load `../../shared/memory/load-shared-memory.md` -- resolve and load every file listed, using paths relative to the manifest's location
 
-## MANDATORY: AWS-Specific Rule Loading
-**CRITICAL**: In addition to shared memory, load these AWS workflow-specific files:
-
-**Common Rules**: ALWAYS load at workflow start:
-- Load `../memory/common/process-overview.md` for workflow overview
-- Load `../memory/common/session-continuity.md` for session resumption guidance
-- Load `../memory/common/question-format-guide.md` for question formatting rules
+## MANDATORY: AWS-Specific Memory Loading
+**CRITICAL**: In addition to shared memory, load the AWS memory manifest and follow ALL instructions within it:
+- Load `../memory/load-aws-memory.md` -- resolve and load every file listed, using paths relative to the manifest's location
 - Reference these throughout the workflow execution
 
 ## MANDATORY: Architecture Decisions Records, Technical Principles and Code Guidelines
