@@ -221,7 +221,7 @@ All Spec-Kit commands follow a consistent pattern:
    - Labels
    - Dependencies
    - Acceptance criteria
-   - Priority and complexity metadata
+   - Priority metadata
 3. Create issues via the GitHub MCP server
 
 **Output**: GitHub issues created in the repository

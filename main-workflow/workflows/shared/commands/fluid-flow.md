@@ -27,25 +27,25 @@ Final accountability always rests with humans.
 **CRITICAL**: At workflow start, you MUST load the following shared memory files:
 
 **Always load:**
-- Load `../../fluid-flow/workflows/shared/memory/ai-operating-contract.md` for AI operating contract
-- Load `../../fluid-flow/workflows/shared/memory/content-validation.md` for content validation requirements
-- Load `../../fluid-flow/workflows/shared/memory/review/ai-self-review.md` for Self Review Guidelines
-- Load `../../fluid-flow/workflows/shared/memory/review/human-gate.md` for Human Gate Guidelines
-- Load `../../fluid-flow/workflows/shared/memory/iso/iso9001-quality-management.md` for quality management
-- Load `../../fluid-flow/workflows/shared/memory/architecture/adr-integrity-gate.md` for ADR integrity gate
-- Load `../../fluid-flow/workflows/shared/memory/meta/continuous-learning.md` for continuous learning
-- Load `../../fluid-flow/workflows/shared/memory/overconfidence-prevention.md` for overconfidence prevention
+- Load `../memory/ai-operating-contract.md` for AI operating contract
+- Load `../memory/content-validation.md` for content validation requirements
+- Load `../memory/review/ai-self-review.md` for Self Review Guidelines
+- Load `../memory/review/human-gate.md` for Human Gate Guidelines
+- Load `../memory/iso/iso9001-quality-management.md` for quality management
+- Load `../memory/architecture/adr-integrity-gate.md` for ADR integrity gate
+- Load `../memory/meta/continuous-learning.md` for continuous learning
+- Load `../memory/overconfidence-prevention.md` for overconfidence prevention
 
 **Load when changes affect security, data, identity, or infrastructure:**
-- Load `../../fluid-flow/workflows/shared/memory/security/iso27001/compliance.md` for ISO 27001 compliance
-- Load `../../fluid-flow/workflows/shared/memory/security/*.md` for all security rules
+- Load `../memory/security/iso27001/compliance.md` for ISO 27001 compliance
+- Load `../memory/security/*.md` for all security rules
 
 **Load when changes affect infrastructure, performance, or energy (SEU-related):**
-- Load `../../fluid-flow/workflows/shared/memory/iso/iso50001-energy-management.md` for ISO 50001 energy management
+- Load `../memory/iso/iso50001-energy-management.md` for ISO 50001 energy management
 
 ## MANDATORY: Custom Welcome Message
 **CRITICAL**: When starting ANY software development request, you MUST display the welcome message.
-1. Load the welcome message from `../../fluid-flow/workflows/shared/memory/welcome-message.md`
+1. Load the welcome message from `../memory/welcome-message.md`
 2. Display the complete message to the user
 3. This should only be done ONCE at the start of a new workflow
 4. Do NOT load this file in subsequent interactions to save context space
