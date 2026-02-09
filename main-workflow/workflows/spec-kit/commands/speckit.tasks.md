@@ -12,17 +12,8 @@ handoffs:
 ---
 
 ## MANDATORY: Shared Memory Loading
-**CRITICAL**: At command start, you MUST load the following shared memory files:
-
-- Load `../../shared/memory/ai-operating-contract.md` for AI operating contract
-- Load `../../shared/memory/content-validation.md` for content validation requirements
-- Load `../../shared/memory/review/ai-self-review.md` for Self Review Guidelines
-- Load `../../shared/memory/review/human-gate.md` for Human Gate Guidelines
-- Load `../../shared/memory/iso/iso9001-quality-management.md` for quality management
-
-**Load when changes affect security, data, identity, or infrastructure:**
-- Load `../../shared/memory/security/iso27001/compliance.md` for ISO 27001 compliance
-- Load `../../shared/memory/security/*.md` for all security rules
+**CRITICAL**: At command start, load the shared memory manifest and follow ALL instructions within it:
+- Load `../../shared/memory/load-shared-memory.md` -- resolve and load every file listed, using paths relative to the manifest's location
 
 ## MANDATORY: State and Audit Logging
 - Read and update `specs/{BRANCH_NAME}/state.md` with stage progress at start and completion of this command

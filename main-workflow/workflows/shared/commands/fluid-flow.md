@@ -24,22 +24,12 @@ AI must never:
 Final accountability always rests with humans.
 
 ## MANDATORY: Shared Memory Loading
-**CRITICAL**: At workflow start, you MUST load the following shared memory files:
-
-**Always load:**
-- Load `../../fluid-flow/workflows/shared/memory/ai-operating-contract.md` for AI operating contract
-- Load `../../fluid-flow/workflows/shared/memory/content-validation.md` for content validation requirements
-- Load `../../fluid-flow/workflows/shared/memory/review/ai-self-review.md` for Self Review Guidelines
-- Load `../../fluid-flow/workflows/shared/memory/review/human-gate.md` for Human Gate Guidelines
-- Load `../../fluid-flow/workflows/shared/memory/iso/iso9001-quality-management.md` for quality management
-
-**Load when changes affect security, data, identity, or infrastructure:**
-- Load `../../fluid-flow/workflows/shared/memory/security/iso27001/compliance.md` for ISO 27001 compliance
-- Load `../../fluid-flow/workflows/shared/memory/security/*.md` for all security rules
+**CRITICAL**: At workflow start, load the shared memory manifest and follow ALL instructions within it:
+- Load `../memory/load-shared-memory.md` -- resolve and load every file listed, using paths relative to the manifest's location
 
 ## MANDATORY: Custom Welcome Message
 **CRITICAL**: When starting ANY software development request, you MUST display the welcome message.
-1. Load the welcome message from `../../fluid-flow/workflows/shared/memory/welcome-message.md`
+1. Load the welcome message from `../memory/welcome-message.md`
 2. Display the complete message to the user
 3. This should only be done ONCE at the start of a new workflow
 4. Do NOT load this file in subsequent interactions to save context space
