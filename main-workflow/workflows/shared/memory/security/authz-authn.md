@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Authentication & Authorization Integrity
 
 AI must treat authentication and authorization as security-critical.

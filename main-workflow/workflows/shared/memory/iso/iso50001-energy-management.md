@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # ISO 50001 – Energy Management Compliance Rule
 
 ## Purpose

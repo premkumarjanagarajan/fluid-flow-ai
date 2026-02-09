@@ -1,7 +1,3 @@
----
-name: aidlc-construction-nfr-requirements
-description: Construction NFR Requirements
----
 # NFR Requirements
 
 ## Prerequisites

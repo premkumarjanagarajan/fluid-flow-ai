@@ -1,7 +1,3 @@
----
-name: aidlc-common-questions-format-guide
-description: Common Questions Format Guide
----
 # Question Format Guide
 
 ## MANDATORY: All Questions Must Use This Format

@@ -1,8 +1,3 @@
----
-name: fluid-flow-rules
-description: The Unified Workflow Entry Point
----
-
 # PRIORITY: This workflow is the SINGLE ENTRY POINT for all development work
 # When a user requests software development, ALWAYS follow this workflow FIRST
 

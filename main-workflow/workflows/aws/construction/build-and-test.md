@@ -1,7 +1,3 @@
----
-name: aidlc-construction-build-and-test
-description: Construction Build & Test
----
 # Build and Test
 
 **Purpose**: Build all units and execute comprehensive testing strategy

@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Dependency & Supply Chain Security
 
 AI must:

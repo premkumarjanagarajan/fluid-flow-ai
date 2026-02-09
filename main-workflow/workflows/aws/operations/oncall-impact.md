@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # On-call & Operational Impact
 
 AI must assess:

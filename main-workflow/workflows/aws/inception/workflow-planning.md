@@ -1,7 +1,3 @@
----
-name: aidlc-inception-workflow-planning
-description: Inception Workflow Planning
----
 # Workflow Planning
 
 **Purpose**: Determine which phases to execute and create comprehensive execution plan

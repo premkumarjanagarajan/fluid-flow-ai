@@ -1,7 +1,3 @@
----
-name: aidlc-operations
-description: Operations
----
 # Operations
 
 **Purpose**: Placeholder for future operational phases (deployment, monitoring, maintenance)

@@ -1,8 +1,3 @@
----
-name: aidlc-inception-user-stories
-description: Inception User Stories
----
-
 # User Stories - Detailed Steps
 
 ## Purpose

@@ -1,8 +1,3 @@
----
-name: aidlc-rules
-description: AWS AI-DLC Workflow (invoked via Fluid Flow entry point)
----
-
 # AWS AI-DLC Workflow
 # This workflow is invoked from the shared entry point (fluid-flow-rules.md) after complexity assessment.
 # The feature branch and directory already exist at specs/{BRANCH_NAME}/.

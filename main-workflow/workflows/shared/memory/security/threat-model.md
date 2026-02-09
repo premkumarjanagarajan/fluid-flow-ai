@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Threat Modeling (Lite)
 
 For medium or high-risk changes, AI must assess:

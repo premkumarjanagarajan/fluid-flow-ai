@@ -1,7 +1,3 @@
----
-name: reverse-engineering-update
-description: Incremental update of reverse engineering artifacts after implementation
----
 # Reverse Engineering Update (Post-Implementation)
 
 **Purpose**: Incrementally update existing reverse engineering artifacts after an implementation completes, ensuring they reflect the current state of the codebase.

@@ -1,7 +1,3 @@
----
-name: aidlc-construction-onboarding-update
-description: Update onboarding decks and feature registry after feature/unit changes
----
 # Onboarding Update (per-unit)
 
 **Purpose**: Keep onboarding materials accurate as the system evolves, for both engineers and product managers.

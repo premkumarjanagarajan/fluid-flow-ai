@@ -1,7 +1,3 @@
----
-name: workspace-detection
-description: Workspace Detection Stage
----
 # Workspace Detection
 
 **Purpose**: Determine workspace state and check for existing projects
