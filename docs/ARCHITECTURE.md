@@ -54,14 +54,14 @@ flowchart TB
     end
 
     subgraph SPECKIT["Spec-Kit Workflow"]
-        SS["speckit.specify"]
-        SC["speckit.clarify"]
-        SP["speckit.plan"]
-        ST["speckit.tasks"]
-        SCH["speckit.checklist"]
-        SI["speckit.implement"]
-        SA["speckit.analyze"]
-        STI["speckit.taskstoissues"]
+        SS["/speckit.specify"]
+        SC["/speckit.clarify"]
+        SP["/speckit.plan"]
+        ST["/speckit.tasks"]
+        SCH["/speckit.checklist"]
+        SI["/speckit.implement"]
+        SA["/speckit.analyze"]
+        STI["/speckit.taskstoissues"]
     end
 
     subgraph AIDLC["AWS AI-DLC Workflow"]

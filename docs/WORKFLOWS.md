@@ -145,9 +145,11 @@ A lightweight, command-driven pipeline for well-scoped features. Each command bu
 ```mermaid
 flowchart LR
     S1["/speckit.specify"] --> S2["/speckit.clarify"]
+    S1 -->|"optional, skip clarify"| S3
     S2 --> S3["/speckit.plan"]
     S3 --> S4["/speckit.tasks"]
     S4 --> S5["/speckit.checklist"]
+    S4 -->|"optional, skip checklist"| S6
     S5 --> S6["/speckit.implement"]
 
     S4 -.->|optional| S7["/speckit.analyze"]
@@ -170,7 +172,7 @@ flowchart LR
 | 1 | `/speckit.specify` | Yes | Converts the natural-language feature description into a structured specification (`spec.md`). Includes user scenarios, requirements, success criteria, and technology constraints. |
 | 2 | `/speckit.clarify` | Optional | Identifies up to 5 underspecified areas in the current spec. Asks targeted clarification questions and encodes answers back into the spec. |
 | 3 | `/speckit.plan` | Yes | Generates an implementation plan (`plan.md`) with architecture decisions, data models, API contracts, and dependency maps. References the constitution and brownfield context. |
-| 4 | `/speckit.tasks` | Yes | Breaks the plan into an ordered, dependency-aware task list (`tasks.md`). Each task includes acceptance criteria, estimated complexity, and file references. |
+| 4 | `/speckit.tasks` | Yes | Breaks the plan into an ordered, dependency-aware task list (`tasks.md`). Uses task IDs with optional `[P]` and `[US#]` labels plus file path references; validation is captured as "Independent Test" criteria at the user-story/phase level. |
 | 5 | `/speckit.checklist` | Optional | Generates domain-specific quality checklists. Checklists act as "unit tests for requirements" -- they validate clarity and completeness, not implementation correctness. |
 | 6 | `/speckit.implement` | Yes | Executes the task list with progress tracking. Checks prerequisite checklists before starting. Processes tasks in dependency order with approval gates. |
 | 7 | `/speckit.analyze` | Optional | Performs cross-artifact consistency analysis across spec, plan, and tasks. Non-destructive -- reports issues without modifying files. |

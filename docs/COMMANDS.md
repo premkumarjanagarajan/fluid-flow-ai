@@ -15,6 +15,7 @@ This document provides a complete reference for every command and stage in Fluid
   - [/speckit.implement](#speckitimplement)
   - [/speckit.analyze](#speckitanalyze)
   - [/speckit.taskstoissues](#speckittaskstoissues)
+  - [/speckit.constitution](#speckitconstitution)
 - [AWS AI-DLC Stages](#aws-ai-dlc-stages)
   - [Inception Phase](#inception-phase)
   - [Construction Phase](#construction-phase)
@@ -128,11 +129,10 @@ All Spec-Kit commands follow a consistent pattern:
 1. Run `check-prerequisites.sh` to verify context
 2. Load design documents (plan, spec, data model, contracts)
 3. Generate the task list:
-   - Each task has acceptance criteria
+   - Tasks follow the Spec-Kit checklist format with task IDs (T001, T002, ...) and optional `[P]` (parallelizable) and `[US#]` (user story) labels
    - Tasks are ordered by dependencies
-   - Estimated complexity per task
-   - File references for each task
-   - Priority levels based on user story priorities
+   - File path references for each task
+   - Tasks are grouped by user story phase; validation is captured as "Independent Test" criteria at the user-story level
 
 **Output**: `specs/{BRANCH_NAME}/tasks.md`
 
