@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # AI Self Review
 
 Before final output, AI must explicitly answer:

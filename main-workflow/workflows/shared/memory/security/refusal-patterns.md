@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Secure Refusal Patterns
 
 If a request:

@@ -1,7 +1,3 @@
----
-name: aidlc-inception-onboarding-presentations
-description: Generate sli-dev onboarding presentations for engineers and product managers
----
 # Onboarding Presentations (sli-dev)
 
 **Purpose**: Create onboarding materials derived from reverse engineering artifacts so new joiners can understand the system quickly.

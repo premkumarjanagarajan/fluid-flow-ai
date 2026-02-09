@@ -1,7 +1,3 @@
----
-name: reverse-engineering
-description: Full Reverse Engineering Stage (Run-Once)
----
 # Reverse Engineering
 
 **Purpose**: Analyze existing codebase and generate comprehensive design artifacts

@@ -1,8 +1,3 @@
----
-alwaysApply: true
-description: C# Coding Rules Description
----
-
 # C# Coding Conventions
 
 Apply these conventions consistently across all C# code.

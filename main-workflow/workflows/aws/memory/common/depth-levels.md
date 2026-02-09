@@ -1,7 +1,3 @@
----
-name: aidlc-common-depth-levels
-description: Common Depth Levels
----
 # Adaptive Depth
 
 **Purpose**: Explain how AI-DLC adapts detail level to problem complexity

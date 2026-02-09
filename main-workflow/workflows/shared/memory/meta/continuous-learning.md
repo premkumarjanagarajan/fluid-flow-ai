@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Continuous Learning Loop
 
 If AI detects:

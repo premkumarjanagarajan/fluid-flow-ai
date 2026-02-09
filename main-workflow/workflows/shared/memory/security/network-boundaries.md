@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Network & Trust Boundaries
 
 AI must:

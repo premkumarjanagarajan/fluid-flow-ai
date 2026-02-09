@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Failure Modes & Resilience
 
 AI must consider and document:

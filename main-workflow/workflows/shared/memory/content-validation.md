@@ -1,7 +1,3 @@
----
-name: aidlc-common-content-validation
-description: Common Content Validation
----
 # Content Validation Rules
 
 ## IMPORTANT: DIAGRAMS GENERATION

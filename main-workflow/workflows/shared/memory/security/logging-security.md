@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Security Logging & Observability
 
 AI must ensure:

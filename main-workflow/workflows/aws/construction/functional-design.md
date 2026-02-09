@@ -1,7 +1,3 @@
----
-name: aidlc-construction-functional-design
-description: Construction Functional Design
----
 # Functional Design
 
 ## Purpose

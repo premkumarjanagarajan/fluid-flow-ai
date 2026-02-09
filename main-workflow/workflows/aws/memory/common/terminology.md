@@ -1,8 +1,3 @@
----
-name: aidlc-common-terminology
-description: Common Terminology
----
-
 # AI-DLC Terminology Glossary
 
 ## Core Terminology

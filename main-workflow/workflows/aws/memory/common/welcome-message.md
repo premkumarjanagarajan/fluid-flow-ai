@@ -1,7 +1,3 @@
----
-name: aidlc-common-welcome-message
-description: Common Welcome Message
----
 # AI-DLC Welcome Message
 
 **Purpose**: This file contains the user-facing welcome message that should be displayed ONCE at the start of any AI-DLC workflow.

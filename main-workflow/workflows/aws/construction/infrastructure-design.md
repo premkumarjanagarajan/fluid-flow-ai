@@ -1,7 +1,3 @@
----
-name: aidlc-construction-infrastructure-design
-description: Construction Infrastructure Design
----
 # Infrastructure Design
 
 ## Prerequisites

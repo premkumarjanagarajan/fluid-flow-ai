@@ -1,8 +1,3 @@
----
-name: aidlc-inception-units-generation
-description: Inception Units Generation
----
-
 # Units Generation - Detailed Steps
 
 ## Overview

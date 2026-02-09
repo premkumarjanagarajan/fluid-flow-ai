@@ -1,7 +1,3 @@
----
-name: aidlc-inception-requirements-analysis
-description: Inception Requirements Analysis
----
 # Requirements Analysis (Adaptive)
 
 **Assume the role** of a product owner

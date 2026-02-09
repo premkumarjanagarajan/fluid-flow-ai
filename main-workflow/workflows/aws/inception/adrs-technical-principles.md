@@ -1,8 +1,3 @@
----
-name: aidlc-inception-adrs-technical-principles
-description: Inception ADRS and Technical Principles
----
-
 # Architecture Design
 
 ## Purpose

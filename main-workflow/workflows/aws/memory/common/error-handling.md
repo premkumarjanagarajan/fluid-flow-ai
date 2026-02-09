@@ -1,7 +1,3 @@
----
-name: aidlc-common-error-handling
-description: Common Error Handling
----
 # Error Handling and Recovery Procedures
 
 ## General Error Handling Principles

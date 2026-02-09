@@ -1,7 +1,3 @@
----
-name: aidlc-common-mid-workflow-changes-phase-management
-description: Common Mid-Workflow Changes and Phase Management
----
 # Mid-Workflow Changes and Phase Management
 
 ## Overview

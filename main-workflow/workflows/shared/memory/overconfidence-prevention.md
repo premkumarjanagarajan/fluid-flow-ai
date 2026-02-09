@@ -1,7 +1,3 @@
----
-name: aidlc-common-overconfidence-prevention
-description: Common Overconfidence Prevention
----
 # Overconfidence Prevention Guide
 
 ## Problem Statement

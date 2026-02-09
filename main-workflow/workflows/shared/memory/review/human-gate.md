@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Human Approval Gate
 
 AI must clearly mark:

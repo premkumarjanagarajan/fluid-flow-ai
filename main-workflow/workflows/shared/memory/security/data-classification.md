@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Data Classification & Handling
 
 Before proposing or generating solutions involving data, AI must determine data classification:

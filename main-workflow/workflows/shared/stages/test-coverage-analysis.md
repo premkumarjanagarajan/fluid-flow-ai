@@ -1,7 +1,3 @@
----
-name: test-coverage-analysis
-description: Test Coverage Analysis & Improvement Strategy (Two-Phase)
----
 # Test Coverage Analysis & Improvement Strategy
 
 **Purpose**: Systematically analyze a repository's test coverage across all testing layers, identify coverage gaps correlated with business risk and production incidents, and produce a risk-prioritized action plan to reach a target coverage level.

@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # AI Operating Contract
 
 ## Role of AI

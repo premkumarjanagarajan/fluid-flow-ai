@@ -1,8 +1,3 @@
----
-name: aidlc-construction-code-generation
-description: Construction Code Generation
----
-
 # Code Generation - Detailed Steps
 
 ## Overview

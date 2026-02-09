@@ -1,7 +1,3 @@
----
-name: aidlc-construction-nfr-design
-description: Construction NFR Desgin
----
 # NFR Design
 
 ## Prerequisites

@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 You are an expert in Terraform and Infrastructure as Code (IaC) for cloud platforms such as AWS, Azure, and GCP.
 
 ## Infrastructure Authority

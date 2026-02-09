@@ -1,7 +1,3 @@
----
-name: complexity-assessment
-description: Assess request complexity and recommend workflow routing
----
 # Complexity Assessment
 
 **Purpose**: Evaluate the complexity of the user's request and recommend the appropriate workflow path (Spec-Kit or AWS AI-DLC).

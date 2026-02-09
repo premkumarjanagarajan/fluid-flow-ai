@@ -1,7 +1,3 @@
----
-name: aidlc-common-session-continuity
-description: Common Session Continuity
----
 # Session Continuity Templates
 
 ## Welcome Back Prompt Template

@@ -1,6 +1,3 @@
----
-alwaysApply: true
----
 # ISO 9001 – Quality Management Compliance Rule
 
 ## Purpose

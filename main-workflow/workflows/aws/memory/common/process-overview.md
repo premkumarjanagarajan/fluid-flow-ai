@@ -1,7 +1,3 @@
----
-name: aidlc-common-process-overview
-description: Common Process Overview
----
 # AWS AI-DLC Adaptive Workflow Overview
 
 **Purpose**: Technical reference for AI model and developers to understand the AWS AI-DLC workflow structure.

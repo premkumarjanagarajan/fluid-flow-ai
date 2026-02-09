@@ -1,7 +1,3 @@
----
-name: fluid-flow-welcome-message
-description: Unified Welcome Message
----
 # Welcome Message
 
 **Purpose**: This file contains the user-facing welcome message that should be displayed ONCE at the start of any Fluid Flow workflow.

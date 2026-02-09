@@ -1,7 +1,3 @@
----
-name: aidlc-inception-application-design
-description: Inception Application Design
----
 # Application Design - Detailed Steps
 
 ## Purpose
