@@ -66,6 +66,7 @@ The AI model intelligently assesses what stages are needed based on:
 **CRITICAL**: When performing any phase, you MUST read and use relevant content from the rule detail files relative to this file's location.
 
 **Common Rules**: ALWAYS load common rules at workflow start:
+- Load `../../shared/memory/ai-operating-contract.md` for AI operating contract
 - Load `../memory/common/process-overview.md` for workflow overview
 - Load `../memory/common/session-continuity.md` for session resumption guidance
 - Load `../../shared/memory/content-validation.md` for content validation requirements
