@@ -113,6 +113,7 @@ For detailed setup instructions, see [Getting Started](docs/GETTING-STARTED.md).
 | [Architecture](docs/ARCHITECTURE.md) | System design, component relationships, and data flow |
 | [Workflows](docs/WORKFLOWS.md) | Detailed reference for both workflow paths |
 | [Commands](docs/COMMANDS.md) | Complete command reference for Spec-Kit and AWS AI-DLC |
+| [Reverse Engineering](docs/REVERSE-ENGINEERING.md) | Artifact reference with content descriptions and samples |
 | [Governance](docs/GOVERNANCE.md) | Compliance standards, security rules, and review gates |
 | [Directory Structure](docs/DIRECTORY-STRUCTURE.md) | File and folder layout reference |
 
