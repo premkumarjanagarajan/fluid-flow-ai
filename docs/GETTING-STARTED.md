@@ -207,5 +207,6 @@ If the AI skips stages or ignores the workflow:
 
 - Read [Workflows](WORKFLOWS.md) for detailed workflow reference
 - Read [Commands](COMMANDS.md) for complete command documentation
+- Read [Reverse Engineering](REVERSE-ENGINEERING.md) for artifact descriptions and samples
 - Read [Governance](GOVERNANCE.md) to understand the compliance and security framework
 - Read [Architecture](ARCHITECTURE.md) for the system design

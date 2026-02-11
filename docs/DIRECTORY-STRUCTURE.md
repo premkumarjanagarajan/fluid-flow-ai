@@ -33,6 +33,7 @@ fluid-flow-pro/
 │   ├── DIRECTORY-STRUCTURE.md                    # This file
 │   ├── GETTING-STARTED.md                        # Installation and first-run guide
 │   ├── GOVERNANCE.md                             # Compliance, security, and review gates
+│   ├── REVERSE-ENGINEERING.md                    # RE artifact reference with samples
 │   └── WORKFLOWS.md                              # Detailed workflow reference
 │
 └── main-workflow/
