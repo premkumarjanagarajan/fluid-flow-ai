@@ -34,7 +34,19 @@ fluid-flow-pro/
 │   ├── GETTING-STARTED.md                        # Installation and first-run guide
 │   ├── GOVERNANCE.md                             # Compliance, security, and review gates
 │   ├── REVERSE-ENGINEERING.md                    # RE artifact reference with samples
-│   └── WORKFLOWS.md                              # Detailed workflow reference
+│   ├── WORKFLOWS.md                              # Detailed workflow reference
+│   └── reverse-engineering-samples/              # Sample output for each RE artifact
+│       ├── business-overview.md
+│       ├── architecture.md
+│       ├── c4-architecture.md
+│       ├── code-structure.md
+│       ├── api-documentation.md
+│       ├── component-inventory.md
+│       ├── technology-stack.md
+│       ├── dependencies.md
+│       ├── code-quality-assessment.md
+│       ├── test-coverage-analysis.md
+│       └── reverse-engineering-timestamp.md
 │
 └── main-workflow/
     │
