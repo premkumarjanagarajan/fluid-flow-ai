@@ -152,36 +152,21 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Confirm the implementation follows the technical plan
    - Report final status with summary of completed work
 
-11. **Test Coverage Delta & Improvement Plan** (CONDITIONAL - Post-Implementation):
-   - **Execute IF**: Baseline exists at `specs/_project/reverse-engineering/test-coverage-analysis.md`
-   - **Skip IF**: No test coverage baseline exists (greenfield project or test-coverage-analysis.md not generated)
-   - Load **Phase 2** instructions (Steps 7-11) from `../../shared/stages/test-coverage-analysis.md`
-   - Load the Phase 1 baseline from `specs/_project/reverse-engineering/test-coverage-analysis.md`
-   - Re-run coverage commands to get current metrics (post-implementation)
-   - Execute Phase 2:
-     - Step 7: Generate Coverage Delta Report (compare baseline vs current)
-     - Step 8: Generate Coverage Improvement Plan (quick wins, high-value, systematic)
-     - Step 9: Generate Test Templates (for top priority gaps)
-     - Step 10: Quality Gate Recommendations
-     - Step 11: Continuous Coverage Improvement Loop
-   - Generate the Phase 2 output artifact at `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md`
+11. **Post-Implementation Documentation & Analytics**:
+   - After implementation is complete, inform the user that documentation updates (Test Coverage Delta, Reverse Engineering Update, and Analytics Finalisation) are handled by a **separate command**:
+     - `../../shared/commands/fluid-flow.update-docs.md`
+   - Present to the user:
+     ```markdown
+     ## Implementation Complete
 
-12. **Reverse Engineering Update** (CONDITIONAL - Post-Implementation):
-   - **Execute IF**: Reverse engineering artifacts exist at `specs/_project/reverse-engineering/`
-   - **Skip IF**: No reverse engineering artifacts (greenfield project)
-   - Load all steps from `../../shared/stages/reverse-engineering-update.md`
-   - Execute incremental update of ALL `specs/_project/reverse-engineering/` artifacts based on changes made during this feature's implementation, including:
-     - `business-overview.md` - Update business transactions and component descriptions
-     - `architecture.md` - Update architecture diagrams and integration points
-     - `c4-architecture.md` - Update C4 model at all affected levels (System Context, Container, Component, Code) to reflect new or changed containers, components, relationships, and deployment topology
-     - `code-structure.md` - Update file inventory and design patterns
-     - `api-documentation.md` - Update API endpoints and data models
-     - `component-inventory.md` - Update package counts and categories
-     - `technology-stack.md` - Update languages, frameworks, and tools
-     - `dependencies.md` - Update internal and external dependency maps
-     - `code-quality-assessment.md` - Update quality indicators and technical debt
-     - `test-coverage-analysis.md` - Update baseline coverage metrics, gap analysis, and business flow coverage with post-implementation data
-   - Update `reverse-engineering-timestamp.md` with feature reference and change summary
-   - Log the update summary in `specs/{BRANCH_NAME}/audit.md`
+     All tasks have been executed. To update project-level documentation and finalise analytics, run:
+
+     **`/fluid-flow.update-docs`**
+
+     This will:
+     - Generate the Test Coverage Delta & Improvement Plan (if baseline exists)
+     - Update all Reverse Engineering artifacts (if they exist)
+     - Finalise the feature analytics file
+     ```
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.

@@ -33,9 +33,9 @@ Final accountability always rests with humans.
 
 # Unified Entry Flow
 
-The shared entry point orchestrates three stages before routing to a workflow:
+The shared entry point orchestrates the following stages before routing to a workflow:
 
-1. **Branch Creation** (ALWAYS)
+1. **Branch Creation** (ALWAYS - includes JIRA ticket prompt and analytics file creation)
 2. **Workspace Detection** (ALWAYS)
 3. **Reverse Engineering** (CONDITIONAL - Brownfield, run-once per project)
 4. **Workflow Selection** (ALWAYS - user chooses Spec-Kit or AWS AI-DLC)
@@ -48,21 +48,32 @@ The shared entry point orchestrates three stages before routing to a workflow:
 **Purpose**: Create a numbered feature branch and initialize the feature directory.
 
 1. Parse the user's request to extract the feature description
-2. **Generate a concise short name** (2-4 words) for the branch:
+2. **Ask for the JIRA Ticket Number**:
+   - Prompt the user: "Please provide the **JIRA Ticket Number** that will be the parent for this initiative (or type `null` / press enter to skip):"
+   - **Wait for User Response**: Do NOT proceed until the user responds
+   - Store the response as `JIRA_TICKET`:
+     - If the user provides a ticket number (e.g., `PROJ-1234`), store it as-is
+     - If the user provides `null`, empty, or skips, store as `null`
+   - The JIRA ticket will be recorded in `state.md`, `audit.md`, and `analytics` for this feature
+3. **Generate a concise short name** (2-4 words) for the branch:
    - Analyze the feature description and extract meaningful keywords
    - Use action-noun format when possible (e.g., "add-user-auth", "fix-payment-bug")
    - Preserve technical terms and acronyms
-3. **Create the feature branch** by running `../../spec-kit/scripts/bash/create-new-feature.sh`:
+4. **Create the feature branch** by running `../../spec-kit/scripts/bash/create-new-feature.sh`:
    - Pass `--json` for structured output
    - Pass `--short-name "<name>"` with the generated short name
    - Pass the feature description as positional argument
    - Parse the JSON output for BRANCH_NAME, SPEC_FILE, FEATURE_NUM
    - For single quotes in args, use escape syntax: e.g `"I'm Groot"` (double-quote)
-4. **Initialize state tracking** in the feature directory (`specs/{BRANCH_NAME}/`):
+5. **Initialize state tracking** in the feature directory (`specs/{BRANCH_NAME}/`):
    - Create `state.md` with initial state (see State File Format below)
    - Create `audit.md` with header (see Audit File Format below)
-5. **Create project directory** if it does not exist: `specs/_project/`
-6. **MANDATORY**: Log the initial user request in `audit.md` with complete raw input
+6. **Create project directory** if it does not exist: `specs/_project/`
+7. **Create analytics file** for this feature (see Analytics File section below):
+   - Create `main-workflow/analytics/{BRANCH_NAME}.md` with initial analytics data
+   - Record the feature start timestamp, description, JIRA ticket, and branch name
+   - The analytics folder (`main-workflow/analytics/`) must be created if it does not exist
+8. **MANDATORY**: Log the initial user request in `audit.md` with complete raw input
 
 ### State File Format
 
@@ -73,6 +84,7 @@ Create `specs/{BRANCH_NAME}/state.md`:
 
 ## Feature Information
 - **Branch**: {BRANCH_NAME}
+- **JIRA Ticket**: {JIRA_TICKET | null}
 - **Created**: [ISO timestamp]
 - **Current Stage**: Entry Point - Branch Creation
 - **Workflow**: Pending (awaiting user selection)
@@ -99,6 +111,7 @@ Create `specs/{BRANCH_NAME}/audit.md`:
 # Feature Audit Trail
 
 **Branch**: {BRANCH_NAME}
+**JIRA Ticket**: {JIRA_TICKET | null}
 **Created**: [ISO timestamp]
 
 ---
@@ -106,6 +119,7 @@ Create `specs/{BRANCH_NAME}/audit.md`:
 ## Branch Creation
 **Timestamp**: [ISO timestamp]
 **User Input**: "[Complete raw user input - never summarized]"
+**JIRA Ticket**: {JIRA_TICKET | null}
 **AI Response**: "Created feature branch {BRANCH_NAME}"
 **Context**: Entry Point - Branch Creation
 
@@ -218,6 +232,69 @@ Based on the user's chosen workflow:
 3. The AWS workflow begins from **Requirements Analysis** (workspace detection and reverse engineering are already complete)
 4. Load the AWS workflow rules from `../../aws/commands/aws-rules.md`
 5. Execute the AWS workflow starting from Requirements Analysis
+
+---
+
+## Analytics File
+
+### Purpose
+
+Track workflow usage metrics across features to understand how much work is done using the workflow and how long each cycle takes. The analytics file is created at the entry point and updated after the final steps of each workflow.
+
+### Analytics File Format
+
+Create `main-workflow/analytics/{BRANCH_NAME}.md`:
+
+```markdown
+# Feature Analytics: {BRANCH_NAME}
+
+## Metadata
+- **Feature**: {feature_description}
+- **Branch**: {BRANCH_NAME}
+- **JIRA Ticket**: {JIRA_TICKET | null}
+- **Workflow**: Pending
+- **Created**: [ISO timestamp]
+- **Completed**: [Populated at workflow end]
+- **Total Duration**: [Calculated at workflow end]
+
+## Stage Timeline
+
+| Stage | Started | Completed | Duration | Status |
+|-------|---------|-----------|----------|--------|
+| Branch Creation | [ISO timestamp] | [ISO timestamp] | [duration] | Completed |
+| Workspace Detection | | | | Pending |
+| Reverse Engineering | | | | Pending / Skipped |
+| Workflow Selection | | | | Pending |
+| Workflow Routing | | | | Pending |
+
+> Workflow-specific stages are appended by the chosen workflow (Spec-Kit or AWS AI-DLC).
+
+## Work Metrics
+- **Total AI Interactions**: 0
+- **Approval Gates Passed**: 0
+- **Change Requests**: 0
+- **Clarification Rounds**: 0
+- **Artifacts Generated**: 0
+- **Stages Executed**: 1
+- **Stages Skipped**: 0
+
+## Effort Breakdown
+
+| Phase | Interactions | Approvals | Duration |
+|-------|-------------|-----------|----------|
+| Entry Point | 0 | 0 | |
+| [Workflow Phase] | 0 | 0 | |
+
+## Cycle Summary
+- **Entry Point Duration**: [Calculated after routing]
+- **Workflow Duration**: [Calculated at workflow end]
+- **End-to-End Duration**: [Calculated at workflow end]
+- **Rework Cycles**: 0 (count of "Request Changes" choices across all stages)
+```
+
+### Analytics Update Instructions
+
+After the final step of each workflow, the analytics file **MUST** be updated by following the instructions in `../stages/analytics-update.md`. Both Spec-Kit and AWS AI-DLC reference this shared instruction file.
 
 ---
 
