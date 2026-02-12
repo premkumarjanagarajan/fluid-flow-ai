@@ -19,7 +19,7 @@ Every development request passes through the same stages before being routed to 
 
 ```mermaid
 flowchart LR
-    S1["Branch<br/>Creation"] --> S2["Workspace<br/>Detection"] --> S3["Reverse<br/>Engineering"] --> S4["Workflow<br/>Selection"] --> S5["Workflow<br/>Routing"]
+    S1["Branch Creation<br/><i>+ JIRA Ticket<br/>+ Analytics Init</i>"] --> S2["Workspace<br/>Detection"] --> S3["Reverse<br/>Engineering"] --> S4["Workflow<br/>Selection"] --> S5["Workflow<br/>Routing"]
 
     style S1 fill:#E3F2FD,stroke:#1565C0,color:#000
     style S2 fill:#E3F2FD,stroke:#1565C0,color:#000
@@ -30,22 +30,25 @@ flowchart LR
 
 ### Stage 1: Branch Creation (Always)
 
-**Purpose**: Create a numbered feature branch and initialise the feature directory.
+**Purpose**: Create a numbered feature branch, collect the JIRA ticket reference, initialise the feature directory, and create the feature analytics file.
 
 **What happens**:
 1. The user's request is parsed to extract a feature description
-2. A concise short name is generated (e.g., `add-user-auth`, `fix-payment-bug`)
-3. The `create-new-feature.sh` script creates the branch and directory:
+2. The user is prompted for a **JIRA Ticket Number** (parent initiative). Providing `null` or skipping is accepted; if provided, the ticket is stored in all feature documentation
+3. A concise short name is generated (e.g., `add-user-auth`, `fix-payment-bug`)
+4. The `create-new-feature.sh` script creates the branch and directory:
    - Branch: `###-feature-name` (e.g., `001-add-user-auth`)
    - Directory: `specs/{BRANCH_NAME}/`
-4. `state.md` and `audit.md` are initialised in the feature directory
-5. The `specs/_project/` directory is created if it does not exist
-6. The initial user request is logged verbatim in `audit.md`
+5. `state.md` and `audit.md` are initialised in the feature directory (both include the JIRA ticket)
+6. The `specs/_project/` directory is created if it does not exist
+7. A **feature analytics file** is created at `main-workflow/analytics/{BRANCH_NAME}.md` with initial metadata, timestamps, and work metric counters
+8. The initial user request is logged verbatim in `audit.md`
 
 **Outputs**:
 - Git branch `###-feature-name`
-- `specs/{BRANCH_NAME}/state.md`
-- `specs/{BRANCH_NAME}/audit.md`
+- `specs/{BRANCH_NAME}/state.md` (includes JIRA ticket)
+- `specs/{BRANCH_NAME}/audit.md` (includes JIRA ticket)
+- `main-workflow/analytics/{BRANCH_NAME}.md` (feature analytics)
 
 ---
 
@@ -151,6 +154,7 @@ flowchart LR
     S4 --> S5["/speckit.checklist"]
     S4 -->|"optional, skip checklist"| S6
     S5 --> S6["/speckit.implement"]
+    S6 --> S9["/fluid-flow.update-docs"]
 
     S4 -.->|optional| S7["/speckit.analyze"]
     S4 -.->|optional| S8["/speckit.taskstoissues"]
@@ -163,6 +167,7 @@ flowchart LR
     style S6 fill:#C8E6C9,stroke:#2E7D32,color:#000
     style S7 fill:#FFF9C4,stroke:#F9A825,color:#000
     style S8 fill:#FFF9C4,stroke:#F9A825,color:#000
+    style S9 fill:#E1BEE7,stroke:#7B1FA2,color:#000
 ```
 
 ### Commands
@@ -179,14 +184,16 @@ flowchart LR
 | 8 | `/speckit.taskstoissues` | Optional | Converts tasks into GitHub issues with labels, dependencies, and acceptance criteria. |
 | 9 | `/speckit.constitution` | Optional | Create or update the project constitution from interactive or provided principle inputs, keeping dependent templates in sync. |
 
+> **Post-implementation**: After `/speckit.implement` completes, run **`/fluid-flow.update-docs`** (shared command) to update project documentation, reverse engineering artifacts, and finalise feature analytics.
+
 ### Spec-Kit Artifacts
 
 All artifacts are written to `specs/{BRANCH_NAME}/`:
 
 ```
 specs/{BRANCH_NAME}/
-├── state.md              # Progress tracking
-├── audit.md              # Full audit trail
+├── state.md              # Progress tracking (includes JIRA ticket)
+├── audit.md              # Full audit trail (includes JIRA ticket)
 ├── workspace-detection.md
 ├── spec.md               # Feature specification
 ├── plan.md               # Implementation plan
@@ -198,6 +205,12 @@ specs/{BRANCH_NAME}/
 ├── data-model.md         # Entity definitions (if applicable)
 ├── contracts/            # API contracts (if applicable)
 └── research.md           # Research and decisions (if applicable)
+```
+
+Additionally, feature analytics are stored at:
+
+```
+main-workflow/analytics/{BRANCH_NAME}.md   # Feature analytics (timing, metrics, effort)
 ```
 
 ---
@@ -229,21 +242,28 @@ flowchart TB
         C5["Code Generation"]
         C6["Onboarding Update"]
         C7["Build and Test<br/><i>Always</i>"]
-        C8["Test Coverage Delta"]
-        C9["RE Update<br/><i>Always</i>"]
         C0 --> C1 --> C2 --> C3 --> C4 --> C5 --> C6
         C6 -->|"Next unit"| C0
-        C6 -->|"All units done"| C7 --> C8 --> C9
+        C6 -->|"All units done"| C7
+    end
+
+    subgraph POSTIMPL["POST-IMPLEMENTATION<br/>(Separate Command)"]
+        direction TB
+        P1["Test Coverage Delta"]
+        P2["RE Update"]
+        P3["Analytics Finalisation"]
+        P1 --> P2 --> P3
     end
 
     subgraph OPERATIONS["OPERATIONS PHASE"]
         O1["Placeholder<br/><i>Future expansion</i>"]
     end
 
-    INCEPTION --> CONSTRUCTION --> OPERATIONS
+    INCEPTION --> CONSTRUCTION --> POSTIMPL --> OPERATIONS
 
     style INCEPTION fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#000
     style CONSTRUCTION fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#000
+    style POSTIMPL fill:#E1BEE7,stroke:#7B1FA2,stroke-width:2px,color:#000
     style OPERATIONS fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#000
 ```
 
@@ -282,8 +302,16 @@ The Construction phase uses a **per-unit loop**. Each unit of work is completed 
 | Stage | Condition | Description |
 |-------|-----------|-------------|
 | **Build and Test** | Always | Generate build instructions, unit/integration/performance test instructions |
+
+### Post-Implementation Documentation (Separate Command)
+
+After the Construction phase completes, the following steps are handled by the shared command **`/fluid-flow.update-docs`** (not part of the AWS AI-DLC workflow itself):
+
+| Step | Condition | Description |
+|------|-----------|-------------|
 | **Test Coverage Delta** | Conditional (baseline exists) | Compare coverage against Phase 1 baseline, generate improvement plan |
-| **RE Update** | Always (if RE artifacts exist) | Incrementally update all reverse engineering artifacts |
+| **RE Update** | Conditional (RE artifacts exist) | Incrementally update all reverse engineering artifacts |
+| **Analytics Finalisation** | Always | Update the feature analytics file with completion data and metrics |
 
 ### Operations Phase
 
@@ -295,8 +323,8 @@ Planned capabilities: deployment planning, monitoring setup, incident response, 
 
 ```
 specs/{BRANCH_NAME}/
-├── state.md
-├── audit.md
+├── state.md                      # Includes JIRA ticket
+├── audit.md                      # Includes JIRA ticket
 ├── workspace-detection.md
 ├── inception/
 │   ├── plans/
@@ -315,10 +343,16 @@ specs/{BRANCH_NAME}/
 │   │   ├── infrastructure-design/
 │   │   └── code/
 │   ├── build-and-test/
-│   └── coverage-improvement-plan.md
+│   └── coverage-improvement-plan.md  # Generated by /fluid-flow.update-docs
 ├── operations/
 └── features/
     └── features-registry.md
+```
+
+Additionally, feature analytics are stored at:
+
+```
+main-workflow/analytics/{BRANCH_NAME}.md   # Feature analytics (timing, metrics, effort)
 ```
 
 ---

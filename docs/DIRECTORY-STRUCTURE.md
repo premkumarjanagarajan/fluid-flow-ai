@@ -34,9 +34,24 @@ fluid-flow-pro/
 │   ├── GETTING-STARTED.md                        # Installation and first-run guide
 │   ├── GOVERNANCE.md                             # Compliance, security, and review gates
 │   ├── REVERSE-ENGINEERING.md                    # RE artifact reference with samples
-│   └── WORKFLOWS.md                              # Detailed workflow reference
+│   ├── WORKFLOWS.md                              # Detailed workflow reference
+│   └── reverse-engineering-samples/              # Sample output for each RE artifact
+│       ├── business-overview.md
+│       ├── architecture.md
+│       ├── c4-architecture.md
+│       ├── code-structure.md
+│       ├── api-documentation.md
+│       ├── component-inventory.md
+│       ├── technology-stack.md
+│       ├── dependencies.md
+│       ├── code-quality-assessment.md
+│       ├── test-coverage-analysis.md
+│       └── reverse-engineering-timestamp.md
 │
 └── main-workflow/
+    │
+    ├── analytics/                                # Feature analytics files (one per feature)
+    │   └── {BRANCH_NAME}.md                      # Per-feature analytics (timing, metrics, effort)
     │
     ├── Instructions/                             # Technology-specific guidelines
     │   └── technology/
@@ -52,7 +67,8 @@ fluid-flow-pro/
         ├── shared/                               # Shared across both workflows
         │   │
         │   ├── commands/
-        │   │   └── fluid-flow.md                 # Unified entry point orchestrator
+        │   │   ├── fluid-flow.md                 # Unified entry point orchestrator
+        │   │   └── fluid-flow.update-docs.md     # Post-implementation documentation update
         │   │
         │   ├── memory/                           # Governance and rules (loaded at runtime)
         │   │   ├── ai-operating-contract.md      # AI role and decision authority
@@ -89,6 +105,7 @@ fluid-flow-pro/
         │   │           └── compliance.md         # ISO 27001 compliance rules
         │   │
         │   └── stages/                           # Shared workflow stages
+        │       ├── analytics-update.md           # Feature analytics finalisation instructions
         │       ├── complexity-assessment.md      # Complexity scoring (not used in entry flow)
         │       ├── reverse-engineering.md         # Full codebase analysis (run-once)
         │       ├── reverse-engineering-update.md  # Incremental RE updates
@@ -179,8 +196,8 @@ Each feature gets its own directory under `specs/`:
 ```
 specs/{BRANCH_NAME}/                              # e.g., specs/001-add-user-auth/
 │
-├── state.md                                      # Progress tracking (checkboxes, current stage)
-├── audit.md                                      # Full audit trail (append-only)
+├── state.md                                      # Progress tracking (includes JIRA ticket)
+├── audit.md                                      # Full audit trail (includes JIRA ticket)
 ├── workspace-detection.md                        # Workspace scan results
 │
 ├── spec.md                                       # Feature specification (Spec-Kit)
@@ -251,6 +268,20 @@ specs/_project/
     └── test-coverage-analysis.md                 # Coverage baseline and gap analysis
 ```
 
+### Feature Analytics
+
+Each feature gets an analytics file in the framework's analytics directory:
+
+```
+main-workflow/analytics/
+│
+├── 001-add-user-auth.md                          # Analytics for feature 001
+├── 002-fix-payment-bug.md                        # Analytics for feature 002
+└── ...                                           # One file per feature
+```
+
+Each analytics file tracks: start/end timestamps, stage timeline with durations, work metrics (interactions, approvals, change requests), effort breakdown by phase, and cycle summary.
+
 ---
 
 ## Code Location Rules
@@ -263,7 +294,8 @@ These rules are enforced throughout the workflow:
 | **Feature documentation** | `specs/{BRANCH_NAME}/` | One directory per feature branch |
 | **Project-level artifacts** | `specs/_project/` | Shared across features |
 | **Reverse engineering** | `specs/_project/reverse-engineering/` | Run-once, updated post-implementation |
-| **Framework files** | `fluid-flow-pro/` | Never modified by the workflow |
+| **Feature analytics** | `main-workflow/analytics/` | One file per feature, tracks timing and metrics |
+| **Framework files** | `fluid-flow-pro/` | Never modified by the workflow (except analytics) |
 
 ### Examples
 

@@ -20,6 +20,8 @@ This document provides a complete reference for every command and stage in Fluid
   - [Inception Phase](#inception-phase)
   - [Construction Phase](#construction-phase)
   - [Operations Phase](#operations-phase)
+- [Shared Commands](#shared-commands)
+  - [/fluid-flow.update-docs](#fluid-flowupdate-docs)
 - [Shared Stages](#shared-stages)
 - [Automation Scripts](#automation-scripts)
 
@@ -182,6 +184,8 @@ All Spec-Kit commands follow a consistent pattern:
 4. Generate code in the workspace root (never in `specs/`)
 
 **Output**: Application code in the workspace root, updated `tasks.md` with progress
+
+> **Post-implementation**: After implementation completes, run **`/fluid-flow.update-docs`** to update project documentation and finalise analytics.
 
 ---
 
@@ -414,25 +418,7 @@ For each unit of work, the following stages execute in sequence. A unit is compl
 
 ---
 
-#### Test Coverage Delta (Conditional)
-
-**Purpose**: Compare current coverage against Phase 1 baseline.
-
-**Execute when**: Baseline exists at `specs/_project/reverse-engineering/test-coverage-analysis.md`.
-
-**Output**: `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md`
-
----
-
-#### Reverse Engineering Update (Always -- Final Step)
-
-**Purpose**: Incrementally update all RE artifacts to reflect implementation changes.
-
-**Updates all artifacts** in `specs/_project/reverse-engineering/`:
-- Business overview, architecture, C4 model, code structure, API docs
-- Component inventory, technology stack, dependencies
-- Code quality assessment, test coverage analysis
-- Timestamp file with change summary
+> **Post-implementation**: After Build and Test completes, run **`/fluid-flow.update-docs`** (shared command) to update project documentation, reverse engineering artifacts, and finalise feature analytics.
 
 ---
 
@@ -444,9 +430,33 @@ For each unit of work, the following stages execute in sequence. A unit is compl
 
 ---
 
+## Shared Commands
+
+These commands are shared across both workflows and invoked independently.
+
+### /fluid-flow.update-docs
+
+**Purpose**: Post-implementation documentation update. Consolidates Test Coverage Delta, Reverse Engineering Update, and Analytics Finalisation into a single command.
+
+**File**: `main-workflow/workflows/shared/commands/fluid-flow.update-docs.md`
+
+**When to run**: After the final implementation step of either workflow (Spec-Kit `/speckit.implement` or AWS AI-DLC Build and Test).
+
+**Process**:
+1. **Test Coverage Delta** (conditional): Compare current coverage against baseline, generate improvement plan
+2. **Reverse Engineering Update** (conditional): Incrementally update all RE artifacts
+3. **Analytics Finalisation** (always): Update the feature analytics file with completion data, stage durations, and work metrics
+
+**Output**:
+- `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md` (if baseline exists)
+- Updated `specs/_project/reverse-engineering/` artifacts (if RE exists)
+- Updated `main-workflow/analytics/{BRANCH_NAME}.md`
+
+---
+
 ## Shared Stages
 
-These stages are used by both workflows via the shared entry point.
+These stages are used by both workflows via the shared entry point or shared commands.
 
 | Stage | File | Description |
 |-------|------|-------------|
@@ -454,6 +464,7 @@ These stages are used by both workflows via the shared entry point.
 | Reverse Engineering | `shared/stages/reverse-engineering.md` | Full codebase analysis (run-once) |
 | Reverse Engineering Update | `shared/stages/reverse-engineering-update.md` | Incremental RE artifact update |
 | Test Coverage Analysis | `shared/stages/test-coverage-analysis.md` | Baseline and delta coverage analysis |
+| Analytics Update | `shared/stages/analytics-update.md` | Feature analytics finalisation (timing, metrics, effort) |
 
 ---
 
