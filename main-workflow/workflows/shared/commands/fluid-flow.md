@@ -74,6 +74,34 @@ The shared entry point orchestrates the following stages before routing to a wor
    - Record the feature start timestamp, description, JIRA ticket, and branch name
    - The analytics folder (`main-workflow/analytics/`) must be created if it does not exist
 8. **MANDATORY**: Log the initial user request in `audit.md` with complete raw input
+9. **MANDATORY: Verify Initiative Folder Requirements**:
+   - After all creation steps, validate that every required artifact exists and is well-formed:
+
+   | Check | Path | Validation |
+   |-------|------|------------|
+   | Feature directory | `specs/{BRANCH_NAME}/` | Directory exists |
+   | State file | `specs/{BRANCH_NAME}/state.md` | File exists, contains `## Feature Information` with Branch, JIRA Ticket, Created, Current Stage, Workflow fields |
+   | Audit file | `specs/{BRANCH_NAME}/audit.md` | File exists, contains `# Feature Audit Trail` header with Branch, JIRA Ticket, Created fields and Branch Creation entry |
+   | Project directory | `specs/_project/` | Directory exists |
+   | Analytics file | `main-workflow/analytics/{BRANCH_NAME}.md` | File exists, contains `## Metadata` with Feature, Branch, JIRA Ticket, Workflow, Created fields |
+
+   - **If any check fails**: Log the failure in audit.md, attempt to create/fix the missing artifact, and re-verify
+   - **If all checks pass**: Log verification success in audit.md and proceed
+   - Present a brief verification summary to the user:
+
+   ```markdown
+   ## Initiative Folder Verified
+
+   | Artifact | Status |
+   |----------|--------|
+   | Feature directory (`specs/{BRANCH_NAME}/`) | ✓ |
+   | State tracking (`state.md`) | ✓ |
+   | Audit trail (`audit.md`) | ✓ |
+   | Project directory (`specs/_project/`) | ✓ |
+   | Analytics file (`analytics/{BRANCH_NAME}.md`) | ✓ |
+   ```
+
+10. Mark checkbox in state.md: `[x] Branch Creation`
 
 ### State File Format
 
