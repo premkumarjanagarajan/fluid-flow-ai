@@ -15,13 +15,13 @@ flowchart TD
     NOTIF["notification-worker"] --> SM
     NOTIF --> SU
 
-    style PAY fill:#E8F5E9,stroke:#2E7D32,color:#000
-    style SETTLE fill:#E8F5E9,stroke:#2E7D32,color:#000
-    style DISPUTE fill:#E8F5E9,stroke:#2E7D32,color:#000
-    style NOTIF fill:#E8F5E9,stroke:#2E7D32,color:#000
-    style SM fill:#FFF9C4,stroke:#F9A825,color:#000
-    style SU fill:#FFF9C4,stroke:#F9A825,color:#000
-    style SC fill:#FFF9C4,stroke:#F9A825,color:#000
+    style PAY fill:#81C784,stroke:#2E7D32
+    style SETTLE fill:#81C784,stroke:#2E7D32
+    style DISPUTE fill:#81C784,stroke:#2E7D32
+    style NOTIF fill:#81C784,stroke:#2E7D32
+    style SM fill:#FFF176,stroke:#F9A825
+    style SU fill:#FFF176,stroke:#F9A825
+    style SC fill:#FFF176,stroke:#F9A825
 ```
 
 | Source | Target | Type | Reason |

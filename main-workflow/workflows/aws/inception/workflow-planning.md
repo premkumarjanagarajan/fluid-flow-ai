@@ -202,23 +202,23 @@ Create Mermaid flowchart showing:
 
 **Styling rules** (add after flowchart):
 ```
-style WD fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-style CP fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-style CG fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-style BT fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-style US fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
-style Start fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
-style End fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
+style WD fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+style CP fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+style CG fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+style BT fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+style US fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5
+style Start fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px
+style End fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px
 
 linkStyle default stroke:#333,stroke-width:2px
 ```
 
 **Style Guidelines**:
-- Completed/Always execute: `fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff` (Material Green with white text)
-- Conditional EXECUTE: `fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000` (Material Orange with black text)
-- Conditional SKIP: `fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000` (Material Gray with black text)
-- Start/End: `fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000` (Material Purple with black text)
-- Phase containers: Use lighter Material colors (INCEPTION: #BBDEFB, CONSTRUCTION: #C8E6C9, OPERATIONS: #FFF59D)
+- Completed/Always execute: `fill:#66BB6A,stroke:#1B5E20,stroke-width:3px` (Material Green, auto text color)
+- Conditional EXECUTE: `fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5` (Material Orange, auto text color)
+- Conditional SKIP: `fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5` (Material Gray, auto text color)
+- Start/End: `fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px` (Material Purple, auto text color)
+- Phase containers: Use medium saturation (INCEPTION: #90CAF9, CONSTRUCTION: #81C784, OPERATIONS: #FFF176)
 
 ## Step 7: Create Execution Plan Document
 

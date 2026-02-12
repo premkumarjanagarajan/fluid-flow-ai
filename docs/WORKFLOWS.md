@@ -21,11 +21,11 @@ Every development request passes through the same stages before being routed to 
 flowchart LR
     S1["Branch Creation<br/><i>+ JIRA Ticket<br/>+ Analytics Init</i>"] --> S2["Workspace<br/>Detection"] --> S3["Reverse<br/>Engineering"] --> S4["Workflow<br/>Selection"] --> S5["Workflow<br/>Routing"]
 
-    style S1 fill:#E3F2FD,stroke:#1565C0,color:#000
-    style S2 fill:#E3F2FD,stroke:#1565C0,color:#000
-    style S3 fill:#E3F2FD,stroke:#1565C0,color:#000
-    style S4 fill:#E3F2FD,stroke:#1565C0,color:#000
-    style S5 fill:#E3F2FD,stroke:#1565C0,color:#000
+    style S1 fill:#90CAF9,stroke:#1565C0
+    style S2 fill:#90CAF9,stroke:#1565C0
+    style S3 fill:#90CAF9,stroke:#1565C0
+    style S4 fill:#90CAF9,stroke:#1565C0
+    style S5 fill:#90CAF9,stroke:#1565C0
 ```
 
 ### Stage 1: Branch Creation (Always)
@@ -159,15 +159,15 @@ flowchart LR
     S4 -.->|optional| S7["/speckit.analyze"]
     S4 -.->|optional| S8["/speckit.taskstoissues"]
 
-    style S1 fill:#C8E6C9,stroke:#2E7D32,color:#000
-    style S2 fill:#C8E6C9,stroke:#2E7D32,color:#000
-    style S3 fill:#C8E6C9,stroke:#2E7D32,color:#000
-    style S4 fill:#C8E6C9,stroke:#2E7D32,color:#000
-    style S5 fill:#C8E6C9,stroke:#2E7D32,color:#000
-    style S6 fill:#C8E6C9,stroke:#2E7D32,color:#000
-    style S7 fill:#FFF9C4,stroke:#F9A825,color:#000
-    style S8 fill:#FFF9C4,stroke:#F9A825,color:#000
-    style S9 fill:#E1BEE7,stroke:#7B1FA2,color:#000
+    style S1 fill:#81C784,stroke:#2E7D32
+    style S2 fill:#81C784,stroke:#2E7D32
+    style S3 fill:#81C784,stroke:#2E7D32
+    style S4 fill:#81C784,stroke:#2E7D32
+    style S5 fill:#81C784,stroke:#2E7D32
+    style S6 fill:#81C784,stroke:#2E7D32
+    style S7 fill:#FFF176,stroke:#F9A825
+    style S8 fill:#FFF176,stroke:#F9A825
+    style S9 fill:#CE93D8,stroke:#7B1FA2
 ```
 
 ### Commands
@@ -261,10 +261,10 @@ flowchart TB
 
     INCEPTION --> CONSTRUCTION --> POSTIMPL --> OPERATIONS
 
-    style INCEPTION fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#000
-    style CONSTRUCTION fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#000
-    style POSTIMPL fill:#E1BEE7,stroke:#7B1FA2,stroke-width:2px,color:#000
-    style OPERATIONS fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#000
+    style INCEPTION fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style CONSTRUCTION fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style POSTIMPL fill:#CE93D8,stroke:#7B1FA2,stroke-width:2px
+    style OPERATIONS fill:#FFB74D,stroke:#E65100,stroke-width:2px
 ```
 
 ### Inception Phase

@@ -43,10 +43,10 @@ flowchart TB
     EB --> PAY
     EB --> DISPUTE
 
-    style API fill:#E3F2FD,stroke:#1565C0,color:#000
-    style SERVICES fill:#E8F5E9,stroke:#2E7D32,color:#000
-    style DATA fill:#FFF9C4,stroke:#F9A825,color:#000
-    style ASYNC fill:#FFE0B2,stroke:#E65100,color:#000
+    style API fill:#90CAF9,stroke:#1565C0
+    style SERVICES fill:#81C784,stroke:#2E7D32
+    style DATA fill:#FFF176,stroke:#F9A825
+    style ASYNC fill:#FFB74D,stroke:#E65100
 ```
 
 ## Data Flow

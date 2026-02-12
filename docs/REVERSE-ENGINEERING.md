@@ -38,11 +38,11 @@ flowchart LR
     ARTS --> REU["RE Update<br/><i>After each implementation</i>"]
     REU --> ARTS
 
-    style WD fill:#E3F2FD,stroke:#1565C0,color:#000
-    style RE fill:#C8E6C9,stroke:#2E7D32,color:#000
-    style ARTS fill:#FFF9C4,stroke:#F9A825,color:#000
-    style WF fill:#E3F2FD,stroke:#1565C0,color:#000
-    style REU fill:#FFE0B2,stroke:#E65100,color:#000
+    style WD fill:#90CAF9,stroke:#1565C0
+    style RE fill:#81C784,stroke:#2E7D32
+    style ARTS fill:#FFF176,stroke:#F9A825
+    style WF fill:#90CAF9,stroke:#1565C0
+    style REU fill:#FFB74D,stroke:#E65100
 ```
 
 ---

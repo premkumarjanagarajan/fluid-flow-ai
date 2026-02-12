@@ -53,10 +53,10 @@ flowchart TD
     B4 -->|Simple| SK1
     B4 -->|Complex| AD1
 
-    style ENTRY fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#000
-    style SPECKIT fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#000
-    style AIDLC fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#000
-    style Request fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px,color:#000
+    style ENTRY fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style SPECKIT fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style AIDLC fill:#FFB74D,stroke:#E65100,stroke-width:2px
+    style Request fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px
 ```
 
 ### Shared Entry Point

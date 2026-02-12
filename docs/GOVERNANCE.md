@@ -191,7 +191,7 @@ flowchart TB
     DEP --> SSR
     RP --> SSR
 
-    style SECURITY fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#000
+    style SECURITY fill:#EF9A9A,stroke:#C62828,stroke-width:2px
 ```
 
 ### ADR Enforcement (AWS AI-DLC)
