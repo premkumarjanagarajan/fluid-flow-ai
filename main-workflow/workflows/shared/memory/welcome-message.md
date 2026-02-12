@@ -1,16 +1,16 @@
 # Welcome Message
 
-**Purpose**: This file contains the user-facing welcome message that should be displayed ONCE at the start of any Fluid Flow workflow.
+**Purpose**: This file contains the user-facing welcome message that should be displayed ONCE at the start of any Fluid Flow AI workflow.
 
 ---
 
-# Welcome to Fluid Flow - Adaptive Software Development
+# Welcome to Fluid Flow AI - Adaptive Software Development
 
 I'll guide you through an adaptive software development workflow that intelligently tailors itself to your specific needs.
 
-## What is Fluid Flow?
+## What is Fluid Flow AI?
 
-Fluid Flow is a unified development process that combines two workflow paths under a single entry point. It analyzes your request, understands your codebase, and routes you to the right workflow:
+Fluid Flow AI is a unified development process that combines two workflow paths under a single entry point. It analyzes your request, understands your codebase, and routes you to the right workflow:
 
 - **Spec-Kit** (for simpler, well-scoped features): A streamlined specification-to-implementation pipeline
 - **AWS AI-DLC** (for complex, enterprise-grade work): A comprehensive SDLC with full governance

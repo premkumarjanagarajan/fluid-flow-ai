@@ -1,20 +1,20 @@
 # Architecture
 
-This document describes the internal architecture of Fluid Flow Pro -- how its components relate to each other, how data flows through the system, and the design decisions behind the framework.
+This document describes the internal architecture of Fluid Flow AI -- how its components relate to each other, how data flows through the system, and the design decisions behind the framework.
 
 ---
 
 ## System Overview
 
-Fluid Flow Pro is a layered workflow framework. At the top sits a Cursor IDE rule that intercepts every development request. That rule loads a unified entry point which orchestrates shared stages, then routes to one of two workflow engines. Both engines share a common governance backbone.
+Fluid Flow AI is a layered workflow framework. At the top sits a Cursor IDE rule that intercepts every development request. That rule loads a unified entry point which orchestrates shared stages, then routes to one of two workflow engines. Both engines share a common governance backbone.
 
 ```mermaid
 C4Context
-    title Fluid Flow Pro - System Context
+    title Fluid Flow AI - System Context
 
     Person(developer, "Developer", "Uses Cursor IDE to make development requests")
 
-    System(fluidflow, "Fluid Flow Pro", "Adaptive workflow framework for AI-assisted software development")
+    System(fluidflow, "Fluid Flow AI", "Adaptive workflow framework for AI-assisted software development")
 
     System_Ext(cursor, "Cursor IDE", "AI-powered code editor with rules engine")
     System_Ext(git, "Git", "Version control for branches and code")

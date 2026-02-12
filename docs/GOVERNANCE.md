@@ -1,6 +1,6 @@
 # Governance, Compliance & Security
 
-This document describes the governance framework that underpins both workflow paths in Fluid Flow Pro. It covers the AI operating contract, compliance standards, security rules, review gates, and audit requirements.
+This document describes the governance framework that underpins both workflow paths in Fluid Flow AI. It covers the AI operating contract, compliance standards, security rules, review gates, and audit requirements.
 
 ---
 
@@ -52,7 +52,7 @@ If the AI is not certain about something, it must say so explicitly. This preven
 
 ## Review Gates
 
-Fluid Flow Pro enforces two types of review gates at every critical stage.
+Fluid Flow AI enforces two types of review gates at every critical stage.
 
 ### AI Self-Review Gate
 
@@ -111,7 +111,7 @@ If repeated friction, workarounds, or conflicts are detected, the AI must highli
 
 ## ISO Compliance
 
-Fluid Flow Pro incorporates three ISO standards into its governance backbone.
+Fluid Flow AI incorporates three ISO standards into its governance backbone.
 
 ### ISO 27001 -- Information Security Management
 

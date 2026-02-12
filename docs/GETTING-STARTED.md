@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide walks you through setting up Fluid Flow Pro and running your first workflow.
+This guide walks you through setting up Fluid Flow AI and running your first workflow.
 
 ---
 
@@ -8,7 +8,7 @@ This guide walks you through setting up Fluid Flow Pro and running your first wo
 
 | Requirement | Details |
 |-------------|---------|
-| **Cursor IDE** | [cursor.sh](https://cursor.sh/) -- Fluid Flow Pro relies on Cursor's rules engine (`.mdc` files) |
+| **Cursor IDE** | [cursor.sh](https://cursor.sh/) -- Fluid Flow AI relies on Cursor's rules engine (`.mdc` files) |
 | **Git** | Any recent version. Must be initialised in your workspace (`git init`) |
 | **Bash** | Required for automation scripts. Available by default on macOS and Linux |
 | **AI Model Access** | Cursor must be configured with an AI model (e.g., Claude, GPT-4) |
@@ -17,13 +17,13 @@ This guide walks you through setting up Fluid Flow Pro and running your first wo
 
 ## Installation
 
-### 1. Copy Fluid Flow Pro into Your Project
+### 1. Copy Fluid Flow AI into Your Project
 
-Copy the `fluid-flow-pro/` directory into the root of your workspace:
+Copy the `fluid-flow-ai/` directory into the root of your workspace:
 
 ```
 your-project/
-├── fluid-flow-pro/
+├── fluid-flow-ai/
 │   ├── .cursor/
 │   │   └── rules/
 │   │       └── workflow.mdc
@@ -48,12 +48,12 @@ git add .
 git commit -m "Initial commit"
 ```
 
-Fluid Flow Pro creates numbered feature branches, so Git must be initialised.
+Fluid Flow AI creates numbered feature branches, so Git must be initialised.
 
 ### 4. Make Scripts Executable
 
 ```bash
-chmod +x fluid-flow-pro/main-workflow/workflows/spec-kit/scripts/bash/*.sh
+chmod +x fluid-flow-ai/main-workflow/workflows/spec-kit/scripts/bash/*.sh
 ```
 
 ---
@@ -82,7 +82,7 @@ If you do not see this banner, the workflow did not trigger. Check that `workflo
 
 ### Step 3: Welcome Message
 
-The AI displays a welcome message explaining the Fluid Flow process. This only appears once per workflow.
+The AI displays a welcome message explaining the Fluid Flow AI process. This only appears once per workflow.
 
 ### Step 4: Branch Creation
 

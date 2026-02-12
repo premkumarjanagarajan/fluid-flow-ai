@@ -1,6 +1,6 @@
 # Workflows
 
-This document provides a detailed reference for both workflow paths in Fluid Flow Pro: the **Shared Entry Point**, the **Spec-Kit** path, and the **AWS AI-DLC** path.
+This document provides a detailed reference for both workflow paths in Fluid Flow AI: the **Shared Entry Point**, the **Spec-Kit** path, and the **AWS AI-DLC** path.
 
 ---
 

@@ -1,6 +1,6 @@
 # Directory Structure
 
-This document describes the complete directory layout of Fluid Flow Pro -- both the framework's own files and the output artifacts it generates in your workspace.
+This document describes the complete directory layout of Fluid Flow AI -- both the framework's own files and the output artifacts it generates in your workspace.
 
 ---
 
@@ -14,10 +14,10 @@ This document describes the complete directory layout of Fluid Flow Pro -- both 
 
 ## Framework Structure
 
-The Fluid Flow Pro framework is organised into four main areas: the Cursor rule trigger, workflow definitions, shared resources, and automation scripts.
+The Fluid Flow AI framework is organised into four main areas: the Cursor rule trigger, workflow definitions, shared resources, and automation scripts.
 
 ```
-fluid-flow-pro/
+fluid-flow-ai/
 │
 ├── .cursor/
 │   └── rules/
@@ -187,7 +187,7 @@ fluid-flow-pro/
 
 ## Generated Artifacts
 
-When you use Fluid Flow Pro in a project, it generates artifacts in a `specs/` directory at your workspace root. Application code is always placed in the workspace root, never inside `specs/`.
+When you use Fluid Flow AI in a project, it generates artifacts in a `specs/` directory at your workspace root. Application code is always placed in the workspace root, never inside `specs/`.
 
 ### Feature-Level Artifacts
 
@@ -295,7 +295,7 @@ These rules are enforced throughout the workflow:
 | **Project-level artifacts** | `specs/_project/` | Shared across features |
 | **Reverse engineering** | `specs/_project/reverse-engineering/` | Run-once, updated post-implementation |
 | **Feature analytics** | `main-workflow/analytics/` | One file per feature, tracks timing and metrics |
-| **Framework files** | `fluid-flow-pro/` | Never modified by the workflow (except analytics) |
+| **Framework files** | `fluid-flow-ai/` | Never modified by the workflow (except analytics) |
 
 ### Examples
 
@@ -318,5 +318,5 @@ your-project/                         # Workspace root
 │       ├── state.md
 │       ├── audit.md
 │       └── spec.md
-└── fluid-flow-pro/                   # Framework (read-only at runtime)
+└── fluid-flow-ai/                   # Framework (read-only at runtime)
 ```

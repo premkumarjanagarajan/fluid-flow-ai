@@ -297,7 +297,7 @@ Create `specs/_project/reverse-engineering/test-coverage-analysis.md`:
 
 **Analysis Date**: [ISO timestamp]
 **Repository**: [repository-name]
-**Analyzer**: Fluid Flow - Test Coverage Analysis (Phase 1)
+**Analyzer**: Fluid Flow AI - Test Coverage Analysis (Phase 1)
 
 ## Executive Summary
 

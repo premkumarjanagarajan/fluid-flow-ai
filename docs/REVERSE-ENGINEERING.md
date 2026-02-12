@@ -1,6 +1,6 @@
 # Reverse Engineering
 
-This document describes the reverse engineering process in Fluid Flow Pro -- what it does, when it runs, and the artifacts it generates in `specs/_project/reverse-engineering/`.
+This document describes the reverse engineering process in Fluid Flow AI -- what it does, when it runs, and the artifacts it generates in `specs/_project/reverse-engineering/`.
 
 ---
 

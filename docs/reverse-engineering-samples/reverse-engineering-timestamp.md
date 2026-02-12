@@ -4,7 +4,7 @@
 |-------|-------|
 | Initial Analysis Date | 2026-02-09T10:30:00Z |
 | Last Updated | 2026-02-09T10:30:00Z |
-| Analyzer | Fluid Flow - Reverse Engineering |
+| Analyzer | Fluid Flow AI - Reverse Engineering |
 | Workspace | /Users/dev/projects/payment-platform |
 | Total Files Analyzed | 147 |
 
