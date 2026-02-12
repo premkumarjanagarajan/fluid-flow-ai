@@ -262,20 +262,20 @@ flowchart TD
     Q5 -->|Yes| A5Y
     Q5 -->|No| A5N
 
-    style Start fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px,color:#000
-    style Q1 fill:#BBDEFB,stroke:#1565C0,stroke-width:2px,color:#000
-    style Q2 fill:#BBDEFB,stroke:#1565C0,stroke-width:2px,color:#000
-    style Q2A fill:#BBDEFB,stroke:#1565C0,stroke-width:2px,color:#000
-    style Q3 fill:#BBDEFB,stroke:#1565C0,stroke-width:2px,color:#000
-    style Q4 fill:#BBDEFB,stroke:#1565C0,stroke-width:2px,color:#000
-    style Q5 fill:#BBDEFB,stroke:#1565C0,stroke-width:2px,color:#000
-    style A1Y fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px,color:#000
-    style A2Low fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px,color:#000
-    style A2High fill:#FFA726,stroke:#E65100,stroke-width:2px,color:#000
-    style A3Y fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px,color:#000
-    style A4Y fill:#FFA726,stroke:#E65100,stroke-width:2px,color:#000
-    style A5Y fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px,color:#000
-    style A5N fill:#FFA726,stroke:#E65100,stroke-width:2px,color:#000
+    style Start fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px
+    style Q1 fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style Q2 fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style Q2A fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style Q3 fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style Q4 fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style Q5 fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style A1Y fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style A2Low fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style A2High fill:#FFA726,stroke:#E65100,stroke-width:2px
+    style A3Y fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style A4Y fill:#FFA726,stroke:#E65100,stroke-width:2px
+    style A5Y fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style A5N fill:#FFA726,stroke:#E65100,stroke-width:2px
 ```
 
 ---

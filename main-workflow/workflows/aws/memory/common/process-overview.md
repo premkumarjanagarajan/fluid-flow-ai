@@ -81,24 +81,24 @@ flowchart TD
     REU -.-> OPS
     REU --> End(["Complete"])
     
-    style RA fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-    style WP fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-    style CG fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-    style BT fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-    style OPS fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
-    style REU fill:#42A5F5,stroke:#1565C0,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style Stories fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style AppDesign fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style UnitsG fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style FD fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style NFRA fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style NFRD fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style ID fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style INCEPTION fill:#BBDEFB,stroke:#1565C0,stroke-width:3px, color:#000
-    style CONSTRUCTION fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px, color:#000
-    style OPERATIONS fill:#FFF59D,stroke:#F57F17,stroke-width:3px, color:#000
-    style Start fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
-    style End fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
+    style RA fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+    style WP fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+    style CG fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+    style BT fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+    style OPS fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5
+    style REU fill:#42A5F5,stroke:#1565C0,stroke-width:3px,stroke-dasharray: 5 5
+    style Stories fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
+    style AppDesign fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
+    style UnitsG fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
+    style FD fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
+    style NFRA fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
+    style NFRD fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
+    style ID fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
+    style INCEPTION fill:#90CAF9,stroke:#1565C0,stroke-width:3px
+    style CONSTRUCTION fill:#81C784,stroke:#2E7D32,stroke-width:3px
+    style OPERATIONS fill:#FFF176,stroke:#F57F17,stroke-width:3px
+    style Start fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px
+    style End fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px
     
     linkStyle default stroke:#333,stroke-width:2px
 ```

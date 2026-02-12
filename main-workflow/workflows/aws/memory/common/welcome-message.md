@@ -53,11 +53,11 @@ flowchart TD
     C6 --> O1
     O1 --> Complete(["Complete"])
 
-    style INCEPTION fill:#BBDEFB,stroke:#1565C0,stroke-width:3px,color:#000
-    style CONSTRUCTION fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px,color:#000
-    style OPERATIONS fill:#FFF59D,stroke:#F57F17,stroke-width:3px,color:#000
-    style Request fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
-    style Complete fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
+    style INCEPTION fill:#90CAF9,stroke:#1565C0,stroke-width:3px
+    style CONSTRUCTION fill:#81C784,stroke:#2E7D32,stroke-width:3px
+    style OPERATIONS fill:#FFF176,stroke:#F57F17,stroke-width:3px
+    style Request fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px
+    style Complete fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px
 ```
 
 ### Phase Breakdown:
