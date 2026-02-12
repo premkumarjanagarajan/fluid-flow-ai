@@ -1,8 +1,8 @@
-# Fluid Flow Pro
+# Fluid Flow AI
 
 **Adaptive Software Development Workflow for AI-Assisted Engineering**
 
-Fluid Flow Pro is a structured, governance-aware workflow framework that guides AI-assisted software development from requirements through implementation. It provides a unified entry point where the developer chooses one of two workflow paths, while enforcing compliance, security, and quality standards at every stage.
+Fluid Flow AI is a structured, governance-aware workflow framework that guides AI-assisted software development from requirements through implementation. It provides a unified entry point where the developer chooses one of two workflow paths, while enforcing compliance, security, and quality standards at every stage.
 
 ---
 
@@ -97,8 +97,8 @@ A comprehensive SDLC with three phases and adaptive depth:
 
 ## Quick Start
 
-1. **Install in your project** -- Copy the `fluid-flow-pro/` directory into your workspace
-2. **Ensure Cursor IDE** -- Fluid Flow Pro is designed for [Cursor](https://cursor.sh/) with its rules engine
+1. **Install in your project** -- Copy the `fluid-flow-ai/` directory into your workspace
+2. **Ensure Cursor IDE** -- Fluid Flow AI is designed for [Cursor](https://cursor.sh/) with its rules engine
 3. **Start developing** -- Make any development request. The workflow rule triggers automatically before any code changes
 
 For detailed setup instructions, see [Getting Started](docs/GETTING-STARTED.md).
@@ -135,7 +135,7 @@ For detailed setup instructions, see [Getting Started](docs/GETTING-STARTED.md).
 
 ## Technology
 
-Fluid Flow Pro is a **process framework**, not a traditional software application. It is composed of:
+Fluid Flow AI is a **process framework**, not a traditional software application. It is composed of:
 
 - **Markdown** -- Workflow definitions, memory files, templates, and governance rules
 - **Cursor Rules** (`.mdc` files) -- IDE-level workflow enforcement

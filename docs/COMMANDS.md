@@ -1,6 +1,6 @@
 # Command Reference
 
-This document provides a complete reference for every command and stage in Fluid Flow Pro.
+This document provides a complete reference for every command and stage in Fluid Flow AI.
 
 ---
 

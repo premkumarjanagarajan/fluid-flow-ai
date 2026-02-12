@@ -1,6 +1,6 @@
 ---
 name: fluid-flow-rules
-description: Mandatory Fluid-Flow workflow gate — executes BEFORE any development work
+description: Mandatory Fluid-Flow AI workflow gate — executes BEFORE any development work
 alwaysApply: true
 ---
 
@@ -33,7 +33,7 @@ You MUST output this exact block to the user so they can verify the workflow tri
 
 ```
 ═══════════════════════════════════════════════════
-  FLUID-FLOW v6 WORKFLOW ACTIVATED
+  FLUID-FLOW AI v6 WORKFLOW ACTIVATED
   All development follows the unified lifecycle.
   Reading workflow instructions now...
 ═══════════════════════════════════════════════════

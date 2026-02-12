@@ -503,7 +503,7 @@ Create `specs/_project/reverse-engineering/reverse-engineering-timestamp.md`:
 
 **Initial Analysis Date**: [ISO timestamp]
 **Last Updated**: [ISO timestamp]
-**Analyzer**: Fluid Flow - Reverse Engineering
+**Analyzer**: Fluid Flow AI - Reverse Engineering
 **Workspace**: [Workspace path]
 **Total Files Analyzed**: [Number]
 
