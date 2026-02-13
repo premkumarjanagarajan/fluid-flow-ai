@@ -267,7 +267,7 @@ Based on the user's chosen workflow:
 
 ### Purpose
 
-Track workflow usage metrics across features to understand how much work is done using the workflow and how long each cycle takes. The analytics file is created at the entry point and updated after the final steps of each workflow.
+Track workflow usage metrics across features to understand how much work is done using the workflow and how long each cycle takes. The analytics file is created at the entry point, updated after each workflow phase/stage, and finalised with totals at the end of implementation.
 
 ### Analytics File Format
 
@@ -322,7 +322,7 @@ Create `main-workflow/analytics/{BRANCH_NAME}.md`:
 
 ### Analytics Update Instructions
 
-After the final step of each workflow, the analytics file **MUST** be updated by following the instructions in `../stages/analytics-update.md`. Both Spec-Kit and AWS AI-DLC reference this shared instruction file.
+After **every** completed workflow phase/stage, and again at implementation completion for final totals, the analytics file **MUST** be updated by following `../stages/analytics-update.md`. Both Spec-Kit and AWS AI-DLC reference this shared instruction file.
 
 ---
 

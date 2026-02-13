@@ -12,6 +12,13 @@ description: Execute the implementation plan by processing and executing all tas
 - Use the same verbatim logging rules: capture COMPLETE RAW INPUT, never summarize
 - ALWAYS append/edit audit.md, NEVER completely overwrite it
 
+## MANDATORY: Per-Phase Analytics Updates
+- Update `main-workflow/analytics/{BRANCH_NAME}.md` after each implementation phase completes.
+- Load `../../shared/stages/analytics-update.md` and execute:
+  - **Step 3: Phase Completion Update** after each phase (`Implement - Setup`, `Implement - Tests`, `Implement - Core`, `Implement - Integration`, `Implement - Polish`)
+  - **Step 3: Phase Completion Update** for overall stage `Implement` at command completion
+  - **Step 4: Final Totals Update** at the end of this command
+
 ## User Input
 
 ```text
@@ -129,6 +136,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - **Follow TDD approach**: Execute test tasks before their corresponding implementation tasks
    - **File-based coordination**: Tasks affecting the same files must run sequentially
    - **Validation checkpoints**: Verify each phase completion before proceeding
+   - **Analytics checkpoint**: After each completed phase, run **Step 3: Phase Completion Update** from `../../shared/stages/analytics-update.md` with the matching stage name (`Implement - Setup`, `Implement - Tests`, `Implement - Core`, `Implement - Integration`, `Implement - Polish`)
 
 8. Implementation execution rules:
    - **Setup first**: Initialize project structure, dependencies, configuration
@@ -152,21 +160,28 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Confirm the implementation follows the technical plan
    - Report final status with summary of completed work
 
-11. **Post-Implementation Documentation & Analytics**:
-   - After implementation is complete, inform the user that documentation updates (Test Coverage Delta, Reverse Engineering Update, and Analytics Finalisation) are handled by a **separate command**:
+11. **Final analytics update (MANDATORY)**:
+   - Update `main-workflow/analytics/{BRANCH_NAME}.md` by loading `../../shared/stages/analytics-update.md`
+   - Execute **Step 3: Phase Completion Update** for stage `Implement` with status `Completed`
+   - Execute **Step 4: Final Totals Update** to finalise metadata, metrics, timeline, and cycle summary by the end of implementation
+
+12. **Post-Implementation Documentation (separate command)**:
+   - After implementation is complete, inform the user that remaining project-level documentation updates are handled by:
      - `../../shared/commands/fluid-flow.update-docs.md`
    - Present to the user:
      ```markdown
      ## Implementation Complete
 
-     All tasks have been executed. To update project-level documentation and finalise analytics, run:
+     All tasks have been executed and analytics totals are now finalised at:
+     `main-workflow/analytics/{BRANCH_NAME}.md`
+
+     To update the remaining project-level documentation, run:
 
      **`/fluid-flow.update-docs`**
 
      This will:
      - Generate the Test Coverage Delta & Improvement Plan (if baseline exists)
      - Update all Reverse Engineering artifacts (if they exist)
-     - Finalise the feature analytics file
      ```
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.

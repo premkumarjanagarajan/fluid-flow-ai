@@ -184,7 +184,9 @@ flowchart LR
 | 8 | `/speckit.taskstoissues` | Optional | Converts tasks into GitHub issues with labels, dependencies, and acceptance criteria. |
 | 9 | `/speckit.constitution` | Optional | Create or update the project constitution from interactive or provided principle inputs, keeping dependent templates in sync. |
 
-> **Post-implementation**: After `/speckit.implement` completes, run **`/fluid-flow.update-docs`** (shared command) to update project documentation, reverse engineering artifacts, and finalise feature analytics.
+> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each Spec-Kit phase and finalised with totals by the end of `/speckit.implement`.
+>
+> **Post-implementation**: After `/speckit.implement` completes, run **`/fluid-flow.update-docs`** (shared command) to update the remaining project documentation and reverse engineering artifacts.
 
 ### Spec-Kit Artifacts
 
@@ -251,7 +253,7 @@ flowchart TB
         direction TB
         P1["Test Coverage Delta"]
         P2["RE Update"]
-        P3["Analytics Finalisation"]
+        P3["Analytics Reconciliation<br/><i>Idempotent</i>"]
         P1 --> P2 --> P3
     end
 
@@ -311,7 +313,8 @@ After the Construction phase completes, the following steps are handled by the s
 |------|-----------|-------------|
 | **Test Coverage Delta** | Conditional (baseline exists) | Compare coverage against Phase 1 baseline, generate improvement plan |
 | **RE Update** | Conditional (RE artifacts exist) | Incrementally update all reverse engineering artifacts |
-| **Analytics Finalisation** | Always | Update the feature analytics file with completion data and metrics |
+
+> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each AWS stage and finalised with totals by the end of Build and Test.
 
 ### Operations Phase
 
