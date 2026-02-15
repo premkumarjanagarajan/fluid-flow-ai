@@ -285,9 +285,37 @@ Based on the user's chosen workflow:
 
 1. Update `specs/{BRANCH_NAME}/state.md`: Set `**Workflow**: AWS AI-DLC`
 2. Log routing decision in audit.md
-3. The AWS workflow begins from **Requirements Analysis** (workspace detection and reverse engineering are already complete)
-4. Load the AWS workflow rules from `../../aws/commands/aws-rules.md`
-5. Execute the AWS workflow starting from Requirements Analysis
+3. **Initialize AWS AI-DLC analytics rows**: Read `main-workflow/analytics/{BRANCH_NAME}.md` and:
+   - Set `**Workflow**` in the Metadata section to `AWS AI-DLC`
+   - Append the AWS AI-DLC stage rows to the **Stage Timeline** table (after the entry point rows):
+
+     | Stage | Started | Completed | Duration | Status |
+     |-------|---------|-----------|----------|--------|
+     | Requirements Analysis | | | | Pending |
+     | Onboarding Presentations | | | | Pending |
+     | User Stories | | | | Pending |
+     | Workflow Planning | | | | Pending |
+     | Application Design | | | | Pending |
+     | Units Generation | | | | Pending |
+     | Functional Design | | | | Pending |
+     | NFR Requirements | | | | Pending |
+     | NFR Design | | | | Pending |
+     | Infrastructure Design | | | | Pending |
+     | Code Generation | | | | Pending |
+     | Onboarding Update | | | | Pending |
+     | Build and Test | | | | Pending |
+
+   - Update the **Effort Breakdown** table to include AWS AI-DLC phases:
+
+     | Phase | Interactions | Approvals | Duration |
+     |-------|-------------|-----------|----------|
+     | Entry Point | [count] | [count] | [duration] |
+     | Inception | 0 | 0 | |
+     | Construction | 0 | 0 | |
+
+4. The AWS workflow begins from **Requirements Analysis** (workspace detection and reverse engineering are already complete)
+5. Load the AWS workflow rules from `../../aws/commands/aws-rules.md`
+6. Execute the AWS workflow starting from Requirements Analysis
 
 ---
 

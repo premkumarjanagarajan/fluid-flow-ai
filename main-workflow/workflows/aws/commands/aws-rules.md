@@ -125,7 +125,8 @@ The welcome message is displayed by the shared entry point (fluid-flow-rules.md)
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this phase in audit.md
-2. Load all steps from `../inception/requirements-analysis.md`
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Requirements Analysis`
+3. Load all steps from `../inception/requirements-analysis.md`
 3. Execute requirements analysis:
    - Load reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
    - Analyze user request (intent analysis)
@@ -136,6 +137,7 @@ The welcome message is displayed by the shared entry point (fluid-flow-rules.md)
 4. Execute at appropriate depth (minimal/standard/comprehensive)
 5. **Wait for Explicit Approval**: Follow approval format from requirements-analysis.md detailed steps - DO NOT PROCEED until user confirms
 6. **MANDATORY**: Log user's response in audit.md with complete raw input
+7. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Requirements Analysis`
 
 
 ## Onboarding Presentations (CONDITIONAL)
@@ -152,13 +154,17 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log start of onboarding presentations generation in audit.md
-2. Load all steps from `../inception/onboarding-presentations.md`
-3. Generate the two sli-dev sources:
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Onboarding Presentations`
+3. Load all steps from `../inception/onboarding-presentations.md`
+4. Generate the two sli-dev sources:
    - `specs/{BRANCH_NAME}/inception/onboarding/engineers/onboarding-engineers.md`
    - `specs/{BRANCH_NAME}/inception/onboarding/product/onboarding-product.md`
-4. **MANDATORY**: Validate content before file creation per `../../shared/memory/content-validation.md`
-5. **Wait for Explicit Approval**: Present completion message (see onboarding-presentations.md for message format) - DO NOT PROCEED until user confirms
-6. **MANDATORY**: Log user's response in audit.md with complete raw input
+5. **MANDATORY**: Validate content before file creation per `../../shared/memory/content-validation.md`
+6. **Wait for Explicit Approval**: Present completion message (see onboarding-presentations.md for message format) - DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Onboarding Presentations`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Onboarding Presentations`
 
 ## User Stories (CONDITIONAL)
 
@@ -219,34 +225,40 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this phase in audit.md
-2. Load all steps from `../inception/user-stories.md`
-3. **MANDATORY**: Perform intelligent assessment (Step 1 in user-stories.md) to validate user stories are needed
-4. Load reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
-5. If Requirements exist, reference them when creating stories
-6. Execute at appropriate depth (minimal/standard/comprehensive)
-7. **PART 1 - Planning**: Create story plan with questions, wait for user answers, analyze for ambiguities, get approval
-8. **PART 2 - Generation**: Execute approved plan to generate stories and personas
-9. **Wait for Explicit Approval**: Follow approval format from user-stories.md detailed steps - DO NOT PROCEED until user confirms
-10. **MANDATORY**: Log user's response in audit.md with complete raw input
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = User Stories`
+3. Load all steps from `../inception/user-stories.md`
+4. **MANDATORY**: Perform intelligent assessment (Step 1 in user-stories.md) to validate user stories are needed
+5. Load reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
+6. If Requirements exist, reference them when creating stories
+7. Execute at appropriate depth (minimal/standard/comprehensive)
+8. **PART 1 - Planning**: Create story plan with questions, wait for user answers, analyze for ambiguities, get approval
+9. **PART 2 - Generation**: Execute approved plan to generate stories and personas
+10. **Wait for Explicit Approval**: Follow approval format from user-stories.md detailed steps - DO NOT PROCEED until user confirms
+11. **MANDATORY**: Log user's response in audit.md with complete raw input
+12. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = User Stories`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = User Stories`
 
 ## Workflow Planning (ALWAYS EXECUTE)
 
 1. **MANDATORY**: Log any user input during this phase in audit.md
-2. Load all steps from `../inception/workflow-planning.md`
-3. **MANDATORY**: Load content validation rules from `../../shared/memory/content-validation.md`
-4. Load all prior context:
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Workflow Planning`
+3. Load all steps from `../inception/workflow-planning.md`
+4. **MANDATORY**: Load content validation rules from `../../shared/memory/content-validation.md`
+5. Load all prior context:
    - Reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
    - Intent analysis
    - Requirements (if executed)
    - User stories (if executed)
-5. Execute workflow planning:
+6. Execute workflow planning:
    - Determine which phases to execute
    - Determine depth level for each phase
    - Create multi-package change sequence (if brownfield)
    - Generate workflow visualization (VALIDATE Mermaid syntax before writing)
-6. **MANDATORY**: Validate all content before file creation per content-validation.md rules
-7. **Wait for Explicit Approval**: Present recommendations using language from workflow-planning.md Step 9, emphasizing user control to override recommendations - DO NOT PROCEED until user confirms
-8. **MANDATORY**: Log user's response in audit.md with complete raw input
+7. **MANDATORY**: Validate all content before file creation per content-validation.md rules
+8. **Wait for Explicit Approval**: Present recommendations using language from workflow-planning.md Step 9, emphasizing user control to override recommendations - DO NOT PROCEED until user confirms
+9. **MANDATORY**: Log user's response in audit.md with complete raw input
+10. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Workflow Planning`
 
 ## Application Design (CONDITIONAL)
 
@@ -263,12 +275,16 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this phase in audit.md
-2. Load all steps from `../inception/application-design.md`
-3. Load an follow the instructions from `../inception/adrs-technical-principles.md`
-4. Load reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
-5. Execute at appropriate depth (minimal/standard/comprehensive)
-6. **Wait for Explicit Approval**: Present detailed completion message (see application-design.md for message format) - DO NOT PROCEED until user confirms
-7. **MANDATORY**: Log user's response in audit.md with complete raw input
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Application Design`
+3. Load all steps from `../inception/application-design.md`
+4. Load an follow the instructions from `../inception/adrs-technical-principles.md`
+5. Load reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
+6. Execute at appropriate depth (minimal/standard/comprehensive)
+7. **Wait for Explicit Approval**: Present detailed completion message (see application-design.md for message format) - DO NOT PROCEED until user confirms
+8. **MANDATORY**: Log user's response in audit.md with complete raw input
+9. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Application Design`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Application Design`
 
 ## Units Generation (CONDITIONAL)
 
@@ -284,11 +300,15 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this phase in audit.md
-2. Load all steps from `../inception/units-generation.md`
-3. Load reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
-4. Execute at appropriate depth (minimal/standard/comprehensive)
-5. **Wait for Explicit Approval**: Present detailed completion message (see units-generation.md for message format) - DO NOT PROCEED until user confirms
-6. **MANDATORY**: Log user's response in audit.md with complete raw input
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Units Generation`
+3. Load all steps from `../inception/units-generation.md`
+4. Load reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
+5. Execute at appropriate depth (minimal/standard/comprehensive)
+6. **Wait for Explicit Approval**: Present detailed completion message (see units-generation.md for message format) - DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Units Generation`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Units Generation`
 
 ---
 
@@ -329,11 +349,15 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this stage in audit.md
-2. Load all steps from `../construction/functional-design.md`
-3. Execute functional design for this unit
-4. **MANDATORY**: Present standardized 2-option completion message as defined in functional-design.md - DO NOT use emergent 3-option behavior
-5. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
-6. **MANDATORY**: Log user's response in audit.md with complete raw input
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Functional Design`
+3. Load all steps from `../construction/functional-design.md`
+4. Execute functional design for this unit
+5. **MANDATORY**: Present standardized 2-option completion message as defined in functional-design.md - DO NOT use emergent 3-option behavior
+6. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Functional Design`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Functional Design`
 
 ### NFR Requirements (CONDITIONAL, per-unit)
 
@@ -349,11 +373,15 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this stage in audit.md
-2. Load all steps from `../construction/nfr-requirements.md`
-3. Execute NFR assessment for this unit
-4. **MANDATORY**: Present standardized 2-option completion message as defined in nfr-requirements.md - DO NOT use emergent behavior
-5. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
-6. **MANDATORY**: Log user's response in audit.md with complete raw input
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = NFR Requirements`
+3. Load all steps from `../construction/nfr-requirements.md`
+4. Execute NFR assessment for this unit
+5. **MANDATORY**: Present standardized 2-option completion message as defined in nfr-requirements.md - DO NOT use emergent behavior
+6. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = NFR Requirements`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = NFR Requirements`
 
 ### NFR Design (CONDITIONAL, per-unit)
 
@@ -367,11 +395,15 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this stage in audit.md
-2. Load all steps from `../construction/nfr-design.md`
-3. Execute NFR design for this unit
-4. **MANDATORY**: Present standardized 2-option completion message as defined in nfr-design.md - DO NOT use emergent behavior
-5. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
-6. **MANDATORY**: Log user's response in audit.md with complete raw input
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = NFR Design`
+3. Load all steps from `../construction/nfr-design.md`
+4. Execute NFR design for this unit
+5. **MANDATORY**: Present standardized 2-option completion message as defined in nfr-design.md - DO NOT use emergent behavior
+6. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = NFR Design`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = NFR Design`
 
 ### Infrastructure Design (CONDITIONAL, per-unit)
 
@@ -386,11 +418,15 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this stage in audit.md
-2. Load all steps from `../construction/infrastructure-design.md`
-3. Execute infrastructure design for this unit
-4. **MANDATORY**: Present standardized 2-option completion message as defined in infrastructure-design.md - DO NOT use emergent behavior
-5. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
-6. **MANDATORY**: Log user's response in audit.md with complete raw input
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Infrastructure Design`
+3. Load all steps from `../construction/infrastructure-design.md`
+4. Execute infrastructure design for this unit
+5. **MANDATORY**: Present standardized 2-option completion message as defined in infrastructure-design.md - DO NOT use emergent behavior
+6. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Infrastructure Design`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Infrastructure Design`
 
 ### Code Generation (ALWAYS EXECUTE, per-unit)
 
@@ -402,12 +438,14 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this stage in audit.md
-2. Load all steps from `../construction/code-generation.md`
-3. **PART 1 - Planning**: Create code generation plan with checkboxes, get user approval
-4. **PART 2 - Generation**: Execute approved plan to generate code for this unit
-5. **MANDATORY**: Present standardized 2-option completion message as defined in code-generation.md - DO NOT use emergent behavior
-6. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
-7. **MANDATORY**: Log user's response in audit.md with complete raw input
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Code Generation`
+3. Load all steps from `../construction/code-generation.md`
+4. **PART 1 - Planning**: Create code generation plan with checkboxes, get user approval
+5. **PART 2 - Generation**: Execute approved plan to generate code for this unit
+6. **MANDATORY**: Present standardized 2-option completion message as defined in code-generation.md - DO NOT use emergent behavior
+7. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
+8. **MANDATORY**: Log user's response in audit.md with complete raw input
+9. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Code Generation`
 
 
 ### Onboarding Update (CONDITIONAL, per-unit)
@@ -423,32 +461,38 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 
 **Execution**:
 1. **MANDATORY**: Log any user input during this stage in audit.md
-2. Load all steps from `../construction/onboarding-update.md`
-3. Update the feature registry entry for this unit:
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Onboarding Update`
+3. Load all steps from `../construction/onboarding-update.md`
+4. Update the feature registry entry for this unit:
    - `specs/{BRANCH_NAME}/features/features-registry.md`
-4. Update both onboarding presentations:
+5. Update both onboarding presentations:
    - `specs/{BRANCH_NAME}/inception/onboarding/engineers/onboarding-engineers.md`
    - `specs/{BRANCH_NAME}/inception/onboarding/product/onboarding-product.md`
-5. Run sli-dev build (if configured in the repo) and validate outputs
-6. **MANDATORY**: Present standardized 2-option completion message as defined in onboarding-update.md - DO NOT use emergent behavior
-7. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
-8. **MANDATORY**: Log user's response in audit.md with complete raw input
+6. Run sli-dev build (if configured in the repo) and validate outputs
+7. **MANDATORY**: Present standardized 2-option completion message as defined in onboarding-update.md - DO NOT use emergent behavior
+8. **Wait for Explicit Approval**: User must choose between "Request Changes" or "Continue to Next Stage" - DO NOT PROCEED until user confirms
+9. **MANDATORY**: Log user's response in audit.md with complete raw input
+10. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Onboarding Update`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Onboarding Update`
 
 ---
 
 ## Build and Test (ALWAYS EXECUTE)
 
 1. **MANDATORY**: Log any user input during this phase in audit.md
-2. Load all steps from `../construction/build-and-test.md`
-3. Generate comprehensive build and test instructions:
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Build and Test`
+3. Load all steps from `../construction/build-and-test.md`
+4. Generate comprehensive build and test instructions:
    - Build instructions for all units
    - Unit test execution instructions
    - Integration test instructions (test interactions between units)
    - Performance test instructions (if applicable)
    - Additional test instructions as needed (contract tests, security tests, e2e tests)
-4. Create instruction files in build-and-test/ subdirectory: build-instructions.md, unit-test-instructions.md, integration-test-instructions.md, performance-test-instructions.md, build-and-test-summary.md
-5. **Wait for Explicit Approval**: Ask: "**Build and test instructions complete. Ready to proceed to Operations stage?**" - DO NOT PROCEED until user confirms
-6. **MANDATORY**: Log user's response in audit.md with complete raw input
+5. Create instruction files in build-and-test/ subdirectory: build-instructions.md, unit-test-instructions.md, integration-test-instructions.md, performance-test-instructions.md, build-and-test-summary.md
+6. **Wait for Explicit Approval**: Ask: "**Build and test instructions complete. Ready to proceed to Operations stage?**" - DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Build and Test`
 
 ## Post-Implementation Documentation & Analytics (SEPARATE COMMAND)
 

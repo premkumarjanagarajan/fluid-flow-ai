@@ -39,6 +39,36 @@ Each calling command MUST provide:
 | `/speckit.checklist` | Checklist |
 | `/speckit.implement` | Implement |
 
+### Stage Name Mapping (AWS AI-DLC)
+
+**Inception Phase:**
+
+| Stage | Stage Name |
+|-------|-----------|
+| Requirements Analysis | Requirements Analysis |
+| Onboarding Presentations | Onboarding Presentations |
+| User Stories | User Stories |
+| Workflow Planning | Workflow Planning |
+| Application Design | Application Design |
+| Units Generation | Units Generation |
+
+**Construction Phase (per-unit):**
+
+| Stage | Stage Name |
+|-------|-----------|
+| Functional Design | Functional Design |
+| NFR Requirements | NFR Requirements |
+| NFR Design | NFR Design |
+| Infrastructure Design | Infrastructure Design |
+| Code Generation | Code Generation |
+| Onboarding Update | Onboarding Update |
+
+**Construction Phase (post-units):**
+
+| Stage | Stage Name |
+|-------|-----------|
+| Build and Test | Build and Test |
+
 ---
 
 ## Step 1: Record Stage Start
