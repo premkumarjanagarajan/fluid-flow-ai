@@ -114,6 +114,17 @@ After all steps are complete:
 **Feature analytics**: `main-workflow/analytics/{BRANCH_NAME}.md`
 
 All project-level documentation has been updated to reflect the implementation changes.
+
+---
+
+### Recommended: Run Workflow Retrospective
+
+To generate continuous improvement insights, run the **fluid-flow.retrospective** command
+now (in this same chat session) to analyse the workflow and generate actionable improvement items.
+
+This produces:
+- A feature retrospective at `specs/{BRANCH_NAME}/retrospective.md`
+- Concrete improvement items in the backlog at `main-workflow/retrospectives/improvement-backlog.md`
 ```
 
 ---
