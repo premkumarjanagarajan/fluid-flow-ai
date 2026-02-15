@@ -89,8 +89,8 @@ The AI displays a welcome message explaining the Fluid Flow AI process. This onl
 The AI creates a numbered feature branch:
 
 ```
-Branch created: 001-add-user-auth
-Feature directory: specs/001-add-user-auth/
+Branch created: 001-proj-1234-add-user-auth
+Feature directory: specs/001-proj-1234-add-user-auth/
 ```
 
 ### Step 5: Workspace Detection

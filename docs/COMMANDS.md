@@ -478,7 +478,7 @@ Located in `main-workflow/workflows/spec-kit/scripts/bash/`:
 
 **Usage**:
 ```bash
-./create-new-feature.sh --json --short-name "add-user-auth" "Add user authentication with JWT"
+./create-new-feature.sh --json --jira-ticket "PROJ-1234" --short-name "add-user-auth" "Add user authentication with JWT"
 ```
 
 **Flags**:
@@ -486,13 +486,15 @@ Located in `main-workflow/workflows/spec-kit/scripts/bash/`:
 |------|-------------|
 | `--json` | Output structured JSON for programmatic parsing |
 | `--short-name "<name>"` | Specify the branch short name |
+| `--jira-ticket "<ticket>"` | Include JIRA ticket in branch name (e.g., `PROJ-1234`) |
 
 **Output** (JSON mode):
 ```json
 {
-  "BRANCH_NAME": "001-add-user-auth",
-  "SPEC_FILE": "specs/001-add-user-auth/spec.md",
-  "FEATURE_NUM": "001"
+  "BRANCH_NAME": "001-proj-1234-add-user-auth",
+  "SPEC_FILE": "specs/001-proj-1234-add-user-auth/spec.md",
+  "FEATURE_NUM": "001",
+  "JIRA_TICKET": "PROJ-1234"
 }
 ```
 

@@ -5,6 +5,7 @@ set -e
 JSON_MODE=false
 SHORT_NAME=""
 BRANCH_NUMBER=""
+JIRA_TICKET=""
 WITH_STATE=false
 ARGS=()
 i=1
@@ -28,6 +29,19 @@ while [ $i -le $# ]; do
             fi
             SHORT_NAME="$next_arg"
             ;;
+        --jira-ticket)
+            if [ $((i + 1)) -gt $# ]; then
+                echo 'Error: --jira-ticket requires a value' >&2
+                exit 1
+            fi
+            i=$((i + 1))
+            next_arg="${!i}"
+            if [[ "$next_arg" == --* ]]; then
+                echo 'Error: --jira-ticket requires a value' >&2
+                exit 1
+            fi
+            JIRA_TICKET="$next_arg"
+            ;;
         --number)
             if [ $((i + 1)) -gt $# ]; then
                 echo 'Error: --number requires a value' >&2
@@ -45,18 +59,23 @@ while [ $i -le $# ]; do
             WITH_STATE=true
             ;;
         --help|-h) 
-            echo "Usage: $0 [--json] [--short-name <name>] [--number N] [--with-state] <feature_description>"
+            echo "Usage: $0 [--json] [--short-name <name>] [--jira-ticket <ticket>] [--number N] [--with-state] <feature_description>"
             echo ""
             echo "Options:"
-            echo "  --json              Output in JSON format"
-            echo "  --short-name <name> Provide a custom short name (2-4 words) for the branch"
-            echo "  --number N          Specify branch number manually (overrides auto-detection)"
-            echo "  --with-state        Create state.md and audit.md in the feature directory"
-            echo "  --help, -h          Show this help message"
+            echo "  --json                  Output in JSON format"
+            echo "  --short-name <name>     Provide a custom short name (2-4 words) for the branch"
+            echo "  --jira-ticket <ticket>  Include JIRA ticket in branch name (e.g., PROJ-1234)"
+            echo "  --number N              Specify branch number manually (overrides auto-detection)"
+            echo "  --with-state            Create state.md and audit.md in the feature directory"
+            echo "  --help, -h              Show this help message"
+            echo ""
+            echo "Branch naming pattern: ###-jira-ticket-short-description (e.g., 001-proj-1234-add-user-auth)"
+            echo "When --jira-ticket is omitted: ###-short-description (e.g., 001-add-user-auth)"
             echo ""
             echo "Examples:"
-            echo "  $0 'Add user authentication system' --short-name 'user-auth'"
-            echo "  $0 'Implement OAuth2 integration for API' --number 5"
+            echo "  $0 --jira-ticket 'PROJ-1234' --short-name 'user-auth' 'Add user authentication system'"
+            echo "  $0 --jira-ticket 'PROJ-5678' 'Implement OAuth2 integration for API'"
+            echo "  $0 'Quick fix for typo' --short-name 'fix-typo'"
             exit 0
             ;;
         *) 
@@ -68,7 +87,7 @@ done
 
 FEATURE_DESCRIPTION="${ARGS[*]}"
 if [ -z "$FEATURE_DESCRIPTION" ]; then
-    echo "Usage: $0 [--json] [--short-name <name>] [--number N] <feature_description>" >&2
+    echo "Usage: $0 [--json] [--short-name <name>] [--jira-ticket <ticket>] [--number N] <feature_description>" >&2
     exit 1
 fi
 
@@ -253,15 +272,27 @@ fi
 
 # Force base-10 interpretation to prevent octal conversion (e.g., 010 → 8 in octal, but should be 10 in decimal)
 FEATURE_NUM=$(printf "%03d" "$((10#$BRANCH_NUMBER))")
-BRANCH_NAME="${FEATURE_NUM}-${BRANCH_SUFFIX}"
+
+# Build branch name: ###-jira-ticket-short-description (or ###-short-description if no JIRA ticket)
+if [ -n "$JIRA_TICKET" ]; then
+    JIRA_CLEAN=$(echo "$JIRA_TICKET" | tr '[:upper:]' '[:lower:]')
+    BRANCH_NAME="${FEATURE_NUM}-${JIRA_CLEAN}-${BRANCH_SUFFIX}"
+else
+    BRANCH_NAME="${FEATURE_NUM}-${BRANCH_SUFFIX}"
+fi
 
 # GitHub enforces a 244-byte limit on branch names
 # Validate and truncate if necessary
 MAX_BRANCH_LENGTH=244
 if [ ${#BRANCH_NAME} -gt $MAX_BRANCH_LENGTH ]; then
     # Calculate how much we need to trim from suffix
-    # Account for: feature number (3) + hyphen (1) = 4 chars
-    MAX_SUFFIX_LENGTH=$((MAX_BRANCH_LENGTH - 4))
+    if [ -n "$JIRA_TICKET" ]; then
+        # Account for: feature number (3) + hyphen (1) + jira ticket + hyphen (1)
+        MAX_SUFFIX_LENGTH=$((MAX_BRANCH_LENGTH - 5 - ${#JIRA_CLEAN}))
+    else
+        # Account for: feature number (3) + hyphen (1) = 4 chars
+        MAX_SUFFIX_LENGTH=$((MAX_BRANCH_LENGTH - 4))
+    fi
     
     # Truncate suffix at word boundary if possible
     TRUNCATED_SUFFIX=$(echo "$BRANCH_SUFFIX" | cut -c1-$MAX_SUFFIX_LENGTH)
@@ -269,7 +300,11 @@ if [ ${#BRANCH_NAME} -gt $MAX_BRANCH_LENGTH ]; then
     TRUNCATED_SUFFIX=$(echo "$TRUNCATED_SUFFIX" | sed 's/-$//')
     
     ORIGINAL_BRANCH_NAME="$BRANCH_NAME"
-    BRANCH_NAME="${FEATURE_NUM}-${TRUNCATED_SUFFIX}"
+    if [ -n "$JIRA_TICKET" ]; then
+        BRANCH_NAME="${FEATURE_NUM}-${JIRA_CLEAN}-${TRUNCATED_SUFFIX}"
+    else
+        BRANCH_NAME="${FEATURE_NUM}-${TRUNCATED_SUFFIX}"
+    fi
     
     >&2 echo "[specify] Warning: Branch name exceeded GitHub's 244-byte limit"
     >&2 echo "[specify] Original: $ORIGINAL_BRANCH_NAME (${#ORIGINAL_BRANCH_NAME} bytes)"
@@ -348,10 +383,11 @@ fi
 export SPECIFY_FEATURE="$BRANCH_NAME"
 
 if $JSON_MODE; then
-    printf '{"BRANCH_NAME":"%s","SPEC_FILE":"%s","FEATURE_NUM":"%s"}\n' "$BRANCH_NAME" "$SPEC_FILE" "$FEATURE_NUM"
+    printf '{"BRANCH_NAME":"%s","SPEC_FILE":"%s","FEATURE_NUM":"%s","JIRA_TICKET":"%s"}\n' "$BRANCH_NAME" "$SPEC_FILE" "$FEATURE_NUM" "$JIRA_TICKET"
 else
     echo "BRANCH_NAME: $BRANCH_NAME"
     echo "SPEC_FILE: $SPEC_FILE"
     echo "FEATURE_NUM: $FEATURE_NUM"
+    echo "JIRA_TICKET: $JIRA_TICKET"
     echo "SPECIFY_FEATURE environment variable set to: $BRANCH_NAME"
 fi

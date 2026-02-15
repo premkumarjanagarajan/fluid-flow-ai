@@ -26,7 +26,7 @@ flowchart TD
     Request(["Development Request"])
 
     subgraph ENTRY["SHARED ENTRY POINT"]
-        B1["1. Branch Creation<br/><code>###-feature-name</code>"]
+        B1["1. Branch Creation<br/><code>###-jira-ticket-short-desc</code>"]
         B2["2. Workspace Detection"]
         B3["3. Reverse Engineering<br/><i>brownfield only, run-once</i>"]
         B4["4. Workflow Selection<br/><i>user chooses</i>"]
@@ -65,7 +65,7 @@ flowchart TD
 
 ### Shared Entry Point (All Requests)
 
-1. **Branch Creation** -- A numbered feature branch (`001-add-user-auth`) and dedicated feature directory are created
+1. **Branch Creation** -- A numbered feature branch (`001-proj-1234-add-user-auth`) and dedicated feature directory are created
 2. **Workspace Detection** -- The workspace is scanned to determine if the project is greenfield or brownfield
 3. **Reverse Engineering** -- For brownfield projects, the existing codebase is analysed once to produce architecture documentation (C4 model, component inventory, API docs, etc.)
 4. **Workflow Selection** -- The user is presented with both workflow options and directly chooses which one to follow

@@ -25,7 +25,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 ## Outline
 
 **IMPORTANT**: This command is invoked AFTER the shared entry point (fluid-flow-rules.md) has already:
-- Created the feature branch (`###-feature-name`)
+- Created the feature branch (`###-jira-ticket-short-description`)
 - Created the feature directory (`specs/{BRANCH_NAME}/`)
 - Initialized `state.md` and `audit.md`
 - Run Workspace Detection and (optionally) Reverse Engineering

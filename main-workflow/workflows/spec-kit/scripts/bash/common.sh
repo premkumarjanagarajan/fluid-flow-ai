@@ -74,7 +74,7 @@ check_feature_branch() {
 
     if [[ ! "$branch" =~ ^[0-9]{3}- ]]; then
         echo "ERROR: Not on a feature branch. Current branch: $branch" >&2
-        echo "Feature branches should be named like: 001-feature-name" >&2
+        echo "Feature branches should be named like: 001-proj-1234-feature-name (or 001-feature-name if no JIRA ticket)" >&2
         return 1
     fi
 

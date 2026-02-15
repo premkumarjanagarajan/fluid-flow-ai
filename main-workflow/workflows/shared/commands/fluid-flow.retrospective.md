@@ -41,7 +41,7 @@ Before executing, verify:
 
 If BRANCH_NAME is not provided or available from conversation context:
 1. Check current git branch: run `git branch --show-current`
-2. If on a feature branch (matches `###-*` pattern), use that as BRANCH_NAME
+2. If on a feature branch (matches `###-*` pattern, e.g., `001-proj-1234-add-user-auth` or `001-add-user-auth`), use that as BRANCH_NAME
 3. If not on a feature branch, list recent feature directories in `specs/` and ask the user to confirm which feature to retrospect
 
 ---
