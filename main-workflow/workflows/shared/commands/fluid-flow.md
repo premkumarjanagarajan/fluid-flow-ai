@@ -242,7 +242,29 @@ Based on the user's chosen workflow:
 
 1. Update `specs/{BRANCH_NAME}/state.md`: Set `**Workflow**: Spec-Kit`
 2. Log routing decision in audit.md
-3. Inform the user:
+3. **Initialize Spec-Kit analytics rows**: Read `main-workflow/analytics/{BRANCH_NAME}.md` and:
+   - Set `**Workflow**` in the Metadata section to `Spec-Kit`
+   - Append the Spec-Kit stage rows to the **Stage Timeline** table (after the entry point rows):
+
+     | Stage | Started | Completed | Duration | Status |
+     |-------|---------|-----------|----------|--------|
+     | Specify | | | | Pending |
+     | Clarify | | | | Pending |
+     | Plan | | | | Pending |
+     | Tasks | | | | Pending |
+     | Checklist | | | | Pending |
+     | Implement | | | | Pending |
+
+   - Update the **Effort Breakdown** table to include Spec-Kit phases:
+
+     | Phase | Interactions | Approvals | Duration |
+     |-------|-------------|-----------|----------|
+     | Entry Point | [count] | [count] | [duration] |
+     | Specification | 0 | 0 | |
+     | Planning | 0 | 0 | |
+     | Implementation | 0 | 0 | |
+
+4. Inform the user:
    ```markdown
    ## Workflow: Spec-Kit
 

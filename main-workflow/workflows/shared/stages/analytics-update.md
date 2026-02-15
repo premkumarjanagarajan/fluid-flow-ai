@@ -22,7 +22,7 @@ This data enables understanding of:
 main-workflow/analytics/{BRANCH_NAME}.md
 ```
 
-This file is created during the entry point (Stage 1: Branch Creation) and updated here after the workflow completes.
+This file is created during the entry point (Stage 1: Branch Creation), updated incrementally after each workflow step (via `analytics-step-update.md`), and finalised here after the workflow completes. The per-step updates provide real-time visibility; this finalisation reconciles all data and calculates authoritative totals.
 
 ---
 
@@ -79,6 +79,8 @@ Collect the following data from the feature directory:
 ---
 
 ## Step 4: Update the Analytics File
+
+**Note**: Per-step analytics updates (via `analytics-step-update.md`) may have already populated some Stage Timeline rows and Work Metrics during the workflow. This finalisation step reconciles and overwrites with authoritative values calculated from the audit trail.
 
 Update `main-workflow/analytics/{BRANCH_NAME}.md` with all gathered data:
 
