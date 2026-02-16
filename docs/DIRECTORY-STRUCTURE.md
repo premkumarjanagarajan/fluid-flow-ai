@@ -194,7 +194,7 @@ When you use Fluid Flow AI in a project, it generates artifacts in a `specs/` di
 Each feature gets its own directory under `specs/`:
 
 ```
-specs/{BRANCH_NAME}/                              # e.g., specs/001-add-user-auth/
+specs/{BRANCH_NAME}/                              # e.g., specs/001-proj-1234-add-user-auth/
 │
 ├── state.md                                      # Progress tracking (includes JIRA ticket)
 ├── audit.md                                      # Full audit trail (includes JIRA ticket)
@@ -275,8 +275,8 @@ Each feature gets an analytics file in the framework's analytics directory:
 ```
 main-workflow/analytics/
 │
-├── 001-add-user-auth.md                          # Analytics for feature 001
-├── 002-fix-payment-bug.md                        # Analytics for feature 002
+├── 001-proj-1234-add-user-auth.md                # Analytics for feature 001
+├── 002-proj-5678-fix-payment-bug.md              # Analytics for feature 002
 └── ...                                           # One file per feature
 ```
 

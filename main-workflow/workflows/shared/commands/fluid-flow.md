@@ -54,27 +54,33 @@ The shared entry point orchestrates the following stages before routing to a wor
    - Store the response as `JIRA_TICKET`:
      - If the user provides a ticket number (e.g., `PROJ-1234`), store it as-is
      - If the user provides `null`, empty, or skips, store as `null`
-   - The JIRA ticket will be recorded in `state.md`, `audit.md`, and `analytics` for this feature
+   - The JIRA ticket will be included in the branch name (lowercased) and recorded in `state.md`, `audit.md`, and `analytics` for this feature
 3. **Generate a concise short name** (2-4 words) for the branch:
    - Analyze the feature description and extract meaningful keywords
    - Use action-noun format when possible (e.g., "add-user-auth", "fix-payment-bug")
    - Preserve technical terms and acronyms
-4. **Create the feature branch** by running `../../spec-kit/scripts/bash/create-new-feature.sh`:
+4. **Confirm branch naming components** if unclear:
+   - If the JIRA ticket format is ambiguous (not matching a recognizable pattern like `PROJ-1234`), ask the user to confirm or correct it
+   - If the short description is ambiguous or too generic, propose a name and ask the user to confirm
+   - Branch naming pattern: `###-jira-ticket-short-description` (e.g., `001-proj-1234-add-user-auth`)
+   - When JIRA is null: `###-short-description` (e.g., `001-add-user-auth`)
+5. **Create the feature branch** by running `../../spec-kit/scripts/bash/create-new-feature.sh`:
    - Pass `--json` for structured output
    - Pass `--short-name "<name>"` with the generated short name
+   - If JIRA_TICKET is not null, pass `--jira-ticket "<ticket>"` with the JIRA ticket number
    - Pass the feature description as positional argument
-   - Parse the JSON output for BRANCH_NAME, SPEC_FILE, FEATURE_NUM
+   - Parse the JSON output for BRANCH_NAME, SPEC_FILE, FEATURE_NUM, JIRA_TICKET
    - For single quotes in args, use escape syntax: e.g `"I'm Groot"` (double-quote)
-5. **Initialize state tracking** in the feature directory (`specs/{BRANCH_NAME}/`):
+6. **Initialize state tracking** in the feature directory (`specs/{BRANCH_NAME}/`):
    - Create `state.md` with initial state (see State File Format below)
    - Create `audit.md` with header (see Audit File Format below)
-6. **Create project directory** if it does not exist: `specs/_project/`
-7. **Create analytics file** for this feature (see Analytics File section below):
+7. **Create project directory** if it does not exist: `specs/_project/`
+8. **Create analytics file** for this feature (see Analytics File section below):
    - Create `main-workflow/analytics/{BRANCH_NAME}.md` with initial analytics data
    - Record the feature start timestamp, description, JIRA ticket, and branch name
    - The analytics folder (`main-workflow/analytics/`) must be created if it does not exist
-8. **MANDATORY**: Log the initial user request in `audit.md` with complete raw input
-9. **MANDATORY: Verify Initiative Folder Requirements**:
+9. **MANDATORY**: Log the initial user request in `audit.md` with complete raw input
+10. **MANDATORY: Verify Initiative Folder Requirements**:
    - After all creation steps, validate that every required artifact exists and is well-formed:
 
    | Check | Path | Validation |
@@ -101,7 +107,7 @@ The shared entry point orchestrates the following stages before routing to a wor
    | Analytics file (`analytics/{BRANCH_NAME}.md`) | ✓ |
    ```
 
-10. Mark checkbox in state.md: `[x] Branch Creation`
+11. Mark checkbox in state.md: `[x] Branch Creation`
 
 ### State File Format
 
@@ -236,7 +242,29 @@ Based on the user's chosen workflow:
 
 1. Update `specs/{BRANCH_NAME}/state.md`: Set `**Workflow**: Spec-Kit`
 2. Log routing decision in audit.md
-3. Inform the user:
+3. **Initialize Spec-Kit analytics rows**: Read `main-workflow/analytics/{BRANCH_NAME}.md` and:
+   - Set `**Workflow**` in the Metadata section to `Spec-Kit`
+   - Append the Spec-Kit stage rows to the **Stage Timeline** table (after the entry point rows):
+
+     | Stage | Started | Completed | Duration | Status |
+     |-------|---------|-----------|----------|--------|
+     | Specify | | | | Pending |
+     | Clarify | | | | Pending |
+     | Plan | | | | Pending |
+     | Tasks | | | | Pending |
+     | Checklist | | | | Pending |
+     | Implement | | | | Pending |
+
+   - Update the **Effort Breakdown** table to include Spec-Kit phases:
+
+     | Phase | Interactions | Approvals | Duration |
+     |-------|-------------|-----------|----------|
+     | Entry Point | [count] | [count] | [duration] |
+     | Specification | 0 | 0 | |
+     | Planning | 0 | 0 | |
+     | Implementation | 0 | 0 | |
+
+4. Inform the user:
    ```markdown
    ## Workflow: Spec-Kit
 
@@ -257,9 +285,37 @@ Based on the user's chosen workflow:
 
 1. Update `specs/{BRANCH_NAME}/state.md`: Set `**Workflow**: AWS AI-DLC`
 2. Log routing decision in audit.md
-3. The AWS workflow begins from **Requirements Analysis** (workspace detection and reverse engineering are already complete)
-4. Load the AWS workflow rules from `../../aws/commands/aws-rules.md`
-5. Execute the AWS workflow starting from Requirements Analysis
+3. **Initialize AWS AI-DLC analytics rows**: Read `main-workflow/analytics/{BRANCH_NAME}.md` and:
+   - Set `**Workflow**` in the Metadata section to `AWS AI-DLC`
+   - Append the AWS AI-DLC stage rows to the **Stage Timeline** table (after the entry point rows):
+
+     | Stage | Started | Completed | Duration | Status |
+     |-------|---------|-----------|----------|--------|
+     | Requirements Analysis | | | | Pending |
+     | Onboarding Presentations | | | | Pending |
+     | User Stories | | | | Pending |
+     | Workflow Planning | | | | Pending |
+     | Application Design | | | | Pending |
+     | Units Generation | | | | Pending |
+     | Functional Design | | | | Pending |
+     | NFR Requirements | | | | Pending |
+     | NFR Design | | | | Pending |
+     | Infrastructure Design | | | | Pending |
+     | Code Generation | | | | Pending |
+     | Onboarding Update | | | | Pending |
+     | Build and Test | | | | Pending |
+
+   - Update the **Effort Breakdown** table to include AWS AI-DLC phases:
+
+     | Phase | Interactions | Approvals | Duration |
+     |-------|-------------|-----------|----------|
+     | Entry Point | [count] | [count] | [duration] |
+     | Inception | 0 | 0 | |
+     | Construction | 0 | 0 | |
+
+4. The AWS workflow begins from **Requirements Analysis** (workspace detection and reverse engineering are already complete)
+5. Load the AWS workflow rules from `../../aws/commands/aws-rules.md`
+6. Execute the AWS workflow starting from Requirements Analysis
 
 ---
 
@@ -330,7 +386,7 @@ After **every** completed workflow phase/stage, and again at implementation comp
 
 - **Single Entry Point**: All development work starts here
 - **User-Driven Routing**: User directly chooses Spec-Kit or AWS AI-DLC for each feature
-- **Standardized Branching**: All features use `###-feature-name` numbered branches
+- **Standardized Branching**: All features use `###-jira-ticket-short-description` numbered branches (or `###-short-description` when JIRA ticket is null)
 - **Standardized Artifacts**: All features write to `specs/{branch}/`
 - **Project-Level RE**: Reverse engineering runs once, stored at `specs/_project/`, updated after implementations
 - **Full Audit Trail**: Every interaction logged in `specs/{branch}/audit.md`

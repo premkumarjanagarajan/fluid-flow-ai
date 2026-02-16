@@ -31,7 +31,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 ## Outline
 
 **IMPORTANT**: This command is invoked AFTER the shared entry point (fluid-flow-rules.md) has already:
-- Created the feature branch (`###-feature-name`)
+- Created the feature branch (`###-jira-ticket-short-description`)
 - Created the feature directory (`specs/{BRANCH_NAME}/`)
 - Initialized `state.md` and `audit.md`
 - Run Workspace Detection and (optionally) Reverse Engineering
@@ -45,7 +45,9 @@ Given that feature description, do this:
 
 2. **Update state tracking**: Read `FEATURE_DIR/state.md` and update the current stage to "Spec-Kit - Specification".
 
-3. **Load brownfield context** (if available):
+3. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Specify`.
+
+4. **Load brownfield context** (if available):
    - Check if `specs/_project/reverse-engineering/` exists
    - If found, load and reference these artifacts to inform the specification:
      - `business-overview.md` - Understand existing business context
@@ -55,11 +57,11 @@ Given that feature description, do this:
      - `component-inventory.md` - Understand existing components
    - Use this context to write more informed specifications that align with the existing codebase
 
-4. Load `../templates/spec-template.md` to understand required sections.
+5. Load `../templates/spec-template.md` to understand required sections.
 
-5. **Log in audit trail**: Append to `FEATURE_DIR/audit.md` with the specification start entry (timestamp, user input, stage context).
+6. **Log in audit trail**: Append to `FEATURE_DIR/audit.md` with the specification start entry (timestamp, user input, stage context).
 
-6. Follow this execution flow:
+7. Follow this execution flow:
 
     1. Parse user description from Input
        If empty: ERROR "No feature description provided"
@@ -85,9 +87,9 @@ Given that feature description, do this:
     7. Identify Key Entities (if data involved)
     8. Return: SUCCESS (spec ready for planning)
 
-7. Write the specification to SPEC_FILE using the template structure, replacing placeholders with concrete details derived from the feature description (arguments) while preserving section order and headings.
+8. Write the specification to SPEC_FILE using the template structure, replacing placeholders with concrete details derived from the feature description (arguments) while preserving section order and headings.
 
-8. **Specification Quality Validation**: After writing the initial spec, validate it against quality criteria:
+9. **Specification Quality Validation**: After writing the initial spec, validate it against quality criteria:
 
    a. **Create Spec Quality Checklist**: Generate a checklist file at `FEATURE_DIR/checklists/requirements.md` using the checklist template structure with these validation items:
 
@@ -179,13 +181,13 @@ Given that feature description, do this:
 
    d. **Update Checklist**: After each validation iteration, update the checklist file with current pass/fail status
 
-9. **Log completion in audit trail**: Append to `FEATURE_DIR/audit.md` with specification completion (timestamp, spec file path, checklist results).
-
-10. **Update analytics**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by loading `../../shared/stages/analytics-update.md` and executing **Step 3: Phase Completion Update** for stage `Specify`.
+10. **Log completion in audit trail**: Append to `FEATURE_DIR/audit.md` with specification completion (timestamp, spec file path, checklist results).
 
 11. **Update state**: Update `FEATURE_DIR/state.md` to mark specification as complete.
 
-12. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit.clarify` or `/speckit.plan`).
+12. **Analytics: Record stage completion**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by following `../../shared/stages/analytics-update.md` **Step 3: Phase Completion Update** for stage `Specify` with status `Completed`.
+
+13. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit.clarify` or `/speckit.plan`).
 
 ## General Guidelines
 

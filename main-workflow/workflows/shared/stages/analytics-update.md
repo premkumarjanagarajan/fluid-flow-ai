@@ -27,7 +27,7 @@ This data enables understanding of:
 main-workflow/analytics/{BRANCH_NAME}.md
 ```
 
-This file is created during the entry point (Stage 1: Branch Creation) and then updated repeatedly during the workflow.
+This file is created during the entry point (Stage 1: Branch Creation), updated incrementally after each workflow step (via per-step hooks in each command referencing this file's Step 3), and finalised at the end of implementation (Step 4). The per-step updates provide real-time visibility; the finalisation reconciles all data and calculates authoritative totals. See also `analytics-step-update.md` for the stage name mapping tables used by each command.
 
 ---
 
@@ -91,6 +91,8 @@ Collect the following data from the feature directory (for both update modes):
 ---
 
 ## Step 4: Final Totals Update (Run At End of Implementation)
+
+**Note**: Per-step analytics updates (Step 3) will have already populated Stage Timeline rows and Work Metrics during the workflow. This finalisation step reconciles and overwrites with authoritative values calculated from the audit trail.
 
 ### Trigger Points
 - **Spec-Kit**: At the end of `/speckit.implement`

@@ -37,7 +37,7 @@ flowchart LR
 2. The user is prompted for a **JIRA Ticket Number** (parent initiative). Providing `null` or skipping is accepted; if provided, the ticket is stored in all feature documentation
 3. A concise short name is generated (e.g., `add-user-auth`, `fix-payment-bug`)
 4. The `create-new-feature.sh` script creates the branch and directory:
-   - Branch: `###-feature-name` (e.g., `001-add-user-auth`)
+   - Branch: `###-jira-ticket-short-description` (e.g., `001-proj-1234-add-user-auth`) or `###-short-description` when JIRA is null
    - Directory: `specs/{BRANCH_NAME}/`
 5. `state.md` and `audit.md` are initialised in the feature directory (both include the JIRA ticket)
 6. The `specs/_project/` directory is created if it does not exist
@@ -45,7 +45,7 @@ flowchart LR
 8. The initial user request is logged verbatim in `audit.md`
 
 **Outputs**:
-- Git branch `###-feature-name`
+- Git branch `###-jira-ticket-short-description` (or `###-short-description` when JIRA is null)
 - `specs/{BRANCH_NAME}/state.md` (includes JIRA ticket)
 - `specs/{BRANCH_NAME}/audit.md` (includes JIRA ticket)
 - `main-workflow/analytics/{BRANCH_NAME}.md` (feature analytics)

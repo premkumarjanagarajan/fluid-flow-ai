@@ -125,7 +125,7 @@ When activated, it displays a visible confirmation banner and immediately loads 
 
 | Stage | Condition | Purpose |
 |-------|-----------|---------|
-| Branch Creation | Always | Create `###-feature-name` branch and `specs/{BRANCH_NAME}/` directory |
+| Branch Creation | Always | Create `###-jira-ticket-short-description` branch and `specs/{BRANCH_NAME}/` directory |
 | Workspace Detection | Always | Scan for existing code, determine greenfield/brownfield |
 | Reverse Engineering | Brownfield, run-once | Generate comprehensive architecture documentation |
 | Workflow Selection | Always | Present both workflows and let the user choose directly |

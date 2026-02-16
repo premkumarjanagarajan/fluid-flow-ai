@@ -38,9 +38,11 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 1. **Setup**: Run `../scripts/bash/setup-plan.sh --json` from repo root and parse JSON for FEATURE_SPEC, IMPL_PLAN, SPECS_DIR, BRANCH. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
 
-2. **Load context**: Read FEATURE_SPEC and `../memory/constitution.md`. Load IMPL_PLAN template (already copied).
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Plan`.
 
-3. **Load brownfield context** (if available):
+3. **Load context**: Read FEATURE_SPEC and `../memory/constitution.md`. Load IMPL_PLAN template (already copied).
+
+4. **Load brownfield context** (if available):
    - Check if `specs/_project/reverse-engineering/` exists
    - If found, load and reference these artifacts to inform the plan:
      - `architecture.md` - Align plan with existing architecture
@@ -50,7 +52,7 @@ You **MUST** consider the user input before proceeding (if not empty).
      - `api-documentation.md` - Understand existing API patterns
    - Use this context to generate plans that are consistent with the existing codebase
 
-4. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
+5. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
    - Fill Technical Context (mark unknowns as "NEEDS CLARIFICATION")
    - Fill Constitution Check section from constitution
    - Evaluate gates (ERROR if violations unjustified)
@@ -59,9 +61,9 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Phase 1: Update agent context by running the agent script
    - Re-evaluate Constitution Check post-design
 
-5. **Update analytics**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by loading `../../shared/stages/analytics-update.md` and executing **Step 3: Phase Completion Update** for stage `Plan`.
+6. **Analytics: Record stage completion**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by following `../../shared/stages/analytics-update.md` **Step 3: Phase Completion Update** for stage `Plan` with status `Completed`.
 
-6. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
+7. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
 
 ## Phases
 

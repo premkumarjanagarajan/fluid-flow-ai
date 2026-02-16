@@ -22,7 +22,7 @@ flowchart TD
     Request(["Your Request"])
 
     subgraph ENTRY["SHARED ENTRY POINT"]
-        B1["1. Branch Creation ###-feature"]
+        B1["1. Branch Creation ###-jira-ticket-desc"]
         B2["2. Workspace Detection"]
         B3["3. Reverse Engineering brownfield"]
         B4["4. Complexity Assessment"]
@@ -62,7 +62,7 @@ flowchart TD
 ### Shared Entry Point
 
 Every feature starts the same way:
-1. **A numbered branch is created** (e.g., `001-add-user-auth`) with a dedicated feature directory
+1. **A numbered branch is created** (e.g., `001-proj-1234-add-user-auth`) with a dedicated feature directory
 2. **Your workspace is scanned** to understand if this is a new or existing project
 3. **For existing projects**: The codebase is analyzed once to create architectural documentation (reused across features)
 4. **Complexity is assessed**: The AI evaluates scope, risk, architecture, infrastructure, and requirements clarity
