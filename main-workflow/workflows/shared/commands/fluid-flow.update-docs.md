@@ -10,7 +10,7 @@
 Update project-level documentation artifacts after implementation is complete. This includes:
 1. Test Coverage Delta & Improvement Plan (conditional)
 2. Reverse Engineering Update (conditional)
-3. Analytics Finalisation (always)
+3. Analytics Reconciliation (always, idempotent)
 
 This command consolidates all post-implementation documentation steps into a single entry point, ensuring consistency regardless of which workflow was used.
 
@@ -79,13 +79,13 @@ This command consolidates all post-implementation documentation steps into a sin
 
 ---
 
-## Step 3: Analytics Finalisation (ALWAYS)
+## Step 3: Analytics Reconciliation (ALWAYS)
 
-**Purpose**: Update the feature analytics file with completion data and final metrics.
+**Purpose**: Reconcile the feature analytics file to ensure metrics remain accurate after documentation updates.
 
 **Execution**:
 1. Load the analytics update instructions from `../stages/analytics-update.md`
-2. Execute the analytics finalisation steps as defined in that instruction file
+2. Execute **Step 4: Final Totals Update** from that instruction file (idempotent)
 3. Update `main-workflow/analytics/{BRANCH_NAME}.md` with:
    - Completion timestamp
    - Total duration (end-to-end)
@@ -109,7 +109,7 @@ After all steps are complete:
 |------|--------|
 | Test Coverage Delta | [Executed / Skipped (reason)] |
 | Reverse Engineering Update | [Executed / Skipped (reason)] |
-| Analytics Finalisation | Completed |
+| Analytics Reconciliation | Completed |
 
 **Feature analytics**: `main-workflow/analytics/{BRANCH_NAME}.md`
 

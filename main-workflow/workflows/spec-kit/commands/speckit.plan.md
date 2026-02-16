@@ -20,6 +20,12 @@ handoffs:
 - Use the same verbatim logging rules: capture COMPLETE RAW INPUT, never summarize
 - ALWAYS append/edit audit.md, NEVER completely overwrite it
 
+## MANDATORY: Per-Phase Analytics Update
+- Update `main-workflow/analytics/{BRANCH_NAME}.md` when this command completes.
+- Load `../../shared/stages/analytics-update.md` and execute **Step 3: Phase Completion Update**.
+- Use stage name: `Plan`.
+- Use status: `Completed`.
+
 ## User Input
 
 ```text
@@ -53,7 +59,9 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Phase 1: Update agent context by running the agent script
    - Re-evaluate Constitution Check post-design
 
-5. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
+5. **Update analytics**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by loading `../../shared/stages/analytics-update.md` and executing **Step 3: Phase Completion Update** for stage `Plan`.
+
+6. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
 
 ## Phases
 

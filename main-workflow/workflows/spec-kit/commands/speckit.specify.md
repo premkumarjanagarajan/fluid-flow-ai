@@ -22,6 +22,12 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
+## MANDATORY: Per-Phase Analytics Update
+- Update `main-workflow/analytics/{BRANCH_NAME}.md` when this command completes.
+- Load `../../shared/stages/analytics-update.md` and execute **Step 3: Phase Completion Update**.
+- Use stage name: `Specify`.
+- Use status: `Completed` (or `Skipped` only if the phase is explicitly skipped).
+
 ## Outline
 
 **IMPORTANT**: This command is invoked AFTER the shared entry point (fluid-flow-rules.md) has already:
@@ -175,9 +181,11 @@ Given that feature description, do this:
 
 9. **Log completion in audit trail**: Append to `FEATURE_DIR/audit.md` with specification completion (timestamp, spec file path, checklist results).
 
-10. **Update state**: Update `FEATURE_DIR/state.md` to mark specification as complete.
+10. **Update analytics**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by loading `../../shared/stages/analytics-update.md` and executing **Step 3: Phase Completion Update** for stage `Specify`.
 
-11. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit.clarify` or `/speckit.plan`).
+11. **Update state**: Update `FEATURE_DIR/state.md` to mark specification as complete.
+
+12. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit.clarify` or `/speckit.plan`).
 
 ## General Guidelines
 
