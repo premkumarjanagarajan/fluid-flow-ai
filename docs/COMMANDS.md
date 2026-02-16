@@ -22,6 +22,7 @@ This document provides a complete reference for every command and stage in Fluid
   - [Operations Phase](#operations-phase)
 - [Shared Commands](#shared-commands)
   - [/fluid-flow.update-docs](#fluid-flowupdate-docs)
+  - [/fluid-flow.save-conversation](#fluid-flowsave-conversation)
 - [Shared Stages](#shared-stages)
 - [Automation Scripts](#automation-scripts)
 
@@ -455,6 +456,31 @@ These commands are shared across both workflows and invoked independently.
 - `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md` (if baseline exists)
 - Updated `specs/_project/reverse-engineering/` artifacts (if RE exists)
 - Updated `main-workflow/analytics/{BRANCH_NAME}.md`
+
+### /fluid-flow.save-conversation
+
+**Purpose**: Persist the current chat session's conversation history — including user prompts, AI responses, reasoning, and decisions — into the feature's spec directory.
+
+**File**: `main-workflow/workflows/shared/commands/fluid-flow.save-conversation.md`
+
+**When to run**: At any point during a chat session when you want to save the conversation. Must be run in the same session where the conversation took place.
+
+**Process**:
+1. Resolve the current BRANCH_NAME (from git or user input)
+2. Check if `specs/{BRANCH_NAME}/conversation-history.md` exists
+3. **If it exists**: Append a new session entry with the current conversation
+4. **If it does not exist**: Create the file with a header and the first session entry
+5. Capture all exchanges — user prompts (verbatim), AI responses, reasoning, decisions, and tool actions
+6. Generate session metadata — summary, key topics, decisions made, open items
+
+**Output**: `specs/{BRANCH_NAME}/conversation-history.md` (created or appended)
+
+**Key features**:
+- **Append-safe**: Never overwrites previous sessions — always appends
+- **Verbatim capture**: User messages are saved exactly as provided
+- **Reasoning preserved**: AI analysis, trade-offs, and design rationale are included
+- **Security-aware**: Credentials and secrets are redacted if detected
+- **Large conversation handling**: Repetitive patterns are summarized while decision-making exchanges are preserved in full
 
 ---
 
