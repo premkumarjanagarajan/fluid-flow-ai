@@ -185,7 +185,9 @@ All Spec-Kit commands follow a consistent pattern:
 
 **Output**: Application code in the workspace root, updated `tasks.md` with progress
 
-> **Post-implementation**: After implementation completes, run **`/fluid-flow.update-docs`** to update project documentation and finalise analytics.
+> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each Spec-Kit phase and finalised with totals by the end of `/speckit.implement`.
+>
+> **Post-implementation**: After implementation completes, run **`/fluid-flow.update-docs`** to update remaining project documentation.
 
 ---
 
@@ -418,7 +420,9 @@ For each unit of work, the following stages execute in sequence. A unit is compl
 
 ---
 
-> **Post-implementation**: After Build and Test completes, run **`/fluid-flow.update-docs`** (shared command) to update project documentation, reverse engineering artifacts, and finalise feature analytics.
+> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each AWS stage and finalised with totals by the end of Build and Test.
+>
+> **Post-implementation**: After Build and Test completes, run **`/fluid-flow.update-docs`** (shared command) to update project documentation and reverse engineering artifacts.
 
 ---
 
@@ -436,7 +440,7 @@ These commands are shared across both workflows and invoked independently.
 
 ### /fluid-flow.update-docs
 
-**Purpose**: Post-implementation documentation update. Consolidates Test Coverage Delta, Reverse Engineering Update, and Analytics Finalisation into a single command.
+**Purpose**: Post-implementation documentation update. Consolidates Test Coverage Delta, Reverse Engineering Update, and analytics reconciliation into a single command.
 
 **File**: `main-workflow/workflows/shared/commands/fluid-flow.update-docs.md`
 
@@ -445,7 +449,7 @@ These commands are shared across both workflows and invoked independently.
 **Process**:
 1. **Test Coverage Delta** (conditional): Compare current coverage against baseline, generate improvement plan
 2. **Reverse Engineering Update** (conditional): Incrementally update all RE artifacts
-3. **Analytics Finalisation** (always): Update the feature analytics file with completion data, stage durations, and work metrics
+3. **Analytics Reconciliation** (always): Recompute and reconcile analytics totals in an idempotent way
 
 **Output**:
 - `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md` (if baseline exists)
@@ -464,7 +468,7 @@ These stages are used by both workflows via the shared entry point or shared com
 | Reverse Engineering | `shared/stages/reverse-engineering.md` | Full codebase analysis (run-once) |
 | Reverse Engineering Update | `shared/stages/reverse-engineering-update.md` | Incremental RE artifact update |
 | Test Coverage Analysis | `shared/stages/test-coverage-analysis.md` | Baseline and delta coverage analysis |
-| Analytics Update | `shared/stages/analytics-update.md` | Feature analytics finalisation (timing, metrics, effort) |
+| Analytics Update | `shared/stages/analytics-update.md` | Per-phase analytics updates and final totals reconciliation |
 
 ---
 

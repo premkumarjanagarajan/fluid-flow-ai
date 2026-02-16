@@ -16,6 +16,12 @@ handoffs:
 - Use the same verbatim logging rules: capture COMPLETE RAW INPUT, never summarize
 - ALWAYS append/edit audit.md, NEVER completely overwrite it
 
+## MANDATORY: Per-Phase Analytics Update
+- Update `main-workflow/analytics/{BRANCH_NAME}.md` when this command completes.
+- Load `../../shared/stages/analytics-update.md` and execute **Step 3: Phase Completion Update**.
+- Use stage name: `Clarify`.
+- Use status: `Completed` (or `Skipped` if the user explicitly skips this optional phase).
+
 ## User Input
 
 ```text
@@ -172,7 +178,7 @@ Execution steps:
 
 8. Write the updated spec back to `FEATURE_SPEC`.
 
-9. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Clarify`. If clarification was skipped (no ambiguities found), follow Step 3 instead to mark the stage as "Skipped".
+9. **Analytics: Record stage completion**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by following `../../shared/stages/analytics-update.md` **Step 3: Phase Completion Update** for stage `Clarify` with status `Completed`. If clarification was skipped (no ambiguities found), use status `Skipped` instead.
 
 10. Report completion (after questioning loop ends or early termination):
    - Number of questions asked & answered.

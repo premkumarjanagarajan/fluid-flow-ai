@@ -89,6 +89,13 @@ The AI model intelligently assesses what stages are needed based on:
 - Answer validation and ambiguity resolution
 - **AI Best Judgement mode**: For every question iteration, offer the user the choice between answering manually or letting the AI use its best judgement. See the "AI Best Judgement Mode" section in the question format guide for full details.
 
+## MANDATORY: Per-Phase Analytics Updates
+**CRITICAL**: Update `main-workflow/analytics/{BRANCH_NAME}.md` after every stage completes (executed or skipped).
+- Load `../../shared/stages/analytics-update.md`
+- Execute **Step 3: Phase Completion Update** with the exact AWS stage name after each stage
+- For conditional stages that are skipped, still execute **Step 3** with status `Skipped`
+- At the end of Build and Test, execute **Step 4: Final Totals Update** so totals are finalised by implementation completion
+
 ## NOTE: Welcome Message
 The welcome message is displayed by the shared entry point (fluid-flow-rules.md) before this workflow is invoked. Do NOT display a separate welcome message.
 
@@ -113,6 +120,7 @@ The welcome message is displayed by the shared entry point (fluid-flow-rules.md)
 - Workflow Planning (ALWAYS)
 - Application Design (CONDITIONAL)
 - Units Generation (CONDITIONAL)
+- **MANDATORY**: After each stage above completes (or is skipped), run `../../shared/stages/analytics-update.md` Step 3 for that stage name.
 
 ---
 
@@ -327,6 +335,7 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
   - Code Generation (ALWAYS, per-unit)
   - Onboarding Update (CONDITIONAL, per-unit)
 - Build and Test (ALWAYS - after all units complete)
+- **MANDATORY**: After each stage above completes (or is skipped), run `../../shared/stages/analytics-update.md` Step 3 for that stage name.
 
 **Note**: Each unit is completed fully (design + code) before moving to the next unit.
 
@@ -335,6 +344,7 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 ## Per-Unit Loop (Executes for Each Unit)
 
 **For each unit of work, execute the following stages in sequence:**
+- **MANDATORY**: After each stage in this loop (executed or skipped), update analytics before advancing to the next stage/unit.
 
 ### Functional Design (CONDITIONAL, per-unit)
 
@@ -492,25 +502,28 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 5. Create instruction files in build-and-test/ subdirectory: build-instructions.md, unit-test-instructions.md, integration-test-instructions.md, performance-test-instructions.md, build-and-test-summary.md
 6. **Wait for Explicit Approval**: Ask: "**Build and test instructions complete. Ready to proceed to Operations stage?**" - DO NOT PROCEED until user confirms
 7. **MANDATORY**: Log user's response in audit.md with complete raw input
-8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Build and Test`
+8. **Analytics: Record stage completion**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by following `../../shared/stages/analytics-update.md` **Step 3: Phase Completion Update** for stage `Build and Test` with status `Completed`
+9. **Analytics: Final totals**: Execute `../../shared/stages/analytics-update.md` **Step 4: Final Totals Update** to finalise metadata, metrics, timeline, and cycle summary
 
-## Post-Implementation Documentation & Analytics (SEPARATE COMMAND)
+## Post-Implementation Documentation (SEPARATE COMMAND)
 
-**NOTE**: Test Coverage Delta, Reverse Engineering Update, and Analytics Finalisation are now handled by a **separate shared command** and are no longer part of this workflow's automatic execution.
+**NOTE**: Test Coverage Delta and Reverse Engineering Update are handled by a **separate shared command**. Analytics is already updated throughout this workflow and finalised by the end of Build and Test.
 
 After the Build and Test stage completes, inform the user:
 
 ```markdown
 ## Construction Phase Complete
 
-All construction stages have been executed. To update project-level documentation and finalise analytics, run:
+All construction stages have been executed, and analytics totals are finalised at:
+`main-workflow/analytics/{BRANCH_NAME}.md`
+
+To update remaining project-level documentation, run:
 
 **`/fluid-flow.update-docs`**
 
 This will:
 - Generate the Test Coverage Delta & Improvement Plan (if baseline exists)
 - Update all Reverse Engineering artifacts (if they exist)
-- Finalise the feature analytics file
 
 See: `../../shared/commands/fluid-flow.update-docs.md`
 ```
