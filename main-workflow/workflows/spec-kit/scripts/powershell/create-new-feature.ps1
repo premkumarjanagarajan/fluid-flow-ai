@@ -4,7 +4,9 @@
 param(
     [switch]$Json,
     [string]$ShortName,
+    [string]$JiraTicket,
     [int]$Number = 0,
+    [switch]$WithState,
     [switch]$Help,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$FeatureDescription
@@ -13,17 +15,23 @@ $ErrorActionPreference = 'Stop'
 
 # Show help if requested
 if ($Help) {
-    Write-Host "Usage: ./create-new-feature.ps1 [-Json] [-ShortName <name>] [-Number N] <feature description>"
+    Write-Host "Usage: ./create-new-feature.ps1 [-Json] [-ShortName <name>] [-JiraTicket <ticket>] [-Number N] [-WithState] <feature description>"
     Write-Host ""
     Write-Host "Options:"
-    Write-Host "  -Json               Output in JSON format"
-    Write-Host "  -ShortName <name>   Provide a custom short name (2-4 words) for the branch"
-    Write-Host "  -Number N           Specify branch number manually (overrides auto-detection)"
-    Write-Host "  -Help               Show this help message"
+    Write-Host "  -Json                   Output in JSON format"
+    Write-Host "  -ShortName <name>       Provide a custom short name (2-4 words) for the branch"
+    Write-Host "  -JiraTicket <ticket>    Include JIRA ticket in branch name (e.g., PROJ-1234)"
+    Write-Host "  -Number N               Specify branch number manually (overrides auto-detection)"
+    Write-Host "  -WithState              Create state.md and audit.md in the feature directory"
+    Write-Host "  -Help                   Show this help message"
+    Write-Host ""
+    Write-Host "Branch naming pattern: ###-jira-ticket-short-description (e.g., 001-proj-1234-add-user-auth)"
+    Write-Host "When -JiraTicket is omitted: ###-short-description (e.g., 001-add-user-auth)"
     Write-Host ""
     Write-Host "Examples:"
-    Write-Host "  ./create-new-feature.ps1 'Add user authentication system' -ShortName 'user-auth'"
-    Write-Host "  ./create-new-feature.ps1 'Implement OAuth2 integration for API'"
+    Write-Host "  ./create-new-feature.ps1 -JiraTicket 'PROJ-1234' -ShortName 'user-auth' 'Add user authentication system'"
+    Write-Host "  ./create-new-feature.ps1 -JiraTicket 'PROJ-5678' 'Implement OAuth2 integration for API'"
+    Write-Host "  ./create-new-feature.ps1 'Quick fix for typo' -ShortName 'fix-typo'"
     exit 0
 }
 
@@ -218,15 +226,27 @@ if ($Number -eq 0) {
 }
 
 $featureNum = ('{0:000}' -f $Number)
-$branchName = "$featureNum-$branchSuffix"
+
+# Build branch name: ###-jira-ticket-short-description (or ###-short-description if no JIRA ticket)
+if ($JiraTicket) {
+    $jiraClean = $JiraTicket.ToLower()
+    $branchName = "$featureNum-$jiraClean-$branchSuffix"
+} else {
+    $branchName = "$featureNum-$branchSuffix"
+}
 
 # GitHub enforces a 244-byte limit on branch names
 # Validate and truncate if necessary
 $maxBranchLength = 244
 if ($branchName.Length -gt $maxBranchLength) {
     # Calculate how much we need to trim from suffix
-    # Account for: feature number (3) + hyphen (1) = 4 chars
-    $maxSuffixLength = $maxBranchLength - 4
+    if ($JiraTicket) {
+        # Account for: feature number (3) + hyphen (1) + jira ticket + hyphen (1)
+        $maxSuffixLength = $maxBranchLength - 5 - $jiraClean.Length
+    } else {
+        # Account for: feature number (3) + hyphen (1) = 4 chars
+        $maxSuffixLength = $maxBranchLength - 4
+    }
     
     # Truncate suffix
     $truncatedSuffix = $branchSuffix.Substring(0, [Math]::Min($branchSuffix.Length, $maxSuffixLength))
@@ -234,7 +254,11 @@ if ($branchName.Length -gt $maxBranchLength) {
     $truncatedSuffix = $truncatedSuffix -replace '-$', ''
     
     $originalBranchName = $branchName
-    $branchName = "$featureNum-$truncatedSuffix"
+    if ($JiraTicket) {
+        $branchName = "$featureNum-$jiraClean-$truncatedSuffix"
+    } else {
+        $branchName = "$featureNum-$truncatedSuffix"
+    }
     
     Write-Warning "[specify] Branch name exceeded GitHub's 244-byte limit"
     Write-Warning "[specify] Original: $originalBranchName ($($originalBranchName.Length) bytes)"
@@ -254,7 +278,8 @@ if ($hasGit) {
 $featureDir = Join-Path $specsDir $branchName
 New-Item -ItemType Directory -Path $featureDir -Force | Out-Null
 
-$template = Join-Path $repoRoot '.specify/templates/spec-template.md'
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$template = Join-Path $scriptDir '../../templates/spec-template.md'
 $specFile = Join-Path $featureDir 'spec.md'
 if (Test-Path $template) { 
     Copy-Item $template $specFile -Force 
@@ -262,14 +287,78 @@ if (Test-Path $template) {
     New-Item -ItemType File -Path $specFile | Out-Null 
 }
 
+# Create state.md and audit.md if -WithState is set
+if ($WithState) {
+    $timestamp = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+    
+    $stateFile = Join-Path $featureDir 'state.md'
+    if (-not (Test-Path $stateFile)) {
+        $jiraField = if ($JiraTicket) { $JiraTicket } else { 'null' }
+        $stateContent = @"
+# Feature State Tracking
+
+## Feature Information
+- **Branch**: $branchName
+- **JIRA Ticket**: $jiraField
+- **Created**: $timestamp
+- **Current Stage**: Entry Point - Branch Creation
+- **Workflow**: Pending (awaiting complexity assessment)
+
+## Entry Point Progress
+- [x] Branch Creation
+- [ ] Workspace Detection
+- [ ] Reverse Engineering (if brownfield)
+- [ ] Complexity Assessment
+- [ ] Workflow Routing
+
+## Workspace State
+[Populated by Workspace Detection]
+
+## Workflow Progress
+[Populated by chosen workflow]
+"@
+        Set-Content -Path $stateFile -Value $stateContent -Encoding UTF8
+    }
+    
+    $auditFile = Join-Path $featureDir 'audit.md'
+    if (-not (Test-Path $auditFile)) {
+        $jiraField = if ($JiraTicket) { $JiraTicket } else { 'null' }
+        $auditContent = @"
+# Feature Audit Trail
+
+**Branch**: $branchName
+**JIRA Ticket**: $jiraField
+**Created**: $timestamp
+
+---
+
+## Branch Creation
+**Timestamp**: $timestamp
+**User Input**: "$featureDesc"
+**AI Response**: "Created feature branch $branchName"
+**Context**: Entry Point - Branch Creation
+
+---
+"@
+        Set-Content -Path $auditFile -Value $auditContent -Encoding UTF8
+    }
+    
+    # Create project directory if not present
+    $projectDir = Join-Path $specsDir '_project'
+    New-Item -ItemType Directory -Path $projectDir -Force | Out-Null
+}
+
 # Set the SPECIFY_FEATURE environment variable for the current session
 $env:SPECIFY_FEATURE = $branchName
+
+$jiraOutput = if ($JiraTicket) { $JiraTicket } else { '' }
 
 if ($Json) {
     $obj = [PSCustomObject]@{ 
         BRANCH_NAME = $branchName
         SPEC_FILE = $specFile
         FEATURE_NUM = $featureNum
+        JIRA_TICKET = $jiraOutput
         HAS_GIT = $hasGit
     }
     $obj | ConvertTo-Json -Compress
@@ -277,6 +366,7 @@ if ($Json) {
     Write-Output "BRANCH_NAME: $branchName"
     Write-Output "SPEC_FILE: $specFile"
     Write-Output "FEATURE_NUM: $featureNum"
+    Write-Output "JIRA_TICKET: $jiraOutput"
     Write-Output "HAS_GIT: $hasGit"
     Write-Output "SPECIFY_FEATURE environment variable set to: $branchName"
 }

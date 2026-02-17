@@ -49,7 +49,7 @@ All Spec-Kit commands follow a consistent pattern:
 **Input**: The feature description provided after the command (e.g., `/speckit.specify Add user authentication with JWT`)
 
 **Process**:
-1. Detect existing feature context via `check-prerequisites.sh`
+1. Detect existing feature context via `check-prerequisites` script (Bash or PowerShell, auto-detected)
 2. Update state tracking to "Spec-Kit - Specification"
 3. Analyse the feature description
 4. Generate a structured specification including:
@@ -100,7 +100,7 @@ All Spec-Kit commands follow a consistent pattern:
 **Input**: Optional arguments (e.g., technology stack preferences)
 
 **Process**:
-1. Run `setup-plan.sh` to prepare context
+1. Run `setup-plan` script (Bash or PowerShell, auto-detected) to prepare context
 2. Load `spec.md` and the constitution template
 3. Load brownfield context (architecture, code structure) if available
 4. Generate the implementation plan including:
@@ -129,7 +129,7 @@ All Spec-Kit commands follow a consistent pattern:
 **Input**: Optional arguments
 
 **Process**:
-1. Run `check-prerequisites.sh` to verify context
+1. Run `check-prerequisites` script (Bash or PowerShell, auto-detected) to verify context
 2. Load design documents (plan, spec, data model, contracts)
 3. Generate the task list:
    - Tasks follow the Spec-Kit checklist format with task IDs (T001, T002, ...) and optional `[P]` (parallelizable) and `[US#]` (user story) labels
@@ -174,7 +174,7 @@ All Spec-Kit commands follow a consistent pattern:
 **Input**: Optional arguments
 
 **Process**:
-1. Run `check-prerequisites.sh` with `--require-tasks --include-tasks`
+1. Run `check-prerequisites` script with task flags (`--require-tasks --include-tasks` for Bash / `-RequireTasks -IncludeTasks` for PowerShell)
 2. Check checklist status (if checklists exist):
    - Generate a status table showing pass/fail per checklist
    - Warn if any checklists have incomplete items
@@ -500,23 +500,32 @@ These stages are used by both workflows via the shared entry point or shared com
 
 ## Automation Scripts
 
-Located in `main-workflow/workflows/spec-kit/scripts/bash/`:
+Scripts are provided in both **Bash** and **PowerShell** for cross-platform support. The workflow auto-detects the shell environment at startup (see Shell Detection in `shared/stages/shell-detection.md`).
 
-### create-new-feature.sh
+- **Bash scripts**: `main-workflow/workflows/spec-kit/scripts/bash/`
+- **PowerShell scripts**: `main-workflow/workflows/spec-kit/scripts/powershell/`
+
+### create-new-feature
 
 **Purpose**: Create numbered feature branches and initialise feature directories.
 
-**Usage**:
+**Bash**:
 ```bash
 ./create-new-feature.sh --json --jira-ticket "PROJ-1234" --short-name "add-user-auth" "Add user authentication with JWT"
 ```
 
+**PowerShell**:
+```powershell
+./create-new-feature.ps1 -Json -JiraTicket "PROJ-1234" -ShortName "add-user-auth" "Add user authentication with JWT"
+```
+
 **Flags**:
-| Flag | Description |
-|------|-------------|
-| `--json` | Output structured JSON for programmatic parsing |
-| `--short-name "<name>"` | Specify the branch short name |
-| `--jira-ticket "<ticket>"` | Include JIRA ticket in branch name (e.g., `PROJ-1234`) |
+| Bash Flag | PowerShell Flag | Description |
+|-----------|----------------|-------------|
+| `--json` | `-Json` | Output structured JSON for programmatic parsing |
+| `--short-name "<name>"` | `-ShortName "<name>"` | Specify the branch short name |
+| `--jira-ticket "<ticket>"` | `-JiraTicket "<ticket>"` | Include JIRA ticket in branch name (e.g., `PROJ-1234`) |
+| `--with-state` | `-WithState` | Create state.md and audit.md in the feature directory |
 
 **Output** (JSON mode):
 ```json
@@ -528,33 +537,61 @@ Located in `main-workflow/workflows/spec-kit/scripts/bash/`:
 }
 ```
 
-### check-prerequisites.sh
+### check-prerequisites
 
 **Purpose**: Validate that feature context exists before commands execute.
 
-**Usage**:
+**Bash**:
 ```bash
 ./check-prerequisites.sh --json --paths-only
 ./check-prerequisites.sh --json --require-tasks --include-tasks
 ```
 
-**Flags**:
-| Flag | Description |
-|------|-------------|
-| `--json` | Output structured JSON |
-| `--paths-only` | Only return FEATURE_DIR and BRANCH_NAME |
-| `--require-tasks` | Fail if tasks.md does not exist |
-| `--include-tasks` | Include task content in output |
+**PowerShell**:
+```powershell
+./check-prerequisites.ps1 -Json -PathsOnly
+./check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks
+```
 
-### setup-plan.sh
+**Flags**:
+| Bash Flag | PowerShell Flag | Description |
+|-----------|----------------|-------------|
+| `--json` | `-Json` | Output structured JSON |
+| `--paths-only` | `-PathsOnly` | Only return FEATURE_DIR and BRANCH_NAME |
+| `--require-tasks` | `-RequireTasks` | Fail if tasks.md does not exist |
+| `--include-tasks` | `-IncludeTasks` | Include task content in output |
+
+### setup-plan
 
 **Purpose**: Prepare the plan template and context for the planning command.
 
-**Usage**:
+**Bash**:
 ```bash
 ./setup-plan.sh --json
 ```
 
-### common.sh
+**PowerShell**:
+```powershell
+./setup-plan.ps1 -Json
+```
+
+### update-agent-context
+
+**Purpose**: Update AI agent context files with technology stack from plan.md.
+
+**Bash**:
+```bash
+./update-agent-context.sh cursor-agent
+```
+
+**PowerShell**:
+```powershell
+./update-agent-context.ps1 -AgentType cursor-agent
+```
+
+### common (shared utilities)
 
 **Purpose**: Shared utilities sourced by other scripts.
+
+- **Bash**: `common.sh` — sourced via `source "$SCRIPT_DIR/common.sh"`
+- **PowerShell**: `common.ps1` — sourced via `. "$PSScriptRoot/common.ps1"`

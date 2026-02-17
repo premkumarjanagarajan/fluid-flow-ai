@@ -10,7 +10,7 @@ This guide walks you through setting up Fluid Flow AI and running your first wor
 |-------------|---------|
 | **Cursor IDE** | [cursor.sh](https://cursor.sh/) -- Fluid Flow AI relies on Cursor's rules engine (`.mdc` files) |
 | **Git** | Any recent version. Must be initialised in your workspace (`git init`) |
-| **Bash** | Required for automation scripts. Available by default on macOS and Linux |
+| **Bash or PowerShell** | Bash is available by default on macOS and Linux. PowerShell is available on Windows (also cross-platform via [PowerShell 7+](https://github.com/PowerShell/PowerShell)). The workflow auto-detects which shell to use. |
 | **AI Model Access** | Cursor must be configured with an AI model (e.g., Claude, GPT-4) |
 
 ---
@@ -52,8 +52,14 @@ Fluid Flow AI creates numbered feature branches, so Git must be initialised.
 
 ### 4. Make Scripts Executable
 
+**macOS / Linux (Bash)**:
 ```bash
 chmod +x fluid-flow-ai/main-workflow/workflows/spec-kit/scripts/bash/*.sh
+```
+
+**Windows (PowerShell)**: No extra step needed — `.ps1` scripts run natively in PowerShell. If execution policy blocks scripts, run once:
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
 ---
@@ -184,15 +190,15 @@ If you close Cursor and return later, the workflow can resume from where you lef
 ### Branch Creation Fails
 
 - Ensure Git is initialised in the workspace
-- Check that the bash scripts are executable (`chmod +x`)
+- **macOS/Linux**: Check that the bash scripts are executable (`chmod +x`)
+- **Windows**: Ensure PowerShell execution policy allows scripts (`Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`)
 - Verify no conflicting branch names exist
 
 ### Scripts Fail on Windows
 
-The automation scripts use Bash. On Windows, use:
-- WSL (Windows Subsystem for Linux)
-- Git Bash
-- Or any Bash-compatible shell
+Fluid Flow AI includes both Bash and PowerShell scripts. The workflow auto-detects your shell environment. If auto-detection fails:
+- On native Windows, ensure PowerShell 5.1+ is available (pre-installed on Windows 10+)
+- Alternatively, use WSL, Git Bash, or any Bash-compatible shell — the workflow will detect these as Bash environments
 
 ### AI Does Not Follow the Workflow
 
