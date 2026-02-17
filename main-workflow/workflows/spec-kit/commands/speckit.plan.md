@@ -36,7 +36,11 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Outline
 
-1. **Setup**: Run `../scripts/bash/setup-plan.sh --json` from repo root and parse JSON for FEATURE_SPEC, IMPL_PLAN, SPECS_DIR, BRANCH. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+1. **Setup**: Resolve `SHELL_TYPE` — read the `**Shell**` field from `specs/{BRANCH_NAME}/state.md`; if missing, detect it per `../../shared/stages/shell-detection.md`. Run the appropriate script from repo root:
+   - **bash**: `../scripts/bash/setup-plan.sh --json` — For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+   - **powershell**: `../scripts/powershell/setup-plan.ps1 -Json`
+
+   Parse JSON for FEATURE_SPEC, IMPL_PLAN, SPECS_DIR, BRANCH.
 
 2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Plan`.
 
@@ -104,8 +108,9 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Use standard REST/GraphQL patterns
    - Output OpenAPI/GraphQL schema to `/contracts/`
 
-3. **Agent context update**:
-   - Run `../scripts/bash/update-agent-context.sh cursor-agent`
+3. **Agent context update** (use `SHELL_TYPE` resolved earlier):
+   - **bash**: Run `../scripts/bash/update-agent-context.sh cursor-agent`
+   - **powershell**: Run `../scripts/powershell/update-agent-context.ps1 -AgentType cursor-agent`
    - These scripts detect which AI agent is in use
    - Update the appropriate agent-specific context file
    - Add only new technology from current plan

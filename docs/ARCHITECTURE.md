@@ -72,10 +72,19 @@ flowchart TB
     end
 
     subgraph SCRIPTS["Automation"]
-        CNF["create-new-feature.sh"]
-        CP["check-prerequisites.sh"]
-        SPL["setup-plan.sh"]
-        CMN["common.sh"]
+        direction TB
+        subgraph BASH["Bash (macOS/Linux)"]
+            CNF["create-new-feature.sh"]
+            CP["check-prerequisites.sh"]
+            SPL["setup-plan.sh"]
+            CMN["common.sh"]
+        end
+        subgraph PS["PowerShell (Windows)"]
+            CNF_PS["create-new-feature.ps1"]
+            CP_PS["check-prerequisites.ps1"]
+            SPL_PS["setup-plan.ps1"]
+            CMN_PS["common.ps1"]
+        end
     end
 
     subgraph ARTIFACTS["Output Artifacts"]
@@ -125,6 +134,7 @@ When activated, it displays a visible confirmation banner and immediately loads 
 
 | Stage | Condition | Purpose |
 |-------|-----------|---------|
+| Shell Detection | Always | Detect Bash vs PowerShell environment for script invocations |
 | Branch Creation | Always | Create `###-jira-ticket-short-description` branch and `specs/{BRANCH_NAME}/` directory |
 | Workspace Detection | Always | Scan for existing code, determine greenfield/brownfield |
 | Reverse Engineering | Brownfield, run-once | Generate comprehensive architecture documentation |
@@ -159,14 +169,15 @@ A phase-based engine with adaptive depth. Stages are conditional -- the AI asses
 
 ### 5. Automation Scripts
 
-Bash scripts handle mechanical tasks:
+Shell scripts handle mechanical tasks. Both Bash and PowerShell versions are provided for cross-OS support. The workflow auto-detects the shell environment (see `shell-detection.md`) and invokes the correct variant.
 
-| Script | Purpose |
-|--------|---------|
-| `create-new-feature.sh` | Creates numbered branches, initialises feature directories |
-| `check-prerequisites.sh` | Validates feature context exists before commands run |
-| `setup-plan.sh` | Prepares plan template and context for planning commands |
-| `common.sh` | Shared utilities for the other scripts |
+| Script (Bash / PowerShell) | Purpose |
+|----------------------------|---------|
+| `create-new-feature.sh` / `.ps1` | Creates numbered branches, initialises feature directories |
+| `check-prerequisites.sh` / `.ps1` | Validates feature context exists before commands run |
+| `setup-plan.sh` / `.ps1` | Prepares plan template and context for planning commands |
+| `update-agent-context.sh` / `.ps1` | Updates AI agent context files from plan data |
+| `common.sh` / `.ps1` | Shared utilities for the other scripts |
 
 ### 6. Output Artifacts
 

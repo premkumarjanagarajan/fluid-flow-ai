@@ -41,7 +41,11 @@ The text the user typed after `/speckit.specify` in the triggering message **is*
 
 Given that feature description, do this:
 
-1. **Detect existing feature context**: Run `../scripts/bash/check-prerequisites.sh --json --paths-only` from repo root to get FEATURE_DIR and BRANCH_NAME. The branch and directory should already exist (created by the shared entry point). If not found, fall back to the original branch creation script.
+1. **Detect existing feature context**: Resolve `SHELL_TYPE` — read the `**Shell**` field from `specs/{BRANCH_NAME}/state.md`; if missing, detect it per `../../shared/stages/shell-detection.md`. Run the appropriate script from repo root:
+   - **bash**: `../scripts/bash/check-prerequisites.sh --json --paths-only`
+   - **powershell**: `../scripts/powershell/check-prerequisites.ps1 -Json -PathsOnly`
+
+   Parse the output to get FEATURE_DIR and BRANCH_NAME. The branch and directory should already exist (created by the shared entry point). If not found, fall back to the original branch creation script.
 
 2. **Update state tracking**: Read `FEATURE_DIR/state.md` and update the current stage to "Spec-Kit - Specification".
 

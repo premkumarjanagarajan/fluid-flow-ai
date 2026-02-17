@@ -139,7 +139,7 @@ Fluid Flow AI is a **process framework**, not a traditional software application
 
 - **Markdown** -- Workflow definitions, memory files, templates, and governance rules
 - **Cursor Rules** (`.mdc` files) -- IDE-level workflow enforcement
-- **Bash Scripts** -- Automation for branch creation, prerequisite checks, and setup
+- **Bash & PowerShell Scripts** -- Cross-OS automation for branch creation, prerequisite checks, and setup (auto-detected per OS)
 - **Mermaid** -- All diagrams use Mermaid syntax for consistency and portability
 
 It is language- and platform-agnostic. The framework includes technology-specific guidelines for .NET/C#, and Terraform, but the workflow itself applies to any stack.

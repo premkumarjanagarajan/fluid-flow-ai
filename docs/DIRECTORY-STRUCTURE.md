@@ -109,6 +109,7 @@ fluid-flow-ai/
         │       ├── complexity-assessment.md      # Complexity scoring (not used in entry flow)
         │       ├── reverse-engineering.md         # Full codebase analysis (run-once)
         │       ├── reverse-engineering-update.md  # Incremental RE updates
+        │       ├── shell-detection.md            # Bash vs PowerShell detection and script mapping
         │       ├── test-coverage-analysis.md     # Coverage baseline and delta
         │       └── workspace-detection.md        # Greenfield/brownfield detection
         │
@@ -129,12 +130,19 @@ fluid-flow-ai/
         │   │   └── constitution.md               # Spec-Kit constitution template
         │   │
         │   ├── scripts/
-        │   │   └── bash/
-        │   │       ├── common.sh                 # Shared utilities
-        │   │       ├── check-prerequisites.sh    # Validate feature context
-        │   │       ├── create-new-feature.sh     # Create feature branches
-        │   │       ├── setup-plan.sh             # Prepare plan context
-        │   │       └── update-agent-context.sh   # Update agent context
+        │   │   ├── bash/                         # Bash scripts (macOS, Linux, Git Bash)
+        │   │   │   ├── common.sh                 # Shared utilities
+        │   │   │   ├── check-prerequisites.sh    # Validate feature context
+        │   │   │   ├── create-new-feature.sh     # Create feature branches
+        │   │   │   ├── setup-plan.sh             # Prepare plan context
+        │   │   │   └── update-agent-context.sh   # Update agent context
+        │   │   │
+        │   │   └── powershell/                   # PowerShell scripts (Windows, cross-platform)
+        │   │       ├── common.ps1                # Shared utilities
+        │   │       ├── check-prerequisites.ps1   # Validate feature context
+        │   │       ├── create-new-feature.ps1    # Create feature branches
+        │   │       ├── setup-plan.ps1            # Prepare plan context
+        │   │       └── update-agent-context.ps1  # Update agent context
         │   │
         │   └── templates/                        # Output templates
         │       ├── agent-file-template.md        # Agent file template

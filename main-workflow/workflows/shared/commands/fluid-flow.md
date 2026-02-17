@@ -35,11 +35,30 @@ Final accountability always rests with humans.
 
 The shared entry point orchestrates the following stages before routing to a workflow:
 
+0. **Shell Environment Detection** (ALWAYS - detects Bash vs PowerShell)
 1. **Branch Creation** (ALWAYS - includes JIRA ticket prompt and analytics file creation)
 2. **Workspace Detection** (ALWAYS)
 3. **Reverse Engineering** (CONDITIONAL - Brownfield, run-once per project)
 4. **Workflow Selection** (ALWAYS - user chooses Spec-Kit or AWS AI-DLC)
 5. **Workflow Routing** (ALWAYS - routes to the chosen workflow)
+
+---
+
+## Stage 0: Shell Environment Detection (ALWAYS EXECUTE)
+
+**Purpose**: Detect whether the user's environment supports Bash or PowerShell so the correct automation scripts are used throughout the workflow.
+
+1. Run the detection command from the repo root:
+   ```sh
+   uname -s 2>/dev/null || echo "WINDOWS"
+   ```
+2. Interpret the result to determine `SHELL_TYPE`:
+   - Output contains `Darwin` or `Linux` → `SHELL_TYPE = bash`
+   - Output contains `MINGW`, `MSYS`, or `CYGWIN` → `SHELL_TYPE = bash` (Git Bash on Windows)
+   - Command fails or output is `WINDOWS` → `SHELL_TYPE = powershell`
+3. Store `SHELL_TYPE` in memory — it will be persisted into `state.md` during Stage 1.
+
+> **Reference**: See `../stages/shell-detection.md` for the full script invocation mapping between Bash and PowerShell.
 
 ---
 
@@ -64,13 +83,23 @@ The shared entry point orchestrates the following stages before routing to a wor
    - If the short description is ambiguous or too generic, propose a name and ask the user to confirm
    - Branch naming pattern: `###-jira-ticket-short-description` (e.g., `001-proj-1234-add-user-auth`)
    - When JIRA is null: `###-short-description` (e.g., `001-add-user-auth`)
-5. **Create the feature branch** by running `../../spec-kit/scripts/bash/create-new-feature.sh`:
-   - Pass `--json` for structured output
-   - Pass `--short-name "<name>"` with the generated short name
-   - If JIRA_TICKET is not null, pass `--jira-ticket "<ticket>"` with the JIRA ticket number
-   - Pass the feature description as positional argument
+5. **Create the feature branch** using the script that matches `SHELL_TYPE` (detected in Stage 0):
+
+   - **If SHELL_TYPE is `bash`**: Run `../../spec-kit/scripts/bash/create-new-feature.sh`
+     - Pass `--json` for structured output
+     - Pass `--short-name "<name>"` with the generated short name
+     - If JIRA_TICKET is not null, pass `--jira-ticket "<ticket>"` with the JIRA ticket number
+     - Pass the feature description as positional argument
+     - For single quotes in args, use escape syntax: e.g `"I'm Groot"` (double-quote)
+
+   - **If SHELL_TYPE is `powershell`**: Run `../../spec-kit/scripts/powershell/create-new-feature.ps1`
+     - Pass `-Json` for structured output
+     - Pass `-ShortName "<name>"` with the generated short name
+     - If JIRA_TICKET is not null, pass `-JiraTicket "<ticket>"` with the JIRA ticket number
+     - Pass the feature description as positional argument
+     - PowerShell handles embedded single quotes in double-quoted strings natively
+
    - Parse the JSON output for BRANCH_NAME, SPEC_FILE, FEATURE_NUM, JIRA_TICKET
-   - For single quotes in args, use escape syntax: e.g `"I'm Groot"` (double-quote)
 6. **Initialize state tracking** in the feature directory (`specs/{BRANCH_NAME}/`):
    - Create `state.md` with initial state (see State File Format below)
    - Create `audit.md` with header (see Audit File Format below)
@@ -86,7 +115,7 @@ The shared entry point orchestrates the following stages before routing to a wor
    | Check | Path | Validation |
    |-------|------|------------|
    | Feature directory | `specs/{BRANCH_NAME}/` | Directory exists |
-   | State file | `specs/{BRANCH_NAME}/state.md` | File exists, contains `## Feature Information` with Branch, JIRA Ticket, Created, Current Stage, Workflow fields |
+   | State file | `specs/{BRANCH_NAME}/state.md` | File exists, contains `## Feature Information` with Branch, JIRA Ticket, Shell, Created, Current Stage, Workflow fields |
    | Audit file | `specs/{BRANCH_NAME}/audit.md` | File exists, contains `# Feature Audit Trail` header with Branch, JIRA Ticket, Created fields and Branch Creation entry |
    | Project directory | `specs/_project/` | Directory exists |
    | Analytics file | `main-workflow/analytics/{BRANCH_NAME}.md` | File exists, contains `## Metadata` with Feature, Branch, JIRA Ticket, Workflow, Created fields |
@@ -119,6 +148,7 @@ Create `specs/{BRANCH_NAME}/state.md`:
 ## Feature Information
 - **Branch**: {BRANCH_NAME}
 - **JIRA Ticket**: {JIRA_TICKET | null}
+- **Shell**: {SHELL_TYPE}
 - **Created**: [ISO timestamp]
 - **Current Stage**: Entry Point - Branch Creation
 - **Workflow**: Pending (awaiting user selection)
