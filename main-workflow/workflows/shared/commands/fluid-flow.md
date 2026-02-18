@@ -298,18 +298,31 @@ Based on the user's chosen workflow:
    ```markdown
    ## Workflow: Spec-Kit
 
-   Your feature will follow the Spec-Kit workflow. The next steps are:
+   Your feature will follow the Spec-Kit workflow. The stages are:
 
-   1. `/speckit.specify` - Create the feature specification
-   2. `/speckit.clarify` - (optional) Clarify ambiguities
-   3. `/speckit.plan` - Create the implementation plan
-   4. `/speckit.tasks` - Generate ordered tasks
-   5. `/speckit.implement` - Execute the implementation
+   1. **Specify** — Create the feature specification
+   2. **Clarify** — (optional) Clarify ambiguities
+   3. **Plan** — Create the implementation plan
+   4. **Tasks** — Generate ordered tasks
+   5. **Checklist** — (optional) Generate quality checklist
+   6. **Implement** — Execute the implementation
 
    The feature directory is ready at: `specs/{BRANCH_NAME}/`
 
    **Ready to proceed with specification?**
    ```
+
+5. **Begin Spec-Kit execution**: When the user confirms they're ready to proceed:
+   - Load the Spec-Kit specification command from `../../spec-kit/commands/speckit.specify.md`
+   - Execute the specification workflow using the original feature description as input
+   - The Spec-Kit workflow is stage-driven; after each stage completes, load and execute the next stage command as indicated by the completion instructions within each command
+6. **Spec-Kit stage chain** (load each file in sequence as stages complete):
+   - Specify: `../../spec-kit/commands/speckit.specify.md`
+   - Clarify (optional): `../../spec-kit/commands/speckit.clarify.md`
+   - Plan: `../../spec-kit/commands/speckit.plan.md`
+   - Tasks: `../../spec-kit/commands/speckit.tasks.md`
+   - Checklist (optional): `../../spec-kit/commands/speckit.checklist.md`
+   - Implement: `../../spec-kit/commands/speckit.implement.md`
 
 ### If AWS AI-DLC was chosen:
 
