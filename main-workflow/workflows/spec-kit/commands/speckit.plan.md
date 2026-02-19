@@ -111,7 +111,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 3. **Agent context update** (use `SHELL_TYPE` resolved earlier):
    - **bash**: Run `../scripts/bash/update-agent-context.sh <agent-type>` (e.g., `cursor-agent`)
    - **powershell**: Run `../scripts/powershell/update-agent-context.ps1 -AgentType <agent-type>` (e.g., `cursor-agent`)
-   - These scripts detect which AI agent context file to update based on the IDE in use
+   - These scripts use the specified `<agent-type>` to select which AI agent context file to update; if no agent type is provided, they update all existing agent context files
    - Update the appropriate agent-specific context file
    - Add only new technology from current plan
    - Preserve manual additions between markers
