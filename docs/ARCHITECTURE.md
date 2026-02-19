@@ -6,22 +6,22 @@ This document describes the internal architecture of Fluid Flow AI -- how its co
 
 ## System Overview
 
-Fluid Flow AI is a layered workflow framework. At the top sits a Cursor IDE rule that intercepts every development request. That rule loads a unified entry point which orchestrates shared stages, then routes to one of two workflow engines. Both engines share a common governance backbone.
+Fluid Flow AI is a layered workflow framework. At the top sits an IDE rule (e.g., a Cursor `.mdc` rule or a VS Code `copilot-instructions.md` file) that intercepts every development request. That rule loads a unified entry point which orchestrates shared stages, then routes to one of two workflow engines. Both engines share a common governance backbone.
 
 ```mermaid
 C4Context
     title Fluid Flow AI - System Context
 
-    Person(developer, "Developer", "Uses Cursor IDE to make development requests")
+    Person(developer, "Developer", "Uses an AI-capable IDE to make development requests")
 
     System(fluidflow, "Fluid Flow AI", "Adaptive workflow framework for AI-assisted software development")
 
-    System_Ext(cursor, "Cursor IDE", "AI-powered code editor with rules engine")
+    System_Ext(ide, "AI-Capable IDE", "Code editor with AI rules engine (e.g., Cursor, VS Code with Copilot)")
     System_Ext(git, "Git", "Version control for branches and code")
     System_Ext(github, "GitHub", "Issue tracking and pull requests")
 
-    Rel(developer, cursor, "Makes development requests")
-    Rel(cursor, fluidflow, "Triggers workflow via .mdc rule")
+    Rel(developer, ide, "Makes development requests")
+    Rel(ide, fluidflow, "Triggers workflow via IDE rule")
     Rel(fluidflow, git, "Creates branches, manages code")
     Rel(fluidflow, github, "Creates issues via /speckit.taskstoissues")
 ```
@@ -33,7 +33,7 @@ C4Context
 ```mermaid
 flowchart TB
     subgraph TRIGGER["Trigger Layer"]
-        MDC["workflow.mdc<br/><i>Cursor Rule</i>"]
+        MDC["workflow.mdc<br/><i>IDE Rule Trigger</i>"]
     end
 
     subgraph ENTRY["Shared Entry Point"]
@@ -121,7 +121,7 @@ flowchart TB
 
 ### 1. Trigger Layer
 
-The `workflow.mdc` Cursor rule is the gateway. It has `alwaysApply: true`, meaning it evaluates on every user message. It classifies the request:
+The IDE rule (e.g., `workflow.mdc` in Cursor, or `copilot-instructions.md` in VS Code) is the gateway. It evaluates on every user message and classifies the request:
 
 - **Development request** (new feature, bug fix, infrastructure change, etc.) --> activates the workflow
 - **Non-development request** (question, discussion) --> responds normally without the workflow
@@ -195,7 +195,7 @@ Application code is always written to the workspace root, never to `specs/`.
 ```mermaid
 sequenceDiagram
     participant Dev as Developer
-    participant IDE as Cursor IDE
+    participant IDE as AI-Capable IDE
     participant Rule as workflow.mdc
     participant FF as Fluid Flow Entry
     participant WD as Workspace Detection

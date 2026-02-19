@@ -138,7 +138,7 @@ For detailed setup instructions, see [Getting Started](docs/GETTING-STARTED.md).
 Fluid Flow AI is a **process framework**, not a traditional software application. It is composed of:
 
 - **Markdown** -- Workflow definitions, memory files, templates, and governance rules
-- **IDE Rules** (`.mdc`, `.rules`, or equivalent) -- IDE-level workflow enforcement via AI rules or system prompts
+- **IDE Rules** (`.mdc` for Cursor, `.github/copilot-instructions.md` for VS Code; additional formats may be added) -- IDE-level workflow enforcement via AI rules or system prompts
 - **Bash & PowerShell Scripts** -- Cross-OS automation for branch creation, prerequisite checks, and setup (auto-detected per OS)
 - **Mermaid** -- All diagrams use Mermaid syntax for consistency and portability
 

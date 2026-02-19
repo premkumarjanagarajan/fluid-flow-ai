@@ -14,14 +14,14 @@ This document describes the complete directory layout of Fluid Flow AI -- both t
 
 ## Framework Structure
 
-The Fluid Flow AI framework is organised into four main areas: the Cursor rule trigger, workflow definitions, shared resources, and automation scripts.
+The Fluid Flow AI framework is organised into four main areas: the IDE rule trigger, workflow definitions, shared resources, and automation scripts.
 
 ```
 fluid-flow-ai/
 │
-├── .cursor/
+├── .cursor/                                      # IDE-specific rule directory (Cursor)
 │   └── rules/
-│       └── workflow.mdc                          # Cursor rule -- triggers on every message
+│       └── workflow.mdc                          # IDE rule trigger -- evaluates on every message
 │
 ├── .gitignore                                    # Git ignore patterns
 │
