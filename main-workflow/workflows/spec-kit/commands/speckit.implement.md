@@ -171,9 +171,8 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Execute **Step 3: Phase Completion Update** for stage `Implement` with status `Completed`
    - Execute **Step 4: Final Totals Update** to finalise metadata, metrics, timeline, and cycle summary
 
-13. **Post-Implementation Documentation (separate command)**:
-   - After implementation is complete, inform the user that remaining project-level documentation updates are handled by:
-     - `../../shared/commands/fluid-flow.update-docs.md`
+13. **Post-Implementation Documentation**:
+   - After implementation is complete, inform the user that remaining project-level documentation updates are available.
    - Present to the user:
      ```markdown
      ## Implementation Complete
@@ -181,13 +180,10 @@ You **MUST** consider the user input before proceeding (if not empty).
      All tasks have been executed and analytics totals are now finalised at:
      `main-workflow/analytics/{BRANCH_NAME}.md`
 
-     To update the remaining project-level documentation, run:
+     **Next step**: Update project-level documentation (test coverage delta, reverse engineering artifacts).
 
-     **`/fluid-flow.update-docs`**
-
-     This will:
-     - Generate the Test Coverage Delta & Improvement Plan (if baseline exists)
-     - Update all Reverse Engineering artifacts (if they exist)
+     Ready to proceed with documentation updates?
      ```
+   - When the user confirms, load and execute `../../shared/commands/fluid-flow.update-docs.md`
 
-Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.
+Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running speckit.tasks first (load `./speckit.tasks.md`) to regenerate the task list.

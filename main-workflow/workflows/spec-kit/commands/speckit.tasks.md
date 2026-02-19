@@ -84,6 +84,10 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Suggested MVP scope (typically just User Story 1)
    - Format validation: Confirm ALL tasks follow the checklist format (checkbox, ID, labels, file paths)
 
+8. **Continue to next stage**: Present the next stage options to the user and wait for confirmation:
+   - If the user wants to generate quality checklists first: Load and execute `./speckit.checklist.md`
+   - When ready to implement: Load and execute `./speckit.implement.md`
+
 Context for task generation: $ARGUMENTS
 
 The tasks.md should be immediately executable - each task must be specific enough that an LLM can complete it without additional context.

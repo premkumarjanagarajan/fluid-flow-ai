@@ -69,6 +69,8 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 7. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
 
+8. **Continue to next stage**: Present the next stage option to the user and wait for confirmation. When the user confirms, load and execute `./speckit.tasks.md`.
+
 ## Phases
 
 ### Phase 0: Outline & Research

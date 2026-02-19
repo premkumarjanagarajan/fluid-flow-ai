@@ -233,6 +233,10 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Actor/timing
    - Any explicit user-specified must-have items incorporated
 
+10. **Continue to next stage**: Present the next stage options to the user and wait for confirmation:
+    - If the user wants additional checklists for other domains: Re-run this command (`./speckit.checklist.md`)
+    - When ready to implement: Load and execute `./speckit.implement.md`
+
 **Important**: Each `/speckit.checklist` command invocation creates a checklist file using short, descriptive names unless file already exists. This allows:
 
 - Multiple checklists of different types (e.g., `ux.md`, `test.md`, `security.md`)

@@ -191,7 +191,11 @@ Given that feature description, do this:
 
 12. **Analytics: Record stage completion**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by following `../../shared/stages/analytics-update.md` **Step 3: Phase Completion Update** for stage `Specify` with status `Completed`.
 
-13. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit.clarify` or `/speckit.plan`).
+13. Report completion with branch name, spec file path, checklist results, and readiness for the next phase.
+
+14. **Continue to next stage**: Present the next stage option to the user and wait for confirmation:
+   - If [NEEDS CLARIFICATION] markers remain or significant coverage gaps exist: Recommend clarification and, when the user confirms, load and execute `./speckit.clarify.md`
+   - If specification is complete and clear: Recommend planning and, when the user confirms, load and execute `./speckit.plan.md`
 
 ## General Guidelines
 

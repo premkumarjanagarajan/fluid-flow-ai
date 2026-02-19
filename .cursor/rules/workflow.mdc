@@ -46,7 +46,7 @@ You MUST output this exact block to the user so they can verify the workflow tri
 ## Step 2: Load the Full Workflow (MANDATORY — TOOL CALL)
 
 Immediately after displaying the gate confirmation, you MUST use the Read tool to load:
-`../../main-workflow/workflows/shared/commands/fluid-flow.md`
+`main-workflow/workflows/shared/commands/fluid-flow.md`
 
 This file contains the complete workflow with all stages:
 1. Branch Creation
