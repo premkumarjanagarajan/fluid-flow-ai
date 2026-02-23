@@ -98,8 +98,8 @@ A comprehensive SDLC with three phases and adaptive depth:
 ## Quick Start
 
 1. **Install in your project** -- Copy the `fluid-flow-ai/` directory into your workspace
-2. **Ensure Cursor IDE** -- Fluid Flow AI is designed for [Cursor](https://cursor.sh/) with its rules engine
-3. **Start developing** -- Make any development request. The workflow rule triggers automatically before any code changes
+2. **Configure your IDE** -- Fluid Flow AI works with any AI-capable IDE that supports rules or system prompts (e.g. Cursor, VS Code with GitHub Copilot). See [Getting Started](docs/GETTING-STARTED.md) for IDE-specific setup
+3. **Start developing** -- Make any development request. The workflow triggers automatically before any code changes
 
 For detailed setup instructions, see [Getting Started](docs/GETTING-STARTED.md).
 
@@ -138,7 +138,7 @@ For detailed setup instructions, see [Getting Started](docs/GETTING-STARTED.md).
 Fluid Flow AI is a **process framework**, not a traditional software application. It is composed of:
 
 - **Markdown** -- Workflow definitions, memory files, templates, and governance rules
-- **Cursor Rules** (`.mdc` files) -- IDE-level workflow enforcement
+- **IDE Rules** (`.mdc` for Cursor, `.github/copilot-instructions.md` for VS Code; additional formats may be added) -- IDE-level workflow enforcement via AI rules or system prompts
 - **Bash & PowerShell Scripts** -- Cross-OS automation for branch creation, prerequisite checks, and setup (auto-detected per OS)
 - **Mermaid** -- All diagrams use Mermaid syntax for consistency and portability
 

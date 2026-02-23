@@ -8,10 +8,10 @@ This guide walks you through setting up Fluid Flow AI and running your first wor
 
 | Requirement | Details |
 |-------------|---------|
-| **Cursor IDE** | [cursor.sh](https://cursor.sh/) -- Fluid Flow AI relies on Cursor's rules engine (`.mdc` files) |
+| **AI-Capable IDE** | An IDE with AI rules or system prompt support -- see [IDE Setup](#ide-setup) below for supported IDEs |
 | **Git** | Any recent version. Must be initialised in your workspace (`git init`) |
 | **Bash or PowerShell** | Bash is available by default on macOS and Linux. PowerShell is available on Windows (also cross-platform via [PowerShell 7+](https://github.com/PowerShell/PowerShell)). The workflow auto-detects which shell to use. |
-| **AI Model Access** | Cursor must be configured with an AI model (e.g., Claude, GPT-4) |
+| **AI Model Access** | Your IDE must be configured with an AI model (e.g., Claude, GPT-4) |
 
 ---
 
@@ -24,9 +24,6 @@ Copy the `fluid-flow-ai/` directory into the root of your workspace:
 ```
 your-project/
 ├── fluid-flow-ai/
-│   ├── .cursor/
-│   │   └── rules/
-│   │       └── workflow.mdc
 │   └── main-workflow/
 │       └── ...
 ├── src/                    # Your application code
@@ -34,11 +31,21 @@ your-project/
 └── ...
 ```
 
-### 2. Enable the Cursor Rule
+### 2. IDE Setup
 
-The `workflow.mdc` file in `.cursor/rules/` has `alwaysApply: true`, which means Cursor will evaluate it on every message. If your project already has a `.cursor/rules/` directory, copy `workflow.mdc` into it.
+Set up the workflow trigger for your IDE. Currently supported:
 
-Verify the rule is active by checking Cursor's rules panel -- you should see `fluid-flow-rules` listed.
+#### Option A: Cursor
+
+1. Copy `fluid-flow-ai/.cursor/rules/workflow.mdc` into your project's `.cursor/rules/` directory (create it if it doesn't exist)
+2. The file has `alwaysApply: true`, which means Cursor evaluates it on every message
+3. Verify the rule is active by checking Cursor's rules panel -- you should see `fluid-flow-rules` listed
+
+#### Option B: VS Code with GitHub Copilot
+
+1. Copy the workflow trigger content into `.github/copilot-instructions.md` at the root of your workspace (create the file if it doesn't exist)
+2. This file is automatically loaded as system context for GitHub Copilot chat
+3. Verify by asking Copilot a development question -- you should see the Fluid Flow activation banner
 
 ### 3. Initialise Git (if not already)
 
@@ -68,7 +75,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 ### Step 1: Make a Development Request
 
-In Cursor's chat, type any development request. For example:
+In your IDE's AI chat, type any development request. For example:
 
 > "Add a user authentication system with JWT tokens and role-based access control"
 
@@ -84,7 +91,7 @@ You should see the activation banner:
 ═══════════════════════════════════════════════════
 ```
 
-If you do not see this banner, the workflow did not trigger. Check that `workflow.mdc` is in `.cursor/rules/` and has `alwaysApply: true`.
+If you do not see this banner, the workflow did not trigger. See the [Troubleshooting](#troubleshooting) section below.
 
 ### Step 3: Welcome Message
 
@@ -170,7 +177,7 @@ The AI guides you through the chosen workflow with approval gates at each stage.
 
 ## Resuming Work
 
-If you close Cursor and return later, the workflow can resume from where you left off:
+If you close your IDE and return later, the workflow can resume from where you left off:
 
 1. The feature branch and `specs/{BRANCH_NAME}/` directory persist
 2. `state.md` tracks the current stage and progress
@@ -183,8 +190,15 @@ If you close Cursor and return later, the workflow can resume from where you lef
 
 ### Workflow Does Not Trigger
 
+**Cursor**:
 - Verify `workflow.mdc` is in `.cursor/rules/` relative to your workspace root
 - Check that the file has `alwaysApply: true` in its frontmatter
+
+**VS Code with GitHub Copilot**:
+- Verify `.github/copilot-instructions.md` exists at the workspace root
+- Ensure the workflow trigger content was copied correctly
+
+**General**:
 - Ensure the request is classified as a development request (not a question or discussion)
 
 ### Branch Creation Fails

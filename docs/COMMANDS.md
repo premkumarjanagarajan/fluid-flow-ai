@@ -581,13 +581,15 @@ Scripts are provided in both **Bash** and **PowerShell** for cross-platform supp
 
 **Bash**:
 ```bash
-./update-agent-context.sh cursor-agent
+./update-agent-context.sh <agent-type>
 ```
 
 **PowerShell**:
 ```powershell
-./update-agent-context.ps1 -AgentType cursor-agent
+./update-agent-context.ps1 -AgentType <agent-type>
 ```
+
+**Supported agent types**: `cursor-agent` (Cursor IDE), with additional IDE agents planned. The scripts detect which AI agent context file to update based on the provided type.
 
 ### common (shared utilities)
 
