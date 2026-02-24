@@ -15,6 +15,7 @@ Fluid Flow AI is a structured, governance-aware workflow framework that guides A
 - **Governance Backbone** -- ISO 27001 (security), ISO 9001 (quality), and ISO 50001 (energy) compliance built in
 - **Brownfield Intelligence** -- Automatic codebase reverse engineering with C4 architecture modelling
 - **Human-in-the-Loop** -- AI proposes, humans decide. Approval gates at every critical stage
+- **Change Risk Reporting** -- Automated CAB-grade risk reports enriched with full lifecycle context, not just the git diff
 - **State Tracking** -- Real-time progress tracking per feature with resume capability
 
 ---
@@ -90,8 +91,20 @@ A comprehensive SDLC with three phases and adaptive depth:
 | Phase | Stages |
 |-------|--------|
 | **Inception** | Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
-| **Construction** | Per-unit loop: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update. Then: Build & Test, RE Update |
-| **Operations** | Placeholder for deployment and monitoring workflows |
+| **Construction** | Per-unit loop: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update. Then: Build & Test, Change Risk Report |
+| **Operations** | Change Risk Report (implemented); deployment and monitoring workflows (planned) |
+
+### Change Risk Report
+
+After all code is written and tested, the workflow automatically generates a structured risk report for CAB reviewers at `specs/{BRANCH_NAME}/operations/risk-report.md`. The report analyses the complete `git diff` against the base branch, enriched with context accumulated throughout the lifecycle:
+
+- **Executive Summary** -- Risk level (LOW to CRITICAL), business impact, and approval recommendation
+- **Technical Risk Analysis** -- Infrastructure impact, operational risks, and change execution risks
+- **LiveOps / NOC Monitoring** -- Pre-change checklist, real-time monitoring plan, and post-change validation windows (0-4h, 4-24h, 24-48h)
+- **Rollback Strategy** -- Procedure, decision thresholds, and partial rollback options
+- **AI Confidence Score** -- Breakdown by technical feasibility, risk identification, rollback capability, and more
+
+The report can be regenerated at any time using `/fluid-flow.risk-report`, which supports both full and delta modes (analyse only changes since the last report).
 
 ---
 
