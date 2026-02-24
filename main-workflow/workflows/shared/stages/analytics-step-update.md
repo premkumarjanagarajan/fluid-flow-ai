@@ -68,6 +68,7 @@ Each calling command MUST provide:
 | Stage | Stage Name |
 |-------|-----------|
 | Build and Test | Build and Test |
+| Risk Report | Risk Report |
 
 ---
 
