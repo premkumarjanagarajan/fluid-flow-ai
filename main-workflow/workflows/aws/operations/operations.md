@@ -13,11 +13,19 @@ Any production-impacting change must consider:
 
 If omitted, AI must explain why.
 
+## Observability Platform
+
+When the project uses Coralogix, all dashboard, alert, and log management decisions must follow the rules in `../../../Instructions/technology/coralogix/general.md`. This includes:
+- Dashboard design following the three-tier hierarchy (overview, drill-down, investigation)
+- Alert design with correct severity mapping and alert type selection
+- Structured logging with TCO tier assignments
+- All Coralogix resources defined as code (Terraform or API)
+
 ## Future Scope
 
 The Operations phase will eventually include:
 - Deployment planning and execution
-- Monitoring and observability setup
+- Monitoring and observability setup (Coralogix dashboards, alerts, and log pipelines)
 - Incident response procedures
 - Maintenance and support workflows
 - Production readiness checklists
