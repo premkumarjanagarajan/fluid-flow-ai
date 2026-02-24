@@ -19,7 +19,7 @@ These files MUST be loaded at the start of every command or workflow stage:
 - Load `architecture/adr-integrity-gate.md` -- ADR compliance checking and extension rules
 - Load `meta/continuous-learning.md` -- Systemic issue detection, rule/ADR improvement proposals
 - Load `overconfidence-prevention.md` -- Prevents confidence without evidence
-
+- Load `presentations/general.md` -- Guidelines for Slidev presentations generations
 ---
 
 ## Conditional: Security, Data, Identity, or Infrastructure
