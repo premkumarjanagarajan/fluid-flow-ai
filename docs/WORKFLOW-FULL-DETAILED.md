@@ -949,11 +949,11 @@ flowchart TD
 
 | Stage | Instruction File | Key Outputs |
 |-------|-----------------|-------------|
-| Functional Design | `aws/construction/functional-design.md` | `specs/{BRANCH}/construction/{unit}/functional-design/{business-logic-model,business-rules,domain-entities}.md` |
-| NFR Requirements | `aws/construction/nfr-requirements.md` | `specs/{BRANCH}/construction/{unit}/nfr-requirements/{nfr-requirements,tech-stack-decisions}.md` |
-| NFR Design | `aws/construction/nfr-design.md` | `specs/{BRANCH}/construction/{unit}/nfr-design/{nfr-design-patterns,logical-components}.md` |
-| Infrastructure Design | `aws/construction/infrastructure-design.md` | `specs/{BRANCH}/construction/{unit}/infrastructure-design/{infrastructure-design,deployment-architecture}.md` |
-| Code Generation | `aws/construction/code-generation.md` | Application code at workspace root + `specs/{BRANCH}/construction/{unit}/code/*.md` |
+| Functional Design | `aws/construction/functional-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/functional-design/{business-logic-model,business-rules,domain-entities}.md` |
+| NFR Requirements | `aws/construction/nfr-requirements.md` | `specs/{BRANCH_NAME}/construction/{unit}/nfr-requirements/{nfr-requirements,tech-stack-decisions}.md` |
+| NFR Design | `aws/construction/nfr-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/nfr-design/{nfr-design-patterns,logical-components}.md` |
+| Infrastructure Design | `aws/construction/infrastructure-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/infrastructure-design/{infrastructure-design,deployment-architecture}.md` |
+| Code Generation | `aws/construction/code-generation.md` | Application code at workspace root + `specs/{BRANCH_NAME}/construction/{unit}/code/*.md` |
 | Onboarding Update | `aws/construction/onboarding-update.md` | Updated feature registry + onboarding decks |
 
 Each stage follows the pattern:
