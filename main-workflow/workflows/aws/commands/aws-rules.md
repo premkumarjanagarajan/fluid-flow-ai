@@ -73,6 +73,10 @@ The AI model intelligently assesses what stages are needed based on:
 - Load `../../../Instructions/technology/csharp/general.md` for dotnet guidelines
 - Load `../../../Instructions/technology/terraform/general.md` for terraform guidelines
 
+## CONDITIONAL: Observability Platform Instructions
+Load when the project uses Coralogix for observability, monitoring, or log management:
+- Load `../../../Instructions/technology/coralogix/general.md` for Coralogix dashboard, alert, and log management guidelines
+
 ## MANDATORY: Content Validation
 **CRITICAL**: Before creating ANY file, you MUST validate content according to the content-validation rules loaded from the shared memory manifest:
 - Validate Mermaid diagram syntax

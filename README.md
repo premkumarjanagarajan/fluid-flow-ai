@@ -92,7 +92,7 @@ A comprehensive SDLC with three phases and adaptive depth:
 |-------|--------|
 | **Inception** | Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
 | **Construction** | Per-unit loop: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update. Then: Build & Test, Change Risk Report |
-| **Operations** | Change Risk Report (implemented); deployment and monitoring workflows (planned) |
+| **Operations** | Change Risk Report (implemented); Observability platform rules (Coralogix dashboards, alerts, log management); deployment and monitoring workflows (planned) |
 
 ### Change Risk Report
 
@@ -155,7 +155,7 @@ Fluid Flow AI is a **process framework**, not a traditional software application
 - **Bash & PowerShell Scripts** -- Cross-OS automation for branch creation, prerequisite checks, and setup (auto-detected per OS)
 - **Mermaid** -- All diagrams use Mermaid syntax for consistency and portability
 
-It is language- and platform-agnostic. The framework includes technology-specific guidelines for .NET/C#, and Terraform, but the workflow itself applies to any stack.
+It is language- and platform-agnostic. The framework includes technology-specific guidelines for .NET/C#, Terraform, and Coralogix (observability), but the workflow itself applies to any stack.
 
 ---
 

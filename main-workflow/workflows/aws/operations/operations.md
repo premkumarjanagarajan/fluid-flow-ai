@@ -39,7 +39,7 @@ When the project uses Coralogix, all dashboard, alert, and log management decisi
 
 The Operations phase will eventually include:
 - Deployment planning and execution
-- Monitoring and observability setup (expanding on risk report recommendations)
+- Monitoring and observability setup (Coralogix dashboards, alerts, and log pipelines — expanding on risk report recommendations)
 - Incident response procedures
 - Maintenance and support workflows
 - Production readiness checklists
