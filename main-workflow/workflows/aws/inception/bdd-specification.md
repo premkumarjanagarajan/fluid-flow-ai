@@ -57,7 +57,7 @@ BDD Specification focuses on:
 **CRITICAL**: Before proceeding, perform this assessment:
 
 ### Assessment Process
-1. **Analyse story context**:
+1. **Analyze story context**:
    - Review `specs/{BRANCH_NAME}/inception/user-stories/stories.md`
    - Identify stories with multiple acceptance criteria or scenario paths
    - Assess whether business stakeholders would benefit from readable specs
