@@ -224,6 +224,61 @@ If performance doesn't meet requirements:
 
 Based on project requirements, generate additional test instruction files:
 
+### BDD Tests (If BDD Specification was executed)
+Create `specs/{BRANCH_NAME}/construction/build-and-test/bdd-test-instructions.md`:
+
+```markdown
+# BDD Test Execution Instructions
+
+## Purpose
+Execute the Gherkin feature files against their step definitions to validate that the system
+behaves exactly as specified in the living documentation.
+
+## Prerequisites
+- BDD framework installed and configured (see `specs/{BRANCH_NAME}/inception/bdd/bdd-strategy.md`)
+- Step definitions generated for all units (see Code Generation outputs)
+- Test environment running with required services available
+
+## Feature Files Location
+`specs/{BRANCH_NAME}/inception/bdd/features/`
+
+## Run BDD Tests
+
+### 1. Execute Full BDD Suite
+\`\`\`bash
+[Command to run all feature files]
+# SpecFlow (.NET): dotnet test --filter Category=BDD
+# Cucumber (Java): mvn test -Dcucumber.features=path/to/features
+# pytest-bdd (Python): pytest --bdd tests/
+# Behave (Python): behave features/
+\`\`\`
+
+### 2. Run by Tag
+\`\`\`bash
+[Command to run scenarios by tag]
+# Example (Cucumber): mvn test -Dcucumber.filter.tags="@smoke"
+# Example (Behave): behave --tags=@regression
+\`\`\`
+
+### 3. Review Scenario Results
+- **Expected**: All scenarios pass; 0 failing; 0 undefined steps
+- **Report Location**: [Path to BDD HTML/JSON report]
+- **Interpret Results**:
+  - **Passed**: Scenario behaviour confirmed
+  - **Failed**: Behaviour diverges from specification — fix code, not the scenario
+  - **Pending/Undefined**: Step definition missing — generate and implement before marking complete
+
+### 4. Fix Undefined or Failing Steps
+If steps are undefined or failing:
+1. Check `specs/{BRANCH_NAME}/inception/bdd/step-catalogue.md` for correct step wording
+2. Verify step definition binding matches the Gherkin text exactly
+3. Review `specs/{BRANCH_NAME}/construction/{unit-name}/functional-design/bdd-step-mapping.md` for the intended implementation
+4. Re-run after fix to confirm green
+
+## Scenario Traceability
+Each scenario includes a story ID comment — use these to trace failures back to the originating user story and acceptance criteria.
+```
+
 ### Contract Tests (For Microservices)
 Create `specs/{BRANCH_NAME}/construction/build-and-test/contract-test-instructions.md`:
 - API contract validation between services
@@ -279,6 +334,14 @@ Create `specs/{BRANCH_NAME}/construction/build-and-test/build-and-test-summary.m
 - **Error Rate**: [Actual] (Target: [Expected])
 - **Status**: [Pass/Fail]
 
+### BDD Tests
+- **Feature Files**: [X]
+- **Total Scenarios**: [X]
+- **Passed**: [X]
+- **Failed**: [X]
+- **Pending / Undefined**: [X]
+- **Status**: [Pass/Fail/N/A]
+
 ### Additional Tests
 - **Contract Tests**: [Pass/Fail/N/A]
 - **Security Tests**: [Pass/Fail/N/A]
@@ -324,8 +387,9 @@ Present comprehensive message:
 2. ✅ unit-test-instructions.md
 3. ✅ integration-test-instructions.md
 4. ✅ performance-test-instructions.md (if applicable)
-5. ✅ [additional test files as needed]
-6. ✅ build-and-test-summary.md
+5. ✅ bdd-test-instructions.md (if BDD Specification was executed)
+6. ✅ [additional test files as needed]
+7. ✅ build-and-test-summary.md
 
 Review the summary in specs/{BRANCH_NAME}/construction/build-and-test/build-and-test-summary.md
 

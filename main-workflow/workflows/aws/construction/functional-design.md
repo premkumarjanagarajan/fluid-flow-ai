@@ -50,6 +50,7 @@ Design detailed business logic for the unit, technology-agnostic and focused pur
 - **Integration Points** - Ask about external system interactions, APIs, and data exchange
 - **Error Handling** - Ask about error scenarios, validation failures, and exception handling
 - **Business Scenarios** - Ask about edge cases, alternative flows, and complex business situations
+- **BDD Coverage** (if BDD Specification was executed) - Ask which BDD scenarios from `specs/{BRANCH_NAME}/inception/bdd/features/` directly exercise this unit's business logic, and whether any new edge-case scenarios should be added to the feature files based on the logic being designed
 
 ### Step 4: Store Plan
 - Save as `specs/{BRANCH_NAME}/construction/plans/{unit-name}-functional-design-plan.md`
@@ -69,6 +70,10 @@ Design detailed business logic for the unit, technology-agnostic and focused pur
 - Create `specs/{BRANCH_NAME}/construction/{unit-name}/functional-design/business-logic-model.md`
 - Create `specs/{BRANCH_NAME}/construction/{unit-name}/functional-design/business-rules.md`
 - Create `specs/{BRANCH_NAME}/construction/{unit-name}/functional-design/domain-entities.md`
+- **If BDD Specification was executed**: Create `specs/{BRANCH_NAME}/construction/{unit-name}/functional-design/bdd-step-mapping.md`
+  - Map each Gherkin `Given / When / Then` step from the relevant feature files to the specific domain entity, business rule, or service method that implements it
+  - Identify any BDD scenarios that cannot be mapped (gaps) and flag them for scenario update or new scenario creation
+  - This artifact is the technical contract between the Gherkin specification and the implementation, and is used by Code Generation to produce accurate step definitions
 
 ### Step 7: Present Completion Message
 - Present completion message in this structure:

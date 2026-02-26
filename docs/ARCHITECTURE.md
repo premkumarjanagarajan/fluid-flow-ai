@@ -66,7 +66,7 @@ flowchart TB
 
     subgraph AIDLC["AWS AI-DLC Workflow"]
         direction TB
-        INC["Inception Phase<br/><i>6 stages</i>"]
+        INC["Inception Phase<br/><i>7 stages</i>"]
         CON["Construction Phase<br/><i>Per-unit loop + Build & Test</i>"]
         OPS["Operations Phase<br/><i>Placeholder</i>"]
     end
@@ -165,7 +165,7 @@ A linear, command-driven pipeline. Each command is a standalone `.md` file that 
 
 #### AWS AI-DLC
 
-A phase-based engine with adaptive depth. Stages are conditional -- the AI assesses what is needed based on complexity, scope, and risk. The Construction phase uses a per-unit loop where each unit of work goes through design, NFR assessment, infrastructure design, and code generation before the next unit starts.
+A phase-based engine with adaptive depth. Stages are conditional -- the AI assesses what is needed based on complexity, scope, and risk. The Inception phase includes a BDD Specification stage that converts user story acceptance criteria into Gherkin feature files when business behaviour contracts are needed. The Construction phase uses a per-unit loop where each unit goes through design, NFR assessment, infrastructure design, step definition generation (if BDD was executed), and code generation before the next unit starts.
 
 ### 5. Automation Scripts
 

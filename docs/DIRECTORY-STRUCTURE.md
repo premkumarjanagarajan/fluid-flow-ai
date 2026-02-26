@@ -159,6 +159,7 @@ fluid-flow-ai/
             ├── inception/                        # Inception phase stage definitions
             │   ├── adrs-technical-principles.md  # ADR and technical principle rules
             │   ├── application-design.md         # Application design stage
+            │   ├── bdd-specification.md          # BDD Specification stage
             │   ├── onboarding-presentations.md   # Onboarding presentation generation
             │   ├── requirements-analysis.md      # Requirements analysis stage
             │   ├── units-generation.md           # Units generation stage
@@ -226,6 +227,10 @@ specs/{BRANCH_NAME}/                              # e.g., specs/001-proj-1234-ad
 │   ├── plans/
 │   ├── requirements/
 │   ├── user-stories/
+│   ├── bdd/                                      # BDD Specification stage (conditional)
+│   │   ├── features/                             # Gherkin .feature files (one per epic or story group)
+│   │   ├── bdd-strategy.md                       # Framework choice, tagging convention, test data approach
+│   │   └── step-catalogue.md                     # All Gherkin steps with domain meaning
 │   ├── onboarding/
 │   │   ├── engineers/
 │   │   │   └── onboarding-engineers.md
@@ -236,16 +241,17 @@ specs/{BRANCH_NAME}/                              # e.g., specs/001-proj-1234-ad
 ├── construction/                                 # Construction phase (AWS AI-DLC)
 │   ├── plans/
 │   ├── {unit-name}/                              # One directory per unit
-│   │   ├── functional-design/
+│   │   ├── functional-design/                    # Includes bdd-step-mapping.md when BDD was executed
 │   │   ├── nfr-requirements/
 │   │   ├── nfr-design/
 │   │   ├── infrastructure-design/
-│   │   └── code/                                 # Markdown summaries only
+│   │   └── code/                                 # Markdown summaries; includes bdd-step-definitions-summary.md when BDD was executed
 │   ├── build-and-test/
 │   │   ├── build-instructions.md
 │   │   ├── unit-test-instructions.md
 │   │   ├── integration-test-instructions.md
 │   │   ├── performance-test-instructions.md
+│   │   ├── bdd-test-instructions.md              # Generated when BDD Specification was executed
 │   │   └── build-and-test-summary.md
 │   └── coverage-improvement-plan.md
 │
