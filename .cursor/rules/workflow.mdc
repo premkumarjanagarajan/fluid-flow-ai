@@ -29,11 +29,11 @@ Determine if the user's message is a **development request**. A development requ
 
 ## Step 1: Display the Workflow Gate Confirmation (MANDATORY — VISIBLE OUTPUT)
 
-You MUST output this exact block to the user so they can verify the workflow triggered:
+First, read the version from the `VERSION` file at the repository root. Then output the following block to the user (replacing `{VERSION}` with the value read from the file):
 
 ```
 ═══════════════════════════════════════════════════
-  FLUID-FLOW AI v6 WORKFLOW ACTIVATED
+  FLUID-FLOW AI v{VERSION}
   All development follows the unified lifecycle.
   Reading workflow instructions now...
 ═══════════════════════════════════════════════════

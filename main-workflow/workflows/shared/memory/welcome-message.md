@@ -4,7 +4,9 @@
 
 ---
 
-# Welcome to Fluid Flow AI - Adaptive Software Development
+# Welcome to Fluid Flow AI v{VERSION} - Adaptive Software Development
+
+> **Note to AI**: Replace `{VERSION}` above with the value from the `VERSION` file at the repository root (same value read during the workflow gate confirmation).
 
 I'll guide you through an adaptive software development workflow that intelligently tailors itself to your specific needs.
 
