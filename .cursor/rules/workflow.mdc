@@ -33,7 +33,7 @@ First, read the version from the `VERSION` file at the repository root. Then out
 
 ```
 ═══════════════════════════════════════════════════
-  FLUID-FLOW AI v{VERSION}
+  FLUID-FLOW AI v{VERSION} WORKFLOW ACTIVATED
   All development follows the unified lifecycle.
   Reading workflow instructions now...
 ═══════════════════════════════════════════════════
