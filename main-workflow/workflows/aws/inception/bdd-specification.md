@@ -299,7 +299,7 @@ Present completion message in this structure:
 
 2. **AI Summary** (optional): Provide structured bullet-point summary
    - List feature files generated with scenario counts
-   - Summarise tagging strategy applied
+   - Summarize tagging strategy applied
    - Note any stories where BDD coverage gaps were identified
    - DO NOT include workflow instructions ("please review", "let me know", "proceed to next phase")
    - Keep factual and content-focused
