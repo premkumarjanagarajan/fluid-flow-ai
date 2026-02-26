@@ -81,7 +81,7 @@ BDD Specification focuses on:
 
 ## Request Analysis
 - **Feature**: [Brief summary]
-- **Stories Analysed**: [Count of stories reviewed]
+- **Stories Analyzed**: [Count of stories reviewed]
 - **Scenario Complexity**: [Simple / Moderate / Complex]
 - **Stakeholders Requiring Readable Specs**: [List]
 
