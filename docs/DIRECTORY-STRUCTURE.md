@@ -25,7 +25,11 @@ fluid-flow-ai/
 │
 ├── .gitignore                                    # Git ignore patterns
 │
+├── CHANGELOG.md                                  # Release history and version changes
+│
 ├── README.md                                     # Project README
+│
+├── VERSION                                       # Current version (semver)
 │
 ├── docs/                                         # Documentation
 │   ├── ARCHITECTURE.md                           # System design and component relationships
