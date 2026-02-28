@@ -337,6 +337,7 @@ Based on the user's chosen workflow:
      | Requirements Analysis | | | | Pending |
      | Onboarding Presentations | | | | Pending |
      | User Stories | | | | Pending |
+     | BDD Specification | | | | Pending |
      | Workflow Planning | | | | Pending |
      | Application Design | | | | Pending |
      | Units Generation | | | | Pending |

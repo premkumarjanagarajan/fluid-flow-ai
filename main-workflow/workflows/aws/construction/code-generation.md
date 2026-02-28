@@ -40,6 +40,7 @@ This stage generates code for each unit of work through two integrated parts:
   - Repository Layer Unit Testing
   - Repository Layer Summary
   - Database Migration Scripts (if data models exist)
+  - BDD Step Definitions Generation (if BDD Specification was executed — see note below)
   - Documentation Generation (API docs, README updates)
   - Deployment Artifacts Generation
 - [ ] Number each step sequentially
@@ -184,6 +185,15 @@ This stage generates code for each unit of work through two integrated parts:
 - If exists: Modify in-place (never create copies like `ClassName_modified.java`)
 - If doesn't exist: Create new file
 - Verify no duplicate files after generation (Step 12)
+
+### BDD Step Definitions Rules (Conditional — when BDD Specification was executed)
+- **Source**: Read `specs/{BRANCH_NAME}/construction/{unit-name}/functional-design/bdd-step-mapping.md` before generating step definitions
+- **Location**: Step definition files are application code — place them in the workspace root under the project's existing test structure (e.g., `tests/steps/`, `src/test/java/.../steps/`, `Features/StepDefinitions/`)
+- **One class per feature file**: Group step definitions by the feature file they serve to keep them cohesive and maintainable
+- **No duplicate steps**: Before generating a new step definition, check the step catalogue (`specs/{BRANCH_NAME}/inception/bdd/step-catalogue.md`) for existing equivalent steps
+- **Binding only, no assertions in steps**: Step definitions wire Gherkin language to service/domain calls; assertions belong in the domain/service layer, not the step body
+- **Hooks**: Generate `Before` / `After` hooks for test setup and teardown only if the BDD plan specifies shared state requirements
+- **Documentation**: Generate a markdown summary at `specs/{BRANCH_NAME}/construction/{unit-name}/code/bdd-step-definitions-summary.md` listing all generated step definition files and the Gherkin steps they implement
 
 ### Planning Phase Rules
 - Create explicit, numbered steps for all generation activities

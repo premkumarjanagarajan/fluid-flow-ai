@@ -10,14 +10,14 @@
 - **OPERATIONS PHASE**: Placeholder for future deployment and monitoring workflows
 
 ## The Adaptive Workflow:
-**Requirements Analysis** (always, adaptive depth) → **Conditional Phases** (as needed) → **Workflow Planning** (always) → **Code Generation** (always, per-unit) → **Build and Test** (always) → **RE Update** (if brownfield)
+**Requirements Analysis** (always, adaptive depth) → **Conditional Phases** (as needed, including BDD Specification) → **Workflow Planning** (always) → **Code Generation** (always, per-unit) → **Build and Test** (always) → **RE Update** (if brownfield)
 
 **Note**: Workspace Detection and Reverse Engineering are handled by the shared entry point (fluid-flow-rules.md) before this workflow starts. Their artifacts are available at `specs/{BRANCH_NAME}/workspace-detection.md` and `specs/_project/reverse-engineering/`.
 
 ## How It Works:
 - **AI analyzes** your request, workspace, and complexity to determine which stages are needed
 - **These stages always execute**: Requirements Analysis (adaptive depth), Workflow Planning, Code Generation (per-unit), Build and Test
-- **All other stages are conditional**: User Stories, Application Design, Units Generation, per-unit design stages (Functional Design, NFR Requirements, NFR Design, Infrastructure Design)
+- **All other stages are conditional**: User Stories, BDD Specification, Application Design, Units Generation, per-unit design stages (Functional Design, NFR Requirements, NFR Design, Infrastructure Design)
 - **No fixed sequences**: Stages execute in the order that makes sense for your specific task
 
 ## Your Team's Role:
@@ -37,6 +37,7 @@ flowchart TD
     subgraph INCEPTION["🔵 INCEPTION PHASE"]
         RA["Requirements Analysis<br/><b>ALWAYS</b>"]
         Stories["User Stories<br/><b>CONDITIONAL</b>"]
+        BDD["BDD Specification<br/><b>CONDITIONAL</b>"]
         WP["Workflow Planning<br/><b>ALWAYS</b>"]
         AppDesign["Application Design<br/><b>CONDITIONAL</b>"]
         UnitsG["Units Generation<br/><b>CONDITIONAL</b>"]
@@ -60,7 +61,9 @@ flowchart TD
     
     RA -.-> Stories
     RA --> WP
+    Stories -.-> BDD
     Stories --> WP
+    BDD --> WP
     
     WP -.-> AppDesign
     WP -.-> UnitsG
@@ -88,6 +91,7 @@ flowchart TD
     style OPS fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5
     style REU fill:#42A5F5,stroke:#1565C0,stroke-width:3px,stroke-dasharray: 5 5
     style Stories fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
+    style BDD fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
     style AppDesign fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
     style UnitsG fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
     style FD fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5
@@ -114,17 +118,18 @@ flowchart TD
 **🔵 INCEPTION PHASE** - Planning and Architecture (AWS AI-DLC starts here)
 - Requirements Analysis: Gather and validate requirements (ALWAYS - Adaptive depth)
 - User Stories: Create user stories and personas (CONDITIONAL)
+- BDD Specification: Convert acceptance criteria into Gherkin feature files; produces living documentation and executable specifications (CONDITIONAL)
 - Workflow Planning: Create execution plan (ALWAYS)
 - Application Design: High-level component identification and service layer design (CONDITIONAL)
 - Units Generation: Decompose into units of work (CONDITIONAL)
 
 **🟢 CONSTRUCTION PHASE** - Design, Implementation, Build and Test
-- Functional Design: Detailed business logic design per unit (CONDITIONAL, per-unit)
+- Functional Design: Detailed business logic design per unit; includes BDD step mapping when BDD Specification was executed (CONDITIONAL, per-unit)
 - NFR Requirements: Determine NFRs and select tech stack (CONDITIONAL, per-unit)
 - NFR Design: Incorporate NFR patterns and logical components (CONDITIONAL, per-unit)
 - Infrastructure Design: Map to actual infrastructure services (CONDITIONAL, per-unit)
-- Code Generation: Generate code with Part 1 - Planning, Part 2 - Generation (ALWAYS, per-unit)
-- Build and Test: Build all units and execute comprehensive testing (ALWAYS)
+- Code Generation: Generate code with Part 1 - Planning, Part 2 - Generation; includes step definition generation when BDD Specification was executed (ALWAYS, per-unit)
+- Build and Test: Build all units and execute comprehensive testing; includes BDD test execution instructions when BDD Specification was executed (ALWAYS)
 - RE Update: Incrementally update reverse engineering artifacts (CONDITIONAL - if brownfield)
 
 **🟡 OPERATIONS PHASE** - Placeholder

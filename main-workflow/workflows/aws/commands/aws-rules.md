@@ -121,6 +121,7 @@ The welcome message is displayed by the shared entry point (fluid-flow-rules.md)
 - Onboarding Presentations (CONDITIONAL)
 - Requirements Analysis (ALWAYS - Adaptive depth)
 - User Stories (CONDITIONAL)
+- BDD Specification (CONDITIONAL)
 - Workflow Planning (ALWAYS)
 - Application Design (CONDITIONAL)
 - Units Generation (CONDITIONAL)
@@ -250,6 +251,50 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 12. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = User Stories`
 
 **If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = User Stories`
+
+## BDD Specification (CONDITIONAL)
+
+**INTELLIGENT ASSESSMENT**: Use multi-factor analysis to determine if BDD scenarios add value.
+
+**ALWAYS Execute IF** (High Priority Indicators):
+- User Stories were generated with acceptance criteria
+- Feature involves complex business rules with multiple scenario paths
+- QA or testing stakeholders require readable, executable specifications
+- Traceability from requirement to test is required (regulated or compliance context)
+- Cross-team collaboration requires a shared business language
+
+**LIKELY Execute IF** (Medium Priority — Assess Complexity):
+- Backend logic with multiple conditional paths affecting observable outcomes
+- Integration scenarios where service interaction sequence and state matter
+- Data transformation or validation rules with defined input/output expectations
+- Security behaviour such as authentication, authorisation, or rate limiting flows
+
+**SKIP ONLY IF** (Low Priority — Simple Cases):
+- Pure infrastructure changes with no business behaviour
+- Refactoring with zero functional change, already covered by existing tests
+- Simple CRUD with no business rules or conditional logic
+- Developer tooling, build process, or CI/CD-only changes
+
+**BDD Specification has two parts within one stage**:
+1. **Part 1 — Planning**: Assess BDD need, establish domain language, ask clarifying questions, get approval on feature file structure and scenario approach
+2. **Part 2 — Generation**: Execute approved plan to generate Gherkin feature files and BDD strategy artifacts
+
+**Execution**:
+1. **MANDATORY**: Log any user input during this phase in audit.md
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = BDD Specification`
+3. Load all steps from `../inception/bdd-specification.md`
+4. **MANDATORY**: Perform intelligent assessment (Step 1 in bdd-specification.md) to validate BDD is needed
+5. Load user stories from `specs/{BRANCH_NAME}/inception/user-stories/stories.md`
+6. If Requirements Analysis was executed, reference requirements when creating scenarios
+7. **PART 1 — Planning**: Establish domain language, ask clarifying questions, get approval on BDD plan
+8. **PART 2 — Generation**: Execute approved plan to generate Gherkin feature files and BDD strategy artifacts
+9. **Wait for Explicit Approval**: Follow approval format from bdd-specification.md detailed steps — DO NOT PROCEED until user confirms
+10. **MANDATORY**: Log user's response in audit.md with complete raw input
+11. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = BDD Specification`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = BDD Specification`
+
+---
 
 ## Workflow Planning (ALWAYS EXECUTE)
 
@@ -684,6 +729,10 @@ the AI must:
 │       │   ├── plans/
 │       │   ├── requirements/
 │       │   ├── user-stories/
+│       │   ├── bdd/                     # BDD Specification stage output
+│       │   │   ├── features/            # Gherkin .feature files
+│       │   │   ├── bdd-strategy.md      # Framework, tagging, test data strategy
+│       │   │   └── step-catalogue.md    # All steps with domain meaning
 │       │   ├── onboarding/
 │       │   └── application-design/
 │       ├── construction/                # 🟢 CONSTRUCTION PHASE
