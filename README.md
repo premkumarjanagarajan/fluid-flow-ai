@@ -1,4 +1,4 @@
-# Fluid Flow AI
+# Fluid Flow AI v0.1
 
 **Adaptive Software Development Workflow for AI-Assisted Engineering**
 
@@ -116,6 +116,20 @@ For detailed setup instructions, see [Getting Started](docs/GETTING-STARTED.md).
 | [Reverse Engineering](docs/REVERSE-ENGINEERING.md) | Artifact reference with content descriptions and samples |
 | [Governance](docs/GOVERNANCE.md) | Compliance standards, security rules, and review gates |
 | [Directory Structure](docs/DIRECTORY-STRUCTURE.md) | File and folder layout reference |
+| [Changelog](CHANGELOG.md) | Release history and version changes |
+
+---
+
+## Releasing
+
+Bump `VERSION`, add a new section to `CHANGELOG.md`, update the `README.md` title, then commit and tag:
+
+```sh
+git add CHANGELOG.md VERSION README.md
+git commit -m "release: v{VERSION}"
+git tag -a "v{VERSION}" -m "Release v{VERSION}"
+git push && git push --tags
+```
 
 ---
 
