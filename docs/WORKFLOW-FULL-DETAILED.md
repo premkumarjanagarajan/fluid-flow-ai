@@ -22,6 +22,7 @@
    - [Tasks](#44-tasks)
    - [Checklist (Optional)](#45-checklist-optional)
    - [Implement](#46-implement)
+   - [VAPT (Mandatory)](#47-vapt-mandatory)
 5. [AWS AI-DLC Workflow](#5-aws-ai-dlc-workflow)
    - [Inception Phase](#51-inception-phase)
    - [Construction Phase](#52-construction-phase)
@@ -38,6 +39,7 @@
 ## 1. Master Flow Diagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     UserRequest(["User Development Request"])
 
@@ -70,7 +72,8 @@ flowchart TD
         SK4["Tasks"]
         SK5["Checklist (optional)"]
         SK6["Implement"]
-        SK1 --> SK2 --> SK3 --> SK4 --> SK5 --> SK6
+        SK7["VAPT"]
+        SK1 --> SK2 --> SK3 --> SK4 --> SK5 --> SK6 --> SK7
     end
 
     subgraph AIDLC["AWS AI-DLC WORKFLOW"]
@@ -79,6 +82,7 @@ flowchart TD
             A1["Requirements Analysis"]
             A2["Onboarding Presentations (cond.)"]
             A3["User Stories (cond.)"]
+            A3B["BDD Specification (cond.)"]
             A4["Workflow Planning"]
             A5["Application Design (cond.)"]
             A6["Units Generation (cond.)"]
@@ -91,11 +95,14 @@ flowchart TD
             C5["Code Generation"]
             C6["Onboarding Update (cond.)"]
             C7["Build and Test"]
+            C8["VAPT"]
+            C9["Risk Report"]
         end
-        A1 --> A2 --> A3 --> A4 --> A5 --> A6
+        A1 --> A2 --> A3 --> A3B --> A4 --> A5 --> A6
         A6 --> C1 --> C2 --> C3 --> C4 --> C5 --> C6
         C6 -->|Next Unit| C1
         C6 -->|All Units Done| C7
+        C7 --> C8 --> C9
     end
 
     subgraph POST["POST-IMPLEMENTATION"]
@@ -108,17 +115,21 @@ flowchart TD
     T5 --> S0
     S5 -->|Spec-Kit| SK1
     S5 -->|AWS AI-DLC| A1
-    SK6 --> P1
-    C7 --> P1
+    SK7 --> P1
+    C9 --> P1
 
-    style TRIGGER fill:#E1BEE7,stroke:#6A1B9A,stroke-width:2px
-    style ENTRY fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style TRIGGER fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px
+    style ENTRY fill:#64B5F6,stroke:#1565C0,stroke-width:2px
     style SPECKIT fill:#81C784,stroke:#2E7D32,stroke-width:2px
-    style AIDLC fill:#FFE0B2,stroke:#E65100,stroke-width:2px
+    style AIDLC fill:#FFB74D,stroke:#E65100,stroke-width:2px
     style INCEPTION fill:#FFB74D,stroke:#E65100,stroke-width:2px
-    style CONSTRUCTION fill:#FFF176,stroke:#F57F17,stroke-width:2px
-    style POST fill:#B2DFDB,stroke:#00695C,stroke-width:2px
+    style CONSTRUCTION fill:#FFD54F,stroke:#F57F17,stroke-width:2px
+    style POST fill:#4DB6AC,stroke:#00695C,stroke-width:2px
     style UserRequest fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px
+    style SK7 fill:#E57373,stroke:#B71C1C,stroke-width:2px
+    style C8 fill:#E57373,stroke:#B71C1C,stroke-width:2px
+    style C9 fill:#FFA726,stroke:#E65100,stroke-width:2px
+    style A3B fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
 ```
 
 ---
@@ -128,6 +139,7 @@ flowchart TD
 Every development request passes through the trigger gate defined in the Cursor workspace rule before any workflow logic begins.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["User message received"] --> B{"Is it a<br/>development request?"}
     B -->|No| C["Respond normally<br/>(no workflow)"]
@@ -138,8 +150,8 @@ flowchart TD
     G --> H["Display Welcome Message to User"]
     H --> I["Proceed to Stage 0"]
 
-    style B fill:#FFF9C4,stroke:#F57F17,stroke-width:2px
-    style D fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px
+    style B fill:#FFD54F,stroke:#F57F17,stroke-width:2px
+    style D fill:#81C784,stroke:#2E7D32,stroke-width:2px
 ```
 
 ### Actions
@@ -176,6 +188,7 @@ flowchart TD
 All development features share stages 0 through 5 before diverging into a workflow-specific path.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart LR
     S0["Stage 0<br/>Shell Detection"] --> S1["Stage 1<br/>Branch Creation"]
     S1 --> S2["Stage 2<br/>Workspace Detection"]
@@ -185,13 +198,13 @@ flowchart LR
     RE --> S4["Stage 4<br/>Workflow Selection"]
     S4 --> S5["Stage 5<br/>Workflow Routing"]
 
-    style S0 fill:#BBDEFB,stroke:#1565C0
-    style S1 fill:#BBDEFB,stroke:#1565C0
-    style S2 fill:#BBDEFB,stroke:#1565C0
-    style S3 fill:#FFF9C4,stroke:#F57F17,stroke-width:2px
-    style S4 fill:#BBDEFB,stroke:#1565C0
-    style S5 fill:#BBDEFB,stroke:#1565C0
-    style RE fill:#FFCCBC,stroke:#BF360C
+    style S0 fill:#64B5F6,stroke:#1565C0
+    style S1 fill:#64B5F6,stroke:#1565C0
+    style S2 fill:#64B5F6,stroke:#1565C0
+    style S3 fill:#FFD54F,stroke:#F57F17,stroke-width:2px
+    style S4 fill:#64B5F6,stroke:#1565C0
+    style S5 fill:#64B5F6,stroke:#1565C0
+    style RE fill:#FF8A65,stroke:#BF360C
 ```
 
 ---
@@ -203,6 +216,7 @@ flowchart LR
 **Reference file**: `main-workflow/workflows/shared/stages/shell-detection.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Run: uname -s 2>/dev/null || echo WINDOWS"] --> B{"Output contains?"}
     B -->|Darwin / Linux| C["SHELL_TYPE = bash"]
@@ -212,8 +226,8 @@ flowchart TD
     D --> F
     E --> F
 
-    style A fill:#E3F2FD,stroke:#1565C0
-    style F fill:#C8E6C9,stroke:#2E7D32
+    style A fill:#64B5F6,stroke:#1565C0
+    style F fill:#81C784,stroke:#2E7D32
 ```
 
 | Action | Detail |
@@ -231,6 +245,7 @@ flowchart TD
 **Reference file**: `main-workflow/workflows/shared/commands/fluid-flow.md` (Stage 1 section)
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Parse user request"] --> B["Ask for JIRA Ticket Number"]
     B --> C["Wait for user response"]
@@ -249,8 +264,8 @@ flowchart TD
     N --> O["Verify all artifacts"]
     O --> P["Mark checkbox in state.md"]
 
-    style F fill:#FFF9C4,stroke:#F57F17,stroke-width:2px
-    style O fill:#C8E6C9,stroke:#2E7D32
+    style F fill:#FFD54F,stroke:#F57F17,stroke-width:2px
+    style O fill:#81C784,stroke:#2E7D32
 ```
 
 | Action | File Path / Command |
@@ -281,6 +296,7 @@ flowchart TD
 **Reference file**: `main-workflow/workflows/shared/stages/workspace-detection.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Log start in audit.md"] --> B{"state.md has<br/>populated workspace?"}
     B -->|Yes| C["Resume from last stage"]
@@ -299,8 +315,8 @@ flowchart TD
     M --> N["Present completion message"]
     N --> O["Auto-proceed to next stage"]
 
-    style F fill:#FFF9C4,stroke:#F57F17,stroke-width:2px
-    style I fill:#FFF9C4,stroke:#F57F17,stroke-width:2px
+    style F fill:#FFD54F,stroke:#F57F17,stroke-width:2px
+    style I fill:#FFD54F,stroke:#F57F17,stroke-width:2px
 ```
 
 | Action | File Path |
@@ -320,6 +336,7 @@ flowchart TD
 **Reference file**: `main-workflow/workflows/shared/stages/reverse-engineering.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Log start in audit.md"] --> B["Multi-Package Discovery"]
     B --> C["Business Context Analysis"]
@@ -359,8 +376,8 @@ flowchart TD
     I --> J["WAIT for explicit approval"]
     J --> K["Log approval in audit.md"]
 
-    style ARTIFACTS fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
-    style J fill:#FFCDD2,stroke:#B71C1C,stroke-width:2px
+    style ARTIFACTS fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style J fill:#EF5350,stroke:#B71C1C,stroke-width:2px
 ```
 
 | Action | File Path |
@@ -376,6 +393,7 @@ flowchart TD
 **Purpose**: User chooses between Spec-Kit and AWS AI-DLC.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Log start in audit.md"] --> B["Present workflow choice"]
     B --> C{"User chooses"}
@@ -386,7 +404,7 @@ flowchart TD
     F --> G["Update state.md with workflow"]
     G --> H["Mark checkbox in state.md"]
 
-    style C fill:#FFF9C4,stroke:#F57F17,stroke-width:2px
+    style C fill:#FFD54F,stroke:#F57F17,stroke-width:2px
 ```
 
 | Action | File Path |
@@ -401,6 +419,7 @@ flowchart TD
 **Purpose**: Initialize the chosen workflow's analytics rows and begin execution.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A{"Chosen Workflow?"} -->|Spec-Kit| B["Set Workflow = Spec-Kit in state.md"]
     A -->|AWS AI-DLC| C["Set Workflow = AWS AI-DLC in state.md"]
@@ -411,7 +430,7 @@ flowchart TD
     F --> H["Begin Specify stage"]
     G --> I["Begin Requirements Analysis"]
 
-    style A fill:#FFF9C4,stroke:#F57F17,stroke-width:2px
+    style A fill:#FFD54F,stroke:#F57F17,stroke-width:2px
 ```
 
 | Action | File Path |
@@ -428,13 +447,15 @@ flowchart TD
 The Spec-Kit workflow is a lightweight specification-to-implementation pipeline with 6 stages.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart LR
     SK1["Specify"] --> SK2["Clarify<br/>(optional)"]
     SK2 --> SK3["Plan"]
     SK3 --> SK4["Tasks"]
     SK4 --> SK5["Checklist<br/>(optional)"]
     SK5 --> SK6["Implement"]
-    SK6 --> POST["Post-Implementation"]
+    SK6 --> SK7["VAPT"]
+    SK7 --> POST["Post-Implementation"]
 
     style SK1 fill:#66BB6A,stroke:#1B5E20,stroke-width:2px
     style SK2 fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
@@ -442,7 +463,8 @@ flowchart LR
     style SK4 fill:#66BB6A,stroke:#1B5E20,stroke-width:2px
     style SK5 fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
     style SK6 fill:#66BB6A,stroke:#1B5E20,stroke-width:2px
-    style POST fill:#B2DFDB,stroke:#00695C,stroke-width:2px
+    style SK7 fill:#E57373,stroke:#B71C1C,stroke-width:2px
+    style POST fill:#4DB6AC,stroke:#00695C,stroke-width:2px
 ```
 
 ---
@@ -452,6 +474,7 @@ flowchart LR
 **Command file**: `main-workflow/workflows/spec-kit/commands/speckit.specify.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Load shared memory manifest"] --> B["Detect SHELL_TYPE"]
     B --> C{"bash or powershell?"}
@@ -481,8 +504,8 @@ flowchart TD
     W --> X["Update analytics"]
     X --> Y["Present next stage option"]
 
-    style I fill:#FFF9C4,stroke:#F57F17
-    style S fill:#FFF9C4,stroke:#F57F17
+    style I fill:#FFD54F,stroke:#F57F17
+    style S fill:#FFD54F,stroke:#F57F17
 ```
 
 | Action | File Path / Command |
@@ -505,6 +528,7 @@ flowchart TD
 **Command file**: `main-workflow/workflows/spec-kit/commands/speckit.clarify.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Load shared memory manifest"] --> B["Resolve SHELL_TYPE"]
     B --> C["Run check-prerequisites script"]
@@ -524,8 +548,8 @@ flowchart TD
     O --> P["Report completion"]
     P --> Q["Proceed to Plan"]
 
-    style G fill:#FFF9C4,stroke:#F57F17
-    style M fill:#FFF9C4,stroke:#F57F17
+    style G fill:#FFD54F,stroke:#F57F17
+    style M fill:#FFD54F,stroke:#F57F17
 ```
 
 | Action | File Path |
@@ -543,6 +567,7 @@ flowchart TD
 **Command file**: `main-workflow/workflows/spec-kit/commands/speckit.plan.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Load shared memory manifest"] --> B["Run setup-plan script"]
     B --> C["Parse FEATURE_SPEC, IMPL_PLAN, SPECS_DIR"]
@@ -564,7 +589,7 @@ flowchart TD
     Q --> R["Report completion"]
     R --> S["Proceed to Tasks"]
 
-    style F fill:#FFF9C4,stroke:#F57F17
+    style F fill:#FFD54F,stroke:#F57F17
 ```
 
 | Action | File Path / Command |
@@ -584,6 +609,7 @@ flowchart TD
 **Command file**: `main-workflow/workflows/spec-kit/commands/speckit.tasks.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Load shared memory manifest"] --> B["Run check-prerequisites script"]
     B --> C["Record analytics stage start"]
@@ -602,7 +628,7 @@ flowchart TD
     N --> O["Report: task count, parallel ops, MVP scope"]
     O --> P["Proceed to Checklist or Implement"]
 
-    style E fill:#FFF9C4,stroke:#F57F17
+    style E fill:#FFD54F,stroke:#F57F17
 ```
 
 | Action | File Path |
@@ -622,6 +648,7 @@ flowchart TD
 **Command file**: `main-workflow/workflows/spec-kit/commands/speckit.checklist.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Load shared memory manifest"] --> B["Run check-prerequisites script"]
     B --> C["Record analytics stage start"]
@@ -634,7 +661,7 @@ flowchart TD
     I --> J["Report completion"]
     J --> K["Proceed to Implement or repeat"]
 
-    style G fill:#E8F5E9,stroke:#2E7D32
+    style G fill:#81C784,stroke:#2E7D32
 ```
 
 | Action | File Path |
@@ -650,6 +677,7 @@ flowchart TD
 **Command file**: `main-workflow/workflows/spec-kit/commands/speckit.implement.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Load shared memory manifest"] --> B["Run check-prerequisites<br/>--require-tasks --include-tasks"]
     B --> C["Record analytics stage start"]
@@ -683,9 +711,9 @@ flowchart TD
     P --> Q["Present: Implementation Complete"]
     Q --> R["Proceed to Update Docs"]
 
-    style D fill:#FFF9C4,stroke:#F57F17
-    style E fill:#FFF9C4,stroke:#F57F17
-    style PHASES fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
+    style D fill:#FFD54F,stroke:#F57F17
+    style E fill:#FFD54F,stroke:#F57F17
+    style PHASES fill:#81C784,stroke:#2E7D32,stroke-width:2px
 ```
 
 | Action | File Path / Command |
@@ -699,20 +727,74 @@ flowchart TD
 
 ---
 
+### 4.7 VAPT (Mandatory)
+
+**Stage file**: `main-workflow/workflows/shared/stages/vapt.md`
+
+**Purpose**: Perform a structured, AI-assisted security assessment of all generated code and infrastructure before proceeding to documentation updates. Always executes after Implement, with depth scaling by risk.
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
+flowchart TD
+    A["Implementation Complete"] --> B["Load feature context<br/>(spec, plan, tasks, RE artifacts)"]
+    B --> C["Load security memory rules"]
+    C --> D{"Determine depth"}
+    D -->|High risk / sensitive data| E["Full (VA + PT)"]
+    D -->|Low complexity / config only| F["Lite (VA only)"]
+    E --> G["Vulnerability Assessment<br/>(SAST, dependencies, secrets, config)"]
+    F --> G
+    G --> H{"Full depth?"}
+    H -->|Yes| I["Penetration Test Simulation<br/>(attack surface, AuthN/AuthZ, injection, API abuse)"]
+    H -->|No| J["Map findings to OWASP Top 10"]
+    I --> J
+    J --> K["Generate vapt-report.md"]
+    K --> L{"Critical or High<br/>findings?"}
+    L -->|Yes| M["STOP: Human gate —<br/>require explicit remediation approval"]
+    L -->|No| N["Present report summary"]
+    M --> N
+    N --> O["Proceed to Post-Implementation"]
+
+    style D fill:#FFD54F,stroke:#F57F17
+    style H fill:#FFD54F,stroke:#F57F17
+    style L fill:#FFD54F,stroke:#F57F17
+    style M fill:#EF5350,stroke:#B71C1C,stroke-width:2px
+```
+
+| Action | File Path |
+|--------|-----------|
+| Stage instructions | `main-workflow/workflows/shared/stages/vapt.md` |
+| Report template | `main-workflow/workflows/shared/memory/security/vapt-report-template.md` |
+| Report output | `specs/{BRANCH_NAME}/security/vapt-report.md` |
+
+**Depth determination signals**:
+
+| Signal | VAPT Depth |
+|--------|------------|
+| Complexity = High, new auth/authz logic, external APIs, sensitive/PII data, infra changes | Full (VA + PT) |
+| Low-complexity UI or config-only change | Lite (VA only) |
+
+**VA checks**: SAST (injection, deserialisation, crypto, randomness, path traversal, XXE, open redirects, info disclosure), dependency scanning, secret scanning, configuration review, data classification validation.
+
+**PT checks** (Full only): Attack surface mapping, authentication bypass, authorisation escalation, injection simulation, API abuse, infrastructure attack simulation.
+
+---
+
 ## 5. AWS AI-DLC Workflow
 
 The AWS AI-DLC workflow is a comprehensive enterprise SDLC with three phases.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     subgraph INCEPTION["INCEPTION PHASE - What and Why"]
         RA["Requirements Analysis<br/><b>ALWAYS</b>"]
         OP["Onboarding Presentations<br/><b>CONDITIONAL</b>"]
         US["User Stories<br/><b>CONDITIONAL</b>"]
+        BDD["BDD Specification<br/><b>CONDITIONAL</b>"]
         WP["Workflow Planning<br/><b>ALWAYS</b>"]
         AD["Application Design<br/><b>CONDITIONAL</b>"]
         UG["Units Generation<br/><b>CONDITIONAL</b>"]
-        RA --> OP --> US --> WP --> AD --> UG
+        RA --> OP --> US --> BDD --> WP --> AD --> UG
     end
 
     subgraph CONSTRUCTION["CONSTRUCTION PHASE - How to Build"]
@@ -726,8 +808,11 @@ flowchart TD
             FD --> NR --> ND --> ID --> CG --> OU
         end
         BT["Build and Test<br/><b>ALWAYS</b>"]
+        VAPT["VAPT<br/><b>ALWAYS</b>"]
+        RR["Risk Report<br/><b>ALWAYS</b>"]
         OU -->|Next Unit| FD
         OU -->|All Done| BT
+        BT --> VAPT --> RR
     end
 
     subgraph OPERATIONS["OPERATIONS PHASE - Placeholder"]
@@ -735,18 +820,21 @@ flowchart TD
     end
 
     UG --> FD
-    BT --> OPS
+    RR --> OPS
 
-    style INCEPTION fill:#90CAF9,stroke:#1565C0,stroke-width:2px
+    style INCEPTION fill:#64B5F6,stroke:#1565C0,stroke-width:2px
     style CONSTRUCTION fill:#81C784,stroke:#2E7D32,stroke-width:2px
-    style OPERATIONS fill:#FFF176,stroke:#F57F17,stroke-width:2px
-    style UNIT_LOOP fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px
+    style OPERATIONS fill:#FFD54F,stroke:#F57F17,stroke-width:2px
+    style UNIT_LOOP fill:#81C784,stroke:#2E7D32,stroke-width:2px
     style RA fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
     style WP fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
     style CG fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
     style BT fill:#66BB6A,stroke:#1B5E20,stroke-width:3px
+    style VAPT fill:#E57373,stroke:#B71C1C,stroke-width:2px
+    style RR fill:#FFA726,stroke:#E65100,stroke-width:2px
     style OP fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
     style US fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
+    style BDD fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
     style AD fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
     style UG fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
     style FD fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
@@ -754,7 +842,7 @@ flowchart TD
     style ND fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
     style ID fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
     style OU fill:#FFA726,stroke:#E65100,stroke-width:2px,stroke-dasharray: 5 5
-    style OPS fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5
+    style OPS fill:#9E9E9E,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5
 ```
 
 ### AWS-Specific Memory Files Loaded (via `load-aws-memory.md`)
@@ -771,13 +859,14 @@ flowchart TD
 
 ### AWS Additional Mandatory Loads
 
-| File | Path |
-|------|------|
-| AWS Rules (main command) | `main-workflow/workflows/aws/commands/aws-rules.md` |
-| ADRs & Technical Principles | `main-workflow/workflows/aws/inception/adrs-technical-principles.md` |
-| C# Guidelines | `main-workflow/Instructions/technology/csharp/general.md` |
-| .NET Guidelines | `main-workflow/Instructions/technology/dotnet/general.md` |
-| Terraform Guidelines | `main-workflow/Instructions/technology/terraform/general.md` |
+| File | Path | Condition |
+|------|------|-----------|
+| AWS Rules (main command) | `main-workflow/workflows/aws/commands/aws-rules.md` | Always |
+| ADRs & Technical Principles | `main-workflow/workflows/aws/inception/adrs-technical-principles.md` | Always |
+| C# Guidelines | `main-workflow/Instructions/technology/csharp/general.md` | Always |
+| .NET Guidelines | `main-workflow/Instructions/technology/dotnet/general.md` | Always |
+| Terraform Guidelines | `main-workflow/Instructions/technology/terraform/general.md` | Always |
+| Coralogix Observability | `main-workflow/Instructions/technology/coralogix/general.md` | Project uses Coralogix |
 
 ---
 
@@ -788,6 +877,7 @@ flowchart TD
 **Instruction file**: `main-workflow/workflows/aws/inception/requirements-analysis.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Log start in audit.md"] --> B["Record analytics start"]
     B --> C{"Brownfield?"}
@@ -812,8 +902,8 @@ flowchart TD
     R --> S["WAIT for approval"]
     S --> T["Record analytics completion"]
 
-    style H fill:#FFF9C4,stroke:#F57F17
-    style S fill:#FFCDD2,stroke:#B71C1C,stroke-width:2px
+    style H fill:#FFD54F,stroke:#F57F17
+    style S fill:#EF5350,stroke:#B71C1C,stroke-width:2px
 ```
 
 | Action | File Path |
@@ -846,11 +936,62 @@ Two-part stage: **Part 1 - Planning** (create plan, collect answers, resolve amb
 | Stories output | `specs/{BRANCH_NAME}/inception/user-stories/stories.md` |
 | Personas output | `specs/{BRANCH_NAME}/inception/user-stories/personas.md` |
 
+#### BDD Specification (CONDITIONAL)
+
+**Instruction file**: `main-workflow/workflows/aws/inception/bdd-specification.md`
+
+**Purpose**: Convert user stories and acceptance criteria into living Gherkin specifications that bridge business requirements and technical tests.
+
+**Execute IF**: User stories exist with acceptance criteria, complex business rules with multiple scenario paths, external stakeholder validation required, regulated/compliance scenarios, or cross-team collaboration needs.
+
+**Skip IF**: Pure infrastructure changes, zero-behaviour refactoring, trivial CRUD with no business rules, or developer tooling changes.
+
+Two-part stage: **Part 1 - Planning** (assess BDD need, establish domain language, ask clarifying questions, get approval) then **Part 2 - Generation** (execute plan, generate Gherkin feature files and strategy artifacts).
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
+flowchart TD
+    A["Log start in audit.md"] --> B["Record analytics start"]
+    B --> C{"Intelligent Assessment:<br/>BDD adds value?"}
+    C -->|No - simple/infra| D["Skip BDD Specification"]
+    C -->|Yes| E["PART 1: Create BDD Plan"]
+    E --> F["Generate questions<br/>(framework, organisation, granularity,<br/>language, data, tagging, edge cases)"]
+    F --> G["Offer Manual or AI Best Judgement"]
+    G --> H["Collect and resolve all answers"]
+    H --> I["WAIT for plan approval"]
+    I --> J["PART 2: Load approved plan"]
+    J --> K["Generate .feature files<br/>(Gherkin scenarios with story traceability)"]
+    K --> L["Generate bdd-strategy.md"]
+    L --> M["Generate step-catalogue.md"]
+    M --> N["WAIT for scenario approval"]
+    N --> O["Update state.md + analytics"]
+
+    style C fill:#FFD54F,stroke:#F57F17,stroke-width:2px
+    style I fill:#EF5350,stroke:#B71C1C,stroke-width:2px
+    style N fill:#EF5350,stroke:#B71C1C,stroke-width:2px
+```
+
+| Action | File Path |
+|--------|-----------|
+| Instruction loaded | `main-workflow/workflows/aws/inception/bdd-specification.md` |
+| Assessment output | `specs/{BRANCH_NAME}/inception/plans/bdd-specification-assessment.md` |
+| BDD plan | `specs/{BRANCH_NAME}/inception/plans/bdd-specification-plan.md` |
+| Feature files | `specs/{BRANCH_NAME}/inception/bdd/features/*.feature` |
+| BDD strategy | `specs/{BRANCH_NAME}/inception/bdd/bdd-strategy.md` |
+| Step catalogue | `specs/{BRANCH_NAME}/inception/bdd/step-catalogue.md` |
+
+**Construction phase integration**: When BDD Specification is executed, downstream stages reference the BDD artifacts:
+- **Functional Design** loads BDD scenarios to map Gherkin steps to domain entities and business rules, producing `bdd-step-mapping.md`
+- **Code Generation** generates step definition classes from the step mapping, placing them in the project's test structure
+
+---
+
 #### Workflow Planning (ALWAYS)
 
 **Instruction file**: `main-workflow/workflows/aws/inception/workflow-planning.md`
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Load all prior context"] --> B["Detailed scope analysis"]
     B --> C{"Brownfield?"}
@@ -867,8 +1008,8 @@ flowchart TD
     L --> M["Initialize state tracking"]
     M --> N["WAIT for approval"]
 
-    style C fill:#FFF9C4,stroke:#F57F17
-    style N fill:#FFCDD2,stroke:#B71C1C,stroke-width:2px
+    style C fill:#FFD54F,stroke:#F57F17
+    style N fill:#EF5350,stroke:#B71C1C,stroke-width:2px
 ```
 
 | Action | File Path |
@@ -908,6 +1049,7 @@ Two-part stage: **Part 1 - Planning** then **Part 2 - Generation**.
 The construction phase loops through each unit of work, executing conditional design stages followed by code generation. After all units complete, Build and Test runs.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     START["Start Construction Phase"] --> UNIT{"For each unit"}
     UNIT --> FD{"Functional Design<br/>needed?"}
@@ -929,31 +1071,35 @@ flowchart TD
     OU_EXEC --> NEXT{"More units?"}
     NEXT -->|Yes| UNIT
     NEXT -->|No| BT["Build and Test"]
-    BT --> RE_UPDATE{"RE artifacts exist?"}
+    BT --> VAPT["VAPT"]
+    VAPT --> RR["Risk Report"]
+    RR --> RE_UPDATE{"RE artifacts exist?"}
     RE_UPDATE -->|Yes| RE["Reverse Engineering Update"]
     RE_UPDATE -->|No| DONE["Construction Complete"]
     RE --> DONE
 
-    style FD fill:#FFF9C4,stroke:#F57F17
-    style NR fill:#FFF9C4,stroke:#F57F17
-    style ND fill:#FFF9C4,stroke:#F57F17
-    style ID fill:#FFF9C4,stroke:#F57F17
-    style OU fill:#FFF9C4,stroke:#F57F17
-    style NEXT fill:#FFF9C4,stroke:#F57F17
-    style RE_UPDATE fill:#FFF9C4,stroke:#F57F17
+    style FD fill:#FFD54F,stroke:#F57F17
+    style NR fill:#FFD54F,stroke:#F57F17
+    style ND fill:#FFD54F,stroke:#F57F17
+    style ID fill:#FFD54F,stroke:#F57F17
+    style OU fill:#FFD54F,stroke:#F57F17
+    style NEXT fill:#FFD54F,stroke:#F57F17
+    style RE_UPDATE fill:#FFD54F,stroke:#F57F17
     style CG fill:#66BB6A,stroke:#1B5E20,stroke-width:2px
     style BT fill:#66BB6A,stroke:#1B5E20,stroke-width:2px
+    style VAPT fill:#E57373,stroke:#B71C1C,stroke-width:2px
+    style RR fill:#FFA726,stroke:#E65100,stroke-width:2px
 ```
 
 #### Per-Unit Stage Reference
 
 | Stage | Instruction File | Key Outputs |
 |-------|-----------------|-------------|
-| Functional Design | `aws/construction/functional-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/functional-design/{business-logic-model,business-rules,domain-entities}.md` |
+| Functional Design | `aws/construction/functional-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/functional-design/{business-logic-model,business-rules,domain-entities}.md` + `bdd-step-mapping.md` (if BDD) |
 | NFR Requirements | `aws/construction/nfr-requirements.md` | `specs/{BRANCH_NAME}/construction/{unit}/nfr-requirements/{nfr-requirements,tech-stack-decisions}.md` |
 | NFR Design | `aws/construction/nfr-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/nfr-design/{nfr-design-patterns,logical-components}.md` |
 | Infrastructure Design | `aws/construction/infrastructure-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/infrastructure-design/{infrastructure-design,deployment-architecture}.md` |
-| Code Generation | `aws/construction/code-generation.md` | Application code at workspace root + `specs/{BRANCH_NAME}/construction/{unit}/code/*.md` |
+| Code Generation | `aws/construction/code-generation.md` | Application code at workspace root + `specs/{BRANCH_NAME}/construction/{unit}/code/*.md` + BDD step definitions (if BDD) |
 | Onboarding Update | `aws/construction/onboarding-update.md` | Updated feature registry + onboarding decks |
 
 Each stage follows the pattern:
@@ -977,13 +1123,71 @@ Each stage follows the pattern:
 | Integration test instructions | `specs/{BRANCH}/construction/build-and-test/integration-test-instructions.md` |
 | Performance test instructions | `specs/{BRANCH}/construction/build-and-test/performance-test-instructions.md` |
 | Summary | `specs/{BRANCH}/construction/build-and-test/build-and-test-summary.md` |
+
+---
+
+#### VAPT (ALWAYS - Depth Scales with Risk)
+
+**Stage file**: `main-workflow/workflows/shared/stages/vapt.md`
+
+**Purpose**: Same VAPT stage used by Spec-Kit (see [Section 4.7](#47-vapt-mandatory)). Executes after Build and Test completes. Depth scales from Lite (VA only) to Full (VA + PT) based on risk signals. Generates `specs/{BRANCH_NAME}/security/vapt-report.md`. Human gate applies for Critical and High severity findings.
+
+| Action | File Path |
+|--------|-----------|
+| Stage instructions | `main-workflow/workflows/shared/stages/vapt.md` |
+| Report template | `main-workflow/workflows/shared/memory/security/vapt-report-template.md` |
+| Report output | `specs/{BRANCH_NAME}/security/vapt-report.md` |
+
+---
+
+#### Risk Report (ALWAYS)
+
+**Stage file**: `main-workflow/workflows/shared/stages/risk-report.md`
+**Standalone command**: `main-workflow/workflows/shared/commands/fluid-flow.risk-report.md`
+
+**Purpose**: Generate a structured risk analysis report for CAB (Change Advisory Board) reviewers by analysing the complete `git diff main...HEAD` enriched with all context accumulated during the AI-DLC lifecycle (requirements, designs, NFRs, infrastructure, test results).
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
+flowchart TD
+    A["VAPT gate satisfied"] --> B["Obtain git diff<br/>(git diff main...HEAD)"]
+    B --> C["Gather lifecycle context<br/>(requirements, designs, NFRs,<br/>infra, test results)"]
+    C --> D["Load RE artifacts (if exist)"]
+    D --> E["Analyse diff with<br/>lifecycle enrichment"]
+    E --> F["Score across dimensions<br/>(security, infra, data, API,<br/>config, dependencies)"]
+    F --> G["Determine risk level<br/>(Critical / High / Medium / Low)"]
+    G --> H["Generate risk-report.md"]
+    H --> I["Present summary + CAB recommendation"]
+    I --> J["WAIT for user acknowledgement"]
+    J --> K["Finalise analytics totals (Step 4)"]
+
+    style J fill:#EF5350,stroke:#B71C1C,stroke-width:2px
+```
+
+| Action | File Path |
+|--------|-----------|
+| Stage instructions | `main-workflow/workflows/shared/stages/risk-report.md` |
+| Standalone command | `main-workflow/workflows/shared/commands/fluid-flow.risk-report.md` |
+| Report output | `specs/{BRANCH_NAME}/operations/risk-report.md` |
 | Analytics final totals | `main-workflow/workflows/shared/stages/analytics-update.md` (Step 4) |
+
+**Context enrichment sources**: Requirements Analysis, User Stories, Workflow Planning, Application Design, NFR Design, Infrastructure Design, ADR Decisions, Build and Test results, Git Diff.
+
+**Report sections**: Change Summary, Risk Classification, Security Impact, Infrastructure Changes, Data Impact, API Surface Changes, Configuration Changes, Dependency Changes, AI Confidence Score, Red Flags, Positive Signals, CAB Recommendation.
+
+**Standalone command** (`/fluid-flow.risk-report`): Supports two modes — **Full Report** (complete analysis) or **Delta Report** (changes since last report).
 
 ---
 
 ### 5.3 Operations Phase (Placeholder)
 
 Currently a placeholder for future deployment, monitoring, and incident response workflows.
+
+When the project uses **Coralogix** for observability, all dashboard, alert, and log management decisions follow `main-workflow/Instructions/technology/coralogix/general.md`, covering:
+- Dashboard design (three-tier hierarchy: overview, drill-down, investigation)
+- Alert design with severity mapping and alert type selection
+- Structured logging with TCO tier assignments
+- Observability resources defined as code (Terraform or API)
 
 ---
 
@@ -992,8 +1196,9 @@ Currently a placeholder for future deployment, monitoring, and incident response
 Both Spec-Kit and AWS AI-DLC converge to the same post-implementation steps.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
-    A["Implementation Complete"] --> B["Load update-docs command"]
+    A["VAPT Gate Satisfied<br/>(both workflows)"] --> B["Load update-docs command"]
     B --> C{"Test coverage baseline<br/>exists?"}
     C -->|Yes| D["Generate Coverage Delta Report"]
     C -->|No| E["Skip coverage delta"]
@@ -1010,9 +1215,11 @@ flowchart TD
     M --> N["Generate retrospective.md"]
     N --> O["Update improvement-backlog.md"]
 
-    style C fill:#FFF9C4,stroke:#F57F17
-    style F fill:#FFF9C4,stroke:#F57F17
+    style C fill:#FFD54F,stroke:#F57F17
+    style F fill:#FFD54F,stroke:#F57F17
 ```
+
+> **Note**: Both Spec-Kit and AWS AI-DLC must pass the VAPT security gate before entering post-implementation. For Spec-Kit, VAPT runs directly after Implement. For AWS AI-DLC, VAPT and Risk Report run after Build and Test.
 
 ### 6.1 Update Docs
 
@@ -1047,6 +1254,7 @@ All memory files that govern AI behavior across both workflows.
 ### Always-Loaded Memory (via `load-shared-memory.md`)
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     MANIFEST["load-shared-memory.md"] --> A["ai-operating-contract.md"]
     MANIFEST --> B["content-validation.md"]
@@ -1056,7 +1264,7 @@ flowchart TD
     MANIFEST --> F["architecture/adr-integrity-gate.md"]
     MANIFEST --> G["meta/continuous-learning.md"]
     MANIFEST --> H["overconfidence-prevention.md"]
-    MANIFEST --> I["presentations/general.md"]
+    MANIFEST --> I["presentations/general.md<br/>(Slidev guidelines)"]
 
     style MANIFEST fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px
 ```
@@ -1089,13 +1297,14 @@ flowchart TD
 Analytics are tracked per-feature in `main-workflow/analytics/{BRANCH_NAME}.md`.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart LR
     CREATE["Branch Creation<br/>creates analytics file"] --> STEP["Each stage completion<br/>updates Stage Timeline"]
     STEP --> FINAL["Implementation end<br/>finalises totals"]
 
-    style CREATE fill:#BBDEFB,stroke:#1565C0
-    style STEP fill:#C8E6C9,stroke:#2E7D32
-    style FINAL fill:#EF9A9A,stroke:#B71C1C
+    style CREATE fill:#64B5F6,stroke:#1565C0
+    style STEP fill:#81C784,stroke:#2E7D32
+    style FINAL fill:#E57373,stroke:#B71C1C
 ```
 
 | Action | Instruction File |
@@ -1111,8 +1320,14 @@ flowchart LR
 | Metadata | Feature name, branch, JIRA, workflow, timestamps |
 | Stage Timeline | Per-stage start/completion/duration/status |
 | Work Metrics | Interactions, approvals, change requests, clarifications, artifacts, stages |
-| Effort Breakdown | Per-phase interaction/approval/duration counts |
+| Effort Breakdown | Per-phase interaction/approval/duration counts (includes Security/VAPT row) |
 | Cycle Summary | Entry point, workflow, end-to-end durations, rework rate |
+
+### Stage Names for Analytics
+
+**Spec-Kit**: Specification, Clarify, Plan, Tasks, Checklist, Implement (Setup/Tests/Core/Integration/Polish), VAPT
+
+**AWS AI-DLC**: Requirements Analysis, Onboarding Presentations, User Stories, BDD Specification, Workflow Planning, Application Design, Units Generation, Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update, Build and Test, VAPT, Risk Report
 
 ---
 
@@ -1121,8 +1336,11 @@ flowchart LR
 ```
 <WORKSPACE-ROOT>/
 ├── .cursor/rules/workflow.mdc           # Trigger rule (always applied)
+├── VERSION                              # Semantic version (e.g., 0.1)
+├── CHANGELOG.md                         # Keep a Changelog format
 ├── main-workflow/
 │   ├── Instructions/technology/         # Technology guidelines
+│   │   ├── coralogix/general.md         # Coralogix observability rules
 │   │   ├── csharp/general.md
 │   │   ├── dotnet/general.md
 │   │   └── terraform/general.md
@@ -1136,6 +1354,7 @@ flowchart LR
 │       │   │   ├── fluid-flow.md                    # Main workflow
 │       │   │   ├── fluid-flow.update-docs.md        # Post-impl docs
 │       │   │   ├── fluid-flow.retrospective.md      # Retrospective
+│       │   │   ├── fluid-flow.risk-report.md        # Change Risk Report (standalone)
 │       │   │   ├── fluid-flow.apply-improvements.md # Apply improvements
 │       │   │   └── fluid-flow.save-conversation.md  # Save conversation
 │       │   ├── memory/                  # Shared governance memory
@@ -1148,10 +1367,12 @@ flowchart LR
 │       │   │   ├── iso/iso9001-quality-management.md
 │       │   │   ├── iso/iso50001-energy-management.md
 │       │   │   ├── meta/continuous-learning.md
-│       │   │   ├── presentations/general.md
+│       │   │   ├── presentations/general.md          # Slidev presentation guidelines
 │       │   │   ├── review/ai-self-review.md
 │       │   │   ├── review/human-gate.md
-│       │   │   └── security/ (10 files)
+│       │   │   └── security/
+│       │   │       ├── (10 security rule files)
+│       │   │       └── vapt-report-template.md       # VAPT report template
 │       │   └── stages/                  # Shared stage instructions
 │       │       ├── shell-detection.md
 │       │       ├── workspace-detection.md
@@ -1161,6 +1382,8 @@ flowchart LR
 │       │       ├── analytics-update.md
 │       │       ├── analytics-step-update.md
 │       │       ├── test-coverage-analysis.md
+│       │       ├── vapt.md                           # VAPT security gate
+│       │       ├── risk-report.md                    # Change Risk Report
 │       │       └── workflow-retrospective.md
 │       ├── spec-kit/
 │       │   ├── commands/                # Spec-Kit stage commands
@@ -1199,6 +1422,7 @@ flowchart LR
 │           │   ├── requirements-analysis.md
 │           │   ├── onboarding-presentations.md
 │           │   ├── user-stories.md
+│           │   ├── bdd-specification.md             # BDD Specification stage
 │           │   ├── workflow-planning.md
 │           │   ├── application-design.md
 │           │   ├── units-generation.md
@@ -1226,10 +1450,22 @@ flowchart LR
 │       ├── plan.md (Spec-Kit)
 │       ├── tasks.md (Spec-Kit)
 │       ├── checklists/ (Spec-Kit)
+│       ├── security/                    # VAPT output (both workflows)
+│       │   └── vapt-report.md
 │       ├── retrospective.md
 │       ├── inception/ (AWS AI-DLC)
+│       │   ├── requirements/
+│       │   ├── user-stories/
+│       │   ├── bdd/                     # BDD Specification output
+│       │   │   ├── features/*.feature
+│       │   │   ├── bdd-strategy.md
+│       │   │   └── step-catalogue.md
+│       │   ├── plans/
+│       │   ├── onboarding/
+│       │   └── application-design/
 │       ├── construction/ (AWS AI-DLC)
 │       ├── operations/ (AWS AI-DLC)
+│       │   └── risk-report.md           # Change Risk Report output
 │       └── features/ (AWS AI-DLC)
 └── docs/                                # Project documentation
     ├── ARCHITECTURE.md
@@ -1238,11 +1474,14 @@ flowchart LR
     ├── GETTING-STARTED.md
     ├── GOVERNANCE.md
     ├── REVERSE-ENGINEERING.md
+    ├── WORKFLOW-FULL-DETAILED.md
     └── WORKFLOWS.md
 ```
 
 ---
 
-> **Document generated**: 2026-02-26  
+> **Document generated**: 2026-02-28  
+> **Version**: 0.1  
 > **Source**: Fluid Flow AI v6 workflow files  
-> **Scope**: Complete lifecycle from trigger through post-implementation retrospective
+> **Scope**: Complete lifecycle from trigger through post-implementation retrospective  
+> **Recent additions**: BDD Specification (inception), VAPT security gate (both workflows), Change Risk Report (AWS construction), Coralogix observability, Slidev presentation guidelines, versioning (VERSION + CHANGELOG.md)
