@@ -33,11 +33,12 @@
 - Reverse Engineering (CONDITIONAL - Brownfield only)
 - Requirements Analysis (ALWAYS - Adaptive depth)
 - User Stories (CONDITIONAL)
+- BDD Specification (CONDITIONAL)
 - Workflow Planning (ALWAYS)
 - Application Design (CONDITIONAL)
 - Design - Units Planning/Generation (CONDITIONAL)
 
-**Outputs**: Requirements, user stories, architectural decisions, unit definitions
+**Outputs**: Requirements, user stories, BDD feature files and strategy, architectural decisions, unit definitions
 
 ### CONSTRUCTION PHASE
 **Purpose**: Detailed design and implementation  
@@ -80,9 +81,10 @@
 ### Conditional Stages
 - **Reverse Engineering**: Analyzing existing codebase (brownfield projects only)
 - **User Stories**: Creating user stories and personas (includes Story Planning and Story Generation)
+- **BDD Specification**: Converting user story acceptance criteria into Gherkin feature files; produces living documentation and an executable specification contract (includes BDD Planning and BDD Generation)
 - **Application Design**: Designing application components, methods, business rules, and services
 - **Design**: Designing system components (includes Units Planning, Units Generation, per-unit design)
-- **Functional Design**: Technology-agnostic business logic design (per-unit)
+- **Functional Design**: Technology-agnostic business logic design; includes BDD step mapping when BDD Specification was executed (per-unit)
 - **NFR Requirements**: Determining NFRs and selecting tech stack (per-unit)
 - **NFR Design**: Incorporating NFR patterns and logical components (per-unit)
 - **Infrastructure Design**: Mapping to actual infrastructure services (per-unit)
@@ -181,6 +183,31 @@ Files tracking workflow progress and status.
 - `specs/{BRANCH_NAME}/state.md`: Overall workflow state
 - `specs/{BRANCH_NAME}/audit.md`: Complete audit trail of all interactions
 
+## BDD Terminology
+
+### Gherkin
+The plain-language syntax used to write BDD scenarios. Uses `Given / When / Then` keywords to describe system behaviour in business terms.
+
+### Feature File
+A `.feature` file containing one or more Gherkin scenarios for a related group of user stories or capabilities.
+
+### Scenario
+A single executable specification describing one concrete example of system behaviour. Each scenario maps back to at least one user story via a comment reference.
+
+### Step Definition
+A code function (in C#, Java, Python, etc.) that binds a Gherkin step to the corresponding domain or service logic. Generated during Code Generation when BDD Specification was executed.
+
+### BDD Step Mapping
+An artifact (`bdd-step-mapping.md`) created during Functional Design that maps each Gherkin step to the domain entity, business rule, or service method implementing it. Acts as the technical contract between Gherkin and code.
+
+### Step Catalogue
+An artifact (`step-catalogue.md`) listing all Gherkin steps with their intended domain meaning. Used to prevent duplicate steps during step definition generation.
+
+### Ubiquitous Language
+The shared vocabulary agreed upon by business stakeholders and developers, used consistently in Gherkin scenarios, domain models, and code. Established during BDD Planning.
+
+---
+
 ## Common Abbreviations
 
 - **AI-DLC**: AI-Driven Development Life Cycle
@@ -188,3 +215,4 @@ Files tracking workflow progress and status.
 - **UOW**: Unit of Work
 - **API**: Application Programming Interface
 - **CDK**: Cloud Development Kit (AWS)
+- **BDD**: Behaviour-Driven Development

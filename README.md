@@ -89,7 +89,7 @@ A comprehensive SDLC with three phases and adaptive depth:
 
 | Phase | Stages |
 |-------|--------|
-| **Inception** | Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
+| **Inception** | Requirements Analysis, Onboarding Presentations, User Stories, BDD Specification, Workflow Planning, Application Design, Units Generation |
 | **Construction** | Per-unit loop: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update. Then: Build & Test, RE Update |
 | **Operations** | Observability platform rules (Coralogix dashboards, alerts, log management); placeholder for deployment and monitoring workflows |
 
