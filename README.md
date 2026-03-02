@@ -11,6 +11,7 @@ Fluid Flow AI is a structured, governance-aware workflow framework that guides A
 - **Unified Entry Point** -- Every development request flows through a single, standardised process regardless of complexity
 - **Dual Workflow Paths** -- Spec-Kit for streamlined features; AWS AI-DLC for complex enterprise work
 - **User-Driven Routing** -- The developer directly chooses which workflow to follow for each feature
+- **Technical Scoping & Engineering Discovery** -- Optional AI-DLC stage that assesses engineering complexity, identifies risk signals, and recommends decomposition into sub-initiatives before any design work begins
 - **Full Audit Trail** -- Every interaction, decision, and approval is logged with ISO 8601 timestamps
 - **Governance Backbone** -- ISO 27001 (security), ISO 9001 (quality), and ISO 50001 (energy) compliance built in
 - **Brownfield Intelligence** -- Automatic codebase reverse engineering with C4 architecture modelling
@@ -90,7 +91,7 @@ A comprehensive SDLC with three phases and adaptive depth:
 
 | Phase | Stages |
 |-------|--------|
-| **Inception** | Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
+| **Inception** | Technical Scoping & Engineering Discovery (optional), Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
 | **Construction** | Per-unit loop: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update. Then: Build & Test, Change Risk Report |
 | **Operations** | Change Risk Report (implemented); Observability platform rules (Coralogix dashboards, alerts, log management); deployment and monitoring workflows (planned) |
 

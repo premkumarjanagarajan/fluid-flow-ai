@@ -261,6 +261,33 @@ AWS AI-DLC stages are not invoked as slash commands. They are executed automatic
 
 ### Inception Phase
 
+#### Technical Scoping & Engineering Discovery (Optional -- User Opt-In)
+
+**Purpose**: Assess engineering complexity and scope before any requirements or design work begins. For large or ambiguous initiatives, recommend decomposition into independently deliverable sub-initiatives — each assigned to the appropriate workflow (Spec-Kit or AWS AI-DLC).
+
+**When prompted**: At the start of every AWS AI-DLC run, the team is asked whether to run this stage. Answering NO skips it entirely and proceeds directly to Requirements Analysis.
+
+**Execute when**: The request is ambiguous in size, spans multiple components or teams, or the team wants a structured scoping assessment before committing to a full DLC cycle.
+
+**Skip when**: The request is clearly scoped, the team already has a decomposition plan, or speed of delivery outweighs the value of upfront scoping.
+
+**Process**:
+1. Load reverse engineering artifacts for system context (if brownfield)
+2. Classify the request by initiative size (Story / Feature / Initiative) and engineering clarity (High / Medium / Low)
+3. Identify technical scope signals — affected systems, services, domains, and teams
+4. Assess eight complexity dimensions: component span, integration surface, data model impact, ADR implications, NFR surface, team dependency, delivery risk, and unknowns
+5. Produce a decomposition recommendation:
+   - **Single initiative**: Proceed as one DLC cycle with workflow assignment
+   - **Decomposition**: Propose named sub-initiatives with Spec-Kit or AWS AI-DLC assigned to each, a delivery sequence, and suggested branch names
+
+> **Note**: If the request appears larger than an Initiative (multi-quarter, cross-domain, multiple independent teams), the stage flags this and recommends the team scope it down before re-engaging Fluid Flow.
+
+**Output**: `specs/{BRANCH_NAME}/inception/technical-scoping/technical-scoping-report.md`
+
+**Approval**: Required — team reviews and approves the scoping report before proceeding.
+
+---
+
 #### Requirements Analysis (Always -- Adaptive Depth)
 
 **Purpose**: Analyse intent and gather requirements.

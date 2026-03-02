@@ -225,6 +225,7 @@ A comprehensive enterprise SDLC with three phases and adaptive depth. Stages are
 flowchart TB
     subgraph INCEPTION["INCEPTION PHASE"]
         direction TB
+        I0["Technical Scoping &amp; Engineering Discovery<br/><i>Optional - user opt-in</i>"]
         I1["Requirements Analysis<br/><i>Always - Adaptive depth</i>"]
         I2["Onboarding Presentations<br/><i>Conditional</i>"]
         I3["User Stories<br/><i>Conditional</i>"]
@@ -232,7 +233,7 @@ flowchart TB
         I4["Workflow Planning<br/><i>Always</i>"]
         I5["Application Design<br/><i>Conditional</i>"]
         I6["Units Generation<br/><i>Conditional</i>"]
-        I1 --> I2 --> I3 --> I3B --> I4 --> I5 --> I6
+        I0 --> I1 --> I2 --> I3 --> I3B --> I4 --> I5 --> I6
     end
 
     subgraph CONSTRUCTION["CONSTRUCTION PHASE"]
@@ -276,6 +277,7 @@ flowchart TB
 
 | Stage | Condition | Depth Levels | Description |
 |-------|-----------|-------------|-------------|
+| **Technical Scoping & Engineering Discovery** | Optional (user opt-in) | N/A | Assess engineering size and complexity; identify affected systems and risk signals; recommend single-initiative or decomposition into sub-initiatives, each assigned to Spec-Kit or AWS AI-DLC |
 | **Requirements Analysis** | Always | Minimal / Standard / Comprehensive | Analyse intent, gather functional and non-functional requirements, generate requirements document |
 | **Onboarding Presentations** | Conditional (brownfield or stale) | N/A | Generate engineer and product manager onboarding presentations from RE artifacts |
 | **User Stories** | Conditional (user-facing changes) | Minimal / Standard / Comprehensive | Two-part: Planning (questions + answers) then Generation (stories + personas) |
@@ -332,6 +334,8 @@ specs/{BRANCH_NAME}/
 ├── audit.md                      # Includes JIRA ticket
 ├── workspace-detection.md
 ├── inception/
+│   ├── technical-scoping/            # Technical Scoping & Engineering Discovery output
+│   │   └── technical-scoping-report.md
 │   ├── plans/
 │   ├── requirements/
 │   ├── user-stories/

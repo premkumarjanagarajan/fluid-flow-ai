@@ -118,6 +118,7 @@ The welcome message is displayed by the shared entry point (fluid-flow-rules.md)
 - `specs/_project/reverse-engineering/` (reverse engineering artifacts, if brownfield)
 
 **Stages in INCEPTION PHASE**:
+- Technical Scoping & Engineering Discovery (OPTIONAL - user opt-in)
 - Onboarding Presentations (CONDITIONAL)
 - Requirements Analysis (ALWAYS - Adaptive depth)
 - User Stories (CONDITIONAL)
@@ -126,6 +127,33 @@ The welcome message is displayed by the shared entry point (fluid-flow-rules.md)
 - Application Design (CONDITIONAL)
 - Units Generation (CONDITIONAL)
 - **MANDATORY**: After each stage above completes (or is skipped), run `../../shared/stages/analytics-update.md` Step 3 for that stage name.
+
+---
+
+## Technical Scoping & Engineering Discovery (OPTIONAL - User Opt-In)
+
+**Optional stage** — always prompted at the start of the AWS AI-DLC. Executes only if the user opts in.
+
+**Purpose**: Assess the engineering complexity and scope of the request before any requirements or design work begins. For large or ambiguous initiatives, recommend a decomposition into independently deliverable sub-initiatives — each assigned to the appropriate workflow (Spec-Kit or AWS AI-DLC).
+
+**Execution**:
+1. **MANDATORY**: Log the opt-in prompt and user response in audit.md
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Technical Scoping & Engineering Discovery`
+3. Load all steps from `../inception/technical-scoping.md`
+4. Present the opt-in gate to the user and **wait for their response**:
+   - If **NO**: Skip — log decision, mark `Skipped` in state.md, proceed to Requirements Analysis
+   - If **YES**: Execute full Technical Scoping analysis
+5. **If executing**:
+   - Load reverse engineering artifacts from `specs/_project/reverse-engineering/` (if brownfield)
+   - Classify the request (initiative size and engineering clarity)
+   - Identify technical scope signals and complexity indicators
+   - Generate decomposition recommendation (single initiative or sub-initiatives with workflow assignments)
+   - Create `specs/{BRANCH_NAME}/inception/technical-scoping/technical-scoping-report.md`
+6. **Wait for Explicit Approval**: Follow approval format from technical-scoping.md — DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion or skip**: Follow Step 2 (completed) or Step 3 (skipped) of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Technical Scoping & Engineering Discovery`
+
+**If skipped**: Follow Step 3 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Technical Scoping & Engineering Discovery` and status `Skipped`
 
 ---
 

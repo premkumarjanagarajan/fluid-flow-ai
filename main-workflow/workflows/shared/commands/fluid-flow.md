@@ -334,6 +334,7 @@ Based on the user's chosen workflow:
 
      | Stage | Started | Completed | Duration | Status |
      |-------|---------|-----------|----------|--------|
+     | Technical Scoping & Engineering Discovery | | | | Pending |
      | Requirements Analysis | | | | Pending |
      | Onboarding Presentations | | | | Pending |
      | User Stories | | | | Pending |
