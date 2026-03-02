@@ -348,6 +348,7 @@ Based on the user's chosen workflow:
      | Code Generation | | | | Pending |
      | Onboarding Update | | | | Pending |
      | Build and Test | | | | Pending |
+     | Risk Report | | | | Pending |
 
    - Update the **Effort Breakdown** table to include AWS AI-DLC phases:
 

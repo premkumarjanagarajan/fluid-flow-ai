@@ -98,7 +98,7 @@ Load when the project uses Coralogix for observability, monitoring, or log manag
 - Load `../../shared/stages/analytics-update.md`
 - Execute **Step 3: Phase Completion Update** with the exact AWS stage name after each stage
 - For conditional stages that are skipped, still execute **Step 3** with status `Skipped`
-- At the end of Build and Test, execute **Step 4: Final Totals Update** so totals are finalised by implementation completion
+- At the end of Risk Report, execute **Step 4: Final Totals Update** so totals are finalised by implementation completion
 
 ## NOTE: Welcome Message
 The welcome message is displayed by the shared entry point (fluid-flow-rules.md) before this workflow is invoked. Do NOT display a separate welcome message.
@@ -384,6 +384,7 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
   - Code Generation (ALWAYS, per-unit)
   - Onboarding Update (CONDITIONAL, per-unit)
 - Build and Test (ALWAYS - after all units complete)
+- Risk Report (ALWAYS - after Build and Test)
 - **MANDATORY**: After each stage above completes (or is skipped), run `../../shared/stages/analytics-update.md` Step 3 for that stage name.
 
 **Note**: Each unit is completed fully (design + code) before moving to the next unit.
@@ -552,19 +553,40 @@ Generate and maintain two sli-dev onboarding presentations derived from reverse 
 6. **Wait for Explicit Approval**: Ask: "**Build and test instructions complete. Ready to proceed to Operations stage?**" - DO NOT PROCEED until user confirms
 7. **MANDATORY**: Log user's response in audit.md with complete raw input
 8. **Analytics: Record stage completion**: Update `main-workflow/analytics/{BRANCH_NAME}.md` by following `../../shared/stages/analytics-update.md` **Step 3: Phase Completion Update** for stage `Build and Test` with status `Completed`
+
+---
+
+## Risk Report (ALWAYS EXECUTE)
+
+**Purpose**: Generate a structured change risk report for CAB reviewers by analysing the complete git diff enriched with all lifecycle context gathered during Inception and Construction.
+
+1. **MANDATORY**: Log any user input during this phase in audit.md
+2. **Analytics: Record stage start**: Follow Step 1 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Risk Report`
+3. Load all steps from `../../shared/stages/risk-report.md`
+4. Execute the risk report generation:
+   - Obtain the git diff (`git diff main...HEAD`)
+   - Gather lifecycle context from `specs/{BRANCH_NAME}/` (requirements, designs, NFRs, infrastructure, test results)
+   - Analyse the diff with lifecycle enrichment
+   - Generate the report at `specs/{BRANCH_NAME}/operations/risk-report.md`
+5. Present the risk report summary to the user
+6. **Wait for Acknowledgement**: The user should review the report. Ask: "**Risk report generated. Please review before proceeding. Ready to continue?**" - DO NOT PROCEED until user confirms
+7. **MANDATORY**: Log user's response in audit.md with complete raw input
+8. **Analytics: Record stage completion**: Follow Step 2 of `../../shared/stages/analytics-step-update.md` with `STAGE_NAME = Risk Report`
 9. **Analytics: Final totals**: Execute `../../shared/stages/analytics-update.md` **Step 4: Final Totals Update** to finalise metadata, metrics, timeline, and cycle summary
 
 ## Post-Implementation Documentation (SEPARATE COMMAND)
 
-**NOTE**: Test Coverage Delta and Reverse Engineering Update are handled by a **separate shared command**. Analytics is already updated throughout this workflow and finalised by the end of Build and Test.
+**NOTE**: Test Coverage Delta and Reverse Engineering Update are handled by a **separate shared command**. Analytics is already updated throughout this workflow and finalised by the end of the Risk Report stage.
 
-After the Build and Test stage completes, inform the user:
+After the Risk Report stage completes, inform the user:
 
 ```markdown
 ## Construction Phase Complete
 
 All construction stages have been executed, and analytics totals are finalised at:
 `main-workflow/analytics/{BRANCH_NAME}.md`
+
+**Change Risk Report**: `specs/{BRANCH_NAME}/operations/risk-report.md`
 
 To update remaining project-level documentation, run:
 
@@ -573,6 +595,10 @@ To update remaining project-level documentation, run:
 This will:
 - Generate the Test Coverage Delta & Improvement Plan (if baseline exists)
 - Update all Reverse Engineering artifacts (if they exist)
+
+To regenerate the risk report after changes, run:
+
+**`/fluid-flow.risk-report`**
 
 See: `../../shared/commands/fluid-flow.update-docs.md`
 ```
@@ -594,14 +620,16 @@ See: `../../shared/commands/fluid-flow.update-docs.md`
 
 **Status**: This stage is currently a placeholder for future expansion.
 
+**Already implemented**: The Change Risk Report is generated at the end of the Construction phase (after Build and Test). The risk report at `specs/{BRANCH_NAME}/operations/risk-report.md` provides CAB reviewers with risk analysis, monitoring recommendations, and rollback strategy.
+
 The Operations stage will eventually include:
 - Deployment planning and execution
-- Monitoring and observability setup
+- Monitoring and observability setup (expanding on risk report recommendations)
 - Incident response procedures
 - Maintenance and support workflows
 - Production readiness checklists
 
-**Current State**: All build and test activities are handled in the CONSTRUCTION phase.
+**Current State**: Build, test, and risk reporting are handled in the CONSTRUCTION phase.
 
 ## Key Principles
 
@@ -716,7 +744,8 @@ the AI must:
 │       │   │   ├── infrastructure-design/
 │       │   │   └── code/                # Markdown summaries only
 │       │   └── build-and-test/
-│       ├── operations/                  # 🟡 OPERATIONS PHASE (placeholder)
+│       ├── operations/                  # 🟡 OPERATIONS PHASE
+│       │   └── risk-report.md           # Change Risk Report for CAB
 │       └── features/
 │           └── features-registry.md
 ```
