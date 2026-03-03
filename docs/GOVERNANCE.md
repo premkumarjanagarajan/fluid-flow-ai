@@ -194,9 +194,9 @@ flowchart TB
     style SECURITY fill:#EF9A9A,stroke:#C62828,stroke-width:2px
 ```
 
-### ADR Enforcement (AWS AI-DLC)
+### ADR Enforcement (Comprehensive Path)
 
-In the AWS AI-DLC workflow, all architectural decisions are evaluated against existing Architecture Decision Records (ADRs):
+In the Comprehensive Path workflow, all architectural decisions are evaluated against existing Architecture Decision Records (ADRs):
 
 1. For each relevant ADR, the AI states whether the solution **complies**, **extends**, or **violates** it
 2. If an ADR must be extended or violated, the AI proposes an ADR update and escalates for human approval

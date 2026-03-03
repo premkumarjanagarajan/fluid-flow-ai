@@ -29,11 +29,11 @@ Determine if the user's message is a **development request**. A development requ
 
 ## Step 1: Display the Workflow Gate Confirmation (MANDATORY — VISIBLE OUTPUT)
 
-First, read the version from the `VERSION` file at the repository root. Then output the following block to the user (replacing `{VERSION}` with the value read from the file):
+Output the following block to the user:
 
 ```
 ═══════════════════════════════════════════════════
-  FLUID-FLOW AI v{VERSION} WORKFLOW ACTIVATED
+  FLUID-FLOW AI v0.1.2 WORKFLOW ACTIVATED
   All development follows the unified lifecycle.
   Reading workflow instructions now...
 ═══════════════════════════════════════════════════
@@ -54,6 +54,7 @@ This file contains the complete workflow with all stages:
 3. Reverse Engineering (conditional)
 4. Workflow Selection (user choice)
 5. Workflow Routing
+6. Completion (Commit, PR, Change Risk Report)
 
 **Read this file NOW. Do not summarize it from memory. Do not skip it.**
 
@@ -66,10 +67,13 @@ Follow every instruction in the loaded workflow file sequentially. The workflow 
 - Displaying the welcome message
 - Creating a feature branch
 - Running workspace detection
-- Presenting the workflow choice to the user (Spec-Kit or AWS AI-DLC)
+- Presenting the workflow choice to the user (Fast-Track or Comprehensive Path)
 - Routing to the chosen sub-workflow
+- Completion: Commit, PR, and Change Risk Report
 
 **Do NOT jump ahead. Do NOT skip stages. Do NOT start coding until the workflow tells you to.**
+
+**CRITICAL -- Validation Gate**: Before committing (Stage 6, Step 1), you MUST stop and ask the user to validate all changes. Present a summary of what was done and wait for explicit approval before running `git add` and `git commit`. Never auto-commit without user confirmation.
 
 ---
 

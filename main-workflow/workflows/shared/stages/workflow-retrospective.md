@@ -2,7 +2,7 @@
 
 **Purpose**: Perform a meta-analysis of the workflow conversation that just completed. Identify concrete improvements to memory files, constitution files, stage prompts, and agent configurations to make future workflow executions more effective.
 
-**Execute when**: After a workflow completes (Spec-Kit or AWS AI-DLC), in the same chat session where the workflow ran.
+**Execute when**: After a workflow completes (Fast-Track or Comprehensive Path), in the same chat session where the workflow ran.
 
 ---
 
@@ -121,7 +121,7 @@ Create `specs/{BRANCH_NAME}/retrospective.md` with the following structure:
 
 **Feature**: {feature_description}
 **Branch**: {BRANCH_NAME}
-**Workflow**: {Spec-Kit / AWS AI-DLC}
+**Workflow**: {Fast-Track / Comprehensive Path}
 **Date**: [ISO timestamp]
 **Total Interactions**: [count from audit.md]
 **Rework Cycles**: [count from audit.md]

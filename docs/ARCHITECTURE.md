@@ -23,7 +23,7 @@ C4Context
     Rel(developer, ide, "Makes development requests")
     Rel(ide, fluidflow, "Triggers workflow via IDE rule")
     Rel(fluidflow, git, "Creates branches, manages code")
-    Rel(fluidflow, github, "Creates issues via /speckit.taskstoissues")
+    Rel(fluidflow, github, "Creates issues via /fasttrack.taskstoissues")
 ```
 
 ---
@@ -53,22 +53,30 @@ flowchart TB
         WM["welcome-message.md"]
     end
 
-    subgraph SPECKIT["Spec-Kit Workflow"]
-        SS["/speckit.specify"]
-        SC["/speckit.clarify"]
-        SP["/speckit.plan"]
-        ST["/speckit.tasks"]
-        SCH["/speckit.checklist"]
-        SI["/speckit.implement"]
-        SA["/speckit.analyze"]
-        STI["/speckit.taskstoissues"]
+    subgraph FASTTRACK["Fast-Track Workflow"]
+        direction TB
+        subgraph FT_INC["Inception"]
+            SS["/fasttrack.specify"]
+            SC["/fasttrack.clarify"]
+            SP["/fasttrack.plan"]
+        end
+        subgraph FT_CON["Construction"]
+            ST["/fasttrack.tasks"]
+            SCH["/fasttrack.checklist"]
+            SI["/fasttrack.implement"]
+        end
     end
 
-    subgraph AIDLC["AWS AI-DLC Workflow"]
+    subgraph COMPREHENSIVE["Comprehensive Path Workflow"]
         direction TB
         INC["Inception Phase<br/><i>7 stages</i>"]
         CON["Construction Phase<br/><i>Per-unit loop + Build & Test</i>"]
-        OPS["Operations Phase<br/><i>Placeholder</i>"]
+    end
+
+    subgraph COMPLETION["Shared Completion"]
+        COMMIT["Commit"]
+        PR["PR"]
+        RR["Risk Report"]
     end
 
     subgraph SCRIPTS["Automation"]
@@ -98,19 +106,21 @@ flowchart TB
     MDC --> FF
     FF --> WD --> RE --> WS
     FF -.->|loads| MEMORY
-    WS -->|"Spec-Kit"| SPECKIT
-    WS -->|"AWS AI-DLC"| AIDLC
-    SPECKIT -.->|uses| SCRIPTS
-    SPECKIT -.->|loads| MEMORY
-    AIDLC -.->|loads| MEMORY
-    SPECKIT -->|writes| ARTIFACTS
-    AIDLC -->|writes| ARTIFACTS
+    WS -->|"Fast-Track"| FASTTRACK
+    WS -->|"Comprehensive Path"| COMPREHENSIVE
+    FASTTRACK --> COMPLETION
+    COMPREHENSIVE --> COMPLETION
+    FASTTRACK -.->|uses| SCRIPTS
+    FASTTRACK -.->|loads| MEMORY
+    COMPREHENSIVE -.->|loads| MEMORY
+    COMPLETION -->|writes| ARTIFACTS
 
     style TRIGGER fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px
     style ENTRY fill:#90CAF9,stroke:#1565C0,stroke-width:2px
     style MEMORY fill:#FFF176,stroke:#F9A825,stroke-width:2px
-    style SPECKIT fill:#81C784,stroke:#2E7D32,stroke-width:2px
-    style AIDLC fill:#FFB74D,stroke:#E65100,stroke-width:2px
+    style FASTTRACK fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style COMPREHENSIVE fill:#FFB74D,stroke:#E65100,stroke-width:2px
+    style COMPLETION fill:#64B5F6,stroke:#1976D2,stroke-width:2px
     style SCRIPTS fill:#BCAAA4,stroke:#4E342E,stroke-width:2px
     style ARTIFACTS fill:#80CBC4,stroke:#00695C,stroke-width:2px
 ```
@@ -135,7 +145,7 @@ When activated, it displays a visible confirmation banner and immediately loads 
 | Stage | Condition | Purpose |
 |-------|-----------|---------|
 | Shell Detection | Always | Detect Bash vs PowerShell environment for script invocations |
-| Branch Creation | Always | Create `###-jira-ticket-short-description` branch and `specs/{BRANCH_NAME}/` directory |
+| Branch Creation | Always | Create `{JIRA-TICKET}-{description}` or `{description}` branch and `specs/{BRANCH_NAME}/` directory |
 | Workspace Detection | Always | Scan for existing code, determine greenfield/brownfield |
 | Reverse Engineering | Brownfield, run-once | Generate comprehensive architecture documentation |
 | Workflow Selection | Always | Present both workflows and let the user choose directly |
@@ -159,13 +169,15 @@ Memory files are loaded at workflow start and referenced throughout execution. T
 
 ### 4. Workflow Engines
 
-#### Spec-Kit
+Both workflow engines converge into a shared **Completion** stage (Commit, PR, Risk Report) before producing final artifacts.
 
-A linear, command-driven pipeline. Each command is a standalone `.md` file that loads shared memory, executes its logic, and produces artifacts in `specs/{BRANCH_NAME}/`.
+#### Fast-Track
 
-#### AWS AI-DLC
+A linear, command-driven pipeline organised into **Inception** (specify, clarify, plan) and **Construction** (tasks, checklist, implement) sub-phases. Each command is a standalone `.md` file that loads shared memory, executes its logic, and produces artifacts in `specs/{BRANCH_NAME}/`.
 
-A phase-based engine with adaptive depth. Stages are conditional -- the AI assesses what is needed based on complexity, scope, and risk. The Inception phase includes a BDD Specification stage that converts user story acceptance criteria into Gherkin feature files when business behaviour contracts are needed. The Construction phase uses a per-unit loop where each unit goes through design, NFR assessment, infrastructure design, step definition generation (if BDD was executed), and code generation before the next unit starts.
+#### Comprehensive Path
+
+A phase-based engine with adaptive depth. Stages are conditional -- the AI assesses what is needed based on complexity, scope, and risk. The **Inception** phase includes a BDD Specification stage that converts user story acceptance criteria into Gherkin feature files when business behaviour contracts are needed. The **Construction** phase uses a per-unit loop where each unit goes through design, NFR assessment, infrastructure design, step definition generation (if BDD was executed), and code generation before the next unit starts.
 
 ### 5. Automation Scripts
 
@@ -173,7 +185,7 @@ Shell scripts handle mechanical tasks. Both Bash and PowerShell versions are pro
 
 | Script (Bash / PowerShell) | Purpose |
 |----------------------------|---------|
-| `create-new-feature.sh` / `.ps1` | Creates numbered branches, initialises feature directories |
+| `create-new-feature.sh` / `.ps1` | Creates feature branches, initialises feature directories |
 | `check-prerequisites.sh` / `.ps1` | Validates feature context exists before commands run |
 | `setup-plan.sh` / `.ps1` | Prepares plan template and context for planning commands |
 | `update-agent-context.sh` / `.ps1` | Updates AI agent context files from plan data |
@@ -220,7 +232,7 @@ sequenceDiagram
         Dev-->>RE: Approve
     end
 
-    FF->>Dev: Present workflow choice (Spec-Kit or AWS AI-DLC)
+    FF->>Dev: Present workflow choice (Fast-Track or Comprehensive Path)
     Dev-->>FF: Choose workflow
 
     FF->>WF: Route to chosen workflow

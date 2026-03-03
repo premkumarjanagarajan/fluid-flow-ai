@@ -4,13 +4,13 @@
 
 This stage operates in **two phases**:
 - **Phase 1 (Baseline)**: Runs during Reverse Engineering — produces the project-level baseline at `specs/_project/reverse-engineering/test-coverage-analysis.md`
-- **Phase 2 (Delta & Improvement)**: Runs after implementation (Build & Test / speckit.implement) — produces the feature-level coverage delta and improvement plan at `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md`
+- **Phase 2 (Delta & Improvement)**: Runs after implementation (Build & Test / fasttrack.implement) — produces the feature-level coverage delta and improvement plan at `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md`
 
 ---
 
 # PHASE 1: Baseline Analysis (Reverse Engineering)
 
-**Execute during**: Reverse Engineering stage (shared and AWS variants)
+**Execute during**: Reverse Engineering stage (shared and Comprehensive variants)
 **Output artifact**: `specs/_project/reverse-engineering/test-coverage-analysis.md`
 **Run-once behavior**: Same as other RE artifacts — generated once, updated incrementally post-implementation.
 
@@ -385,7 +385,7 @@ Create `specs/_project/reverse-engineering/test-coverage-analysis.md`:
 
 # PHASE 2: Coverage Delta & Improvement Plan (Post-Implementation)
 
-**Execute during**: Build & Test (AWS) or speckit.implement (Spec-Kit) — after tests run, before RE update
+**Execute during**: Build & Test (Comprehensive) or fasttrack.implement (Fast-Track) — after tests run, before RE update
 **Input**: Phase 1 baseline from `specs/_project/reverse-engineering/test-coverage-analysis.md`
 **Output artifact**: `specs/{BRANCH_NAME}/construction/coverage-improvement-plan.md`
 

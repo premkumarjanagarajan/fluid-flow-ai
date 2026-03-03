@@ -4,9 +4,7 @@
 
 ---
 
-# Welcome to Fluid Flow AI v{VERSION} - Adaptive Software Development
-
-> **Note to AI**: Replace `{VERSION}` above with the value from the `VERSION` file at the repository root (same value read during the workflow gate confirmation).
+# Welcome to Fluid Flow AI v0.1.2 - Adaptive Software Development
 
 I'll guide you through an adaptive software development workflow that intelligently tailors itself to your specific needs.
 
@@ -14,8 +12,8 @@ I'll guide you through an adaptive software development workflow that intelligen
 
 Fluid Flow AI is a unified development process that combines two workflow paths under a single entry point. It analyzes your request, understands your codebase, and routes you to the right workflow:
 
-- **Spec-Kit** (for simpler, well-scoped features): A streamlined specification-to-implementation pipeline
-- **AWS AI-DLC** (for complex, enterprise-grade work): A comprehensive SDLC with full governance
+- **Fast-Track** (for simpler, well-scoped features): A streamlined specification-to-implementation pipeline
+- **Comprehensive Path** (for complex, enterprise-grade work): A comprehensive SDLC with full governance
 
 ## How It Works
 
@@ -24,7 +22,7 @@ flowchart TD
     Request(["Your Request"])
 
     subgraph ENTRY["SHARED ENTRY POINT"]
-        B1["1. Branch Creation ###-jira-ticket-desc"]
+        B1["1. Branch Creation"]
         B2["2. Workspace Detection"]
         B3["3. Reverse Engineering brownfield"]
         B4["4. Complexity Assessment"]
@@ -33,44 +31,46 @@ flowchart TD
 
     Request --> B1
 
-    subgraph SPECKIT["SPEC-KIT (Simpler)"]
-        SK1["specify"]
-        SK2["clarify"]
-        SK3["plan"]
-        SK4["tasks"]
-        SK5["checklists"]
-        SK6["implement"]
+    subgraph FASTTRACK["FAST-TRACK (Simpler)"]
+        subgraph FT_I["Inception"]
+            SK1["specify"]
+            SK2["clarify"]
+            SK3["plan"]
+        end
+        subgraph FT_C["Construction"]
+            SK4["tasks"]
+            SK5["checklists"]
+            SK6["implement"]
+        end
+        FT_I --> FT_C
     end
 
-    subgraph AIDLC["AWS AI-DLC (Complex)"]
-        AD1["Requirements"]
-        AD2["User Stories"]
-        AD3["App Design"]
-        AD4["Units"]
-        AD5["Per-Unit Design"]
-        AD6["Code Generation"]
-        AD7["Build & Test"]
+    subgraph COMPREHENSIVE["COMPREHENSIVE (Complex)"]
+        AD1["Inception Phase"]
+        AD2["Construction Phase"]
+        AD1 --> AD2
+    end
+
+    subgraph FINISH["COMPLETION"]
+        C1["Commit + PR + Risk Report"]
     end
 
     B4 -->|Simple| SK1
     B4 -->|Complex| AD1
-
-    style ENTRY fill:#90CAF9,stroke:#1565C0,stroke-width:2px
-    style SPECKIT fill:#81C784,stroke:#2E7D32,stroke-width:2px
-    style AIDLC fill:#FFB74D,stroke:#E65100,stroke-width:2px
-    style Request fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px
+    SK6 --> C1
+    AD2 --> C1
 ```
 
 ### Shared Entry Point
 
 Every feature starts the same way:
-1. **A numbered branch is created** (e.g., `001-proj-1234-add-user-auth`) with a dedicated feature directory
+1. **A feature branch is created** (e.g., `GXD-1732-add-user-authentication-flow`) with a dedicated feature directory
 2. **Your workspace is scanned** to understand if this is a new or existing project
 3. **For existing projects**: The codebase is analyzed once to create architectural documentation (reused across features)
 4. **Complexity is assessed**: The AI evaluates scope, risk, architecture, infrastructure, and requirements clarity
 5. **A workflow is recommended**: You review and approve (or override) the recommendation
 
-### Spec-Kit Path (Simpler Features)
+### Fast-Track Path (Simpler Features)
 
 For well-scoped features with clear requirements:
 - Create a feature specification from natural language
@@ -79,7 +79,7 @@ For well-scoped features with clear requirements:
 - Break down into ordered, dependency-aware tasks
 - Execute implementation with progress tracking
 
-### AWS AI-DLC Path (Complex Features)
+### Comprehensive Path (Complex Features)
 
 For enterprise-grade work requiring full governance:
 - Comprehensive requirements analysis with adaptive depth
@@ -113,5 +113,6 @@ Both workflows share the same governance backbone:
 3. **I'll assess complexity** and recommend a workflow
 4. **You'll confirm** the workflow (or choose the other)
 5. **We'll execute** with checkpoints at each stage
+6. **Completion** -- Commit, PR, and Change Risk Report
 
 Let's begin!

@@ -2,7 +2,7 @@
 
 **Purpose**: Generate a structured risk analysis report for CAB (Change Advisory Board) reviewers by analysing the complete git diff against the base branch, enriched with all context accumulated during the AI-DLC lifecycle.
 
-**Execute when**: After Build and Test completes in the AWS AI-DLC workflow, or on demand via the `/fluid-flow.risk-report` command.
+**Execute when**: As part of Stage 6: Completion (runs for both Fast-Track and Comprehensive Path workflows after Commit and PR), or on demand via the `/fluid-flow.risk-report` command.
 
 ---
 
@@ -107,7 +107,7 @@ Generate the report at `specs/{BRANCH_NAME}/operations/risk-report.md` following
 **Feature**: {feature_description}
 **Branch**: {BRANCH_NAME}
 **JIRA Ticket**: {JIRA_TICKET | null}
-**Workflow**: AWS AI-DLC
+**Workflow**: Comprehensive Path
 **Base Branch**: {base_branch}
 **Report Mode**: {Full | Delta}
 

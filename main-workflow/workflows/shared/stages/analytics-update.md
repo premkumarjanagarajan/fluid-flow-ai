@@ -1,6 +1,6 @@
 # Analytics Update Instructions
 
-# This instruction file is referenced by BOTH workflows (Spec-Kit and AWS AI-DLC)
+# This instruction file is referenced by BOTH workflows (Fast-Track and Comprehensive Path)
 # directly during workflow execution and via the shared command fluid-flow.update-docs.md.
 # It defines how to update the feature analytics file after each completed phase/stage
 # and how to finalise totals by the end of implementation.
@@ -17,7 +17,7 @@ This data enables understanding of:
 - **Cycle Time**: How long it takes to complete the full development cycle (end-to-end)
 - **Stage Efficiency**: Which stages take the longest and where bottlenecks occur
 - **Rework Rate**: How often change requests occur (indicates requirement quality)
-- **Workflow Comparison**: Compare Spec-Kit vs AWS AI-DLC effort for similar features
+- **Workflow Comparison**: Compare Fast-Track vs Comprehensive Path effort for similar features
 
 ---
 
@@ -45,7 +45,7 @@ Collect the following data from the feature directory (for both update modes):
 ### From `specs/{BRANCH_NAME}/state.md`:
 - Current stage (should be final stage)
 - All completed checkboxes (count stages executed vs skipped)
-- Workflow type (Spec-Kit or AWS AI-DLC)
+- Workflow type (Fast-Track or Comprehensive Path)
 
 ### From `specs/{BRANCH_NAME}/audit.md`:
 - All timestamps (to calculate stage durations)
@@ -65,7 +65,7 @@ Collect the following data from the feature directory (for both update modes):
 ### Required Inputs
 - **Stage Name**: Exact stage label to update (must match the timeline row name)
 - **Stage Status**: `Completed` or `Skipped`
-- **Workflow Type**: Spec-Kit or AWS AI-DLC
+- **Workflow Type**: Fast-Track or Comprehensive Path
 
 ### Execution
 1. Ensure the Stage Timeline includes all rows for the active workflow (see reference tables below). Append missing rows if needed.
@@ -95,8 +95,8 @@ Collect the following data from the feature directory (for both update modes):
 **Note**: Per-step analytics updates (Step 3) will have already populated Stage Timeline rows and Work Metrics during the workflow. This finalisation step reconciles and overwrites with authoritative values calculated from the audit trail.
 
 ### Trigger Points
-- **Spec-Kit**: At the end of `/speckit.implement`
-- **AWS AI-DLC**: At the end of `Build and Test`
+- **Fast-Track**: At the end of `/fasttrack.implement`
+- **Comprehensive Path**: At the end of `Build and Test`
 
 ### Execution
 1. Recompute timeline data for all stages:
@@ -121,7 +121,7 @@ Collect the following data from the feature directory (for both update modes):
 
 ### Workflow-Specific Stage Rows
 
-**For Spec-Kit**, append these rows to the Stage Timeline:
+**For Fast-Track**, append these rows to the Stage Timeline:
 
 | Stage | Started | Completed | Duration | Status |
 |-------|---------|-----------|----------|--------|
@@ -137,7 +137,7 @@ Collect the following data from the feature directory (for both update modes):
 | Implement - Polish | | | | Completed / Skipped |
 | Implement | | | | |
 
-**For AWS AI-DLC**, append these rows to the Stage Timeline:
+**For Comprehensive Path**, append these rows to the Stage Timeline:
 
 | Stage | Started | Completed | Duration | Status |
 |-------|---------|-----------|----------|--------|
@@ -157,7 +157,7 @@ Collect the following data from the feature directory (for both update modes):
 
 ### Effort Breakdown Per Phase
 
-**For Spec-Kit**:
+**For Fast-Track**:
 
 | Phase | Interactions | Approvals | Duration |
 |-------|-------------|-----------|----------|
@@ -166,7 +166,7 @@ Collect the following data from the feature directory (for both update modes):
 | Planning | [count] | [count] | [duration] |
 | Implementation | [count] | [count] | [duration] |
 
-**For AWS AI-DLC**:
+**For Comprehensive Path**:
 
 | Phase | Interactions | Approvals | Duration |
 |-------|-------------|-----------|----------|

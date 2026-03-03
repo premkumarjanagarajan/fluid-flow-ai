@@ -37,7 +37,7 @@ Before executing, verify:
 
 If BRANCH_NAME is not provided or available from conversation context:
 1. Check current git branch: run `git branch --show-current`
-2. If on a feature branch (matches `###-*` pattern), use that as BRANCH_NAME
+2. If on a feature branch (matches JIRA ticket pattern `[A-Z]+-[0-9]+-*` or any non-main/develop branch), use that as BRANCH_NAME
 3. If not on a feature branch, list recent feature directories in `specs/` and ask the user to confirm
 
 ---

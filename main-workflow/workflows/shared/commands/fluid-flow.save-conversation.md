@@ -39,7 +39,7 @@ Before executing, verify:
 
 If BRANCH_NAME is not provided or available from conversation context:
 1. Check current git branch: run `git branch --show-current`
-2. If on a feature branch (matches `###-*` pattern, e.g., `001-proj-1234-add-user-auth` or `001-add-user-auth`), use that as BRANCH_NAME
+2. If on a feature branch (matches JIRA ticket pattern `[A-Z]+-[0-9]+-*`, e.g., `GXD-1732-add-user-authentication-flow`, or any non-main/develop branch like `add-user-authentication-flow`), use that as BRANCH_NAME
 3. If not on a feature branch, list recent feature directories in `specs/` and ask the user to confirm which feature's conversation history to save to
 4. If no feature directories exist, ask the user if they want to create the spec directory manually or abort
 

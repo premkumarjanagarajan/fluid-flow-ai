@@ -117,21 +117,21 @@ fluid-flow-ai/
         │       ├── test-coverage-analysis.md     # Coverage baseline and delta
         │       └── workspace-detection.md        # Greenfield/brownfield detection
         │
-        ├── spec-kit/                             # Spec-Kit workflow
+        ├── fast-track/                             # Fast-Track workflow
         │   │
         │   ├── commands/                         # Slash commands
-        │   │   ├── speckit.specify.md            # Create specification
-        │   │   ├── speckit.clarify.md            # Clarify ambiguities
-        │   │   ├── speckit.plan.md               # Create implementation plan
-        │   │   ├── speckit.tasks.md              # Generate task list
-        │   │   ├── speckit.checklist.md          # Generate quality checklists
-        │   │   ├── speckit.implement.md          # Execute implementation
-        │   │   ├── speckit.analyze.md            # Cross-artifact analysis
-        │   │   ├── speckit.constitution.md       # Constitution management
-        │   │   └── speckit.taskstoissues.md      # Convert tasks to GitHub issues
+        │   │   ├── fasttrack.specify.md            # Create specification
+        │   │   ├── fasttrack.clarify.md            # Clarify ambiguities
+        │   │   ├── fasttrack.plan.md               # Create implementation plan
+        │   │   ├── fasttrack.tasks.md              # Generate task list
+        │   │   ├── fasttrack.checklist.md          # Generate quality checklists
+        │   │   ├── fasttrack.implement.md          # Execute implementation
+        │   │   ├── fasttrack.analyze.md            # Cross-artifact analysis
+        │   │   ├── fasttrack.constitution.md       # Constitution management
+        │   │   └── fasttrack.taskstoissues.md      # Convert tasks to GitHub issues
         │   │
         │   ├── memory/
-        │   │   └── constitution.md               # Spec-Kit constitution template
+        │   │   └── constitution.md               # Fast-Track constitution template
         │   │
         │   ├── scripts/
         │   │   ├── bash/                         # Bash scripts (macOS, Linux, Git Bash)
@@ -155,10 +155,10 @@ fluid-flow-ai/
         │       ├── spec-template.md              # Specification template
         │       └── tasks-template.md             # Task list template
         │
-        └── aws/                                  # AWS AI-DLC workflow
+        └── comprehensive/                                  # Comprehensive Path workflow
             │
             ├── commands/
-            │   └── aws-rules.md                  # AWS workflow definition and rules
+            │   └── comprehensive-rules.md            # Comprehensive Path workflow definition and rules
             │
             ├── inception/                        # Inception phase stage definitions
             │   ├── adrs-technical-principles.md  # ADR and technical principle rules
@@ -179,7 +179,7 @@ fluid-flow-ai/
             │   ├── nfr-requirements.md           # NFR requirements stage
             │   └── onboarding-update.md          # Onboarding update stage
             │
-            ├── memory/                           # AWS-specific memory files
+            ├── memory/                           # Comprehensive-specific memory files
             │   └── common/
             │       ├── depth-levels.md           # Adaptive depth level definitions
             │       ├── error-handling.md         # Error handling patterns
@@ -187,7 +187,7 @@ fluid-flow-ai/
             │       ├── question-format-guide.md  # Question formatting rules
             │       ├── session-continuity.md     # Session resumption guidance
             │       ├── terminology.md            # Domain terminology
-            │       ├── welcome-message.md        # AWS-specific welcome content
+            │       ├── welcome-message.md        # Comprehensive-specific welcome content
             │       └── workflow-changes.md       # Workflow change tracking
             │
             └── operations/                       # Operations phase definitions
@@ -207,19 +207,19 @@ When you use Fluid Flow AI in a project, it generates artifacts in a `specs/` di
 Each feature gets its own directory under `specs/`:
 
 ```
-specs/{BRANCH_NAME}/                              # e.g., specs/001-proj-1234-add-user-auth/
+specs/{BRANCH_NAME}/                              # e.g., specs/GXD-1732-add-user-authentication-flow/
 │
 ├── state.md                                      # Progress tracking (includes JIRA ticket)
 ├── audit.md                                      # Full audit trail (includes JIRA ticket)
 ├── workspace-detection.md                        # Workspace scan results
 │
-├── spec.md                                       # Feature specification (Spec-Kit)
-├── plan.md                                       # Implementation plan (Spec-Kit)
-├── tasks.md                                      # Ordered task list (Spec-Kit)
+├── spec.md                                       # Feature specification (Fast-Track)
+├── plan.md                                       # Implementation plan (Fast-Track)
+├── tasks.md                                      # Ordered task list (Fast-Track)
 ├── data-model.md                                 # Entity definitions (if applicable)
 ├── research.md                                   # Research and decisions (if applicable)
 │
-├── checklists/                                   # Quality checklists (Spec-Kit)
+├── checklists/                                   # Quality checklists (Fast-Track)
 │   ├── ux.md
 │   ├── security.md
 │   └── ...
@@ -227,7 +227,7 @@ specs/{BRANCH_NAME}/                              # e.g., specs/001-proj-1234-ad
 ├── contracts/                                    # API contracts (if applicable)
 │   └── ...
 │
-├── inception/                                    # Inception phase (AWS AI-DLC)
+├── inception/                                    # Inception phase (Comprehensive Path)
 │   ├── plans/
 │   ├── requirements/
 │   ├── user-stories/
@@ -242,7 +242,7 @@ specs/{BRANCH_NAME}/                              # e.g., specs/001-proj-1234-ad
 │   │       └── onboarding-product.md
 │   └── application-design/
 │
-├── construction/                                 # Construction phase (AWS AI-DLC)
+├── construction/                                 # Construction phase (Comprehensive Path)
 │   ├── plans/
 │   ├── {unit-name}/                              # One directory per unit
 │   │   ├── functional-design/                    # Includes bdd-step-mapping.md when BDD was executed
@@ -293,8 +293,8 @@ Each feature gets an analytics file in the framework's analytics directory:
 ```
 main-workflow/analytics/
 │
-├── 001-proj-1234-add-user-auth.md                # Analytics for feature 001
-├── 002-proj-5678-fix-payment-bug.md              # Analytics for feature 002
+├── GXD-1732-add-user-authentication-flow.md      # Analytics for feature with JIRA
+├── fix-payment-bug.md                             # Analytics for feature without JIRA
 └── ...                                           # One file per feature
 ```
 
@@ -328,11 +328,11 @@ your-project/                         # Workspace root
 ├── specs/                            # Workflow artifacts go HERE
 │   ├── _project/
 │   │   └── reverse-engineering/
-│   ├── 001-add-user-auth/
+│   ├── GXD-1732-add-user-authentication-flow/
 │   │   ├── state.md
 │   │   ├── audit.md
 │   │   └── spec.md
-│   └── 002-fix-payment-bug/
+│   └── fix-payment-bug/
 │       ├── state.md
 │       ├── audit.md
 │       └── spec.md

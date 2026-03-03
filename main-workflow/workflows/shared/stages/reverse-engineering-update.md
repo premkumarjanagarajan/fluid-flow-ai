@@ -2,7 +2,7 @@
 
 **Purpose**: Incrementally update existing reverse engineering artifacts after an implementation completes, ensuring they reflect the current state of the codebase.
 
-**Execute when**: After implementation completes in either workflow (AWS AI-DLC Build & Test, or Spec-Kit `/speckit.implement`).
+**Execute when**: After implementation completes in either workflow (Comprehensive Path Build & Test, or Fast-Track `/fasttrack.implement`).
 
 **Skip when**: `specs/_project/reverse-engineering/` does not exist (no prior reverse engineering has been done, meaning the project is greenfield).
 
@@ -25,8 +25,8 @@ Read all current artifacts from `specs/_project/reverse-engineering/`:
 
 Analyze what changed during the implementation by:
 1. Reviewing the feature's implementation artifacts:
-   - For AWS: `specs/{branch}/construction/` artifacts and code changes
-   - For Spec-Kit: `specs/{branch}/plan.md`, `specs/{branch}/tasks.md`, and code changes
+   - For Comprehensive: `specs/{branch}/construction/` artifacts and code changes
+   - For Fast-Track: `specs/{branch}/plan.md`, `specs/{branch}/tasks.md`, and code changes
 2. Scanning the workspace for new or modified source files since the last RE timestamp
 3. Identifying:
    - New components or packages added

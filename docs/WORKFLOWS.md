@@ -1,14 +1,15 @@
 # Workflows
 
-This document provides a detailed reference for both workflow paths in Fluid Flow AI: the **Shared Entry Point**, the **Spec-Kit** path, and the **AWS AI-DLC** path.
+This document provides a detailed reference for both workflow paths in Fluid Flow AI: the **Shared Entry Point**, the **Fast-Track** path, and the **Comprehensive Path** path.
 
 ---
 
 ## Table of Contents
 
 - [Shared Entry Point](#shared-entry-point)
-- [Spec-Kit Workflow](#spec-kit-workflow)
-- [AWS AI-DLC Workflow](#aws-ai-dlc-workflow)
+- [Fast-Track Workflow](#fast-track-workflow)
+- [Comprehensive Path Workflow](#comprehensive-path-workflow)
+- [Completion (Shared)](#completion-shared)
 - [Workflow Guidance](#workflow-guidance)
 
 ---
@@ -30,14 +31,14 @@ flowchart LR
 
 ### Stage 1: Branch Creation (Always)
 
-**Purpose**: Create a numbered feature branch, collect the JIRA ticket reference, initialise the feature directory, and create the feature analytics file.
+**Purpose**: Create a feature branch, collect the JIRA ticket reference, initialise the feature directory, and create the feature analytics file.
 
 **What happens**:
 1. The user's request is parsed to extract a feature description
 2. The user is prompted for a **JIRA Ticket Number** (parent initiative). Providing `null` or skipping is accepted; if provided, the ticket is stored in all feature documentation
 3. A concise short name is generated (e.g., `add-user-auth`, `fix-payment-bug`)
 4. The `create-new-feature` script (Bash `.sh` or PowerShell `.ps1`, auto-detected) creates the branch and directory:
-   - Branch: `###-jira-ticket-short-description` (e.g., `001-proj-1234-add-user-auth`) or `###-short-description` when JIRA is null
+   - Branch: `{JIRA-TICKET}-{description}` (e.g., `GXD-1732-add-user-authentication-flow`) or `{description}` when JIRA is null
    - Directory: `specs/{BRANCH_NAME}/`
 5. `state.md` and `audit.md` are initialised in the feature directory (both include the JIRA ticket)
 6. The `specs/_project/` directory is created if it does not exist
@@ -45,7 +46,7 @@ flowchart LR
 8. The initial user request is logged verbatim in `audit.md`
 
 **Outputs**:
-- Git branch `###-jira-ticket-short-description` (or `###-short-description` when JIRA is null)
+- Git branch `{JIRA-TICKET}-{description}` (or `{description}` when JIRA is null)
 - `specs/{BRANCH_NAME}/state.md` (includes JIRA ticket)
 - `specs/{BRANCH_NAME}/audit.md` (includes JIRA ticket)
 - `main-workflow/analytics/{BRANCH_NAME}.md` (feature analytics)
@@ -121,8 +122,8 @@ flowchart LR
 
 **What happens**:
 1. The user is presented with both workflow options:
-   - **Spec-Kit** -- Lightweight specification-driven workflow. Best for standard features, bug fixes, enhancements, CRUD operations, and work that does not require deep infrastructure or compliance design.
-   - **AWS AI-DLC** -- Full Architecture Decision Lifecycle. Best for complex infrastructure changes, multi-service integrations, projects requiring ADRs, NFR analysis, and formal architecture design.
+   - **Fast-Track** -- Lightweight specification-driven workflow. Best for standard features, bug fixes, enhancements, CRUD operations, and work that does not require deep infrastructure or compliance design.
+   - **Comprehensive Path** -- Full Architecture Decision Lifecycle. Best for complex infrastructure changes, multi-service integrations, projects requiring ADRs, NFR analysis, and formal architecture design.
 2. The user replies with their choice (no AI recommendation is made -- this is purely user-driven)
 3. The choice is logged in `audit.md`
 4. `state.md` is updated with the selected workflow
@@ -136,28 +137,36 @@ flowchart LR
 **Purpose**: Route to the chosen workflow and begin execution.
 
 Based on the user's choice:
-- **Spec-Kit**: The user is informed of the Spec-Kit command sequence and the feature directory location. The workflow is ready for `/speckit.specify`.
-- **AWS AI-DLC**: The AWS workflow rules are loaded and execution begins from Requirements Analysis. Workspace Detection and Reverse Engineering artifacts are carried forward as context.
+- **Fast-Track**: The user is informed of the Fast-Track command sequence and the feature directory location. The workflow is ready for `/fasttrack.specify`.
+- **Comprehensive Path**: The Comprehensive workflow rules are loaded and execution begins from Requirements Analysis. Workspace Detection and Reverse Engineering artifacts are carried forward as context.
 
 ---
 
-## Spec-Kit Workflow
+## Fast-Track Workflow
 
-A lightweight, command-driven pipeline for well-scoped features. Each command builds on the output of the previous one.
+A lightweight, command-driven pipeline for well-scoped features. Each command builds on the output of the previous one. Stages are organised into **Inception** (Specify, Clarify, Plan) and **Construction** (Tasks, Checklist, Implement) phases.
 
 ```mermaid
-flowchart LR
-    S1["/speckit.specify"] --> S2["/speckit.clarify"]
-    S1 -->|"optional, skip clarify"| S3
-    S2 --> S3["/speckit.plan"]
-    S3 --> S4["/speckit.tasks"]
-    S4 --> S5["/speckit.checklist"]
-    S4 -->|"optional, skip checklist"| S6
-    S5 --> S6["/speckit.implement"]
+flowchart TB
+    subgraph INCEPTION["INCEPTION PHASE"]
+        direction LR
+        S1["/fasttrack.specify"] --> S2["/fasttrack.clarify"]
+        S1 -->|"optional, skip clarify"| S3
+        S2 --> S3["/fasttrack.plan"]
+    end
+
+    subgraph CONSTRUCTION["CONSTRUCTION PHASE"]
+        direction LR
+        S4["/fasttrack.tasks"] --> S5["/fasttrack.checklist"]
+        S4 -->|"optional, skip checklist"| S6
+        S5 --> S6["/fasttrack.implement"]
+    end
+
+    S3 --> S4
     S6 --> S9["/fluid-flow.update-docs"]
 
-    S4 -.->|optional| S7["/speckit.analyze"]
-    S4 -.->|optional| S8["/speckit.taskstoissues"]
+    S4 -.->|optional| S7["/fasttrack.analyze"]
+    S4 -.->|optional| S8["/fasttrack.taskstoissues"]
 
     style S1 fill:#81C784,stroke:#2E7D32
     style S2 fill:#81C784,stroke:#2E7D32
@@ -170,25 +179,39 @@ flowchart LR
     style S9 fill:#CE93D8,stroke:#7B1FA2
 ```
 
-### Commands
+### Inception Phase
+
+**Purpose**: Determine WHAT to build and HOW to approach it.
 
 | # | Command | Required | Description |
 |---|---------|----------|-------------|
-| 1 | `/speckit.specify` | Yes | Converts the natural-language feature description into a structured specification (`spec.md`). Includes user scenarios, requirements, success criteria, and technology constraints. |
-| 2 | `/speckit.clarify` | Optional | Identifies up to 5 underspecified areas in the current spec. Asks targeted clarification questions and encodes answers back into the spec. |
-| 3 | `/speckit.plan` | Yes | Generates an implementation plan (`plan.md`) with architecture decisions, data models, API contracts, and dependency maps. References the constitution and brownfield context. |
-| 4 | `/speckit.tasks` | Yes | Breaks the plan into an ordered, dependency-aware task list (`tasks.md`). Uses task IDs with optional `[P]` and `[US#]` labels plus file path references; validation is captured as "Independent Test" criteria at the user-story/phase level. |
-| 5 | `/speckit.checklist` | Optional | Generates domain-specific quality checklists. Checklists act as "unit tests for requirements" -- they validate clarity and completeness, not implementation correctness. |
-| 6 | `/speckit.implement` | Yes | Executes the task list with progress tracking. Checks prerequisite checklists before starting. Processes tasks in dependency order with approval gates. |
-| 7 | `/speckit.analyze` | Optional | Performs cross-artifact consistency analysis across spec, plan, and tasks. Non-destructive -- reports issues without modifying files. |
-| 8 | `/speckit.taskstoissues` | Optional | Converts tasks into GitHub issues with labels, dependencies, and acceptance criteria. |
-| 9 | `/speckit.constitution` | Optional | Create or update the project constitution from interactive or provided principle inputs, keeping dependent templates in sync. |
+| 1 | `/fasttrack.specify` | Yes | Converts the natural-language feature description into a structured specification (`spec.md`). Includes user scenarios, requirements, success criteria, and technology constraints. |
+| 2 | `/fasttrack.clarify` | Optional | Identifies up to 5 underspecified areas in the current spec. Asks targeted clarification questions and encodes answers back into the spec. |
+| 3 | `/fasttrack.plan` | Yes | Generates an implementation plan (`plan.md`) with architecture decisions, data models, API contracts, and dependency maps. References the constitution and brownfield context. |
 
-> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each Spec-Kit phase and finalised with totals by the end of `/speckit.implement`.
+### Construction Phase
+
+**Purpose**: Build the feature according to the plan.
+
+| # | Command | Required | Description |
+|---|---------|----------|-------------|
+| 4 | `/fasttrack.tasks` | Yes | Breaks the plan into an ordered, dependency-aware task list (`tasks.md`). Uses task IDs with optional `[P]` and `[US#]` labels plus file path references; validation is captured as "Independent Test" criteria at the user-story/phase level. |
+| 5 | `/fasttrack.checklist` | Optional | Generates domain-specific quality checklists. Checklists act as "unit tests for requirements" -- they validate clarity and completeness, not implementation correctness. |
+| 6 | `/fasttrack.implement` | Yes | Executes the task list with progress tracking. Checks prerequisite checklists before starting. Processes tasks in dependency order with approval gates. |
+
+### Optional Commands
+
+| # | Command | Description |
+|---|---------|-------------|
+| 7 | `/fasttrack.analyze` | Performs cross-artifact consistency analysis across spec, plan, and tasks. Non-destructive -- reports issues without modifying files. |
+| 8 | `/fasttrack.taskstoissues` | Converts tasks into GitHub issues with labels, dependencies, and acceptance criteria. |
+| 9 | `/fasttrack.constitution` | Create or update the project constitution from interactive or provided principle inputs, keeping dependent templates in sync. |
+
+> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each Fast-Track phase and finalised with totals by the end of `/fasttrack.implement`.
 >
-> **Post-implementation**: After `/speckit.implement` completes, run **`/fluid-flow.update-docs`** (shared command) to update the remaining project documentation and reverse engineering artifacts.
+> **Post-implementation**: After `/fasttrack.implement` completes, run **`/fluid-flow.update-docs`** (shared command) to update the remaining project documentation and reverse engineering artifacts.
 
-### Spec-Kit Artifacts
+### Fast-Track Artifacts
 
 All artifacts are written to `specs/{BRANCH_NAME}/`:
 
@@ -217,7 +240,7 @@ main-workflow/analytics/{BRANCH_NAME}.md   # Feature analytics (timing, metrics,
 
 ---
 
-## AWS AI-DLC Workflow
+## Comprehensive Path Workflow
 
 A comprehensive enterprise SDLC with three phases and adaptive depth. Stages are conditional -- the AI assesses which ones add value based on complexity, scope, and risk.
 
@@ -309,14 +332,14 @@ The Construction phase uses a **per-unit loop**. Each unit of work is completed 
 
 ### Post-Implementation Documentation (Separate Command)
 
-After the Construction phase completes, the following steps are handled by the shared command **`/fluid-flow.update-docs`** (not part of the AWS AI-DLC workflow itself):
+After the Construction phase completes, the following steps are handled by the shared command **`/fluid-flow.update-docs`** (not part of the Comprehensive Path workflow itself):
 
 | Step | Condition | Description |
 |------|-----------|-------------|
 | **Test Coverage Delta** | Conditional (baseline exists) | Compare coverage against Phase 1 baseline, generate improvement plan |
 | **RE Update** | Conditional (RE artifacts exist) | Incrementally update all reverse engineering artifacts |
 
-> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each AWS stage and finalised with totals by the end of Build and Test.
+> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each Comprehensive stage and finalised with totals by the end of Build and Test.
 
 ### Operations Phase
 
@@ -324,7 +347,7 @@ After the Construction phase completes, the following steps are handled by the s
 
 Planned capabilities: deployment planning, monitoring setup, incident response, maintenance workflows, production readiness checklists.
 
-### AWS AI-DLC Artifacts
+### Comprehensive Path Artifacts
 
 ```
 specs/{BRANCH_NAME}/
@@ -372,6 +395,18 @@ main-workflow/analytics/{BRANCH_NAME}.md   # Feature analytics (timing, metrics,
 
 ---
 
+## Completion (Shared)
+
+This stage runs after either workflow path completes (Fast-Track or Comprehensive Path). Both paths converge into the shared Completion stage.
+
+| Step | Description |
+|------|-------------|
+| **1. Commit** | Commit changes using conventional commits format. User approval is required before committing. |
+| **2. Pull Request** | Push the branch, create a pull request, and present the PR link to the user. |
+| **3. Change Risk Report** | Generate a change risk report via `/fluid-flow.risk-report` and attach it to the pull request. |
+
+---
+
 ## Workflow Guidance
 
 At the Workflow Selection stage, the user is presented with two options. There is no AI-driven assessment or recommendation -- the user reads the descriptions and makes their own choice.
@@ -380,7 +415,8 @@ The descriptions presented to the user are:
 
 | Workflow | Description |
 |----------|-------------|
-| **Spec-Kit** | Lightweight specification-driven workflow. Best for: standard features, bug fixes, enhancements, CRUD operations, and work that does not require deep infrastructure or compliance design. |
-| **AWS AI-DLC** | Full Architecture Decision Lifecycle. Best for: complex infrastructure changes, multi-service integrations, projects requiring ADRs, NFR analysis, and formal architecture design. |
+| **Fast-Track** | Lightweight specification-driven workflow. Best for: standard features, bug fixes, enhancements, CRUD operations, and work that does not require deep infrastructure or compliance design. |
+| **Comprehensive Path** | Full Architecture Decision Lifecycle. Best for: complex infrastructure changes, multi-service integrations, projects requiring ADRs, NFR analysis, and formal architecture design. |
+| **Completion (Shared)** | Both paths converge into the shared Completion stage: Commit (conventional format, user approval), Pull Request (push branch, create PR, present link), and Change Risk Report (via `/fluid-flow.risk-report`, attached to PR). |
 
 The user replies with **1** or **2** (or the workflow name) to make their selection. The choice is logged in the audit trail and the workflow begins immediately.

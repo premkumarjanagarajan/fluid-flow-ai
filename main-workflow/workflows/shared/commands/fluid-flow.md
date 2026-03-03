@@ -39,7 +39,7 @@ The shared entry point orchestrates the following stages before routing to a wor
 1. **Branch Creation** (ALWAYS - includes JIRA ticket prompt and analytics file creation)
 2. **Workspace Detection** (ALWAYS)
 3. **Reverse Engineering** (CONDITIONAL - Brownfield, run-once per project)
-4. **Workflow Selection** (ALWAYS - user chooses Spec-Kit or AWS AI-DLC)
+4. **Workflow Selection** (ALWAYS - user chooses Fast-Track or Comprehensive Path)
 5. **Workflow Routing** (ALWAYS - routes to the chosen workflow)
 
 ---
@@ -64,7 +64,7 @@ The shared entry point orchestrates the following stages before routing to a wor
 
 ## Stage 1: Branch Creation (ALWAYS EXECUTE)
 
-**Purpose**: Create a numbered feature branch and initialize the feature directory.
+**Purpose**: Create a feature branch and initialize the feature directory.
 
 1. Parse the user's request to extract the feature description
 2. **Ask for the JIRA Ticket Number**:
@@ -81,18 +81,18 @@ The shared entry point orchestrates the following stages before routing to a wor
 4. **Confirm branch naming components** if unclear:
    - If the JIRA ticket format is ambiguous (not matching a recognizable pattern like `PROJ-1234`), ask the user to confirm or correct it
    - If the short description is ambiguous or too generic, propose a name and ask the user to confirm
-   - Branch naming pattern: `###-jira-ticket-short-description` (e.g., `001-proj-1234-add-user-auth`)
-   - When JIRA is null: `###-short-description` (e.g., `001-add-user-auth`)
+   - Branch naming pattern: `{JIRA-TICKET}-{description}` (e.g., `GXD-1732-add-user-authentication-flow`)
+   - When JIRA is null: `{description}` (e.g., `add-user-authentication-flow`)
 5. **Create the feature branch** using the script that matches `SHELL_TYPE` (detected in Stage 0):
 
-   - **If SHELL_TYPE is `bash`**: Run `../../spec-kit/scripts/bash/create-new-feature.sh`
+   - **If SHELL_TYPE is `bash`**: Run `../../fast-track/scripts/bash/create-new-feature.sh`
      - Pass `--json` for structured output
      - Pass `--short-name "<name>"` with the generated short name
      - If JIRA_TICKET is not null, pass `--jira-ticket "<ticket>"` with the JIRA ticket number
      - Pass the feature description as positional argument
      - For single quotes in args, use escape syntax: e.g `"I'm Groot"` (double-quote)
 
-   - **If SHELL_TYPE is `powershell`**: Run `../../spec-kit/scripts/powershell/create-new-feature.ps1`
+   - **If SHELL_TYPE is `powershell`**: Run `../../fast-track/scripts/powershell/create-new-feature.ps1`
      - Pass `-Json` for structured output
      - Pass `-ShortName "<name>"` with the generated short name
      - If JIRA_TICKET is not null, pass `-JiraTicket "<ticket>"` with the JIRA ticket number
@@ -246,11 +246,11 @@ Create `specs/{BRANCH_NAME}/audit.md`:
 
    Which workflow would you like to use for this feature?
 
-   **1. Spec-Kit** — Lightweight specification-driven workflow.
+   **1. Fast-Track** — Lightweight specification-driven workflow.
       Best for: standard features, bug fixes, enhancements, CRUD operations,
       and work that doesn't require deep infrastructure or compliance design.
 
-   **2. AWS AI-DLC** — Full Architecture Decision Lifecycle.
+   **2. Comprehensive Path** — Full Architecture Decision Lifecycle.
       Best for: complex infrastructure changes, multi-service integrations,
       projects requiring ADRs, NFR analysis, and formal architecture design.
 
@@ -268,13 +268,13 @@ Create `specs/{BRANCH_NAME}/audit.md`:
 
 Based on the user's chosen workflow:
 
-### If Spec-Kit was chosen:
+### If Fast-Track was chosen:
 
-1. Update `specs/{BRANCH_NAME}/state.md`: Set `**Workflow**: Spec-Kit`
+1. Update `specs/{BRANCH_NAME}/state.md`: Set `**Workflow**: Fast-Track`
 2. Log routing decision in audit.md
-3. **Initialize Spec-Kit analytics rows**: Read `main-workflow/analytics/{BRANCH_NAME}.md` and:
-   - Set `**Workflow**` in the Metadata section to `Spec-Kit`
-   - Append the Spec-Kit stage rows to the **Stage Timeline** table (after the entry point rows):
+3. **Initialize Fast-Track analytics rows**: Read `main-workflow/analytics/{BRANCH_NAME}.md` and:
+   - Set `**Workflow**` in the Metadata section to `Fast-Track`
+   - Append the Fast-Track stage rows to the **Stage Timeline** table (after the entry point rows):
 
      | Stage | Started | Completed | Duration | Status |
      |-------|---------|-----------|----------|--------|
@@ -285,52 +285,60 @@ Based on the user's chosen workflow:
      | Checklist | | | | Pending |
      | Implement | | | | Pending |
 
-   - Update the **Effort Breakdown** table to include Spec-Kit phases:
+   - Update the **Effort Breakdown** table to include Fast-Track phases:
 
      | Phase | Interactions | Approvals | Duration |
      |-------|-------------|-----------|----------|
      | Entry Point | [count] | [count] | [duration] |
-     | Specification | 0 | 0 | |
-     | Planning | 0 | 0 | |
-     | Implementation | 0 | 0 | |
+     | Inception | 0 | 0 | |
+     | Construction | 0 | 0 | |
+     | Completion | 0 | 0 | |
 
 4. Inform the user:
    ```markdown
-   ## Workflow: Spec-Kit
+   ## Workflow: Fast-Track
 
-   Your feature will follow the Spec-Kit workflow. The stages are:
+   Your feature will follow the Fast-Track workflow:
 
+   **Inception**
    1. **Specify** — Create the feature specification
    2. **Clarify** — (optional) Clarify ambiguities
    3. **Plan** — Create the implementation plan
+
+   **Construction**
    4. **Tasks** — Generate ordered tasks
    5. **Checklist** — (optional) Generate quality checklist
    6. **Implement** — Execute the implementation
+
+   **Completion** (shared)
+   7. **Commit** — Stage and commit changes
+   8. **Pull Request** — Push branch and create PR
+   9. **Change Risk Report** — Generate CAB-grade risk report
 
    The feature directory is ready at: `specs/{BRANCH_NAME}/`
 
    **Ready to proceed with specification?**
    ```
 
-5. **Begin Spec-Kit execution**: When the user confirms they're ready to proceed:
-   - Load the Spec-Kit specification command from `../../spec-kit/commands/speckit.specify.md`
+5. **Begin Fast-Track execution**: When the user confirms they're ready to proceed:
+   - Load the Fast-Track specification command from `../../fast-track/commands/fasttrack.specify.md`
    - Execute the specification workflow using the original feature description as input
-   - The Spec-Kit workflow is stage-driven; after each stage completes, load and execute the next stage command as indicated by the completion instructions within each command
-6. **Spec-Kit stage chain** (load each file in sequence as stages complete):
-   - Specify: `../../spec-kit/commands/speckit.specify.md`
-   - Clarify (optional): `../../spec-kit/commands/speckit.clarify.md`
-   - Plan: `../../spec-kit/commands/speckit.plan.md`
-   - Tasks: `../../spec-kit/commands/speckit.tasks.md`
-   - Checklist (optional): `../../spec-kit/commands/speckit.checklist.md`
-   - Implement: `../../spec-kit/commands/speckit.implement.md`
+   - The Fast-Track workflow is stage-driven; after each stage completes, load and execute the next stage command as indicated by the completion instructions within each command
+6. **Fast-Track stage chain** (load each file in sequence as stages complete):
+   - Specify: `../../fast-track/commands/fasttrack.specify.md`
+   - Clarify (optional): `../../fast-track/commands/fasttrack.clarify.md`
+   - Plan: `../../fast-track/commands/fasttrack.plan.md`
+   - Tasks: `../../fast-track/commands/fasttrack.tasks.md`
+   - Checklist (optional): `../../fast-track/commands/fasttrack.checklist.md`
+   - Implement: `../../fast-track/commands/fasttrack.implement.md`
 
-### If AWS AI-DLC was chosen:
+### If Comprehensive Path was chosen:
 
-1. Update `specs/{BRANCH_NAME}/state.md`: Set `**Workflow**: AWS AI-DLC`
+1. Update `specs/{BRANCH_NAME}/state.md`: Set `**Workflow**: Comprehensive Path`
 2. Log routing decision in audit.md
-3. **Initialize AWS AI-DLC analytics rows**: Read `main-workflow/analytics/{BRANCH_NAME}.md` and:
-   - Set `**Workflow**` in the Metadata section to `AWS AI-DLC`
-   - Append the AWS AI-DLC stage rows to the **Stage Timeline** table (after the entry point rows):
+3. **Initialize Comprehensive Path analytics rows**: Read `main-workflow/analytics/{BRANCH_NAME}.md` and:
+   - Set `**Workflow**` in the Metadata section to `Comprehensive Path`
+   - Append the Comprehensive Path stage rows to the **Stage Timeline** table (after the entry point rows):
 
      | Stage | Started | Completed | Duration | Status |
      |-------|---------|-----------|----------|--------|
@@ -348,19 +356,56 @@ Based on the user's chosen workflow:
      | Code Generation | | | | Pending |
      | Onboarding Update | | | | Pending |
      | Build and Test | | | | Pending |
-     | Risk Report | | | | Pending |
 
-   - Update the **Effort Breakdown** table to include AWS AI-DLC phases:
+   - Update the **Effort Breakdown** table to include Comprehensive Path phases:
 
      | Phase | Interactions | Approvals | Duration |
      |-------|-------------|-----------|----------|
      | Entry Point | [count] | [count] | [duration] |
      | Inception | 0 | 0 | |
      | Construction | 0 | 0 | |
+     | Completion | 0 | 0 | |
 
-4. The AWS workflow begins from **Requirements Analysis** (workspace detection and reverse engineering are already complete)
-5. Load the AWS workflow rules from `../../aws/commands/aws-rules.md`
-6. Execute the AWS workflow starting from Requirements Analysis
+4. The Comprehensive workflow begins from **Requirements Analysis** (workspace detection and reverse engineering are already complete)
+5. Load the Comprehensive workflow rules from `../../comprehensive/commands/comprehensive-rules.md`
+6. Execute the Comprehensive workflow starting from Requirements Analysis
+
+---
+
+## Stage 6: Completion (ALWAYS EXECUTE -- after chosen workflow finishes)
+
+Regardless of which workflow was chosen (Fast-Track or Comprehensive Path), execute these final steps in order once the workflow's implementation and post-implementation documentation stages are complete.
+
+### Step 1: Commit
+
+1. **MANDATORY**: Log start of Completion stage in audit.md
+2. Stage all changes: `git add .`
+3. Present the user with a proposed commit message following conventional commits format:
+   ```
+   feat({scope}): {short description}
+
+   {body with key changes}
+   ```
+4. **Wait for User Response**: Do NOT commit until the user has approved or modified the message
+5. Execute the commit: `git commit -m "{approved message}"`
+6. Log the commit hash in audit.md
+
+### Step 2: Pull Request
+
+1. Push the feature branch to the remote: `git push -u origin {BRANCH_NAME}`
+2. Create a Pull Request targeting the base branch (`main`)
+3. Use the feature description and key artifacts (specification, plan, implementation summary) as the PR body
+4. Present the PR link to the user
+5. Log the PR URL in audit.md
+
+### Step 3: Change Risk Report
+
+1. Load and execute the risk report command from `../commands/fluid-flow.risk-report.md`
+2. The report is generated at `specs/{BRANCH_NAME}/operations/risk-report.md`
+3. Present a summary of the risk report to the user
+4. Attach the risk report summary as a comment on the PR
+5. **MANDATORY**: Log completion of Completion stage in audit.md
+6. Update `specs/{BRANCH_NAME}/state.md`: Mark `[x] Completion`
 
 ---
 
@@ -396,7 +441,7 @@ Create `main-workflow/analytics/{BRANCH_NAME}.md`:
 | Workflow Selection | | | | Pending |
 | Workflow Routing | | | | Pending |
 
-> Workflow-specific stages are appended by the chosen workflow (Spec-Kit or AWS AI-DLC).
+> Workflow-specific stages are appended by the chosen workflow (Fast-Track or Comprehensive Path).
 
 ## Work Metrics
 - **Total AI Interactions**: 0
@@ -423,15 +468,15 @@ Create `main-workflow/analytics/{BRANCH_NAME}.md`:
 
 ### Analytics Update Instructions
 
-After **every** completed workflow phase/stage, and again at implementation completion for final totals, the analytics file **MUST** be updated by following `../stages/analytics-update.md`. Both Spec-Kit and AWS AI-DLC reference this shared instruction file.
+After **every** completed workflow phase/stage, and again at implementation completion for final totals, the analytics file **MUST** be updated by following `../stages/analytics-update.md`. Both Fast-Track and Comprehensive Path reference this shared instruction file.
 
 ---
 
 ## Key Principles
 
 - **Single Entry Point**: All development work starts here
-- **User-Driven Routing**: User directly chooses Spec-Kit or AWS AI-DLC for each feature
-- **Standardized Branching**: All features use `###-jira-ticket-short-description` numbered branches (or `###-short-description` when JIRA ticket is null)
+- **User-Driven Routing**: User directly chooses Fast-Track or Comprehensive Path for each feature
+- **Standardized Branching**: All features use `{JIRA-TICKET}-{description}` branches (or `{description}` when JIRA ticket is null)
 - **Standardized Artifacts**: All features write to `specs/{branch}/`
 - **Project-Level RE**: Reverse engineering runs once, stored at `specs/_project/`, updated after implementations
 - **Full Audit Trail**: Every interaction logged in `specs/{branch}/audit.md`

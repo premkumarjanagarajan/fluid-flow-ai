@@ -5,7 +5,7 @@
 ## When to Run
 
 - **Entry point** (`fluid-flow.md`): Run once during Stage 1 (Branch Creation) and store the result in `state.md`.
-- **Individual commands** (e.g., `/speckit.specify`): Read the stored `SHELL_TYPE` from `specs/{BRANCH_NAME}/state.md`. If the field is missing (e.g., feature was created before this detection existed), run the detection below and update `state.md`.
+- **Individual commands** (e.g., `/fasttrack.specify`): Read the stored `SHELL_TYPE` from `specs/{BRANCH_NAME}/state.md`. If the field is missing (e.g., feature was created before this detection existed), run the detection below and update `state.md`.
 
 ## Detection Method
 
@@ -40,7 +40,7 @@ or
 
 ## Script Invocation Reference
 
-Once `SHELL_TYPE` is known, use the table below to select the correct script and argument syntax. All scripts live under `spec-kit/scripts/`.
+Once `SHELL_TYPE` is known, use the table below to select the correct script and argument syntax. All scripts live under `fast-track/scripts/`.
 
 ### check-prerequisites
 
