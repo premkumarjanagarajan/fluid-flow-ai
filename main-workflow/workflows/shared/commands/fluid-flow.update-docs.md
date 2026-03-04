@@ -1,6 +1,6 @@
 # Post-Implementation Documentation Update
 
-# This command is invoked AFTER the final implementation step of either workflow (Spec-Kit or AWS AI-DLC).
+# This command is invoked AFTER the final implementation step of either workflow (Fast-Track or Comprehensive Path).
 # It is a SEPARATE agent/command — not part of the implementation flow itself.
 # The feature branch and directory already exist at specs/{BRANCH_NAME}/.
 # state.md and audit.md already exist in the feature directory.

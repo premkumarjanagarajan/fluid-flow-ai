@@ -28,7 +28,7 @@ This document describes the reverse engineering process in Fluid Flow AI -- what
 
 ## Overview
 
-Reverse engineering is a **run-once** analysis of an existing codebase. It produces 11 documentation artifacts that capture the project's business context, architecture, code structure, APIs, dependencies, quality, and test coverage. These artifacts serve as context for all subsequent workflow stages -- both Spec-Kit and AWS AI-DLC use them to make informed decisions about implementation.
+Reverse engineering is a **run-once** analysis of an existing codebase. It produces 11 documentation artifacts that capture the project's business context, architecture, code structure, APIs, dependencies, quality, and test coverage. These artifacts serve as context for all subsequent workflow stages -- both Fast-Track and Comprehensive Path use them to make informed decisions about implementation.
 
 ```mermaid
 flowchart LR
@@ -282,7 +282,7 @@ All artifacts are written to `specs/_project/reverse-engineering/`. User approva
 
 ## Incremental Updates
 
-After each implementation cycle (Spec-Kit `/speckit.implement` or AWS AI-DLC Build & Test), the **Reverse Engineering Update** stage incrementally updates the existing artifacts. This is not a full regeneration -- only the affected sections are modified.
+After each implementation cycle (Fast-Track `/fasttrack.implement` or Comprehensive Path Build & Test), the **Reverse Engineering Update** stage incrementally updates the existing artifacts. This is not a full regeneration -- only the affected sections are modified.
 
 | Principle | Description |
 |-----------|-------------|

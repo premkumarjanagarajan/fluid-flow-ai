@@ -11,6 +11,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.2] - 2026-03-03
+
+### Changed
+
+- **Rebranding: Fast-Track** -- Rebranded "Spec-Kit" workflow to "Fast-Track" across all directories, command files (`/speckit.*` to `/fasttrack.*`), paths, and documentation
+- **Rebranding: Comprehensive Path** -- Rebranded "AWS AI-DLC" workflow to "Comprehensive Path" across all directories, command files, paths, and documentation. AWS cloud service references preserved unchanged
+- **Fast-Track structure** -- Organised Fast-Track stages into Inception (Specify, Clarify, Plan) and Construction (Tasks, Checklist, Implement) phases, matching the Comprehensive Path's structure
+- **Branch naming** -- Changed from auto-incrementing `###-jira-ticket-short-description` to ticket-first `{JIRA-TICKET}-{description}` (e.g., `GXD-1732-add-user-authentication-flow`). Branches without a JIRA ticket use `{description}` only
+- **Hardcoded version** -- Version `v0.1.2` is now hardcoded in the workflow gate banner and welcome message instead of being read dynamically from the `VERSION` file
+
+### Added
+
+- **Completion stage** -- Added shared Stage 6 (Commit, PR, Change Risk Report) that runs after either workflow path completes, providing a consistent delivery finale
+- **Internal development workflow** -- Added root `.cursor/rules/workflow.mdc` enforcing structured plans with mandatory closing steps (version bump, README, CHANGELOG, commit, PR, release note) for all changes to the framework itself
+
+### Removed
+
+- **Risk Report from Comprehensive Construction** -- Moved the Change Risk Report out of the Comprehensive Path's Construction phase into the shared Completion stage, so both paths generate risk reports consistently
+
+---
+
 ## [0.1] - 2026-02-26 -- Alpha Release
 
 ### Added

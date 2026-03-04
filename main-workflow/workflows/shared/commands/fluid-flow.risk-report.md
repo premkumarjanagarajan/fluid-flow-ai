@@ -37,8 +37,13 @@ Before executing, verify:
 
 If BRANCH_NAME is not provided or available from conversation context:
 1. Check current git branch: run `git branch --show-current`
-2. If on a feature branch (matches `###-*` pattern), use that as BRANCH_NAME
-3. If not on a feature branch, list recent feature directories in `specs/` and ask the user to confirm
+2. Validate the branch name matches a feature branch pattern:
+   - JIRA ticket format: `[A-Z]+-[0-9]+-` followed by kebab-case description (e.g., `GXD-1732-add-user-authentication-flow`)
+   - Description-only format: kebab-case `[a-z0-9]+(-[a-z0-9]+)*` (e.g., `add-user-authentication-flow`)
+   - **Reject** branches with slashes (e.g., `feature/foo`, `release/v1`) — these would create nested/invalid `specs/` paths
+   - **Reject** `main`, `master`, `develop`
+3. If the branch matches, use it as BRANCH_NAME
+4. If not on a valid feature branch, list recent feature directories in `specs/` and ask the user to confirm
 
 ---
 

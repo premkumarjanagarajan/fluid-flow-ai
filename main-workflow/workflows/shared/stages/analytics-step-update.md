@@ -1,6 +1,6 @@
 # Per-Step Analytics Update
 
-# This instruction file is referenced by each Spec-Kit command (and can be used by AWS AI-DLC commands)
+# This instruction file is referenced by each Fast-Track command (and can be used by Comprehensive Path commands)
 # to update the analytics file incrementally after each workflow step completes.
 # This ensures the Stage Timeline is populated in real-time, not only at finalisation.
 
@@ -15,7 +15,7 @@ Update the feature analytics file after completing each workflow step so that:
 
 ## When to Execute
 
-Each workflow command (e.g., `/speckit.specify`, `/speckit.plan`, etc.) MUST execute this update at **two points**:
+Each workflow command (e.g., `/fasttrack.specify`, `/fasttrack.plan`, etc.) MUST execute this update at **two points**:
 
 1. **At command START** — record the stage start timestamp
 2. **At command END** — record the stage completion, duration, and update counters
@@ -28,18 +28,18 @@ Each calling command MUST provide:
 - `{STAGE_NAME}` — The analytics stage name (must match a row in the Stage Timeline table)
 - `{BRANCH_NAME}` — The feature branch name
 
-### Stage Name Mapping (Spec-Kit)
+### Stage Name Mapping (Fast-Track)
 
 | Command | Stage Name |
 |---------|-----------|
-| `/speckit.specify` | Specify |
-| `/speckit.clarify` | Clarify |
-| `/speckit.plan` | Plan |
-| `/speckit.tasks` | Tasks |
-| `/speckit.checklist` | Checklist |
-| `/speckit.implement` | Implement |
+| `/fasttrack.specify` | Specify |
+| `/fasttrack.clarify` | Clarify |
+| `/fasttrack.plan` | Plan |
+| `/fasttrack.tasks` | Tasks |
+| `/fasttrack.checklist` | Checklist |
+| `/fasttrack.implement` | Implement |
 
-### Stage Name Mapping (AWS AI-DLC)
+### Stage Name Mapping (Comprehensive Path)
 
 **Inception Phase:**
 

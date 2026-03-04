@@ -55,13 +55,13 @@ git add .
 git commit -m "Initial commit"
 ```
 
-Fluid Flow AI creates numbered feature branches, so Git must be initialised.
+Fluid Flow AI creates feature branches, so Git must be initialised.
 
 ### 4. Make Scripts Executable
 
 **macOS / Linux (Bash)**:
 ```bash
-chmod +x fluid-flow-ai/main-workflow/workflows/spec-kit/scripts/bash/*.sh
+chmod +x fluid-flow-ai/main-workflow/workflows/fast-track/scripts/bash/*.sh
 ```
 
 **Windows (PowerShell)**: No extra step needed — `.ps1` scripts run natively in PowerShell. If execution policy blocks scripts, run once:
@@ -99,11 +99,11 @@ The AI displays a welcome message explaining the Fluid Flow AI process. This onl
 
 ### Step 4: Branch Creation
 
-The AI creates a numbered feature branch:
+The AI creates a feature branch:
 
 ```
-Branch created: 001-proj-1234-add-user-auth
-Feature directory: specs/001-proj-1234-add-user-auth/
+Branch created: GXD-1732-add-user-authentication-flow
+Feature directory: specs/GXD-1732-add-user-authentication-flow/
 ```
 
 ### Step 5: Workspace Detection
@@ -133,18 +133,18 @@ Choose Your Workflow
 
 Which workflow would you like to use for this feature?
 
-1. Spec-Kit -- Lightweight specification-driven workflow.
+1. Fast-Track -- Lightweight specification-driven workflow.
    Best for: standard features, bug fixes, enhancements, CRUD operations,
    and work that doesn't require deep infrastructure or compliance design.
 
-2. AWS AI-DLC -- Full Architecture Decision Lifecycle.
+2. Comprehensive Path -- Full Architecture Decision Lifecycle.
    Best for: complex infrastructure changes, multi-service integrations,
    projects requiring ADRs, NFR analysis, and formal architecture design.
 
 Please reply with 1 or 2 (or the workflow name).
 ```
 
-Reply **1** or **Spec-Kit** for the lightweight path, or **2** or **AWS** for the comprehensive path.
+Reply **1** or **Fast-Track** for the lightweight path, or **2** or **Comprehensive** for the comprehensive path.
 
 ### Step 8: Execute the Workflow
 
@@ -157,13 +157,13 @@ The AI guides you through the chosen workflow with approval gates at each stage.
 ### Scenario: Simple Bug Fix
 
 1. Request: "Fix the null pointer exception in the payment processing module"
-2. Workflow Selection: User chooses **Spec-Kit**
+2. Workflow Selection: User chooses **Fast-Track**
 3. Flow: specify --> plan --> tasks --> implement
 
 ### Scenario: New Microservice
 
 1. Request: "Build a notification service that handles email, SMS, and push notifications"
-2. Workflow Selection: User chooses **AWS AI-DLC**
+2. Workflow Selection: User chooses **Comprehensive Path**
 3. Flow: Requirements --> User Stories --> Workflow Planning --> Application Design --> Units Generation --> Per-unit Construction --> Build & Test
 
 ### Scenario: Brownfield Enhancement

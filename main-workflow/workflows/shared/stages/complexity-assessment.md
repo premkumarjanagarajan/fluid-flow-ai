@@ -1,6 +1,6 @@
 # Complexity Assessment
 
-**Purpose**: Evaluate the complexity of the user's request and recommend the appropriate workflow path (Spec-Kit or AWS AI-DLC).
+**Purpose**: Evaluate the complexity of the user's request and recommend the appropriate workflow path (Fast-Track or Comprehensive Path).
 
 **Execute when**: Always, after Workspace Detection and Reverse Engineering (if applicable).
 
@@ -48,7 +48,7 @@ Assess each factor and assign a score: **Low**, **Medium**, or **High**.
 
 ## Step 3: Calculate Recommendation
 
-### Route to Spec-Kit when:
+### Route to Fast-Track when:
 - Majority of factors score **Low** or **Medium**
 - No factors score **High** in Risk or Architectural Impact
 - No infrastructure provisioning required
@@ -56,7 +56,7 @@ Assess each factor and assign a score: **Low**, **Medium**, or **High**.
 - No regulatory/compliance changes
 - Single or few units of work
 
-### Route to AWS AI-DLC when:
+### Route to Comprehensive Path when:
 - Any factor scores **High** in Risk, Architectural Impact, or Infrastructure
 - Multiple factors score **High**
 - Security/compliance/regulatory implications exist
@@ -67,8 +67,8 @@ Assess each factor and assign a score: **Low**, **Medium**, or **High**.
 
 ### Borderline Cases
 When the assessment is ambiguous (mix of Medium scores, or one High with otherwise Low):
-- Default to **Spec-Kit** if the user's request is clear and self-contained
-- Default to **AWS AI-DLC** if there are unknowns that need structured exploration
+- Default to **Fast-Track** if the user's request is clear and self-contained
+- Default to **Comprehensive Path** if there are unknowns that need structured exploration
 - Always present both options and let the human decide
 
 ## Step 4: Present Recommendation
@@ -89,17 +89,17 @@ Present the assessment to the user in the following format:
 | Infrastructure | [Low/Medium/High] | [Brief justification] |
 | Units of Work | [Low/Medium/High] | [Brief justification] |
 
-### Recommendation: **[Spec-Kit / AWS AI-DLC]**
+### Recommendation: **[Fast-Track / Comprehensive Path]**
 
 **Reasoning**: [2-3 sentences explaining why this workflow is recommended]
 
 ### What this means:
 
-**If Spec-Kit**: Your feature will follow a streamlined specification-to-implementation pipeline. You'll create a spec, plan, tasks, and implement -- with shared governance rules (security, quality, review gates) applied throughout.
+**If Fast-Track**: Your feature will follow a streamlined specification-to-implementation pipeline. You'll create a spec, plan, tasks, and implement -- with shared governance rules (security, quality, review gates) applied throughout.
 
-**If AWS AI-DLC**: Your feature will follow a comprehensive enterprise SDLC with full requirements analysis, user stories, application design, per-unit functional and NFR design, and structured code generation with build and test.
+**If Comprehensive Path**: Your feature will follow a comprehensive enterprise SDLC with full requirements analysis, user stories, application design, per-unit functional and NFR design, and structured code generation with build and test.
 
-> **Your choice**: You can accept this recommendation or choose the other workflow. Reply with **"accept"** or specify **"Spec-Kit"** / **"AWS"**.
+> **Your choice**: You can accept this recommendation or choose the other workflow. Reply with **"accept"** or specify **"Fast-Track"** / **"Comprehensive"**.
 ```
 
 ## Step 5: Record Decision

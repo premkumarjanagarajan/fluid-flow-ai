@@ -6,17 +6,17 @@ This document provides a complete reference for every command and stage in Fluid
 
 ## Table of Contents
 
-- [Spec-Kit Commands](#spec-kit-commands)
-  - [/speckit.specify](#speckitspecify)
-  - [/speckit.clarify](#speckitclarify)
-  - [/speckit.plan](#speckitplan)
-  - [/speckit.tasks](#speckittasks)
-  - [/speckit.checklist](#speckitchecklist)
-  - [/speckit.implement](#speckitimplement)
-  - [/speckit.analyze](#speckitanalyze)
-  - [/speckit.taskstoissues](#speckittaskstoissues)
-  - [/speckit.constitution](#speckitconstitution)
-- [AWS AI-DLC Stages](#aws-ai-dlc-stages)
+- [Fast-Track Commands](#fast-track-commands)
+  - [/fasttrack.specify](#fasttrackspecify)
+  - [/fasttrack.clarify](#fasttrackclarify)
+  - [/fasttrack.plan](#fasttrackplan)
+  - [/fasttrack.tasks](#fasttracktasks)
+  - [/fasttrack.checklist](#fasttrackchecklist)
+  - [/fasttrack.implement](#fasttrackimplement)
+  - [/fasttrack.analyze](#fasttrackanalyze)
+  - [/fasttrack.taskstoissues](#fasttracktaskstoissues)
+  - [/fasttrack.constitution](#fasttrackconstitution)
+- [Comprehensive Path Stages](#comprehensive-path-stages)
   - [Inception Phase](#inception-phase)
   - [Construction Phase](#construction-phase)
   - [Operations Phase](#operations-phase)
@@ -28,9 +28,9 @@ This document provides a complete reference for every command and stage in Fluid
 
 ---
 
-## Spec-Kit Commands
+## Fast-Track Commands
 
-All Spec-Kit commands follow a consistent pattern:
+All Fast-Track commands follow a consistent pattern:
 1. Load shared memory files (AI operating contract, content validation, review gates, ISO 9001, ADR integrity gate, continuous learning, overconfidence prevention)
 2. Load security rules if the change affects security, data, identity, or infrastructure
 3. Load ISO 50001 energy management if the change affects infrastructure, performance, or energy (SEU-related)
@@ -40,17 +40,17 @@ All Spec-Kit commands follow a consistent pattern:
 
 ---
 
-### /speckit.specify
+### /fasttrack.specify
 
 **Purpose**: Convert a natural-language feature description into a structured specification.
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.specify.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.specify.md`
 
-**Input**: The feature description provided after the command (e.g., `/speckit.specify Add user authentication with JWT`)
+**Input**: The feature description provided after the command (e.g., `/fasttrack.specify Add user authentication with JWT`)
 
 **Process**:
 1. Detect existing feature context via `check-prerequisites` script (Bash or PowerShell, auto-detected)
-2. Update state tracking to "Spec-Kit - Specification"
+2. Update state tracking to "Fast-Track - Specification"
 3. Analyse the feature description
 4. Generate a structured specification including:
    - User scenarios and personas
@@ -65,16 +65,16 @@ All Spec-Kit commands follow a consistent pattern:
 **Output**: `specs/{BRANCH_NAME}/spec.md`
 
 **Handoffs**:
-- `/speckit.plan` -- Build a technical plan from the specification
-- `/speckit.clarify` -- Clarify underspecified areas
+- `/fasttrack.plan` -- Build a technical plan from the specification
+- `/fasttrack.clarify` -- Clarify underspecified areas
 
 ---
 
-### /speckit.clarify
+### /fasttrack.clarify
 
 **Purpose**: Identify underspecified areas in the current spec and resolve them through targeted questions.
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.clarify.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.clarify.md`
 
 **Input**: Optional arguments; operates on the existing `spec.md`
 
@@ -87,15 +87,15 @@ All Spec-Kit commands follow a consistent pattern:
 
 **Output**: Updated `specs/{BRANCH_NAME}/spec.md`
 
-**Handoff**: `/speckit.plan`
+**Handoff**: `/fasttrack.plan`
 
 ---
 
-### /speckit.plan
+### /fasttrack.plan
 
 **Purpose**: Generate an implementation plan with architecture decisions, data models, and API contracts.
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.plan.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.plan.md`
 
 **Input**: Optional arguments (e.g., technology stack preferences)
 
@@ -115,16 +115,16 @@ All Spec-Kit commands follow a consistent pattern:
 **Output**: `specs/{BRANCH_NAME}/plan.md` (plus optional `data-model.md`, `contracts/`)
 
 **Handoffs**:
-- `/speckit.tasks` -- Break the plan into tasks
-- `/speckit.checklist` -- Create quality checklists
+- `/fasttrack.tasks` -- Break the plan into tasks
+- `/fasttrack.checklist` -- Create quality checklists
 
 ---
 
-### /speckit.tasks
+### /fasttrack.tasks
 
 **Purpose**: Break the implementation plan into an ordered, dependency-aware task list.
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.tasks.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.tasks.md`
 
 **Input**: Optional arguments
 
@@ -132,7 +132,7 @@ All Spec-Kit commands follow a consistent pattern:
 1. Run `check-prerequisites` script (Bash or PowerShell, auto-detected) to verify context
 2. Load design documents (plan, spec, data model, contracts)
 3. Generate the task list:
-   - Tasks follow the Spec-Kit checklist format with task IDs (T001, T002, ...) and optional `[P]` (parallelizable) and `[US#]` (user story) labels
+   - Tasks follow the Fast-Track checklist format with task IDs (T001, T002, ...) and optional `[P]` (parallelizable) and `[US#]` (user story) labels
    - Tasks are ordered by dependencies
    - File path references for each task
    - Tasks are grouped by user story phase; validation is captured as "Independent Test" criteria at the user-story level
@@ -140,16 +140,16 @@ All Spec-Kit commands follow a consistent pattern:
 **Output**: `specs/{BRANCH_NAME}/tasks.md`
 
 **Handoffs**:
-- `/speckit.analyze` -- Run consistency analysis
-- `/speckit.implement` -- Start implementation
+- `/fasttrack.analyze` -- Run consistency analysis
+- `/fasttrack.implement` -- Start implementation
 
 ---
 
-### /speckit.checklist
+### /fasttrack.checklist
 
 **Purpose**: Generate domain-specific quality checklists that act as "unit tests for requirements."
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.checklist.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.checklist.md`
 
 **Input**: The domain to generate a checklist for (e.g., "UX", "security", "accessibility")
 
@@ -165,11 +165,11 @@ All Spec-Kit commands follow a consistent pattern:
 
 ---
 
-### /speckit.implement
+### /fasttrack.implement
 
 **Purpose**: Execute the task list with progress tracking and approval gates.
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.implement.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.implement.md`
 
 **Input**: Optional arguments
 
@@ -186,17 +186,17 @@ All Spec-Kit commands follow a consistent pattern:
 
 **Output**: Application code in the workspace root, updated `tasks.md` with progress
 
-> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each Spec-Kit phase and finalised with totals by the end of `/speckit.implement`.
+> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each Fast-Track phase and finalised with totals by the end of `/fasttrack.implement`.
 >
 > **Post-implementation**: After implementation completes, run **`/fluid-flow.update-docs`** to update remaining project documentation.
 
 ---
 
-### /speckit.analyze
+### /fasttrack.analyze
 
 **Purpose**: Perform cross-artifact consistency and quality analysis.
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.analyze.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.analyze.md`
 
 **Input**: Optional arguments
 
@@ -214,11 +214,11 @@ All Spec-Kit commands follow a consistent pattern:
 
 ---
 
-### /speckit.taskstoissues
+### /fasttrack.taskstoissues
 
 **Purpose**: Convert tasks into GitHub issues.
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.taskstoissues.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.taskstoissues.md`
 
 **Input**: Optional arguments
 
@@ -235,11 +235,11 @@ All Spec-Kit commands follow a consistent pattern:
 
 ---
 
-### /speckit.constitution
+### /fasttrack.constitution
 
 **Purpose**: Create or update the project constitution from interactive or provided principle inputs.
 
-**File**: `main-workflow/workflows/spec-kit/commands/speckit.constitution.md`
+**File**: `main-workflow/workflows/fast-track/commands/fasttrack.constitution.md`
 
 **Input**: Optional principle inputs
 
@@ -251,15 +251,42 @@ All Spec-Kit commands follow a consistent pattern:
 
 **Output**: Updated constitution file
 
-**Handoff**: `/speckit.specify`
+**Handoff**: `/fasttrack.specify`
 
 ---
 
-## AWS AI-DLC Stages
+## Comprehensive Path Stages
 
-AWS AI-DLC stages are not invoked as slash commands. They are executed automatically by the workflow engine based on the execution plan created during Workflow Planning.
+Comprehensive Path stages are not invoked as slash commands. They are executed automatically by the workflow engine based on the execution plan created during Workflow Planning.
 
 ### Inception Phase
+
+#### Technical Scoping & Engineering Discovery (Optional -- User Opt-In)
+
+**Purpose**: Assess engineering complexity and scope before any requirements or design work begins. For large or ambiguous initiatives, recommend decomposition into independently deliverable sub-initiatives — each assigned to the appropriate workflow (Fast-Track or Comprehensive Path).
+
+**When prompted**: At the start of every Comprehensive Path run, the team is asked whether to run this stage. Answering NO skips it entirely and proceeds directly to Requirements Analysis.
+
+**Execute when**: The request is ambiguous in size, spans multiple components or teams, or the team wants a structured scoping assessment before committing to a full Comprehensive Path cycle.
+
+**Skip when**: The request is clearly scoped, the team already has a decomposition plan, or speed of delivery outweighs the value of upfront scoping.
+
+**Process**:
+1. Load reverse engineering artifacts for system context (if brownfield)
+2. Classify the request by initiative size (Story / Feature / Initiative) and engineering clarity (High / Medium / Low)
+3. Identify technical scope signals — affected systems, services, domains, and teams
+4. Assess eight complexity dimensions: component span, integration surface, data model impact, ADR implications, NFR surface, team dependency, delivery risk, and unknowns
+5. Produce a decomposition recommendation:
+   - **Single initiative**: Proceed as one Comprehensive Path cycle with workflow assignment
+   - **Decomposition**: Propose named sub-initiatives with Fast-Track or Comprehensive Path assigned to each, a delivery sequence, and suggested branch names
+
+> **Note**: If the request appears larger than an Initiative (multi-quarter, cross-domain, multiple independent teams), the stage flags this and recommends the team scope it down before re-engaging Fluid Flow.
+
+**Output**: `specs/{BRANCH_NAME}/inception/technical-scoping/technical-scoping-report.md`
+
+**Approval**: Required — team reviews and approves the scoping report before proceeding.
+
+---
 
 #### Requirements Analysis (Always -- Adaptive Depth)
 
@@ -421,7 +448,7 @@ For each unit of work, the following stages execute in sequence. A unit is compl
 
 ---
 
-> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each AWS stage and finalised with totals by the end of Build and Test.
+> **Analytics tracking**: `main-workflow/analytics/{BRANCH_NAME}.md` is updated after each Comprehensive stage and finalised with totals by the end of Build and Test.
 >
 > **Post-implementation**: After Build and Test completes, run **`/fluid-flow.update-docs`** (shared command) to update project documentation and reverse engineering artifacts.
 
@@ -445,7 +472,7 @@ These commands are shared across both workflows and invoked independently.
 
 **File**: `main-workflow/workflows/shared/commands/fluid-flow.update-docs.md`
 
-**When to run**: After the final implementation step of either workflow (Spec-Kit `/speckit.implement` or AWS AI-DLC Build and Test).
+**When to run**: After the final implementation step of either workflow (Fast-Track `/fasttrack.implement` or Comprehensive Path Build and Test).
 
 **Process**:
 1. **Test Coverage Delta** (conditional): Compare current coverage against baseline, generate improvement plan
@@ -502,21 +529,21 @@ These stages are used by both workflows via the shared entry point or shared com
 
 Scripts are provided in both **Bash** and **PowerShell** for cross-platform support. The workflow auto-detects the shell environment at startup (see Shell Detection in `shared/stages/shell-detection.md`).
 
-- **Bash scripts**: `main-workflow/workflows/spec-kit/scripts/bash/`
-- **PowerShell scripts**: `main-workflow/workflows/spec-kit/scripts/powershell/`
+- **Bash scripts**: `main-workflow/workflows/fast-track/scripts/bash/`
+- **PowerShell scripts**: `main-workflow/workflows/fast-track/scripts/powershell/`
 
 ### create-new-feature
 
-**Purpose**: Create numbered feature branches and initialise feature directories.
+**Purpose**: Create feature branches and initialise feature directories.
 
 **Bash**:
 ```bash
-./create-new-feature.sh --json --jira-ticket "PROJ-1234" --short-name "add-user-auth" "Add user authentication with JWT"
+./create-new-feature.sh --json --jira-ticket "GXD-1732" --short-name "add-user-authentication-flow" "Add user authentication with JWT"
 ```
 
 **PowerShell**:
 ```powershell
-./create-new-feature.ps1 -Json -JiraTicket "PROJ-1234" -ShortName "add-user-auth" "Add user authentication with JWT"
+./create-new-feature.ps1 -Json -JiraTicket "GXD-1732" -ShortName "add-user-authentication-flow" "Add user authentication with JWT"
 ```
 
 **Flags**:
@@ -524,16 +551,16 @@ Scripts are provided in both **Bash** and **PowerShell** for cross-platform supp
 |-----------|----------------|-------------|
 | `--json` | `-Json` | Output structured JSON for programmatic parsing |
 | `--short-name "<name>"` | `-ShortName "<name>"` | Specify the branch short name |
-| `--jira-ticket "<ticket>"` | `-JiraTicket "<ticket>"` | Include JIRA ticket in branch name (e.g., `PROJ-1234`) |
+| `--jira-ticket "<ticket>"` | `-JiraTicket "<ticket>"` | Include JIRA ticket in branch name (e.g., `GXD-1732`) |
 | `--with-state` | `-WithState` | Create state.md and audit.md in the feature directory |
 
 **Output** (JSON mode):
 ```json
 {
-  "BRANCH_NAME": "001-proj-1234-add-user-auth",
-  "SPEC_FILE": "specs/001-proj-1234-add-user-auth/spec.md",
-  "FEATURE_NUM": "001",
-  "JIRA_TICKET": "PROJ-1234"
+  "BRANCH_NAME": "GXD-1732-add-user-authentication-flow",
+  "SPEC_FILE": "specs/GXD-1732-add-user-authentication-flow/spec.md",
+  "FEATURE_NUM": "",
+  "JIRA_TICKET": "GXD-1732"
 }
 ```
 

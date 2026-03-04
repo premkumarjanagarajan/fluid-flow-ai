@@ -1,4 +1,4 @@
-# Fluid Flow AI v0.1
+# Fluid Flow AI v0.1.2
 
 **Adaptive Software Development Workflow for AI-Assisted Engineering**
 
@@ -9,8 +9,9 @@ Fluid Flow AI is a structured, governance-aware workflow framework that guides A
 ## Key Features
 
 - **Unified Entry Point** -- Every development request flows through a single, standardised process regardless of complexity
-- **Dual Workflow Paths** -- Spec-Kit for streamlined features; AWS AI-DLC for complex enterprise work
+- **Dual Workflow Paths** -- Fast-Track for streamlined features; Comprehensive Path for complex enterprise work
 - **User-Driven Routing** -- The developer directly chooses which workflow to follow for each feature
+- **Technical Scoping & Engineering Discovery** -- Optional Comprehensive Path stage that assesses engineering complexity, identifies risk signals, and recommends decomposition into sub-initiatives before any design work begins
 - **Full Audit Trail** -- Every interaction, decision, and approval is logged with ISO 8601 timestamps
 - **Governance Backbone** -- ISO 27001 (security), ISO 9001 (quality), and ISO 50001 (energy) compliance built in
 - **Brownfield Intelligence** -- Automatic codebase reverse engineering with C4 architecture modelling
@@ -27,76 +28,116 @@ flowchart TD
     Request(["Development Request"])
 
     subgraph ENTRY["SHARED ENTRY POINT"]
-        B1["1. Branch Creation<br/><code>###-jira-ticket-short-desc</code>"]
-        B2["2. Workspace Detection"]
-        B3["3. Reverse Engineering<br/><i>brownfield only, run-once</i>"]
-        B4["4. Workflow Selection<br/><i>user chooses</i>"]
+        B1("1. Branch Creation")
+        B2("2. Workspace Detection")
+        B3("3. Reverse Engineering")
+        B4("4. Workflow Selection")
         B1 --> B2 --> B3 --> B4
     end
 
     Request --> B1
 
-    subgraph SPECKIT["SPEC-KIT PATH"]
-        direction TB
-        SK1["/speckit.specify"]
-        SK2["/speckit.clarify"]
-        SK3["/speckit.plan"]
-        SK4["/speckit.tasks"]
-        SK5["/speckit.checklist"]
-        SK6["/speckit.implement"]
-        SK1 --> SK2 --> SK3 --> SK4 --> SK5 --> SK6
+    subgraph FASTTRACK["FAST-TRACK"]
+        subgraph FT_INC["Inception"]
+            FT1("Specify")
+            FT2("Clarify")
+            FT3("Plan")
+            FT1 --> FT2 --> FT3
+        end
+        subgraph FT_CON["Construction"]
+            FT4("Tasks")
+            FT5("Checklist")
+            FT6("Implement")
+            FT4 --> FT5 --> FT6
+        end
+        FT3 --> FT4
     end
 
-    subgraph AIDLC["AWS AI-DLC PATH"]
-        direction TB
-        AD1["Inception Phase"]
-        AD2["Construction Phase"]
-        AD3["Operations Phase"]
-        AD1 --> AD2 --> AD3
+    subgraph COMP["COMPREHENSIVE"]
+        subgraph CP_INC["Inception"]
+            CP0("Technical Scoping<br/><i>Optional</i>")
+            CP1("Requirements Analysis")
+            CP2("Onboarding Presentations")
+            CP3("User Stories")
+            CP4("Workflow Planning")
+            CP5("Application Design")
+            CP6("Units Generation")
+            CP0 --> CP1 --> CP2 --> CP3 --> CP4 --> CP5 --> CP6
+        end
+        subgraph CP_CON["Construction"]
+            CP7("Functional Design")
+            CP8("NFR Requirements")
+            CP9("NFR Design")
+            CP10("Infrastructure Design")
+            CP11("Code Generation")
+            CP12("Onboarding Update")
+            CP13("Build & Test")
+            CP7 --> CP8 --> CP9 --> CP10 --> CP11 --> CP12 --> CP13
+        end
+        CP6 --> CP7
     end
 
-    B4 -->|"User chooses Spec-Kit"| SK1
-    B4 -->|"User chooses AWS AI-DLC"| AD1
+    subgraph FINISH["CONSTRUCTION — COMPLETION"]
+        FC1("Commit")
+        FC2("Pull Request")
+        FC3("Change Risk Report")
+        FC1 --> FC2 --> FC3
+    end
 
-    style ENTRY fill:#90CAF9,stroke:#1565C0,stroke-width:2px
-    style SPECKIT fill:#81C784,stroke:#2E7D32,stroke-width:2px
-    style AIDLC fill:#FFB74D,stroke:#E65100,stroke-width:2px
+    B4 -->|"Fast-Track"| FT1
+    B4 -->|"Comprehensive"| CP0
+    FT6 --> FC1
+    CP13 --> FC1
+
     style Request fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px
+    style ENTRY fill:#90CAF9,stroke:#1565C0,stroke-width:2px,rx:10,ry:10
+    style FASTTRACK fill:#81C784,stroke:#2E7D32,stroke-width:2px,rx:10,ry:10
+    style FT_INC fill:#C8E6C9,stroke:#43A047,stroke-width:1px,rx:8,ry:8
+    style FT_CON fill:#A5D6A7,stroke:#2E7D32,stroke-width:1px,rx:8,ry:8
+    style COMP fill:#FFB74D,stroke:#E65100,stroke-width:2px,rx:10,ry:10
+    style CP_INC fill:#FFE0B2,stroke:#FB8C00,stroke-width:1px,rx:8,ry:8
+    style CP_CON fill:#FFCC80,stroke:#E65100,stroke-width:1px,rx:8,ry:8
+    style FINISH fill:#B39DDB,stroke:#4527A0,stroke-width:2px,rx:10,ry:10
 ```
 
 ### Shared Entry Point (All Requests)
 
-1. **Branch Creation** -- A numbered feature branch (`001-proj-1234-add-user-auth`) and dedicated feature directory are created
+1. **Branch Creation** -- A feature branch (`GXD-1732-add-user-authentication-flow`) and dedicated feature directory are created
 2. **Workspace Detection** -- The workspace is scanned to determine if the project is greenfield or brownfield
 3. **Reverse Engineering** -- For brownfield projects, the existing codebase is analysed once to produce architecture documentation (C4 model, component inventory, API docs, etc.)
 4. **Workflow Selection** -- The user is presented with both workflow options and directly chooses which one to follow
 
-### Spec-Kit Path (Simpler Features)
+### Fast-Track Path (Simpler Features)
 
-A streamlined specification-to-implementation pipeline with six commands:
+A streamlined specification-to-implementation pipeline with two phases:
 
-| Command | Purpose |
-|---------|---------|
-| `/speckit.specify` | Convert natural language to a structured specification |
-| `/speckit.clarify` | Identify and resolve ambiguities interactively |
-| `/speckit.plan` | Generate an implementation plan with data models and contracts |
-| `/speckit.tasks` | Break the plan into ordered, dependency-aware tasks |
-| `/speckit.checklist` | Generate quality checklists for specific domains |
-| `/speckit.implement` | Execute implementation with progress tracking |
+| Phase | Commands | Purpose |
+|-------|----------|---------|
+| **Inception** | `/fasttrack.specify` | Convert natural language to a structured specification |
+| | `/fasttrack.clarify` | Identify and resolve ambiguities interactively |
+| | `/fasttrack.plan` | Generate an implementation plan with data models and contracts |
+| **Construction** | `/fasttrack.tasks` | Break the plan into ordered, dependency-aware tasks |
+| | `/fasttrack.checklist` | Generate quality checklists for specific domains |
+| | `/fasttrack.implement` | Execute implementation with progress tracking |
 
-### AWS AI-DLC Path (Complex Enterprise Work)
+### Comprehensive Path (Complex Enterprise Work)
 
-A comprehensive SDLC with three phases and adaptive depth:
+A comprehensive SDLC with two phases and adaptive depth:
 
 | Phase | Stages |
 |-------|--------|
-| **Inception** | Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
-| **Construction** | Per-unit loop: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update. Then: Build & Test, Change Risk Report |
-| **Operations** | Change Risk Report (implemented); Observability platform rules (Coralogix dashboards, alerts, log management); deployment and monitoring workflows (planned) |
+| **Inception** | Technical Scoping & Engineering Discovery (optional), Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
+| **Construction** | Per-unit loop: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update. Then: Build & Test |
 
-### Change Risk Report
+### Completion (Both Paths)
 
-After all code is written and tested, the workflow automatically generates a structured risk report for CAB reviewers at `specs/{BRANCH_NAME}/operations/risk-report.md`. The report analyses the complete `git diff` against the base branch, enriched with context accumulated throughout the lifecycle:
+After either workflow finishes, a shared completion stage runs:
+
+1. **Commit** -- Stage and commit all changes with a conventional commit message
+2. **Pull Request** -- Push the branch and create a PR targeting main
+3. **Change Risk Report** -- Generate a CAB-grade risk report and attach it to the PR
+
+The risk report analyses the complete `git diff` against the base branch, enriched with context accumulated throughout the lifecycle:
 
 - **Executive Summary** -- Risk level (LOW to CRITICAL), business impact, and approval recommendation
 - **Technical Risk Analysis** -- Infrastructure impact, operational risks, and change execution risks
@@ -125,7 +166,7 @@ For detailed setup instructions, see [Getting Started](docs/GETTING-STARTED.md).
 | [Getting Started](docs/GETTING-STARTED.md) | Installation, prerequisites, and first-run guide |
 | [Architecture](docs/ARCHITECTURE.md) | System design, component relationships, and data flow |
 | [Workflows](docs/WORKFLOWS.md) | Detailed reference for both workflow paths |
-| [Commands](docs/COMMANDS.md) | Complete command reference for Spec-Kit and AWS AI-DLC |
+| [Commands](docs/COMMANDS.md) | Complete command reference for Fast-Track and Comprehensive Path |
 | [Reverse Engineering](docs/REVERSE-ENGINEERING.md) | Artifact reference with content descriptions and samples |
 | [Governance](docs/GOVERNANCE.md) | Compliance standards, security rules, and review gates |
 | [Directory Structure](docs/DIRECTORY-STRUCTURE.md) | File and folder layout reference |

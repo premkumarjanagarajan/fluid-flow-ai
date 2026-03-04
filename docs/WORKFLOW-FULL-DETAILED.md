@@ -15,7 +15,7 @@
    - [Stage 3: Reverse Engineering (Conditional)](#stage-3-reverse-engineering-conditional)
    - [Stage 4: Workflow Selection](#stage-4-workflow-selection)
    - [Stage 5: Workflow Routing](#stage-5-workflow-routing)
-4. [Spec-Kit Workflow](#4-spec-kit-workflow)
+4. [Fast-Track Workflow](#4-fast-track-workflow)
    - [Specify](#41-specify)
    - [Clarify (Optional)](#42-clarify-optional)
    - [Plan](#43-plan)
@@ -23,7 +23,7 @@
    - [Checklist (Optional)](#45-checklist-optional)
    - [Implement](#46-implement)
    - [VAPT (Mandatory)](#47-vapt-mandatory)
-5. [AWS AI-DLC Workflow](#5-aws-ai-dlc-workflow)
+5. [Comprehensive Path Workflow](#5-aws-ai-dlc-workflow)
    - [Inception Phase](#51-inception-phase)
    - [Construction Phase](#52-construction-phase)
    - [Operations Phase (Placeholder)](#53-operations-phase-placeholder)
@@ -65,7 +65,7 @@ flowchart TD
         RE --> S4 --> S5
     end
 
-    subgraph SPECKIT["SPEC-KIT WORKFLOW"]
+    subgraph FASTTRACK["FAST-TRACK WORKFLOW"]
         SK1["Specify"]
         SK2["Clarify (optional)"]
         SK3["Plan"]
@@ -76,7 +76,7 @@ flowchart TD
         SK1 --> SK2 --> SK3 --> SK4 --> SK5 --> SK6 --> SK7
     end
 
-    subgraph AIDLC["AWS AI-DLC WORKFLOW"]
+    subgraph COMPREHENSIVE["Comprehensive Path WORKFLOW"]
         direction TB
         subgraph INCEPTION["Inception Phase"]
             A1["Requirements Analysis"]
@@ -113,15 +113,15 @@ flowchart TD
 
     UserRequest --> T1
     T5 --> S0
-    S5 -->|Spec-Kit| SK1
-    S5 -->|AWS AI-DLC| A1
+    S5 -->|Fast-Track| SK1
+    S5 -->|Comprehensive Path| A1
     SK7 --> P1
     C9 --> P1
 
     style TRIGGER fill:#CE93D8,stroke:#6A1B9A,stroke-width:2px
     style ENTRY fill:#64B5F6,stroke:#1565C0,stroke-width:2px
-    style SPECKIT fill:#81C784,stroke:#2E7D32,stroke-width:2px
-    style AIDLC fill:#FFB74D,stroke:#E65100,stroke-width:2px
+    style FASTTRACK fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style COMPREHENSIVE fill:#FFB74D,stroke:#E65100,stroke-width:2px
     style INCEPTION fill:#FFB74D,stroke:#E65100,stroke-width:2px
     style CONSTRUCTION fill:#FFD54F,stroke:#F57F17,stroke-width:2px
     style POST fill:#4DB6AC,stroke:#00695C,stroke-width:2px
@@ -240,7 +240,7 @@ flowchart TD
 
 ### Stage 1: Branch Creation
 
-**Purpose**: Create a numbered feature branch, initialize feature directory, state file, audit file, and analytics file.
+**Purpose**: Create a feature branch, initialize feature directory, state file, audit file, and analytics file.
 
 **Reference file**: `main-workflow/workflows/shared/commands/fluid-flow.md` (Stage 1 section)
 
@@ -270,8 +270,8 @@ flowchart TD
 
 | Action | File Path / Command |
 |--------|---------------------|
-| Create feature (bash) | `main-workflow/workflows/spec-kit/scripts/bash/create-new-feature.sh --json --short-name "<name>" [--jira-ticket "<ticket>"] "<description>"` |
-| Create feature (PS) | `main-workflow/workflows/spec-kit/scripts/powershell/create-new-feature.ps1 -Json -ShortName "<name>" [-JiraTicket "<ticket>"] "<description>"` |
+| Create feature (bash) | `main-workflow/workflows/fast-track/scripts/bash/create-new-feature.sh --json --short-name "<name>" [--jira-ticket "<ticket>"] "<description>"` |
+| Create feature (PS) | `main-workflow/workflows/fast-track/scripts/powershell/create-new-feature.ps1 -Json -ShortName "<name>" [-JiraTicket "<ticket>"] "<description>"` |
 | Create state file | `specs/{BRANCH_NAME}/state.md` |
 | Create audit file | `specs/{BRANCH_NAME}/audit.md` |
 | Create project dir | `specs/_project/` |
@@ -390,15 +390,15 @@ flowchart TD
 
 ### Stage 4: Workflow Selection
 
-**Purpose**: User chooses between Spec-Kit and AWS AI-DLC.
+**Purpose**: User chooses between Fast-Track and Comprehensive Path.
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
     A["Log start in audit.md"] --> B["Present workflow choice"]
     B --> C{"User chooses"}
-    C -->|1 / Spec-Kit| D["Selected: Spec-Kit"]
-    C -->|2 / AWS AI-DLC| E["Selected: AWS AI-DLC"]
+    C -->|1 / Fast-Track| D["Selected: Fast-Track"]
+    C -->|2 / Comprehensive Path| E["Selected: Comprehensive Path"]
     D --> F["Log choice in audit.md"]
     E --> F
     F --> G["Update state.md with workflow"]
@@ -421,12 +421,12 @@ flowchart TD
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
 flowchart TD
-    A{"Chosen Workflow?"} -->|Spec-Kit| B["Set Workflow = Spec-Kit in state.md"]
-    A -->|AWS AI-DLC| C["Set Workflow = AWS AI-DLC in state.md"]
-    B --> D["Initialize Spec-Kit analytics rows"]
-    C --> E["Initialize AWS AI-DLC analytics rows"]
-    D --> F["Inform user of Spec-Kit stages"]
-    E --> G["Load AWS rules and memory"]
+    A{"Chosen Workflow?"} -->|Fast-Track| B["Set Workflow = Fast-Track in state.md"]
+    A -->|Comprehensive Path| C["Set Workflow = Comprehensive Path in state.md"]
+    B --> D["Initialize Fast-Track analytics rows"]
+    C --> E["Initialize Comprehensive Path analytics rows"]
+    D --> F["Inform user of Fast-Track stages"]
+    E --> G["Load Comprehensive rules and memory"]
     F --> H["Begin Specify stage"]
     G --> I["Begin Requirements Analysis"]
 
@@ -436,15 +436,15 @@ flowchart TD
 | Action | File Path |
 |--------|-----------|
 | Analytics updated | `main-workflow/analytics/{BRANCH_NAME}.md` |
-| Spec-Kit first command loaded | `main-workflow/workflows/spec-kit/commands/speckit.specify.md` |
-| AWS rules loaded | `main-workflow/workflows/aws/commands/aws-rules.md` |
-| AWS memory manifest loaded | `main-workflow/workflows/aws/memory/load-aws-memory.md` |
+| Fast-Track first command loaded | `main-workflow/workflows/fast-track/commands/fasttrack.specify.md` |
+| Comprehensive rules loaded | `main-workflow/workflows/comprehensive/commands/comprehensive-rules.md` |
+| Comprehensive memory manifest loaded | `main-workflow/workflows/comprehensive/memory/load-comprehensive-memory.md` |
 
 ---
 
-## 4. Spec-Kit Workflow
+## 4. Fast-Track Workflow
 
-The Spec-Kit workflow is a lightweight specification-to-implementation pipeline with 6 stages.
+The Fast-Track workflow is a lightweight specification-to-implementation pipeline with 6 stages.
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -471,7 +471,7 @@ flowchart LR
 
 ### 4.1 Specify
 
-**Command file**: `main-workflow/workflows/spec-kit/commands/speckit.specify.md`
+**Command file**: `main-workflow/workflows/fast-track/commands/fasttrack.specify.md`
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -482,7 +482,7 @@ flowchart TD
     C -->|powershell| E["Run check-prerequisites.ps1 -Json -PathsOnly"]
     D --> F["Parse FEATURE_DIR, BRANCH_NAME"]
     E --> F
-    F --> G["Update state.md: Spec-Kit - Specification"]
+    F --> G["Update state.md: Fast-Track - Specification"]
     G --> H["Record analytics stage start"]
     H --> I{"Brownfield context<br/>available?"}
     I -->|Yes| J["Load RE artifacts as context"]
@@ -510,11 +510,11 @@ flowchart TD
 
 | Action | File Path / Command |
 |--------|---------------------|
-| Command loaded | `main-workflow/workflows/spec-kit/commands/speckit.specify.md` |
+| Command loaded | `main-workflow/workflows/fast-track/commands/fasttrack.specify.md` |
 | Memory loaded | `main-workflow/workflows/shared/memory/load-shared-memory.md` (+ all listed files) |
-| Prerequisites (bash) | `main-workflow/workflows/spec-kit/scripts/bash/check-prerequisites.sh --json --paths-only` |
-| Prerequisites (PS) | `main-workflow/workflows/spec-kit/scripts/powershell/check-prerequisites.ps1 -Json -PathsOnly` |
-| Spec template loaded | `main-workflow/workflows/spec-kit/templates/spec-template.md` |
+| Prerequisites (bash) | `main-workflow/workflows/fast-track/scripts/bash/check-prerequisites.sh --json --paths-only` |
+| Prerequisites (PS) | `main-workflow/workflows/fast-track/scripts/powershell/check-prerequisites.ps1 -Json -PathsOnly` |
+| Spec template loaded | `main-workflow/workflows/fast-track/templates/spec-template.md` |
 | RE artifacts loaded (if brownfield) | `specs/_project/reverse-engineering/{business-overview,architecture,code-structure,api-documentation,component-inventory}.md` |
 | Analytics step update | `main-workflow/workflows/shared/stages/analytics-step-update.md` |
 | Analytics update | `main-workflow/workflows/shared/stages/analytics-update.md` (Step 3) |
@@ -525,7 +525,7 @@ flowchart TD
 
 ### 4.2 Clarify (Optional)
 
-**Command file**: `main-workflow/workflows/spec-kit/commands/speckit.clarify.md`
+**Command file**: `main-workflow/workflows/fast-track/commands/fasttrack.clarify.md`
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -554,7 +554,7 @@ flowchart TD
 
 | Action | File Path |
 |--------|-----------|
-| Command loaded | `main-workflow/workflows/spec-kit/commands/speckit.clarify.md` |
+| Command loaded | `main-workflow/workflows/fast-track/commands/fasttrack.clarify.md` |
 | Spec read/updated | `specs/{BRANCH_NAME}/spec.md` |
 | Analytics updated | `main-workflow/analytics/{BRANCH_NAME}.md` (Stage: Clarify) |
 
@@ -564,7 +564,7 @@ flowchart TD
 
 ### 4.3 Plan
 
-**Command file**: `main-workflow/workflows/spec-kit/commands/speckit.plan.md`
+**Command file**: `main-workflow/workflows/fast-track/commands/fasttrack.plan.md`
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -594,19 +594,19 @@ flowchart TD
 
 | Action | File Path / Command |
 |--------|---------------------|
-| Command loaded | `main-workflow/workflows/spec-kit/commands/speckit.plan.md` |
-| Setup plan (bash) | `main-workflow/workflows/spec-kit/scripts/bash/setup-plan.sh --json` |
-| Setup plan (PS) | `main-workflow/workflows/spec-kit/scripts/powershell/setup-plan.ps1 -Json` |
-| Constitution loaded | `main-workflow/workflows/spec-kit/memory/constitution.md` |
-| Agent context (bash) | `main-workflow/workflows/spec-kit/scripts/bash/update-agent-context.sh <agent-type>` |
-| Agent context (PS) | `main-workflow/workflows/spec-kit/scripts/powershell/update-agent-context.ps1 -AgentType <agent-type>` |
+| Command loaded | `main-workflow/workflows/fast-track/commands/fasttrack.plan.md` |
+| Setup plan (bash) | `main-workflow/workflows/fast-track/scripts/bash/setup-plan.sh --json` |
+| Setup plan (PS) | `main-workflow/workflows/fast-track/scripts/powershell/setup-plan.ps1 -Json` |
+| Constitution loaded | `main-workflow/workflows/fast-track/memory/constitution.md` |
+| Agent context (bash) | `main-workflow/workflows/fast-track/scripts/bash/update-agent-context.sh <agent-type>` |
+| Agent context (PS) | `main-workflow/workflows/fast-track/scripts/powershell/update-agent-context.ps1 -AgentType <agent-type>` |
 | Outputs | `specs/{BRANCH_NAME}/{research.md, data-model.md, contracts/*, quickstart.md, plan.md}` |
 
 ---
 
 ### 4.4 Tasks
 
-**Command file**: `main-workflow/workflows/spec-kit/commands/speckit.tasks.md`
+**Command file**: `main-workflow/workflows/fast-track/commands/fasttrack.tasks.md`
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -633,8 +633,8 @@ flowchart TD
 
 | Action | File Path |
 |--------|-----------|
-| Command loaded | `main-workflow/workflows/spec-kit/commands/speckit.tasks.md` |
-| Tasks template | `main-workflow/workflows/spec-kit/templates/tasks-template.md` |
+| Command loaded | `main-workflow/workflows/fast-track/commands/fasttrack.tasks.md` |
+| Tasks template | `main-workflow/workflows/fast-track/templates/tasks-template.md` |
 | Output | `specs/{BRANCH_NAME}/tasks.md` |
 
 **Task format**: `- [ ] [TaskID] [P?] [Story?] Description with file path`
@@ -645,7 +645,7 @@ flowchart TD
 
 ### 4.5 Checklist (Optional)
 
-**Command file**: `main-workflow/workflows/spec-kit/commands/speckit.checklist.md`
+**Command file**: `main-workflow/workflows/fast-track/commands/fasttrack.checklist.md`
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -666,15 +666,15 @@ flowchart TD
 
 | Action | File Path |
 |--------|-----------|
-| Command loaded | `main-workflow/workflows/spec-kit/commands/speckit.checklist.md` |
-| Checklist template | `main-workflow/workflows/spec-kit/templates/checklist-template.md` |
+| Command loaded | `main-workflow/workflows/fast-track/commands/fasttrack.checklist.md` |
+| Checklist template | `main-workflow/workflows/fast-track/templates/checklist-template.md` |
 | Output | `specs/{BRANCH_NAME}/checklists/{domain}.md` (e.g., `ux.md`, `security.md`) |
 
 ---
 
 ### 4.6 Implement
 
-**Command file**: `main-workflow/workflows/spec-kit/commands/speckit.implement.md`
+**Command file**: `main-workflow/workflows/fast-track/commands/fasttrack.implement.md`
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -718,8 +718,8 @@ flowchart TD
 
 | Action | File Path / Command |
 |--------|---------------------|
-| Command loaded | `main-workflow/workflows/spec-kit/commands/speckit.implement.md` |
-| Prerequisites (bash) | `main-workflow/workflows/spec-kit/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` |
+| Command loaded | `main-workflow/workflows/fast-track/commands/fasttrack.implement.md` |
+| Prerequisites (bash) | `main-workflow/workflows/fast-track/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` |
 | Analytics final totals | `main-workflow/workflows/shared/stages/analytics-update.md` (Step 3 per phase + Step 4 final) |
 | Post-impl docs command | `main-workflow/workflows/shared/commands/fluid-flow.update-docs.md` |
 
@@ -779,9 +779,9 @@ flowchart TD
 
 ---
 
-## 5. AWS AI-DLC Workflow
+## 5. Comprehensive Path Workflow
 
-The AWS AI-DLC workflow is a comprehensive enterprise SDLC with three phases.
+The Comprehensive Path workflow is a comprehensive enterprise SDLC with three phases.
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -845,9 +845,9 @@ flowchart TD
     style OPS fill:#9E9E9E,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5
 ```
 
-### AWS-Specific Memory Files Loaded (via `load-aws-memory.md`)
+### Comprehensive-Specific Memory Files Loaded (via `load-comprehensive-memory.md`)
 
-| Memory File | Path (relative to `aws/memory/`) |
+| Memory File | Path (relative to `comprehensive/memory/`) |
 |-------------|----------------------------------|
 | Process Overview | `common/process-overview.md` |
 | Session Continuity | `common/session-continuity.md` |
@@ -857,12 +857,12 @@ flowchart TD
 | Terminology | `common/terminology.md` |
 | Workflow Changes | `common/workflow-changes.md` |
 
-### AWS Additional Mandatory Loads
+### Comprehensive Additional Mandatory Loads
 
 | File | Path | Condition |
 |------|------|-----------|
-| AWS Rules (main command) | `main-workflow/workflows/aws/commands/aws-rules.md` | Always |
-| ADRs & Technical Principles | `main-workflow/workflows/aws/inception/adrs-technical-principles.md` | Always |
+| Comprehensive Rules (main command) | `main-workflow/workflows/comprehensive/commands/comprehensive-rules.md` | Always |
+| ADRs & Technical Principles | `main-workflow/workflows/comprehensive/inception/adrs-technical-principles.md` | Always |
 | C# Guidelines | `main-workflow/Instructions/technology/csharp/general.md` | Always |
 | .NET Guidelines | `main-workflow/Instructions/technology/dotnet/general.md` | Always |
 | Terraform Guidelines | `main-workflow/Instructions/technology/terraform/general.md` | Always |
@@ -874,7 +874,7 @@ flowchart TD
 
 #### Requirements Analysis (ALWAYS - Adaptive Depth)
 
-**Instruction file**: `main-workflow/workflows/aws/inception/requirements-analysis.md`
+**Instruction file**: `main-workflow/workflows/comprehensive/inception/requirements-analysis.md`
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -908,13 +908,13 @@ flowchart TD
 
 | Action | File Path |
 |--------|-----------|
-| Instruction loaded | `main-workflow/workflows/aws/inception/requirements-analysis.md` |
+| Instruction loaded | `main-workflow/workflows/comprehensive/inception/requirements-analysis.md` |
 | Questions written to | `specs/{BRANCH_NAME}/inception/requirements/requirement-verification-questions.md` |
 | Requirements written to | `specs/{BRANCH_NAME}/inception/requirements/requirements.md` |
 
 #### Onboarding Presentations (CONDITIONAL)
 
-**Instruction file**: `main-workflow/workflows/aws/inception/onboarding-presentations.md`
+**Instruction file**: `main-workflow/workflows/comprehensive/inception/onboarding-presentations.md`
 
 | Action | File Path |
 |--------|-----------|
@@ -925,7 +925,7 @@ flowchart TD
 
 #### User Stories (CONDITIONAL)
 
-**Instruction file**: `main-workflow/workflows/aws/inception/user-stories.md`
+**Instruction file**: `main-workflow/workflows/comprehensive/inception/user-stories.md`
 
 Two-part stage: **Part 1 - Planning** (create plan, collect answers, resolve ambiguities) then **Part 2 - Generation** (execute plan, generate stories).
 
@@ -938,7 +938,7 @@ Two-part stage: **Part 1 - Planning** (create plan, collect answers, resolve amb
 
 #### BDD Specification (CONDITIONAL)
 
-**Instruction file**: `main-workflow/workflows/aws/inception/bdd-specification.md`
+**Instruction file**: `main-workflow/workflows/comprehensive/inception/bdd-specification.md`
 
 **Purpose**: Convert user stories and acceptance criteria into living Gherkin specifications that bridge business requirements and technical tests.
 
@@ -973,7 +973,7 @@ flowchart TD
 
 | Action | File Path |
 |--------|-----------|
-| Instruction loaded | `main-workflow/workflows/aws/inception/bdd-specification.md` |
+| Instruction loaded | `main-workflow/workflows/comprehensive/inception/bdd-specification.md` |
 | Assessment output | `specs/{BRANCH_NAME}/inception/plans/bdd-specification-assessment.md` |
 | BDD plan | `specs/{BRANCH_NAME}/inception/plans/bdd-specification-plan.md` |
 | Feature files | `specs/{BRANCH_NAME}/inception/bdd/features/*.feature` |
@@ -988,7 +988,7 @@ flowchart TD
 
 #### Workflow Planning (ALWAYS)
 
-**Instruction file**: `main-workflow/workflows/aws/inception/workflow-planning.md`
+**Instruction file**: `main-workflow/workflows/comprehensive/inception/workflow-planning.md`
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -1019,7 +1019,7 @@ flowchart TD
 
 #### Application Design (CONDITIONAL)
 
-**Instruction file**: `main-workflow/workflows/aws/inception/application-design.md`
+**Instruction file**: `main-workflow/workflows/comprehensive/inception/application-design.md`
 
 | Action | File Path |
 |--------|-----------|
@@ -1031,7 +1031,7 @@ flowchart TD
 
 #### Units Generation (CONDITIONAL)
 
-**Instruction file**: `main-workflow/workflows/aws/inception/units-generation.md`
+**Instruction file**: `main-workflow/workflows/comprehensive/inception/units-generation.md`
 
 Two-part stage: **Part 1 - Planning** then **Part 2 - Generation**.
 
@@ -1095,12 +1095,12 @@ flowchart TD
 
 | Stage | Instruction File | Key Outputs |
 |-------|-----------------|-------------|
-| Functional Design | `aws/construction/functional-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/functional-design/{business-logic-model,business-rules,domain-entities}.md` + `bdd-step-mapping.md` (if BDD) |
-| NFR Requirements | `aws/construction/nfr-requirements.md` | `specs/{BRANCH_NAME}/construction/{unit}/nfr-requirements/{nfr-requirements,tech-stack-decisions}.md` |
-| NFR Design | `aws/construction/nfr-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/nfr-design/{nfr-design-patterns,logical-components}.md` |
-| Infrastructure Design | `aws/construction/infrastructure-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/infrastructure-design/{infrastructure-design,deployment-architecture}.md` |
-| Code Generation | `aws/construction/code-generation.md` | Application code at workspace root + `specs/{BRANCH_NAME}/construction/{unit}/code/*.md` + BDD step definitions (if BDD) |
-| Onboarding Update | `aws/construction/onboarding-update.md` | Updated feature registry + onboarding decks |
+| Functional Design | `comprehensive/construction/functional-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/functional-design/{business-logic-model,business-rules,domain-entities}.md` + `bdd-step-mapping.md` (if BDD) |
+| NFR Requirements | `comprehensive/construction/nfr-requirements.md` | `specs/{BRANCH_NAME}/construction/{unit}/nfr-requirements/{nfr-requirements,tech-stack-decisions}.md` |
+| NFR Design | `comprehensive/construction/nfr-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/nfr-design/{nfr-design-patterns,logical-components}.md` |
+| Infrastructure Design | `comprehensive/construction/infrastructure-design.md` | `specs/{BRANCH_NAME}/construction/{unit}/infrastructure-design/{infrastructure-design,deployment-architecture}.md` |
+| Code Generation | `comprehensive/construction/code-generation.md` | Application code at workspace root + `specs/{BRANCH_NAME}/construction/{unit}/code/*.md` + BDD step definitions (if BDD) |
+| Onboarding Update | `comprehensive/construction/onboarding-update.md` | Updated feature registry + onboarding decks |
 
 Each stage follows the pattern:
 1. Create plan with `[Answer]:` tags
@@ -1114,7 +1114,7 @@ Each stage follows the pattern:
 
 #### Build and Test (ALWAYS)
 
-**Instruction file**: `main-workflow/workflows/aws/construction/build-and-test.md`
+**Instruction file**: `main-workflow/workflows/comprehensive/construction/build-and-test.md`
 
 | Action | File Path |
 |--------|-----------|
@@ -1130,7 +1130,7 @@ Each stage follows the pattern:
 
 **Stage file**: `main-workflow/workflows/shared/stages/vapt.md`
 
-**Purpose**: Same VAPT stage used by Spec-Kit (see [Section 4.7](#47-vapt-mandatory)). Executes after Build and Test completes. Depth scales from Lite (VA only) to Full (VA + PT) based on risk signals. Generates `specs/{BRANCH_NAME}/security/vapt-report.md`. Human gate applies for Critical and High severity findings.
+**Purpose**: Same VAPT stage used by Fast-Track (see [Section 4.7](#47-vapt-mandatory)). Executes after Build and Test completes. Depth scales from Lite (VA only) to Full (VA + PT) based on risk signals. Generates `specs/{BRANCH_NAME}/security/vapt-report.md`. Human gate applies for Critical and High severity findings.
 
 | Action | File Path |
 |--------|-----------|
@@ -1193,7 +1193,7 @@ When the project uses **Coralogix** for observability, all dashboard, alert, and
 
 ## 6. Post-Implementation (Shared)
 
-Both Spec-Kit and AWS AI-DLC converge to the same post-implementation steps.
+Both Fast-Track and Comprehensive Path converge to the same post-implementation steps.
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryTextColor': '#1B2631', 'lineColor': '#546E7A', 'textColor': '#1B2631'}}}%%
@@ -1219,7 +1219,7 @@ flowchart TD
     style F fill:#FFD54F,stroke:#F57F17
 ```
 
-> **Note**: Both Spec-Kit and AWS AI-DLC must pass the VAPT security gate before entering post-implementation. For Spec-Kit, VAPT runs directly after Implement. For AWS AI-DLC, VAPT and Risk Report run after Build and Test.
+> **Note**: Both Fast-Track and Comprehensive Path must pass the VAPT security gate before entering post-implementation. For Fast-Track, VAPT runs directly after Implement. For Comprehensive Path, VAPT and Risk Report run after Build and Test.
 
 ### 6.1 Update Docs
 
@@ -1325,9 +1325,9 @@ flowchart LR
 
 ### Stage Names for Analytics
 
-**Spec-Kit**: Specification, Clarify, Plan, Tasks, Checklist, Implement (Setup/Tests/Core/Integration/Polish), VAPT
+**Fast-Track**: Specification, Clarify, Plan, Tasks, Checklist, Implement (Setup/Tests/Core/Integration/Polish), VAPT
 
-**AWS AI-DLC**: Requirements Analysis, Onboarding Presentations, User Stories, BDD Specification, Workflow Planning, Application Design, Units Generation, Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update, Build and Test, VAPT, Risk Report
+**Comprehensive Path**: Requirements Analysis, Onboarding Presentations, User Stories, BDD Specification, Workflow Planning, Application Design, Units Generation, Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update, Build and Test, VAPT, Risk Report
 
 ---
 
@@ -1385,17 +1385,17 @@ flowchart LR
 │       │       ├── vapt.md                           # VAPT security gate
 │       │       ├── risk-report.md                    # Change Risk Report
 │       │       └── workflow-retrospective.md
-│       ├── spec-kit/
-│       │   ├── commands/                # Spec-Kit stage commands
-│       │   │   ├── speckit.specify.md
-│       │   │   ├── speckit.clarify.md
-│       │   │   ├── speckit.plan.md
-│       │   │   ├── speckit.tasks.md
-│       │   │   ├── speckit.checklist.md
-│       │   │   ├── speckit.implement.md
-│       │   │   ├── speckit.analyze.md
-│       │   │   ├── speckit.constitution.md
-│       │   │   └── speckit.taskstoissues.md
+│       ├── fast-track/
+│       │   ├── commands/                # Fast-Track stage commands
+│       │   │   ├── fasttrack.specify.md
+│       │   │   ├── fasttrack.clarify.md
+│       │   │   ├── fasttrack.plan.md
+│       │   │   ├── fasttrack.tasks.md
+│       │   │   ├── fasttrack.checklist.md
+│       │   │   ├── fasttrack.implement.md
+│       │   │   ├── fasttrack.analyze.md
+│       │   │   ├── fasttrack.constitution.md
+│       │   │   └── fasttrack.taskstoissues.md
 │       │   ├── memory/constitution.md   # Project constitution template
 │       │   ├── scripts/                 # Automation scripts
 │       │   │   ├── bash/{check-prerequisites,common,create-new-feature,setup-plan,update-agent-context}.sh
@@ -1406,11 +1406,11 @@ flowchart LR
 │       │       ├── tasks-template.md
 │       │       ├── checklist-template.md
 │       │       └── agent-file-template.md
-│       └── aws/
-│           ├── commands/aws-rules.md    # AWS main orchestrator
+│       └── comprehensive/
+│           ├── commands/comprehensive-rules.md    # Comprehensive main orchestrator
 │           ├── memory/
-│           │   ├── load-aws-memory.md   # AWS memory manifest
-│           │   └── common/              # AWS-specific memory
+│           │   ├── load-comprehensive-memory.md   # Comprehensive memory manifest
+│           │   └── common/              # Comprehensive-specific memory
 │           │       ├── process-overview.md
 │           │       ├── session-continuity.md
 │           │       ├── question-format-guide.md
@@ -1446,14 +1446,14 @@ flowchart LR
 │       ├── state.md
 │       ├── audit.md
 │       ├── workspace-detection.md
-│       ├── spec.md (Spec-Kit)
-│       ├── plan.md (Spec-Kit)
-│       ├── tasks.md (Spec-Kit)
-│       ├── checklists/ (Spec-Kit)
+│       ├── spec.md (Fast-Track)
+│       ├── plan.md (Fast-Track)
+│       ├── tasks.md (Fast-Track)
+│       ├── checklists/ (Fast-Track)
 │       ├── security/                    # VAPT output (both workflows)
 │       │   └── vapt-report.md
 │       ├── retrospective.md
-│       ├── inception/ (AWS AI-DLC)
+│       ├── inception/ (Comprehensive Path)
 │       │   ├── requirements/
 │       │   ├── user-stories/
 │       │   ├── bdd/                     # BDD Specification output
@@ -1463,10 +1463,10 @@ flowchart LR
 │       │   ├── plans/
 │       │   ├── onboarding/
 │       │   └── application-design/
-│       ├── construction/ (AWS AI-DLC)
-│       ├── operations/ (AWS AI-DLC)
+│       ├── construction/ (Comprehensive Path)
+│       ├── operations/ (Comprehensive Path)
 │       │   └── risk-report.md           # Change Risk Report output
-│       └── features/ (AWS AI-DLC)
+│       └── features/ (Comprehensive Path)
 └── docs/                                # Project documentation
     ├── ARCHITECTURE.md
     ├── COMMANDS.md
@@ -1484,4 +1484,4 @@ flowchart LR
 > **Version**: 0.1  
 > **Source**: Fluid Flow AI v6 workflow files  
 > **Scope**: Complete lifecycle from trigger through post-implementation retrospective  
-> **Recent additions**: BDD Specification (inception), VAPT security gate (both workflows), Change Risk Report (AWS construction), Coralogix observability, Slidev presentation guidelines, versioning (VERSION + CHANGELOG.md)
+> **Recent additions**: BDD Specification (inception), VAPT security gate (both workflows), Change Risk Report (Comprehensive construction), Coralogix observability, Slidev presentation guidelines, versioning (VERSION + CHANGELOG.md)
