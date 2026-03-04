@@ -99,7 +99,7 @@ The shared entry point orchestrates the following stages before routing to a wor
      - Pass the feature description as positional argument
      - PowerShell handles embedded single quotes in double-quoted strings natively
 
-   - Parse the JSON output for BRANCH_NAME, SPEC_FILE, FEATURE_NUM, JIRA_TICKET
+   - Parse the JSON output for BRANCH_NAME, SPEC_FILE, JIRA_TICKET
 6. **Initialize state tracking** in the feature directory (`specs/{BRANCH_NAME}/`):
    - Create `state.md` with initial state (see State File Format below)
    - Create `audit.md` with header (see Audit File Format below)
@@ -342,6 +342,7 @@ Based on the user's chosen workflow:
 
      | Stage | Started | Completed | Duration | Status |
      |-------|---------|-----------|----------|--------|
+     | Technical Scoping & Engineering Discovery | | | | Pending |
      | Requirements Analysis | | | | Pending |
      | Onboarding Presentations | | | | Pending |
      | User Stories | | | | Pending |
@@ -366,9 +367,9 @@ Based on the user's chosen workflow:
      | Construction | 0 | 0 | |
      | Completion | 0 | 0 | |
 
-4. The Comprehensive workflow begins from **Requirements Analysis** (workspace detection and reverse engineering are already complete)
+4. The Comprehensive workflow begins from **Technical Scoping & Engineering Discovery** (optional opt-in), then proceeds to **Requirements Analysis** (workspace detection and reverse engineering are already complete)
 5. Load the Comprehensive workflow rules from `../../comprehensive/commands/comprehensive-rules.md`
-6. Execute the Comprehensive workflow starting from Requirements Analysis
+6. Execute the Comprehensive workflow starting from Technical Scoping & Engineering Discovery
 
 ---
 

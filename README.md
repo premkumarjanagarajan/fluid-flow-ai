@@ -11,6 +11,7 @@ Fluid Flow AI is a structured, governance-aware workflow framework that guides A
 - **Unified Entry Point** -- Every development request flows through a single, standardised process regardless of complexity
 - **Dual Workflow Paths** -- Fast-Track for streamlined features; Comprehensive Path for complex enterprise work
 - **User-Driven Routing** -- The developer directly chooses which workflow to follow for each feature
+- **Technical Scoping & Engineering Discovery** -- Optional Comprehensive Path stage that assesses engineering complexity, identifies risk signals, and recommends decomposition into sub-initiatives before any design work begins
 - **Full Audit Trail** -- Every interaction, decision, and approval is logged with ISO 8601 timestamps
 - **Governance Backbone** -- ISO 27001 (security), ISO 9001 (quality), and ISO 50001 (energy) compliance built in
 - **Brownfield Intelligence** -- Automatic codebase reverse engineering with C4 architecture modelling
@@ -54,13 +55,14 @@ flowchart TD
 
     subgraph COMP["COMPREHENSIVE"]
         subgraph CP_INC["Inception"]
+            CP0("Technical Scoping<br/><i>Optional</i>")
             CP1("Requirements Analysis")
             CP2("Onboarding Presentations")
             CP3("User Stories")
             CP4("Workflow Planning")
             CP5("Application Design")
             CP6("Units Generation")
-            CP1 --> CP2 --> CP3 --> CP4 --> CP5 --> CP6
+            CP0 --> CP1 --> CP2 --> CP3 --> CP4 --> CP5 --> CP6
         end
         subgraph CP_CON["Construction"]
             CP7("Functional Design")
@@ -83,7 +85,7 @@ flowchart TD
     end
 
     B4 -->|"Fast-Track"| FT1
-    B4 -->|"Comprehensive"| CP1
+    B4 -->|"Comprehensive"| CP0
     FT6 --> FC1
     CP13 --> FC1
 
@@ -124,7 +126,7 @@ A comprehensive SDLC with two phases and adaptive depth:
 
 | Phase | Stages |
 |-------|--------|
-| **Inception** | Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
+| **Inception** | Technical Scoping & Engineering Discovery (optional), Requirements Analysis, Onboarding Presentations, User Stories, Workflow Planning, Application Design, Units Generation |
 | **Construction** | Per-unit loop: Functional Design, NFR Requirements, NFR Design, Infrastructure Design, Code Generation, Onboarding Update. Then: Build & Test |
 
 ### Completion (Both Paths)

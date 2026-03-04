@@ -7,16 +7,16 @@ This document provides a complete reference for every command and stage in Fluid
 ## Table of Contents
 
 - [Fast-Track Commands](#fast-track-commands)
-  - [/fasttrack.specify](#speckitspecify)
-  - [/fasttrack.clarify](#speckitclarify)
-  - [/fasttrack.plan](#speckitplan)
-  - [/fasttrack.tasks](#speckittasks)
-  - [/fasttrack.checklist](#speckitchecklist)
-  - [/fasttrack.implement](#speckitimplement)
-  - [/fasttrack.analyze](#speckitanalyze)
-  - [/fasttrack.taskstoissues](#speckittaskstoissues)
-  - [/fasttrack.constitution](#speckitconstitution)
-- [Comprehensive Path Stages](#aws-ai-dlc-stages)
+  - [/fasttrack.specify](#fasttrackspecify)
+  - [/fasttrack.clarify](#fasttrackclarify)
+  - [/fasttrack.plan](#fasttrackplan)
+  - [/fasttrack.tasks](#fasttracktasks)
+  - [/fasttrack.checklist](#fasttrackchecklist)
+  - [/fasttrack.implement](#fasttrackimplement)
+  - [/fasttrack.analyze](#fasttrackanalyze)
+  - [/fasttrack.taskstoissues](#fasttracktaskstoissues)
+  - [/fasttrack.constitution](#fasttrackconstitution)
+- [Comprehensive Path Stages](#comprehensive-path-stages)
   - [Inception Phase](#inception-phase)
   - [Construction Phase](#construction-phase)
   - [Operations Phase](#operations-phase)
@@ -260,6 +260,33 @@ All Fast-Track commands follow a consistent pattern:
 Comprehensive Path stages are not invoked as slash commands. They are executed automatically by the workflow engine based on the execution plan created during Workflow Planning.
 
 ### Inception Phase
+
+#### Technical Scoping & Engineering Discovery (Optional -- User Opt-In)
+
+**Purpose**: Assess engineering complexity and scope before any requirements or design work begins. For large or ambiguous initiatives, recommend decomposition into independently deliverable sub-initiatives — each assigned to the appropriate workflow (Fast-Track or Comprehensive Path).
+
+**When prompted**: At the start of every Comprehensive Path run, the team is asked whether to run this stage. Answering NO skips it entirely and proceeds directly to Requirements Analysis.
+
+**Execute when**: The request is ambiguous in size, spans multiple components or teams, or the team wants a structured scoping assessment before committing to a full Comprehensive Path cycle.
+
+**Skip when**: The request is clearly scoped, the team already has a decomposition plan, or speed of delivery outweighs the value of upfront scoping.
+
+**Process**:
+1. Load reverse engineering artifacts for system context (if brownfield)
+2. Classify the request by initiative size (Story / Feature / Initiative) and engineering clarity (High / Medium / Low)
+3. Identify technical scope signals — affected systems, services, domains, and teams
+4. Assess eight complexity dimensions: component span, integration surface, data model impact, ADR implications, NFR surface, team dependency, delivery risk, and unknowns
+5. Produce a decomposition recommendation:
+   - **Single initiative**: Proceed as one Comprehensive Path cycle with workflow assignment
+   - **Decomposition**: Propose named sub-initiatives with Fast-Track or Comprehensive Path assigned to each, a delivery sequence, and suggested branch names
+
+> **Note**: If the request appears larger than an Initiative (multi-quarter, cross-domain, multiple independent teams), the stage flags this and recommends the team scope it down before re-engaging Fluid Flow.
+
+**Output**: `specs/{BRANCH_NAME}/inception/technical-scoping/technical-scoping-report.md`
+
+**Approval**: Required — team reviews and approves the scoping report before proceeding.
+
+---
 
 #### Requirements Analysis (Always -- Adaptive Depth)
 

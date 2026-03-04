@@ -162,9 +162,9 @@ Collect the following data from the feature directory (for both update modes):
 | Phase | Interactions | Approvals | Duration |
 |-------|-------------|-----------|----------|
 | Entry Point | [count] | [count] | [duration] |
-| Specification | [count] | [count] | [duration] |
-| Planning | [count] | [count] | [duration] |
-| Implementation | [count] | [count] | [duration] |
+| Inception | [count] | [count] | [duration] |
+| Construction | [count] | [count] | [duration] |
+| Completion | [count] | [count] | [duration] |
 
 **For Comprehensive Path**:
 
@@ -173,6 +173,7 @@ Collect the following data from the feature directory (for both update modes):
 | Entry Point | [count] | [count] | [duration] |
 | Inception | [count] | [count] | [duration] |
 | Construction | [count] | [count] | [duration] |
+| Completion | [count] | [count] | [duration] |
 
 ---
 

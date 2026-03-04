@@ -1,6 +1,6 @@
 # Workflows
 
-This document provides a detailed reference for both workflow paths in Fluid Flow AI: the **Shared Entry Point**, the **Fast-Track** path, and the **Comprehensive Path** path.
+This document provides a detailed reference for both workflow paths in Fluid Flow AI: the **Shared Entry Point**, the **Fast-Track** path, and the **Comprehensive Path**.
 
 ---
 
@@ -138,7 +138,7 @@ flowchart LR
 
 Based on the user's choice:
 - **Fast-Track**: The user is informed of the Fast-Track command sequence and the feature directory location. The workflow is ready for `/fasttrack.specify`.
-- **Comprehensive Path**: The Comprehensive workflow rules are loaded and execution begins from Requirements Analysis. Workspace Detection and Reverse Engineering artifacts are carried forward as context.
+- **Comprehensive Path**: The Comprehensive workflow rules are loaded and execution begins from Technical Scoping & Engineering Discovery (optional opt-in), then proceeds to Requirements Analysis. Workspace Detection and Reverse Engineering artifacts are carried forward as context.
 
 ---
 
@@ -248,6 +248,7 @@ A comprehensive enterprise SDLC with three phases and adaptive depth. Stages are
 flowchart TB
     subgraph INCEPTION["INCEPTION PHASE"]
         direction TB
+        I0["Technical Scoping &amp; Engineering Discovery<br/><i>Optional - user opt-in</i>"]
         I1["Requirements Analysis<br/><i>Always - Adaptive depth</i>"]
         I2["Onboarding Presentations<br/><i>Conditional</i>"]
         I3["User Stories<br/><i>Conditional</i>"]
@@ -255,7 +256,7 @@ flowchart TB
         I4["Workflow Planning<br/><i>Always</i>"]
         I5["Application Design<br/><i>Conditional</i>"]
         I6["Units Generation<br/><i>Conditional</i>"]
-        I1 --> I2 --> I3 --> I3B --> I4 --> I5 --> I6
+        I0 --> I1 --> I2 --> I3 --> I3B --> I4 --> I5 --> I6
     end
 
     subgraph CONSTRUCTION["CONSTRUCTION PHASE"]
@@ -299,6 +300,7 @@ flowchart TB
 
 | Stage | Condition | Depth Levels | Description |
 |-------|-----------|-------------|-------------|
+| **Technical Scoping & Engineering Discovery** | Optional (user opt-in) | N/A | Assess engineering size and complexity; identify affected systems and risk signals; recommend single-initiative or decomposition into sub-initiatives, each assigned to Fast-Track or Comprehensive Path |
 | **Requirements Analysis** | Always | Minimal / Standard / Comprehensive | Analyse intent, gather functional and non-functional requirements, generate requirements document |
 | **Onboarding Presentations** | Conditional (brownfield or stale) | N/A | Generate engineer and product manager onboarding presentations from RE artifacts |
 | **User Stories** | Conditional (user-facing changes) | Minimal / Standard / Comprehensive | Two-part: Planning (questions + answers) then Generation (stories + personas) |
@@ -355,6 +357,8 @@ specs/{BRANCH_NAME}/
 ├── audit.md                      # Includes JIRA ticket
 ├── workspace-detection.md
 ├── inception/
+│   ├── technical-scoping/            # Technical Scoping & Engineering Discovery output
+│   │   └── technical-scoping-report.md
 │   ├── plans/
 │   ├── requirements/
 │   ├── user-stories/
