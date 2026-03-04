@@ -245,7 +245,7 @@ The request is too broad for a single workflow cycle. The following decompositio
 
 ### Branch Naming Suggestions
 
-[Proposed branch names for each sub-initiative, following the `###-jira-ticket-short-description` pattern]
+[Proposed branch names for each sub-initiative, following the `{JIRA-TICKET}-{description}` pattern (or `{description}` when no JIRA ticket)]
 
 ---
 

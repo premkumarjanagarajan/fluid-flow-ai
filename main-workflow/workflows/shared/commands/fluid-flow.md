@@ -380,14 +380,14 @@ Regardless of which workflow was chosen (Fast-Track or Comprehensive Path), exec
 ### Step 1: Commit
 
 1. **MANDATORY**: Log start of Completion stage in audit.md
-2. Stage all changes: `git add .`
-3. Present the user with a proposed commit message following conventional commits format:
+2. Present the user with a summary of all changes and a proposed commit message following conventional commits format:
    ```
    feat({scope}): {short description}
 
    {body with key changes}
    ```
-4. **Wait for User Response**: Do NOT commit until the user has approved or modified the message
+3. **Wait for User Response**: Do NOT stage or commit until the user has explicitly approved the changes and the commit message
+4. Stage all changes: `git add .`
 5. Execute the commit: `git commit -m "{approved message}"`
 6. Log the commit hash in audit.md
 
@@ -401,7 +401,7 @@ Regardless of which workflow was chosen (Fast-Track or Comprehensive Path), exec
 
 ### Step 3: Change Risk Report
 
-1. Load and execute the risk report command from `../commands/fluid-flow.risk-report.md`
+1. Load and execute the risk report command from `./fluid-flow.risk-report.md`
 2. The report is generated at `specs/{BRANCH_NAME}/operations/risk-report.md`
 3. Present a summary of the risk report to the user
 4. Attach the risk report summary as a comment on the PR
