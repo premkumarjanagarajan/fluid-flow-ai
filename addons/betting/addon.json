@@ -1,0 +1,5 @@
+{
+  "id": "betting",
+  "name": "Betting Domain",
+  "description": "Domain context and rules for betting/sportsbook services"
+}

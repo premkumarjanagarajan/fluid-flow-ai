@@ -1,0 +1,49 @@
+---
+name: payments-domain-context
+description: Payments domain knowledge and conventions
+alwaysApply: true
+---
+
+# Payments Domain Context
+
+You are working in a **payments** domain. Follow these conventions.
+
+## Domain Knowledge Base
+
+Before starting any task, fetch the relevant knowledge from the `BetssonGroup/betsson-kb-docs` repository using the GitHub MCP server:
+
+1. **Department overlay** (always read first):
+   `knowledge/departments/payments/engineering/ai/overlay.md`
+
+2. **Compliance rules** (read when touching regulatory or KYC logic):
+   `knowledge/shared/global/compliance/jurisdiction-mga.md`
+
+3. **Market-specific rules** (read when working on currency/locale features):
+   `knowledge/shared/markets/FI.md` (or the relevant market file)
+
+4. **Feature flagging** (read when adding/modifying feature toggles):
+   `knowledge/shared/capabilities/feature-flagging/feature-flagging.md`
+
+## Domain Terminology
+- **PSP** — Payment Service Provider (e.g., Adyen, Worldpay)
+- **Deposit** — funds moving from player to platform
+- **Withdrawal** — funds moving from platform to player
+- **KYC** — Know Your Customer verification, required before first withdrawal
+- **Chargeback** — a disputed transaction reversed by the card issuer
+
+## Architecture Conventions
+- All payment transactions are idempotent — use a unique `transactionId` for every request
+- Amounts are always in minor units (cents/pence) as integers — never floats
+- Currency is always ISO 4217 (e.g., `EUR`, `SEK`, `GBP`)
+- PCI DSS compliance: never log or store raw card numbers, CVV, or full PAN
+- Retry failed PSP calls with exponential backoff, max 3 attempts
+
+## Security Requirements
+- Tokenise card data at the earliest point — never pass raw card details between services
+- All payment endpoints require mTLS between internal services
+- Withdrawal requests require async approval workflow for amounts above threshold
+
+## Testing
+- Always test with multiple currencies (EUR, SEK, GBP, USD at minimum)
+- Include test cases for PSP timeout, declined, and partial-capture scenarios
+- Mock PSP responses — never hit real PSP endpoints in tests

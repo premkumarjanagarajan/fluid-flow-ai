@@ -1,0 +1,5 @@
+{
+  "id": "payments",
+  "name": "Payments Domain",
+  "description": "Domain context and rules for payment processing services"
+}

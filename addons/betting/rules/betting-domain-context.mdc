@@ -1,0 +1,45 @@
+---
+name: betting-domain-context
+description: Betting domain knowledge and conventions
+alwaysApply: true
+---
+
+# Betting Domain Context
+
+You are working in a **betting/sportsbook** domain. Follow these conventions.
+
+## Domain Knowledge Base
+
+Before starting any task, fetch the relevant knowledge from the `BetssonGroup/betsson-kb-docs` repository using the GitHub MCP server:
+
+1. **Department overlay** (always read first):
+   `knowledge/departments/sportsbook/engineering/ai/overlay.md`
+
+2. **Compliance rules** (read when touching regulatory logic):
+   `knowledge/shared/global/compliance/jurisdiction-mga.md`
+
+3. **Market-specific rules** (read when working on localised features):
+   `knowledge/shared/markets/FI.md` (or the relevant market file)
+
+4. **Feature flagging** (read when adding/modifying feature toggles):
+   `knowledge/shared/capabilities/feature-flagging/feature-flagging.md`
+
+## Domain Terminology
+- **Bet Slip** — the user's current selection of bets before placement
+- **Odds** — always use decimal format (e.g., 2.50) unless the market specifies otherwise
+- **Stake** — the amount a user wagers
+- **Payout** — stake x odds
+- **Accumulator (Acca)** — a single bet combining multiple selections; all must win
+- **Each-Way** — two bets: one on win, one on place
+- **In-Play / Live** — bets placed after an event has started
+
+## Architecture Conventions
+- Betting services use event-driven architecture (Kafka topics prefixed with `betting.`)
+- Odds are stored as integers (multiply by 1000) to avoid floating-point precision issues
+- All monetary values use integer cents — never floating-point
+- Settlement is always asynchronous — never block on payout calculations
+
+## Testing
+- Always include edge cases for odds boundaries (minimum odds: 1.01, maximum: 10000.00)
+- Test accumulator combinations with 2, 5, and 20 selections
+- Mock external feed providers in integration tests
