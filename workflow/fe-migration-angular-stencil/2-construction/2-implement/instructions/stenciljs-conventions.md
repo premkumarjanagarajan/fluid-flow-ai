@@ -5,6 +5,7 @@ Also read before implementing:
 - `knowledge-core/event-bus-access.md` — mandatory `window.sbXpEventBus` rule
 - `knowledge-core/bff-data-fetching.md` — three mandatory BFF data fetching rules
 - `knowledge-core/typescript-standards.md` — TypeScript standards (return types, enums, null handling)
+- `knowledge-core/typography-and-genos-rules.md` — fds-sb-typography mandatory, Genos CSS variables forbidden
 - `tsx-structure-semantics.md` — semantic HTML5 in TSX
 - `sass-standards.md` — SCSS formatting
 - `performance-best-practices.md` — performance rules

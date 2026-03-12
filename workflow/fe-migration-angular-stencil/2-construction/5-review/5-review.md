@@ -6,30 +6,43 @@ checkpoint: initiatives/{INITIATIVE_NAME}/artefacts/2.5-code-review.md
 
 ## Inputs
 
-- All implemented files (from 2-implement)
+- All implemented files (from 2-implement, committed per group)
 - `1.4-requirements.md` (from 4-requirements)
 - `2.4-test-report.md` (from 4-test)
 
 ## Guidance
 
-Pre-load `knowledge-core/troubleshooting.md` for reference when diagnosing any issues found during review. Also reference `knowledge-core/shadow-dom-css-rules.md`, `knowledge-core/event-bus-access.md`, and `knowledge-core/bff-data-fetching.md` when verifying implementation correctness.
+Pre-load `knowledge-core/troubleshooting.md` for reference when diagnosing any issues found during review. Also reference `knowledge-core/shadow-dom-css-rules.md`, `knowledge-core/event-bus-access.md`, `knowledge-core/bff-data-fetching.md`, and `knowledge-core/typography-and-genos-rules.md` when verifying implementation correctness.
 
-### 1. Requirements Verification
+### Per-Group Review (during 2-implement)
 
-Check every requirement in `1.4-requirements.md` against the implementation:
+During the group-based implementation (step 2.2), a review subagent is launched after each group. The review subagent checks the group's files against standards and returns findings categorised as:
+
+- **MUST-FIX**: blocks continuation (broken functionality, missing requirements, architecture violations, Genos typography classes, Genos CSS variables)
+- **SHOULD-FIX**: guideline violations that should be addressed before PR merge
+- **CONSIDER**: suggestions for improvement
+
+The review subagent checks vary by group type:
+
+| Group type | Key checks |
+|---|---|
+| contracts-scaffold | Types match BFF contract, `Get{Widget}Response` alias exported, no duplicate types, scaffold config consistent |
+| component | Root is orchestrator-only, children are pure, BFF dual guard, no Angular config, no Genos classes/variables, `fds-sb-typography` used, Event Bus via `window.sbXpEventBus`, SCSS flat selectors, no hardcoded values |
+| tests | All props tested, all render branches covered, all events tested, mocks reset in beforeEach, `newSpecPage` used |
+| stories | All meaningful states covered, Event Bus mocks present, mock data matches BFF types, no duplicates |
+
+### 1. Final Requirements Verification
+
+After all groups are complete, check every requirement in `1.4-requirements.md` against the full implementation:
 - FR-xxx: is the functional requirement met?
 - DR-xxx: are data contracts correct?
 - VR-xxx: does the visual match the expected layout?
 
 Mark each requirement as: MET / PARTIAL / NOT MET.
 
-### 2. Code Review
+### 2. Consolidated Code Review
 
-Populate `templates/2.5-code-review.template.md` with findings categorised as:
-
-- **Must Fix**: blocks delivery (broken functionality, missing requirements, security issues)
-- **Should Fix**: high impact but not blocking (naming violations, missing edge cases)
-- **Consider**: suggestions for improvement (performance, readability)
+Populate `templates/2.5-code-review.template.md` with a consolidated summary of all per-group reviews plus any additional findings.
 
 ### 3. Present to User
 
@@ -47,4 +60,4 @@ Ask user to review locally:
 
 ## Gate
 
-STOP -- this triggers the **Phase 2 gate**. User must confirm local review passes.
+STOP — this triggers the **Phase 2 gate**. User must confirm local review passes.

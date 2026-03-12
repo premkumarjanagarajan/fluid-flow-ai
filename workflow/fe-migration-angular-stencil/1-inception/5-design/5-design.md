@@ -13,6 +13,7 @@ checkpoint: initiatives/{INITIATIVE_NAME}/artefacts/1.5-architecture.md
 ## Guidance
 
 Load `instructions/event-bus-patterns.md` and `instructions/naming-conventions.md`.
+Also load `knowledge-core/typography-and-genos-rules.md` for typography and Genos CSS variable constraints.
 
 ### 1. Reusability Scan
 
@@ -34,21 +35,47 @@ For each candidate found, decide: **Reuse as-is** / **Adapt** / **Create new**. 
 - If a component file would exceed ~150 lines, split further
 - Document: component name, tag name, responsibility, inputs, parent
 
-### 3. Service Layer
+### 3. Component Breakdown Approval (STOP gate)
+
+**Before writing the architecture document**, present the proposed component breakdown to the user for approval. This prevents plan rewrites — the agreed breakdown drives all output documents.
+
+Present:
+- The root component and its responsibilities
+- Each proposed child component with: name, responsibility, what gets extracted into it, and which parent mounts it
+- The reasoning for each extraction (extract vs combine rule of thumb)
+- How the breakdown maps to the visual sections identified in the analysis/screenshots
+
+Ask the user to review against Figma/screenshots and confirm:
+- **A**: Approved — proceed with this breakdown
+- **B**: I have changes (describe them)
+
+**STOP until the user approves the component breakdown.**
+
+If the user requests changes, adjust and re-present until approved.
+
+### 4. Service Layer
 
 Map Angular services to StencilJS equivalents. Define Event Bus contracts for inter-MFE communication.
 
-### 4. Produce Architecture
+### 5. Typography and Genos Replacements
+
+Using the typography and Genos CSS variable findings from the analysis report:
+- Map every Genos typography class to its `<fds-sb-typography>` equivalent (variant + tag)
+- Identify replacements for every Genos CSS variable (project token or documented gap)
+- Include both mappings in the architecture document
+
+### 6. Produce Architecture
 
 Populate `templates/1.5-architecture.template.md` and save to `initiatives/{INITIATIVE_NAME}/artefacts/1.5-architecture.md`.
 
-This is a **permanent** document -- it survives after implementation.
+This is a **permanent** document — it survives after implementation. Must include all reusability decisions (permanent record since implementation-plan.md is deleted after migration).
 
 ## Outputs
 
 - `1.5-architecture.md` in initiative artefacts folder
 - Reusability decision table (inline in architecture)
+- Approved component breakdown
 
 ## Gate
 
-None -- continue to next step. (Phase gate after step 6 covers approval.)
+STOP at step 3 for component breakdown approval. Then continue to completion. (Phase gate after step 6 covers overall approval.)

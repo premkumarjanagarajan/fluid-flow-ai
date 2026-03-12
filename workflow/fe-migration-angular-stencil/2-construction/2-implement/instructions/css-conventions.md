@@ -1,6 +1,6 @@
 # CSS Conventions
 
-Also read: `knowledge-core/shadow-dom-css-rules.md` (two mandatory rules that cause invisible styling failures) and `sass-standards.md` (SCSS-specific formatting).
+Also read: `knowledge-core/shadow-dom-css-rules.md` (two mandatory rules that cause invisible styling failures), `knowledge-core/typography-and-genos-rules.md` (fds-sb-typography + Genos CSS variables forbidden), and `sass-standards.md` (SCSS-specific formatting).
 
 ## Design Tokens (FDS)
 

@@ -128,11 +128,12 @@ Output templates live in each step's `templates/` folder:
 
 | Template | Step | Purpose |
 |----------|------|---------|
-| `1.2-analysis-summary.template.md` | 1.2 Analyze | Widget analysis checkpoint |
+| `1.2-analysis-summary.template.md` | 1.2 Analyze | Widget analysis checkpoint (includes typography, Genos vars, analytics) |
 | `1.4-requirements.template.md` | 1.4 Requirements | Structured requirements with ACs |
 | `1.5-architecture.template.md` | 1.5 Design | Permanent architecture reference |
-| `1.6-implementation-plan.template.md` | 1.6 Plan | Temporary task document |
-| `2.5-code-review.template.md` | 2.5 Review | Scored code review |
+| `1.6-implementation-plan.template.md` | 1.6 Plan | Temporary task document (group-based) |
+| `1.6-migration-context.template.md` | 1.6 Plan | Compact handoff for Construction phase |
+| `2.5-code-review.template.md` | 2.5 Review | Scored code review (per-group + consolidated) |
 
 ## Knowledge Core
 
@@ -145,6 +146,7 @@ Cross-cutting reference material shared across multiple phases and steps. Lives 
 | `bff-data-fetching.md` | Three mandatory BFF rules (named type alias, dual guard, full envelope in mocks) | 2.2, 2.4, 2.5 |
 | `typescript-standards.md` | TypeScript standards (explicit return types, enum guidance, null handling) | 2.2 |
 | `troubleshooting.md` | Documented root causes and exact fixes for common issues | 2.2, 2.3, 2.4, 2.5 |
+| `typography-and-genos-rules.md` | fds-sb-typography mandatory + Genos CSS variables forbidden | 1.2, 1.5, 2.2, 2.5 |
 
 ## Instructions
 

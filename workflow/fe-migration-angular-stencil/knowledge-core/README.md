@@ -13,6 +13,7 @@ Step-specific knowledge lives in each step's `instructions/` folder.
 | `bff-data-fetching.md` | Three mandatory BFF data fetching rules (type alias, dual guard, full envelope) | 2.2 Implement, 2.4 Test, 2.5 Review |
 | `typescript-standards.md` | TypeScript standards (explicit return types, enum guidance, null handling) | 2.2 Implement |
 | `troubleshooting.md` | Documented root causes and fixes for common issues | 2.2 Implement, 2.3 Build, 2.4 Test, 2.5 Review |
+| `typography-and-genos-rules.md` | fds-sb-typography mandatory + Genos CSS variables forbidden | 1.2 Analyze, 1.5 Design, 2.2 Implement, 2.5 Review |
 
 ## Usage
 
