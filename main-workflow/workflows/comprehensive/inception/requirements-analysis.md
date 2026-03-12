@@ -107,9 +107,7 @@ Analyze whatever the user has provided:
      - Label the options as A, B, C, D etc.
      - Ensure options are mutually exclusive and don't overlap
      - ALWAYS include option for custom response: "X) Other (please describe after [Answer]: tag below)"
-   - **MANDATORY**: Offer the user the choice between **Answer Manually** or **AI Best Judgement** mode (see `../memory/common/question-format-guide.md` for full details):
-     - **Answer Manually**: User fills in [Answer]: tags; wait for user to confirm completion
-     - **AI Best Judgement**: AI fills all [Answer]: tags with best judgement, adds [Reasoning]: for each, flags low-confidence answers; user reviews and overrides as needed; wait for user to confirm review is complete
+   - Ask user to fill in [Answer]: tags; wait for user to confirm completion
    - **MANDATORY**: Analyze ALL answers for ambiguities and create follow-up questions if needed
    - **MANDATORY**: Keep asking questions until ALL ambiguities are resolved OR user explicitly asks to proceed
 

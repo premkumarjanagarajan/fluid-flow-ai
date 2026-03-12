@@ -55,11 +55,9 @@ This stage decomposes the system into manageable units of work through two integ
 - Ensure plan covers all aspects of system decomposition
 
 ## Step 5: Request User Input
-- **MANDATORY**: Offer the user the choice between **Answer Manually** or **AI Best Judgement** mode (see `../../memory/common/question-format-guide.md` for full details):
-  - **Answer Manually**: Ask user to fill [Answer]: tags directly in the plan document
-  - **AI Best Judgement**: AI fills all [Answer]: tags with best judgement, adds [Reasoning]: for each, flags low-confidence answers; user reviews and overrides as needed
+- Ask user to fill [Answer]: tags directly in the plan document
 - Emphasize importance of decomposition decisions
-- Provide clear instructions on completing the [Answer]: tags (or how to review AI-generated answers)
+- Provide clear instructions on completing the [Answer]: tags
 
 ## Step 6: Collect Answers
 - Wait for user to provide answers to all questions using [Answer]: tags in the document

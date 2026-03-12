@@ -38,9 +38,7 @@ Incorporate NFR requirements into unit design using patterns and logical compone
 - Include all [Answer]: tags for user input
 
 ### Step 5: Collect and Analyze Answers
-- **MANDATORY**: Offer the user the choice between **Answer Manually** or **AI Best Judgement** mode (see `../../comprehensive/memory/common/question-format-guide.md` for full details):
-  - **Answer Manually**: Wait for user to complete all [Answer]: tags
-  - **AI Best Judgement**: AI fills all [Answer]: tags with best judgement, adds [Reasoning]: for each, flags low-confidence answers; user reviews and overrides as needed; wait for user to confirm review is complete
+- Wait for user to complete all [Answer]: tags
 - Review for vague or ambiguous responses
 - Add follow-up questions if needed
 

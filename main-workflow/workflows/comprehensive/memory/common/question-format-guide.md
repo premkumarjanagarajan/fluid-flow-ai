@@ -144,25 +144,15 @@ C) Maybe
 Create specs/{BRANCH_NAME}/{phase-name}-questions.md with all questions
 ```
 
-#### Step 2: Inform User and Offer Response Mode
+#### Step 2: Inform User
 ```
 "I've created {phase-name}-questions.md with [X] questions. 
 
-**How would you like to proceed?**
-
-1️⃣ **Answer Manually** — Fill in the [Answer]: tags yourself in the document. Let me know when you're done.
-2️⃣ **AI Best Judgement** — I will answer ALL questions using my best judgement based on available context. You then review and override any answers you disagree with.
-
-Please choose option 1 or 2."
+Please fill in the [Answer]: tags in the document. Let me know when you're done."
 ```
 
-#### Step 3: Handle Response Mode
-
-**If user chooses "Answer Manually" (Option 1)**:
+#### Step 3: Wait for Completion
 - Wait for user to say "done", "completed", "finished", or similar.
-
-**If user chooses "AI Best Judgement" (Option 2)**:
-- Execute the **AI Best Judgement Mode** (see section below).
 
 #### Step 4: Read and Analyze
 ```
@@ -171,101 +161,6 @@ Extract all answers
 Validate completeness
 Proceed with analysis
 ```
-
----
-
-### AI Best Judgement Mode
-
-**Purpose**: Allow the AI to answer question iterations using its best judgement based on the available context (codebase, requirements, prior decisions, domain knowledge), reducing human effort on questions where the AI has sufficient context to reason well.
-
-**CRITICAL**: AI Best Judgement does NOT remove human oversight. All AI-generated answers MUST be reviewed and approved by the user before proceeding.
-
-#### How It Works
-
-1. **AI Fills Answers**: For each question, the AI selects the best option and fills in the `[Answer]:` tag
-2. **AI Provides Reasoning**: For each answer, the AI adds a `[Reasoning]:` tag explaining WHY that option was chosen
-3. **AI Marks Answers**: Each AI-generated answer is prefixed with `[AI-Generated]` so it is clearly distinguishable from human answers
-4. **User Reviews**: The user reviews all AI-generated answers and can override any they disagree with
-5. **Proceed After Review**: Only after the user confirms the answers (with any overrides) does the workflow proceed
-
-#### AI Best Judgement Answer Format
-
-When using AI Best Judgement, each question's answer section is formatted as:
-
-```markdown
-## Question [Number]
-[Clear, specific question text]
-
-A) [First meaningful option]
-B) [Second meaningful option]
-C) [Third meaningful option]
-X) Other (please describe after [Answer]: tag below)
-
-[Answer]: [AI-Generated] B
-[Reasoning]: Based on [specific context, artifact, or prior decision], option B is the best fit because [explanation]. [Reference to supporting evidence if available.]
-```
-
-#### AI Reasoning Guidelines
-
-When generating best judgement answers, the AI MUST:
-- **Reference concrete context**: Cite specific files, prior decisions, requirements, or codebase evidence
-- **Explain trade-offs**: If multiple options are viable, explain why the chosen one is preferred
-- **Flag low-confidence answers**: If the AI is uncertain, prefix the reasoning with `⚠️ LOW CONFIDENCE:` and explain what information is missing
-- **Never fabricate context**: Only reference information that actually exists in the workspace or conversation
-- **Be conservative**: When genuinely uncertain, prefer the safer/simpler option and explain why
-
-#### Low Confidence Handling
-
-If the AI has low confidence on a question, it should:
-
-```markdown
-[Answer]: [AI-Generated] C
-[Reasoning]: ⚠️ LOW CONFIDENCE: I selected C based on [limited evidence], but this could also be A if [condition]. This question would benefit from human input.
-```
-
-#### User Review Process
-
-After the AI fills all answers:
-1. **Inform User**: 
-```
-"I've filled all [X] questions using my best judgement. Each answer includes my reasoning.
-
-⚠️ [Y] answers are marked as LOW CONFIDENCE and would benefit from your review.
-
-Please review the answers in {phase-name}-questions.md:
-- ✅ If you agree with an answer, no action needed
-- ✏️ To override, replace the answer letter after [Answer]: (remove the [AI-Generated] prefix)
-- Let me know when your review is complete."
-```
-
-2. **Wait for User Confirmation**: Do not proceed until user confirms review is complete
-3. **Re-read and Analyze**: After user confirms, re-read the file and proceed with analysis as normal
-4. **Treat Overridden Answers as Authoritative**: Any answers where the user removed `[AI-Generated]` and provided their own answer take precedence
-
-#### Audit Trail for AI Best Judgement
-
-When AI Best Judgement mode is used, log in `audit.md`:
-```markdown
-## [Stage Name] - Question Iteration
-**Timestamp**: [ISO timestamp]
-**Mode**: AI Best Judgement
-**Total Questions**: [X]
-**Low Confidence Answers**: [Y]
-**User Overrides**: [Z] (logged after user review)
-**Context**: AI answered all questions using best judgement; user reviewed and confirmed.
-```
-
-#### When AI Best Judgement Is Especially Useful
-- Brownfield projects where codebase context provides strong evidence
-- Follow-up iterations where prior decisions inform current answers
-- Technical questions where the codebase structure makes the answer evident
-- Questions where workspace detection or reverse engineering artifacts provide clear guidance
-
-#### When AI Best Judgement Should Flag Low Confidence
-- Business decisions with no clear technical evidence
-- Regulatory or compliance questions
-- Questions about user preferences, team conventions, or organizational policies
-- Questions where multiple options are equally valid with no distinguishing context
 
 ### Error Handling
 
@@ -426,15 +321,12 @@ E) Other (please describe after [Answer]: tag below)
 - ✅ **Always include "Other" as the LAST option (MANDATORY)**
 - ✅ Only include meaningful options - don't make up options to fill slots
 - ✅ Always use [Answer]: tags
-- ✅ Always offer the choice between **Answer Manually** and **AI Best Judgement** for each question iteration
-- ✅ Always wait for user completion (manual) or user review confirmation (AI best judgement)
+- ✅ Always wait for user to complete all answers before proceeding
 - ✅ Always validate responses for contradictions
 - ✅ Always create clarification files if needed
 - ✅ Always resolve contradictions before proceeding
-- ✅ When using AI Best Judgement, always include [Reasoning]: tags and flag low-confidence answers
 - ❌ Never ask questions in chat
 - ❌ Never make up options just to have A, B, C, D
 - ❌ Never proceed without answers
 - ❌ Never proceed with unresolved contradictions
 - ❌ Never make assumptions about ambiguous responses
-- ❌ Never skip user review when using AI Best Judgement mode

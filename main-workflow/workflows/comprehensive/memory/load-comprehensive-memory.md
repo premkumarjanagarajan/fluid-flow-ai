@@ -15,7 +15,7 @@ These files MUST be loaded at the start of the Comprehensive Path workflow:
 
 - Load `common/process-overview.md` -- Workflow overview and phase structure
 - Load `common/session-continuity.md` -- Session resumption and recovery guidance
-- Load `common/question-format-guide.md` -- Question formatting rules and AI Best Judgement mode
+- Load `common/question-format-guide.md` -- Question formatting rules
 - Load `common/depth-levels.md` -- Adaptive depth explanation (minimal/standard/comprehensive)
 - Load `common/error-handling.md` -- Error severity levels and recovery procedures
 - Load `common/terminology.md` -- AI-DLC glossary (phase vs stage, unit, etc.)

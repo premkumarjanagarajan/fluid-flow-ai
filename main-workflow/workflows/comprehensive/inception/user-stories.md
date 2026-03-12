@@ -168,11 +168,9 @@ For medium priority cases, execute user stories if ANY of these apply:
 - Ensure plan is comprehensive and covers all story development aspects
 
 ## Step 7: Request User Input
-- **MANDATORY**: Offer the user the choice between **Answer Manually** or **AI Best Judgement** mode (see `../memory/common/question-format-guide.md` for full details):
-  - **Answer Manually**: Ask user to fill in all [Answer]: tags directly in the story plan document
-  - **AI Best Judgement**: AI fills all [Answer]: tags with best judgement, adds [Reasoning]: for each, flags low-confidence answers; user reviews and overrides as needed
+- Ask user to fill in all [Answer]: tags directly in the story plan document
 - Emphasize importance of audit trail and decision documentation
-- Provide clear instructions on how to fill in the [Answer]: tags (or how to review AI-generated answers)
+- Provide clear instructions on how to fill in the [Answer]: tags
 - Explain that all questions must be answered before proceeding
 
 ## Step 8: Collect Answers
