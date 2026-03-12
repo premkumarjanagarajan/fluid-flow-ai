@@ -4,7 +4,7 @@ Validates the latest step output against the full knowledge base without bloatin
 
 ## When to Run
 
-After every stage or step completion, alongside state-manager and analytics.
+After the **last step of each phase** (i.e. on phase transitions and workflow end). This runs alongside state-manager and analytics at those boundaries, but NOT after every individual step within a phase.
 
 ## How It Works
 

@@ -13,7 +13,7 @@ The knowledge base is enforced through two complementary layers:
 
 1. **Pre-step (tiered loading)**: The main agent loads a subset of KB files into its context before executing a step. The "Always Load" set is loaded for every step. Conditional sets are loaded only when the step's domain matches.
 
-2. **Post-step (compliance subagent)**: After every step, `primitives/kb-compliance.md` launches a dedicated subagent that loads the **entire** KB in its own context window, reviews the step output, and returns a short PASS/FAIL verdict. This catches anything the tiered pre-loading might miss -- without inflating the main conversation's context.
+2. **Post-phase (compliance subagent)**: After the last step of each phase (phase transitions), `primitives/kb-compliance.md` launches a dedicated subagent that loads the **entire** KB in its own context window, reviews the phase output, and returns a short PASS/FAIL verdict. This catches anything the tiered pre-loading might miss -- without inflating the main conversation's context.
 
 ---
 
@@ -29,6 +29,7 @@ These files MUST be loaded at the start of every command or workflow stage:
 - Load `ai-governance/adr-integrity-gate.md` -- ADR compliance checking and extension rules
 - Load `ai-governance/continuous-learning.md` -- Systemic issue detection, rule/ADR improvement proposals
 - Load `ai-governance/overconfidence-prevention.md` -- Prevents confidence without evidence
+- Load `ai-governance/no-assumption-policy.md` -- Prohibits filling gaps with "best judgment"; always ask the user
 
 ---
 

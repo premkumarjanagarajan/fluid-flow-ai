@@ -103,6 +103,8 @@ Present workflows grouped by source. Suggest best match with `-->`. **Wait for u
 
 1. Load `workflow/{selected}/wf-{selected}.md`
 2. Execute phase->step chain: each `{N}-{phase}.md` defines its steps, each `{N}-{step}.md` is loaded and executed in order
+3. **After every step completes**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`
+4. **After the last step of each phase** (phase transition or workflow end): additionally run `primitives/kb-compliance.md`
 
 ## Stage 6: Completion
 
@@ -114,4 +116,5 @@ Present workflows grouped by source. Suggest best match with `-->`. **Wait for u
 
 **Rules**:
 - Never auto-commit. Never skip stages. Wait for user approval at gates.
-- **After every stage/step**: run `primitives/state-manager.md`, `primitives/analytics.md`, and `primitives/kb-compliance.md`.
+- **After every step**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`.
+- **After the last step of each phase** (phase transition): additionally run `primitives/kb-compliance.md`.
