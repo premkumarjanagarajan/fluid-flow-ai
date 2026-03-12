@@ -13,7 +13,19 @@ checkpoint: initiatives/{INITIATIVE_NAME}/artefacts/2.2-implementation-complete.
 
 ## Guidance
 
-Load `instructions/stenciljs-conventions.md` and `instructions/css-conventions.md`.
+Load these instructions before implementing:
+- `instructions/stenciljs-conventions.md` — component structure, shadow DOM, lifecycle, Event Bus access, BFF fetching
+- `instructions/css-conventions.md` — FDS tokens, shadow DOM CSS rules, responsive layout system, specificity
+- `instructions/tsx-structure-semantics.md` — semantic HTML5 in TSX render output
+- `instructions/sass-standards.md` — SCSS formatting, ordering, modules
+- `instructions/performance-best-practices.md` — lazy loading, bundle size, observers
+
+Also pre-load from `knowledge-core/`:
+- `shadow-dom-css-rules.md` — two mandatory rules (class placement, flat selectors)
+- `event-bus-access.md` — mandatory `window.sbXpEventBus` rule
+- `bff-data-fetching.md` — three mandatory BFF data fetching rules
+- `typescript-standards.md` — explicit return types, enum guidance, null handling
+- `troubleshooting.md` — common build/test/styling issues and fixes
 
 ### Build-First Approach
 

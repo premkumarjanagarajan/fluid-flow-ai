@@ -12,6 +12,8 @@ subagent: false
 
 ## Guidance
 
+Load `instructions/project-workflows.md` — template usage, branch naming, code quality checklist, `.gitkeep` hygiene, central mock file structure.
+
 ### 1. Branch Creation
 
 - Checkout base branch and pull latest

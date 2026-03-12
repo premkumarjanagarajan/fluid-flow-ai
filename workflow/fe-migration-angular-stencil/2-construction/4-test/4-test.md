@@ -11,7 +11,14 @@ checkpoint: initiatives/{INITIATIVE_NAME}/artefacts/2.4-test-report.md
 
 ## Guidance
 
-Load `instructions/unit-testing-conventions.md` and `instructions/storybook-conventions.md`.
+Load these instructions before testing:
+- `instructions/unit-testing-conventions.md` — Jest setup, EventBus mock pattern, moduleNameMapper, BFF envelope in test stubs
+- `instructions/storybook-conventions.md` — required stories, container-query layouts, mock timing, central mock registry, Actions tab
+
+Also pre-load from `knowledge-core/`:
+- `event-bus-access.md` — why `window.sbXpEventBus` and impact on test setup
+- `bff-data-fetching.md` — full envelope rule (applies to both test stubs and story mocks)
+- `troubleshooting.md` — unit test TypeError fixes, component not loading in Storybook
 
 ### 1. Unit Tests
 

@@ -134,6 +134,18 @@ Output templates live in each step's `templates/` folder:
 | `1.6-implementation-plan.template.md` | 1.6 Plan | Temporary task document |
 | `2.5-code-review.template.md` | 2.5 Review | Scored code review |
 
+## Knowledge Core
+
+Cross-cutting reference material shared across multiple phases and steps. Lives in `knowledge-core/`:
+
+| File | Covers | Referenced by |
+|------|--------|---------------|
+| `shadow-dom-css-rules.md` | Two mandatory Shadow DOM CSS rules (class placement on wrapper, flat selectors) | 2.2, 2.3, 2.4, 2.5 |
+| `event-bus-access.md` | Mandatory `window.sbXpEventBus` rule (never import `EventBus` directly) | 1.5, 2.2, 2.4, 2.5 |
+| `bff-data-fetching.md` | Three mandatory BFF rules (named type alias, dual guard, full envelope in mocks) | 2.2, 2.4, 2.5 |
+| `typescript-standards.md` | TypeScript standards (explicit return types, enum guidance, null handling) | 2.2 |
+| `troubleshooting.md` | Documented root causes and exact fixes for common issues | 2.2, 2.3, 2.4, 2.5 |
+
 ## Instructions
 
 Domain-specific rules live in each step's `instructions/` folder:
@@ -141,12 +153,16 @@ Domain-specific rules live in each step's `instructions/` folder:
 | Instruction | Step | Covers |
 |-------------|------|--------|
 | `angular-stencil-mapping.md` | 1.2 Analyze | Angular to StencilJS pattern mapping |
-| `event-bus-patterns.md` | 1.5 Design | Event Bus contracts, inter-MFE communication |
+| `event-bus-patterns.md` | 1.5 Design | Event Bus contracts, access pattern, inter-MFE communication |
 | `naming-conventions.md` | 1.5 Design | Component tags, files, CSS custom properties |
-| `stenciljs-conventions.md` | 2.2 Implement | Component structure, shadow DOM, lifecycle |
-| `css-conventions.md` | 2.2 Implement | FDS tokens, container queries, SCSS |
-| `unit-testing-conventions.md` | 2.4 Test | Jest patterns, mocking, coverage |
-| `storybook-conventions.md` | 2.4 Test | Stories, mocks, design links |
+| `project-workflows.md` | 2.1 Scaffold | Templates, branch naming, quality checklist, mock hygiene |
+| `stenciljs-conventions.md` | 2.2 Implement | Component structure, shadow DOM, lifecycle, Event Bus access, BFF fetching |
+| `css-conventions.md` | 2.2 Implement | FDS tokens, shadow DOM CSS, responsive layout system, specificity |
+| `tsx-structure-semantics.md` | 2.2 Implement | Semantic HTML5 in TSX render output |
+| `sass-standards.md` | 2.2 Implement | SCSS formatting, ordering, modules, ampersand rules |
+| `performance-best-practices.md` | 2.2 Implement | Lazy loading, bundle size, observers, GPU acceleration |
+| `unit-testing-conventions.md` | 2.4 Test | Jest setup, EventBus mock, moduleNameMapper, BFF envelope stubs |
+| `storybook-conventions.md` | 2.4 Test | Stories, container-query layouts, mock timing, central registry, Actions tab |
 
 ## Governance
 
@@ -181,3 +197,5 @@ Each step folder can contain:
 - `instructions/` -- domain-specific rules loaded on demand
 - `knowledge-base/` -- reference material for this step
 - `commands/` -- executable commands
+
+The `knowledge-core/` folder contains cross-cutting reference material shared by multiple steps (shadow DOM rules, Event Bus access, BFF data fetching, TypeScript standards, troubleshooting).

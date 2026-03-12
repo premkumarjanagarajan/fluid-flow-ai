@@ -12,6 +12,8 @@ checkpoint: initiatives/{INITIATIVE_NAME}/artefacts/2.5-code-review.md
 
 ## Guidance
 
+Pre-load `knowledge-core/troubleshooting.md` for reference when diagnosing any issues found during review. Also reference `knowledge-core/shadow-dom-css-rules.md`, `knowledge-core/event-bus-access.md`, and `knowledge-core/bff-data-fetching.md` when verifying implementation correctness.
+
 ### 1. Requirements Verification
 
 Check every requirement in `1.4-requirements.md` against the implementation:
