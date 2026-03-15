@@ -66,7 +66,14 @@ When multiple repos are detected in the workspace without an `ff-workspace.yaml`
     one source of truth for workflows and governance
 
   A) Set up as Fluid Flow Workspace (recommended)
+     Use this repo as the workspace
+
   B) Continue with single-repo mode
+     No workspace setup, standard Stages 0-6
+
+  C) Create a new Fluid Flow Workspace repo
+     Creates {context}-ff-workspace/ as a sibling
+     directory and adds it to the .code-workspace file
 
 ══════════════════════════════════════════════════════════
 ```
@@ -74,6 +81,16 @@ When multiple repos are detected in the workspace without an `ff-workspace.yaml`
 If the user selects **B**, proceed with single-repo behaviour (standard Stages 0-6). No disruption.
 
 If the user selects **A**, load `skills/workspace-setup/workspace-setup.md`.
+
+If the user selects **C**, run workspace repo creation:
+
+1. Ask for the workspace context name (e.g. `sportsbook`, `payments`). Suggest based on common repo name prefixes.
+2. Create the directory `../{context}-ff-workspace/` as a sibling to the current repos
+3. Initialise it as a git repo (`git init`)
+4. Copy the Fluid Flow framework files into it (orchestrator.md, knowledge-base-core/, primitives/, skills/, workflow/, templates/)
+5. Copy the IDE entry points (`.cursor/rules/instructions.mdc`, `.github/copilot-instructions.md`)
+6. Update the `.code-workspace` file: add `{context}-ff-workspace` as the **first** folder entry
+7. Load `skills/workspace-setup/workspace-setup.md` to complete setup (RE, ff-workspace.yaml, shared repo discovery)
 
 ---
 
@@ -105,7 +122,9 @@ Load `skills/shell-detection/shell-detection.md`. Store `SHELL_TYPE`.
 Load `skills/reverse-engineering/reverse-engineering.md`. **Wait for user approval.**
 
 If `ff-workspace.yaml` exists (Fluid Flow Workspace mode):
-- Per-repo RE artifacts are written to `{repo}/reverse-engineering/` (unchanged)
+- RE output mode is read from `ff-workspace.yaml` field `re_output` (default: `both`)
+- If `both`: per-repo RE artifacts written to `{repo}/reverse-engineering/`, combined in workspace
+- If `workspace-only`: all RE artifacts written to `reverse-engineering/{repo-name}/` in workspace repo — target repos are not modified
 - Combined architecture artifacts are written to `reverse-engineering/` in the workspace repo
 - Validate and update `ff-workspace.yaml` from RE findings
 

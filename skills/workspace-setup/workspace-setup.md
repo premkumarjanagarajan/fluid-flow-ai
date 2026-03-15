@@ -41,22 +41,60 @@ Wait for user approval via `primitives/human-gate.md`.
 
 Load `skills/shell-detection/shell-detection.md`. Store `SHELL_TYPE`. Same as Stage 0.
 
-### 3. Run RE Across All Repos
+### 3. RE Output Location
 
-Load `skills/reverse-engineering/reverse-engineering.md`.
+Before running RE, ask the user where per-repo artifacts should be stored:
+
+```
+───────────────────────────────────────────────────
+  WORKSPACE SETUP — RE Output Location
+───────────────────────────────────────────────────
+
+  Where should reverse engineering artifacts be stored?
+
+  A) Both — per-repo artifacts in each repo +
+     combined architecture in workspace (default)
+     Best when you have write access to all repos.
+
+  B) Workspace only — all RE artifacts centralised
+     in the workspace repo
+     Best when you don't own the target repos or
+     want to keep them clean.
+
+───────────────────────────────────────────────────
+```
+
+Store the choice as `RE_OUTPUT_MODE` (`both` or `workspace-only`).
+
+If `ff-workspace.yaml` already exists and has an `re_output` field, use that value as default and skip the prompt.
+
+### 4. Run RE Across All Repos
+
+Load `skills/reverse-engineering/reverse-engineering.md` with `RE_OUTPUT_MODE`.
 
 This runs the full RE flow:
+
+**If `RE_OUTPUT_MODE = both`** (default):
 - Per-repo subagents produce 11 artifacts each, written to `{repo}/reverse-engineering/`
-- The combined architecture subagent reads per-repo artifacts and produces:
-  - `reverse-engineering/combined-architecture.md` in the workspace repo
-  - `reverse-engineering/combined-c4.md` in the workspace repo
-  - `reverse-engineering/reverse-engineering-timestamp.md` in the workspace repo
+- Combined architecture written to `reverse-engineering/` in the workspace repo
+
+**If `RE_OUTPUT_MODE = workspace-only`**:
+- Per-repo subagents produce 11 artifacts each, written to `reverse-engineering/{repo-name}/` **in the workspace repo**
+- Combined architecture written to `reverse-engineering/` in the workspace repo
+- No files are written inside the target repos
+
+In both modes, the combined architecture subagent produces:
+- `reverse-engineering/combined-architecture.md`
+- `reverse-engineering/combined-c4.md`
+- `reverse-engineering/reverse-engineering-timestamp.md`
 
 Wait for user approval of RE results.
 
-### 4. Generate `ff-workspace.yaml`
+### 5. Generate `ff-workspace.yaml`
 
-From RE findings, generate `ff-workspace.yaml` in the workspace root:
+From RE findings, generate `ff-workspace.yaml` in the workspace root.
+
+Include `re_output: both` or `re_output: workspace-only` based on the user's choice in Step 3. This persists the preference for future RE runs.
 
 **Repositories** — for each repo:
 - `name`: folder name from `.code-workspace`
@@ -72,7 +110,7 @@ From RE findings, generate `ff-workspace.yaml` in the workspace root:
 - `iso27001: true` if `knowledge-base-core/security/iso27001-compliance.md` exists
 - `iso9001: true` if `knowledge-base-core/quality/iso9001-quality-management.md` exists
 
-### 5. Discover Shared Repos via GitHub MCP
+### 6. Discover Shared Repos via GitHub MCP
 
 **Skip if**: GitHub MCP server is not available (check MCP status from orchestrator).
 
@@ -84,7 +122,7 @@ For each repo in the workspace:
    - Set `change_coordination: manual` (default strategy)
 3. If GitHub MCP is not available: skip. Shared repos can be flagged manually later.
 
-### 6. Present `ff-workspace.yaml` for Review
+### 7. Present `ff-workspace.yaml` for Review
 
 Present the generated file via `primitives/human-gate.md`:
 
@@ -109,7 +147,7 @@ Present the generated file via `primitives/human-gate.md`:
 
 On **A**: write `ff-workspace.yaml` to the workspace root.
 
-### 7. Done
+### 8. Done
 
 Workspace setup is complete. Report:
 

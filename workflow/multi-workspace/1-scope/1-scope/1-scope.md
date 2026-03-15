@@ -7,29 +7,70 @@ subagent: false
 
 | Load | Do NOT Load |
 |------|------------|
-| `domain-catalog.yaml` | `reverse-engineering/combined-architecture.md` |
+| `domain-catalog.yaml` (if scope mode uses it) | `reverse-engineering/combined-architecture.md` |
 | `ff-workspace.yaml` (already loaded at Stage 1) | Per-repo RE artifacts |
 | | `reverse-engineering/combined-c4.md` |
 | | `reverse-engineering/incident-learnings.md` |
 
-The scope step works from the domain catalog and workspace composition file. Per-repo detail is not needed to identify affected domains.
+The scope step works from the domain catalog, workspace composition, or user-provided repo list. Per-repo detail is not needed to identify what's in scope.
 
 ## Inputs
 
 - User prompt (natural language initiative description)
-- `domain-catalog.yaml` — org-level domain registry
+- `domain-catalog.yaml` — org-level domain registry (optional, depends on scope mode)
 
 ## Guidance
 
-Identify which domains and workspaces are affected by the initiative. The AI proposes; the human validates.
+Identify what this initiative spans. The AI proposes; the human validates.
 
-### 1. Read Domain Catalog
+### 1. Determine Scope Mode
 
-Read `domain-catalog.yaml` from the workspace or a provided path. This is an existing org-level registry of repositories across product domains. It is not owned by Fluid Flow.
+Present the scope mode prompt and wait for user choice:
 
-If the domain catalog is not found, ask the user to provide the path or describe the domains manually.
+```
+───────────────────────────────────────────────────
+  MULTI-WORKSPACE — Scope Mode
+───────────────────────────────────────────────────
 
-### 2. Analyse Initiative Against Domains
+  What does this initiative span?
+
+  A) Multiple repos in this workspace
+     → I'll use ff-workspace.yaml to identify targets
+
+  B) Multiple domains across the organisation
+     → I'll use the domain catalog to identify targets
+
+  C) Specific repos I'll name
+     → Tell me which repos are involved
+
+  D) Let me describe the scope and you figure it out
+     → I'll analyse your description against all
+       available context
+
+───────────────────────────────────────────────────
+```
+
+**Mode A — Repos in this workspace**:
+- Read `ff-workspace.yaml` for the repo list
+- Present the repos for the user to select which are in scope
+- Skip domain catalog entirely
+
+**Mode B — Domain catalog**:
+- Read `domain-catalog.yaml` from the workspace or a provided path
+- If not found: ask the user to provide the path or fall back to Mode C/D
+- Run domain impact analysis (step 2 below)
+
+**Mode C — User-named repos**:
+- Ask the user to list the repos involved
+- For each repo: check if it's in `ff-workspace.yaml`, in the domain catalog, or external
+- Classify repos as: in-workspace, in-org (known from catalog), or external
+
+**Mode D — AI-analysed description**:
+- Parse the user's initiative description
+- Check against `ff-workspace.yaml` repos, `domain-catalog.yaml` domains, and any other available context
+- Propose affected repos/domains with reasoning
+
+### 2. Domain Impact Analysis (Mode B only)
 
 For each domain in the catalog:
 - Read the domain description and key repo descriptions
@@ -38,65 +79,75 @@ For each domain in the catalog:
   - **Evaluate** — possibly required, needs human decision
   - **Not affected** — no relationship to the initiative
 
-### 3. Identify Cross-Domain Integration Points
+### 3. Identify Integration Points
 
-- Look for repos that appear in multiple domains
-- Trace event flows and API dependencies between confirmed domains
-- Check for shared libraries, contracts, or schemas that bridge domains
+Regardless of scope mode:
+- Look for repos/domains that connect (shared contracts, event flows, API dependencies)
+- Check for shared libraries or schemas that bridge the selected targets
+- If `ff-workspace.yaml` exists: check `shared: true` repos and their `also_in` lists
 
 ### 4. Check for Existing Fluid Flow Workspaces
 
-For each confirmed domain:
+For each confirmed domain or external repo:
 - Check if a Fluid Flow Workspace exists (via filesystem or GitHub MCP)
 - If found: note the workspace name and `ff-workspace.yaml` location
-- If not found: note that the domain has no workspace (specs will need manual distribution)
+- If not found: note that specs will need manual distribution
 
-### 5. Present Domain Impact Analysis
+### 5. Present Scope Analysis
 
 Present the analysis for human review.
 
 ## Outputs
 
-- `artefacts/1.1-domain-impact.md`
+- `artefacts/1.1-scope-analysis.md`
 
 ### Output Template
 
 ```markdown
-# Domain Impact Analysis
+# Scope Analysis
 
 **Initiative**: {INITIATIVE_NAME}
 **Date**: {ISO_TIMESTAMP}
+**Scope Mode**: {A: Workspace repos / B: Domain catalog / C: Named repos / D: AI-analysed}
 
-## Confirmed Domains
+## In-Scope Targets
 
-### {Domain Name}
-- **Reason**: {Why this domain is required}
+### {Target Name} (repo / domain / workspace)
+- **Reason**: {Why this target is in scope}
 - **Key repos**: {repo1}, {repo2}, {repo3}
-- **FF Workspace**: {workspace-name} (exists) | not found
+- **Location**: In this workspace / In org (domain: {name}) / External
+- **FF Workspace**: {workspace-name} (exists) | not found | this workspace
 
-{Repeat for each confirmed domain.}
+{Repeat for each confirmed target.}
 
 ## Evaluate
 
-### {Domain Name}
-- **Reason**: {Why this domain might be required}
+### {Target Name}
+- **Reason**: {Why this target might be in scope}
 - **Decision needed**: {Specific question for the human}
 
-{Repeat for each domain needing evaluation.}
+{Repeat for each target needing evaluation.}
 
-## Cross-Domain Integration Points
+## Integration Points
 
 | Integration | From | To | Type |
 |-------------|------|-----|------|
-| {integration-name} | {domain} | {domain} | {New event/API / Existing API / Shared schema} |
+| {name} | {target} | {target} | {New event/API / Existing API / Shared schema} |
+
+## Initiative Home
+
+All initiative artifacts will be stored in:
+`initiatives/{INITIATIVE_NAME}/` in **this** workspace/repo.
+
+Spec stubs for targets outside this workspace will be generated
+in the seed step for manual distribution.
 
 ## Decision Required
 
-[ ] Confirm {domain1}, {domain2}, {domain3} as in-scope
-[ ] Include or exclude {evaluate-domain1}
-[ ] Include or exclude {evaluate-domain2}
+[ ] Confirm in-scope targets
+[ ] Include or exclude evaluated targets
 ```
 
 ## Gate
 
-STOP. Present via `primitives/human-gate.md`. The human must confirm which domains are in-scope before proceeding to decomposition.
+STOP. Present via `primitives/human-gate.md`. The human must confirm what is in scope before proceeding to decomposition.

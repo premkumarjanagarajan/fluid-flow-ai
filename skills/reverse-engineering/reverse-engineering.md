@@ -46,13 +46,24 @@ Each subagent type has a strictly scoped context:
 
 This follows the workspace loading strategy in `knowledge-base-core/manifest.md` § Workspace Artifacts.
 
+### RE Output Mode
+
+If `ff-workspace.yaml` exists and has an `re_output` field, use that value. Otherwise default to `both`.
+
+| Mode | Per-repo output path | Combined output path |
+|------|---------------------|---------------------|
+| `both` | `{repo}/reverse-engineering/` (inside each repo) | `reverse-engineering/` in workspace repo |
+| `workspace-only` | `reverse-engineering/{repo-name}/` (in workspace repo) | `reverse-engineering/` in workspace repo |
+
+In `workspace-only` mode, no files are written inside target repos. All RE artifacts are centralised in the workspace.
+
 For each repository discovered in Step 1, launch **one subagent** (in parallel where possible) with a prompt that includes:
 
 1. The repository path
 2. The domain indicators detected
 3. The full artifact template list (from Step 3)
 4. The templates path: `skills/reverse-engineering/templates/`
-5. The output path: `{repo}/reverse-engineering/`
+5. The output path: `{repo}/reverse-engineering/` (mode `both`) or `reverse-engineering/{repo-name}/` in workspace (mode `workspace-only`)
 6. The current ISO 8601 timestamp and workspace path (for the timestamp file)
 
 The subagent prompt MUST instruct the agent to:
