@@ -1,6 +1,6 @@
 ---
-workflow-name: initiative
-workflow-description: Cross-workspace initiative planning — domain impact analysis, contract design, and workspace spec generation
+workflow-name: multi-workspace
+workflow-description: Cross-workspace planning — domain impact analysis, contract design, and workspace spec generation
 domain: orchestration
 version: v1.0
 release: 2026-03-15

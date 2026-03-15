@@ -1,0 +1,471 @@
+# =============================================================================
+# BetssonGroup Domain Catalog
+# =============================================================================
+# A curated registry of GitHub repositories organized by product domain.
+# Used by product agents to navigate the BetssonGroup org (~3,200 repos)
+# without requiring local clones or git submodules.
+#
+# Agents use this catalog + GitHub MCP tools (search_code, get_file_contents,
+# list_issues, search_pull_requests) to query repos on-demand.
+#
+# Maintenance:
+#   - Review quarterly or when org structure changes
+#   - Run `org:BetssonGroup topic:<topic>` searches to discover new repos
+#   - Repos listed under `key_repos` are the most important per domain
+#
+# Last updated: 2026-02-19
+# =============================================================================
+
+org: BetssonGroup
+
+domains:
+
+  # ---------------------------------------------------------------------------
+  # SPORTSBOOK
+  # ---------------------------------------------------------------------------
+  sportsbook:
+    description: >
+      Sportsbook platform — betting engine, trading tools, odds management,
+      cash-out, B2B partner integration, and sportsbook front-end.
+    topics:
+      - sportsbook-area
+      - sbsm
+    name_patterns:
+      - "sb-*"
+      - "obg-sportsbook*"
+    estimated_repo_count: 243
+    primary_language: C#
+    key_repos:
+      - name: obg-sportsbook
+        description: Core sportsbook backend
+        language: C#
+      - name: sb-b2b-fe-app
+        description: B2B sportsbook front-end (TypeScript)
+        language: TypeScript
+      - name: sb-trading
+        description: Sportsbook trading engine
+        language: C#
+      - name: sb-betting-couponplacement
+        description: Coupon/bet placement service
+        language: C#
+      - name: sb-betting-cashout
+        description: Cash-out service
+        language: C#
+      - name: sb-experience-core
+        description: Sportsbook experience/UX layer
+        language: C#
+      - name: sb-sitemanager-fe
+        description: Site manager front-end
+        language: TypeScript
+      - name: sb-riskv4
+        description: Sportsbook risk management
+        language: C#
+      - name: sb-b2b-integration
+        description: B2B partner integration
+        language: C#
+      - name: sb-b2b-eventstreams
+        description: Event streaming for B2B
+        language: C#
+      - name: core-testautomation
+        description: Central E2E test framework (hosts sportsbook tests)
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # GAMING / CASINO
+  # ---------------------------------------------------------------------------
+  gaming:
+    description: >
+      Casino and gaming platform — game provider integrations (GPI/GPT),
+      game launcher, game management, session handling, poker, and
+      native mobile casino apps (iOS/Android).
+    topics:
+      - gaming-area
+      - gaming
+      - game
+      - game-management-tool
+    name_patterns:
+      - "techsson-gaming-*"
+      - "gaming-*"
+      - "NextGen.*Casino*"
+      - "casino-*"
+    estimated_repo_count: 196
+    primary_language: C#
+    key_repos:
+      - name: techsson-gaming-gpt
+        description: Gaming provider transactions
+        language: C#
+      - name: techsson-gaming-gpi
+        description: Gaming provider integration
+        language: C#
+      - name: gaming-obg-gamelauncher
+        description: Game launcher service
+        language: C#
+      - name: techsson-gaming-game-management
+        description: Game management tool
+        language: C#
+      - name: techsson-gaming-session
+        description: Gaming session management
+        language: C#
+      - name: techsson-gaming-provider-feeds
+        description: Provider data feeds
+        language: C#
+      - name: techsson-gaming-poker
+        description: Poker vertical
+        language: C#
+      - name: NextGen.Android.Casino
+        description: Android casino native app
+        language: Kotlin
+      - name: NextGen.iOS.Brands.All
+        description: iOS native apps (all brands)
+        language: Swift
+      - name: casino-feature-taxonomy
+        description: Casino feature classification
+        language: Python
+
+  # ---------------------------------------------------------------------------
+  # PAYMENTS
+  # ---------------------------------------------------------------------------
+  payments:
+    description: >
+      Payment processing platform — deposit/withdrawal orchestration,
+      PSP integrations, payment analytics, fraud prevention, and KYC
+      payment compliance.
+    topics:
+      - payments
+      - payment-processing
+      - psp-transactions
+    name_patterns:
+      - "payment-*"
+    estimated_repo_count: 62
+    primary_language: C#
+    key_repos:
+      - name: payment-paas
+        description: Payment Platform-as-a-Service (core orchestration)
+        language: C#
+      - name: payment-psp
+        description: PSP integrations and transaction processing
+        language: C#
+      - name: payment-analytics
+        description: Payment analytics and reporting
+        language: C#
+      - name: payment-kycnow
+        description: KYC verification for payments
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # WALLET
+  # ---------------------------------------------------------------------------
+  wallet:
+    description: >
+      Customer wallet platform — balance management, transaction history,
+      wallet APIs, brand setup, taxation, migrations, and loyalty bridge.
+    topics:
+      - techsson-wallet
+    name_patterns:
+      - "wallet-*"
+      - "techsson-wallet*"
+      - "obg.wallet"
+    estimated_repo_count: 62
+    primary_language: C#
+    key_repos:
+      - name: wallet
+        description: Core wallet service
+        language: C#
+      - name: techsson-wallet-api
+        description: Wallet API layer
+        language: C#
+      - name: obg.wallet
+        description: OBG wallet integration
+        language: C#
+      - name: wallet-transactionhistory
+        description: Transaction history service
+        language: C#
+      - name: wallet-management-service
+        description: Wallet management service
+        language: C#
+      - name: wallet-brandsetup
+        description: Brand-level wallet configuration
+        language: TSQL
+      - name: wallet-migration-orchestrator
+        description: Wallet migration tooling
+        language: C#
+      - name: techsson-wallet-taxationprocessor
+        description: Tax processing for wallet transactions
+        language: C#
+      - name: techsson-wallet-eventprocessor
+        description: Wallet event processing
+        language: C#
+      - name: wallet-loyalty-bridge
+        description: Bridge between wallet and loyalty/gamification
+        language: C#
+      - name: wallets-service
+        description: Wallets aggregation service
+        language: TypeScript
+
+  # ---------------------------------------------------------------------------
+  # CAMPAIGNS & REWARDS
+  # ---------------------------------------------------------------------------
+  campaigns-and-rewards:
+    description: >
+      Marketing campaigns engine, reward systems, bonus management,
+      loyalty programs, and CRM-driven campaign analytics.
+    topics:
+      - techsson-campaigns
+      - prg
+    name_patterns:
+      - "campaigns-*"
+      - "techsson-campaigns-*"
+      - "techsson-rewards*"
+      - "obg.campaigns"
+      - "obg.rewards"
+    estimated_repo_count: 54
+    primary_language: C#
+    key_repos:
+      - name: campaigns-engine
+        description: Core campaign rules engine
+        language: C#
+      - name: techsson-campaigns
+        description: Techsson campaign platform
+        language: C#
+      - name: techsson-campaigns-loyalty
+        description: Loyalty-based campaigns
+        language: C#
+      - name: techsson-campaigns-eventstreams
+        description: Campaign event streaming
+        language: C#
+      - name: techsson-campaigns-rules
+        description: Campaign rule definitions
+        language: C#
+      - name: techsson-rewards
+        description: Core rewards engine
+        language: C#
+      - name: obg.rewards
+        description: OBG rewards integration
+        language: C#
+      - name: obg.campaigns
+        description: OBG campaigns integration
+        language: C#
+      - name: techsson-campaigns-operations
+        description: Campaign operational tooling
+        language: C#
+      - name: campaigns-docs
+        description: Campaign system documentation
+
+  # ---------------------------------------------------------------------------
+  # PAM / CUSTOMER MANAGEMENT
+  # ---------------------------------------------------------------------------
+  pam-customer:
+    description: >
+      Player Account Management — customer registration, authentication,
+      account management, KYC, fraud prevention, regulatory compliance,
+      onboarding, and back-office tooling (control panel, migration tools).
+    topics:
+      - pam
+      - pam-authentication
+      - pam-account-management
+      - pam-tools
+      - onboarding
+      - customer-management
+      - acquisition
+      - kyc
+    name_patterns:
+      - "pam-*"
+      - "techsson-customer-*"
+      - "obg.customers.*"
+      - "core-tools-*"
+      - "weave.pam.*"
+    estimated_repo_count: 245
+    primary_language: C#
+    key_repos:
+      - name: techsson-customer
+        description: Core customer service
+        language: C#
+      - name: techsson-customer-registration
+        description: Customer registration flow
+        language: C#
+      - name: pam-authentication-actions
+        description: Authentication actions/policies
+        language: C#
+      - name: pam-login
+        description: Login service
+        language: C#
+      - name: pam-kyc-verification
+        description: KYC verification
+        language: C#
+      - name: obg.customers.registration
+        description: OBG customer registration
+        language: C#
+      - name: obg.customers.management
+        description: OBG customer account management
+        language: C#
+      - name: techsson-customer-fraud
+        description: Customer fraud detection
+        language: C#
+      - name: pam-documentation
+        description: PAM system documentation
+        language: HTML
+      - name: core-tools-controlpanel-site-root
+        description: Back-office control panel
+        language: C#
+      - name: core-tools-migrationtool-coordinator
+        description: Customer migration orchestration
+        language: C#
+      - name: weave.pam.authentication.credentials.api
+        description: Auth credentials API (Weave platform)
+        language: C#
+      - name: weave.pam.playeraccount
+        description: Player account service (Weave platform)
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # GAMIFICATION & ENGAGEMENT
+  # ---------------------------------------------------------------------------
+  gamification:
+    description: >
+      Gamification platform — tournaments, loyalty games, bonus wheels,
+      engagement mechanics, and the GameFlix PoC framework.
+    topics:
+      - gamification
+      - tournaments
+      - gameflix
+    name_patterns:
+      - "tournaments*"
+      - "gamification-*"
+      - "engagement-*"
+    estimated_repo_count: 46
+    primary_language: C#
+    key_repos:
+      - name: tournaments
+        description: Core tournaments engine
+        language: C#
+      - name: tournaments-fe
+        description: Tournaments front-end
+        language: TypeScript
+      - name: gamification-gateway
+        description: Gamification API gateway
+        language: C#
+      - name: gamification-games
+        description: Gamification game modules
+        language: C#
+      - name: gamification-bonusreminders
+        description: Bonus expiry reminder service
+        language: C#
+      - name: gamification-bonuswheel
+        description: Bonus wheel game
+        language: C#
+      - name: gamification-messaging
+        description: Gamification event/message bus
+        language: C#
+      - name: wallet-loyalty-bridge
+        description: Bridge between wallet and gamification
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # PLATFORM / CORE
+  # ---------------------------------------------------------------------------
+  platform:
+    description: >
+      Shared platform services — adaptive front-end sites, event bus,
+      communications, feature flags, and cross-cutting platform concerns.
+    topics:
+      - core-area
+      - techsson
+      - techsson-communications
+      - platform-core
+    name_patterns:
+      - "core-obg-*"
+      - "techsson-*"  # (excluding domain-specific techsson repos)
+      - "obg-event-*"
+      - "microfrontend-*"
+    estimated_repo_count: 100
+    primary_language: C#
+    key_repos:
+      - name: core-obg-fe-adaptive-sites
+        description: Adaptive front-end site framework
+        language: TypeScript
+      - name: obg-event-bus-inspector
+        description: Event bus inspector/debugger
+        language: TypeScript
+
+  # ---------------------------------------------------------------------------
+  # DATA & AI/ML
+  # ---------------------------------------------------------------------------
+  data-aiml:
+    description: >
+      Data engineering, AI/ML models, analytics pipelines — game
+      recommendation engines (GRE), value segmentation, churn prediction,
+      and Snowflake/Glue ETL infrastructure.
+    topics: []
+    name_patterns:
+      - "aiml-*"
+      - "data-*"
+      - "ml-*"
+      - "crmanalytics-*"
+    estimated_repo_count: 493
+    primary_language: Python
+    key_repos:
+      - name: aiml-gre-data-pipeline
+        description: Game Recommendation Engine data pipeline
+        language: Python
+      - name: aiml-valuesegmentation-data-pipeline
+        description: Customer value segmentation pipeline
+        language: Python
+      - name: aiml-earlyvip-data-pipeline
+        description: Early VIP identification pipeline
+        language: Python
+      - name: aiml-gameaffinity-data-pipeline
+        description: Game affinity scoring pipeline
+        language: Python
+      - name: data-aiml-samples
+        description: AI/ML sample notebooks
+        language: Jupyter Notebook
+      - name: sb-aiml
+        description: Sportsbook AI/ML service
+        language: C#
+      - name: sb-aiml-mcp-time-server
+        description: Sportsbook AI/ML MCP integration
+        language: Python
+
+  # ---------------------------------------------------------------------------
+  # INFRASTRUCTURE & TOOLING
+  # ---------------------------------------------------------------------------
+  infrastructure:
+    description: >
+      Infrastructure-as-Code (Terraform), CI/CD tooling, developer CLI (bego),
+      and platform engineering tools.
+    topics:
+      - infra
+      - tooling-team
+      - gha
+    name_patterns:
+      - "iac-*"
+      - "terraform-*"
+    estimated_repo_count: 30
+    primary_language: HCL
+    key_repos:
+      - name: iac-terraform
+        description: Central IaC Terraform modules
+        language: HCL
+      - name: bego
+        description: Developer CLI and deployment tooling
+        language: Go
+
+  # ---------------------------------------------------------------------------
+  # MOBILE APPS (NextGen)
+  # ---------------------------------------------------------------------------
+  mobile:
+    description: >
+      Native mobile applications — Android (Kotlin) and iOS (Swift)
+      apps across all brands, including casino and sportsbook verticals.
+    topics: []
+    name_patterns:
+      - "NextGen.*"
+    estimated_repo_count: 15
+    primary_language: Kotlin
+    key_repos:
+      - name: NextGen.Android.Casino
+        description: Android casino app
+        language: Kotlin
+      - name: NextGen.iOS.Brands.All
+        description: iOS app (all brands)
+        language: Swift

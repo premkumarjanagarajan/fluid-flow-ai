@@ -140,4 +140,4 @@ Present all stubs for human review before distribution.
 
 ## Gate
 
-STOP. Present via `primitives/human-gate.md`. This is the final step of the initiative workflow. After approval, stubs are ready for distribution to workspace teams.
+STOP. Present via `primitives/human-gate.md`. This is the final step of the multi-workspace workflow. After approval, stubs are ready for distribution to workspace teams.

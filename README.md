@@ -31,7 +31,7 @@ v1.0 is additive — everything from v0.9 is preserved. The orchestrator lifecyc
 | **Cross-Repo RE** | Per-repo RE artifacts (unchanged) + combined architecture view in the workspace |
 | **Conflict Detection** | Pre-construction skill comparing active initiatives for contract and file conflicts |
 | **Lazy Branching** | Workspace repo branched at inception; target repos branched only at construction |
-| **Initiative Workflow** | New pluggable workflow for cross-workspace initiatives using the org-level domain catalog |
+| **Multi-Workspace Workflow** | New pluggable workflow for cross-workspace planning using the org-level domain catalog |
 | **Incident Learnings** | New RE artifact capturing production feedback for agent context |
 
 ## How It Works
@@ -175,8 +175,9 @@ Phases execute in order. Within each phase, steps execute in order. After every 
 
 | Workflow | Domain | Description |
 |----------|--------|-------------|
+| `fast-track` | general | Streamlined feature development — specification, planning, task decomposition, quality checks, and implementation |
 | `fe-migration-angular-stencil` | front-end | Migrate Angular widgets to StencilJS MFEs with structured analysis, planning, and implementation |
-| `initiative` | orchestration | Cross-workspace initiative planning — domain impact analysis, contract design, and workspace spec generation |
+| `multi-workspace` | orchestration | Cross-workspace planning — domain impact analysis, contract design, and workspace spec generation |
 
 ## Initiatives
 
@@ -280,13 +281,21 @@ fluid-flow-ai/
     conflict-detection/         -- pre-construction conflict detection (v1.0)
 
   workflow/
+    fast-track/                 -- streamlined feature development (v1.0)
+      wf-fast-track.md
+      knowledge-core/           -- constitution template
+      templates/                -- spec, plan, tasks, checklist templates
+      scripts/                  -- bash and powershell helper scripts
+      1-inception/              -- 4 steps: specify, clarify, plan, tasks
+      2-quality/                -- 2 steps: checklist, analyze
+      3-construction/           -- 1 step: implement
     fe-migration-angular-stencil/
       wf-fe-migration-angular-stencil.md
       1-inception/              -- 6 steps
       2-construction/           -- 5 steps
       3-qa/                     -- 2 steps
-    initiative/                 -- cross-workspace initiative planning (v1.0)
-      wf-initiative.md
+    multi-workspace/            -- cross-workspace planning (v1.0)
+      wf-multi-workspace.md
       1-scope/                  -- domain impact analysis
       2-decompose/              -- per-workspace scope
       3-contracts/              -- cross-workspace contract design
