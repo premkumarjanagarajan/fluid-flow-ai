@@ -78,26 +78,26 @@ During workspace setup (Step 3 of the workspace-setup skill), the user is asked:
 ```
 Where should reverse engineering artifacts be stored?
 
-A) Both — per-repo artifacts in each repo + combined in workspace (default)
-B) Workspace only — all RE artifacts centralised in the workspace repo
+A) Full — per-repo RE (11 artifacts per repo) + combined architecture in workspace (default)
+B) Combined only — just the combined architecture view saved in the workspace repo
 ```
 
-### 4.2 Output Modes
+### 4.2 RE Modes
 
-| Mode | Per-repo artifacts | Combined artifacts |
-|------|-------------------|-------------------|
-| `both` (default) | `{repo}/reverse-engineering/` (inside each repo) | `reverse-engineering/` in workspace |
-| `workspace-only` | `reverse-engineering/{repo-name}/` (in workspace repo) | `reverse-engineering/` in workspace |
+| Mode | Per-repo RE | Combined RE | Files in target repos |
+|------|------------|------------|----------------------|
+| `full` (default) | Yes — 11 artifacts per repo via subagents | Yes — reads per-repo artifacts | Yes |
+| `combined-only` | No — skipped entirely | Yes — reads codebases directly | No |
 
-In `workspace-only` mode, **no files are written inside target repos**. All RE output is centralised.
+In `combined-only` mode, per-repo RE subagents are not launched at all. The combined architecture subagent reads each repo's codebase directly (source code, config files, package manifests, API definitions) to produce the combined cross-repo architecture view. This is faster and writes nothing to target repos.
 
 ### 4.3 Persistence
 
-The choice is stored in `ff-workspace.yaml` as the `re_output` field (`both` or `workspace-only`). Future RE runs read this field and skip the prompt. The field is preserved across `ff-workspace.yaml` regeneration (human-edited field).
+The choice is stored in `ff-workspace.yaml` as the `re_mode` field (`full` or `combined-only`). Future RE runs read this field and skip the prompt. The field is preserved across `ff-workspace.yaml` regeneration (human-edited field).
 
 ### 4.4 Impact on Context Loading
 
-The context loading strategy in `knowledge-base-core/manifest.md` § Workspace Artifacts is unaffected — it references per-repo RE artifacts generically. The RE skill resolves the actual path based on `re_output` mode. Implementation subagents receive the correct path regardless of mode.
+In `combined-only` mode, per-repo RE artifacts do not exist. The context loading strategy in `knowledge-base-core/manifest.md` § Workspace Artifacts still works — steps that need per-repo detail will use `combined-architecture.md` as the primary source. Implementation subagents in construction mode will read the target repo's codebase directly (same as the combined-only RE subagent does).
 
 ---
 

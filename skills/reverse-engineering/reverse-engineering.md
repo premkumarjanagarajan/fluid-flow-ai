@@ -46,24 +46,24 @@ Each subagent type has a strictly scoped context:
 
 This follows the workspace loading strategy in `knowledge-base-core/manifest.md` § Workspace Artifacts.
 
-### RE Output Mode
+### RE Mode
 
-If `ff-workspace.yaml` exists and has an `re_output` field, use that value. Otherwise default to `both`.
+If `ff-workspace.yaml` exists and has an `re_mode` field, use that value. Otherwise default to `full`.
 
-| Mode | Per-repo output path | Combined output path |
-|------|---------------------|---------------------|
-| `both` | `{repo}/reverse-engineering/` (inside each repo) | `reverse-engineering/` in workspace repo |
-| `workspace-only` | `reverse-engineering/{repo-name}/` (in workspace repo) | `reverse-engineering/` in workspace repo |
+| Mode | Per-repo RE | Combined RE | Files in target repos |
+|------|------------|------------|----------------------|
+| `full` | Yes — 11 artifacts per repo | Yes — reads per-repo artifacts | Yes |
+| `combined-only` | No — skipped entirely | Yes — reads codebases directly | No |
 
-In `workspace-only` mode, no files are written inside target repos. All RE artifacts are centralised in the workspace.
+**If `combined-only`**: skip Steps 2 and 3 entirely. Jump to Step 4 (Combined Workspace Artifacts) where the subagent reads each repo's codebase directly instead of pre-produced per-repo artifacts.
 
-For each repository discovered in Step 1, launch **one subagent** (in parallel where possible) with a prompt that includes:
+For each repository discovered in Step 1 (**`full` mode only**), launch **one subagent** (in parallel where possible) with a prompt that includes:
 
 1. The repository path
 2. The domain indicators detected
 3. The full artifact template list (from Step 3)
 4. The templates path: `skills/reverse-engineering/templates/`
-5. The output path: `{repo}/reverse-engineering/` (mode `both`) or `reverse-engineering/{repo-name}/` in workspace (mode `workspace-only`)
+5. The output path: `{repo}/reverse-engineering/`
 6. The current ISO 8601 timestamp and workspace path (for the timestamp file)
 
 The subagent prompt MUST instruct the agent to:
@@ -106,7 +106,12 @@ After all per-repo subagents complete, launch **one additional subagent** to pro
 4. The output path: `reverse-engineering/` in the Fluid Flow Workspace repo
 
 The subagent prompt MUST instruct the agent to:
-- Read per-repo `architecture.md`, `dependencies.md`, `c4-architecture.md`, and `api-documentation.md` from each repo
+
+**If `full` mode**: read per-repo `architecture.md`, `dependencies.md`, `c4-architecture.md`, and `api-documentation.md` from each repo's `reverse-engineering/` directory.
+
+**If `combined-only` mode**: read each repo's codebase directly — scan source code, config files, package manifests, API definitions, and directory structure to understand architecture and dependencies. This replaces the pre-produced per-repo artifacts.
+
+In both modes:
 - Synthesise cross-repo relationships: inter-repo data flows (Kafka topics, REST API calls, shared library dependencies)
 - Produce `combined-architecture.md` using the template — system-level architecture with Mermaid diagrams showing all repos and their relationships
 - Produce `combined-c4.md` using the template — C4 model where containers = repos

@@ -41,49 +41,49 @@ Wait for user approval via `primitives/human-gate.md`.
 
 Load `skills/shell-detection/shell-detection.md`. Store `SHELL_TYPE`. Same as Stage 0.
 
-### 3. RE Output Location
+### 3. RE Mode
 
-Before running RE, ask the user where per-repo artifacts should be stored:
+Before running RE, ask the user how much reverse engineering to perform:
 
 ```
 ───────────────────────────────────────────────────
-  WORKSPACE SETUP — RE Output Location
+  WORKSPACE SETUP — Reverse Engineering Mode
 ───────────────────────────────────────────────────
 
-  Where should reverse engineering artifacts be stored?
+  How should reverse engineering be run?
 
-  A) Both — per-repo artifacts in each repo +
-     combined architecture in workspace (default)
-     Best when you have write access to all repos.
+  A) Full — per-repo RE (11 artifacts per repo)
+     + combined architecture in workspace (default)
+     Gives the deepest analysis per repo. Writes
+     artifacts into each repo's directory.
 
-  B) Workspace only — all RE artifacts centralised
-     in the workspace repo
-     Best when you don't own the target repos or
-     want to keep them clean.
+  B) Combined only — just the combined architecture
+     view saved in the workspace repo
+     Faster. No per-repo artifacts. The AI reads
+     each repo's code directly to produce the
+     combined cross-repo architecture view.
 
 ───────────────────────────────────────────────────
 ```
 
-Store the choice as `RE_OUTPUT_MODE` (`both` or `workspace-only`).
+Store the choice as `RE_MODE` (`full` or `combined-only`).
 
-If `ff-workspace.yaml` already exists and has an `re_output` field, use that value as default and skip the prompt.
+If `ff-workspace.yaml` already exists and has an `re_mode` field, use that value as default and skip the prompt.
 
 ### 4. Run RE Across All Repos
 
-Load `skills/reverse-engineering/reverse-engineering.md` with `RE_OUTPUT_MODE`.
+Load `skills/reverse-engineering/reverse-engineering.md` with `RE_MODE`.
 
-This runs the full RE flow:
-
-**If `RE_OUTPUT_MODE = both`** (default):
+**If `RE_MODE = full`** (default):
 - Per-repo subagents produce 11 artifacts each, written to `{repo}/reverse-engineering/`
-- Combined architecture written to `reverse-engineering/` in the workspace repo
+- After all per-repo subagents complete, the combined architecture subagent reads the per-repo artifacts and produces combined views in the workspace
 
-**If `RE_OUTPUT_MODE = workspace-only`**:
-- Per-repo subagents produce 11 artifacts each, written to `reverse-engineering/{repo-name}/` **in the workspace repo**
-- Combined architecture written to `reverse-engineering/` in the workspace repo
-- No files are written inside the target repos
+**If `RE_MODE = combined-only`**:
+- Skip per-repo RE subagents entirely
+- Launch the combined architecture subagent directly — it reads each repo's codebase (not pre-produced artifacts) and produces only the combined workspace-level views
+- No files are written inside any target repos
 
-In both modes, the combined architecture subagent produces:
+In both modes, the combined output in the workspace repo includes:
 - `reverse-engineering/combined-architecture.md`
 - `reverse-engineering/combined-c4.md`
 - `reverse-engineering/reverse-engineering-timestamp.md`
@@ -94,7 +94,7 @@ Wait for user approval of RE results.
 
 From RE findings, generate `ff-workspace.yaml` in the workspace root.
 
-Include `re_output: both` or `re_output: workspace-only` based on the user's choice in Step 3. This persists the preference for future RE runs.
+Include `re_mode: full` or `re_mode: combined-only` based on the user's choice in Step 3. This persists the preference for future RE runs.
 
 **Repositories** — for each repo:
 - `name`: folder name from `.code-workspace`

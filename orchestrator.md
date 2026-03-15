@@ -122,10 +122,9 @@ Load `skills/shell-detection/shell-detection.md`. Store `SHELL_TYPE`.
 Load `skills/reverse-engineering/reverse-engineering.md`. **Wait for user approval.**
 
 If `ff-workspace.yaml` exists (Fluid Flow Workspace mode):
-- RE output mode is read from `ff-workspace.yaml` field `re_output` (default: `both`)
-- If `both`: per-repo RE artifacts written to `{repo}/reverse-engineering/`, combined in workspace
-- If `workspace-only`: all RE artifacts written to `reverse-engineering/{repo-name}/` in workspace repo — target repos are not modified
-- Combined architecture artifacts are written to `reverse-engineering/` in the workspace repo
+- RE mode is read from `ff-workspace.yaml` field `re_mode` (default: `full`)
+- If `full`: per-repo RE subagents produce 11 artifacts each in `{repo}/reverse-engineering/`, then combined architecture in workspace
+- If `combined-only`: skip per-repo RE entirely — combined architecture subagent reads codebases directly and writes only to `reverse-engineering/` in workspace. No files written to target repos.
 - Validate and update `ff-workspace.yaml` from RE findings
 
 If no `ff-workspace.yaml` (single-repo mode):
