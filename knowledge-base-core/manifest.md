@@ -47,3 +47,31 @@ Load these when the change affects security, data handling, identity, or infrast
 Load when the change affects infrastructure, performance, or Significant Energy Use:
 
 - Load `quality/iso50001-energy-management.md` -- ISO 50001 energy management
+
+---
+
+## Workspace Artifacts
+
+These rules apply only when `ff-workspace.yaml` exists (Fluid Flow Workspace mode). They follow the same principle as KB tiered loading: **load the map, not the territory**.
+
+### Always Load
+- Load `ff-workspace.yaml` at Stage 1 (Workspace Detection) — repo list, teams, shared flags
+
+### On-Demand: Cross-Repo Planning
+- Load `reverse-engineering/combined-architecture.md` during planning phases that may produce `target-repos.md`
+- Load `reverse-engineering/incident-learnings.md` filtered to target repos during planning and implementation
+
+### On-Demand: Conflict Detection
+- Load `reverse-engineering/combined-architecture.md` in conflict detection subagent
+- Load all active `initiatives/*/target-repos.md` in conflict detection subagent
+
+### On-Demand: Per-Repo Implementation
+- Load `{repo}/reverse-engineering/` artifacts ONLY for the repo being implemented
+- Load `reverse-engineering/incident-learnings.md` filtered to that repo
+
+### Never Load Proactively
+- `reverse-engineering/combined-c4.md` — only on explicit architectural queries or during RE
+- Per-repo RE for repos not in the current initiative's `target-repos.md`
+- Per-repo RE for ALL repos simultaneously (use `combined-architecture.md` for the overview)
+- `conflict-report.md` from other initiatives — only the current initiative's report matters
+- `ff-workspace.yaml` `also_in` details for non-shared repos — only relevant during conflict detection on shared repos

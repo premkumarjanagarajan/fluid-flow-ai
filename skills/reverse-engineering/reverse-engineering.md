@@ -1,6 +1,6 @@
 # Reverse Engineering
 
-Analyze existing codebase(s) in the workspace and generate design artifacts per repository.
+Analyze existing codebase(s) in the workspace and generate design artifacts per repository. In Fluid Flow Workspace mode, also produce combined workspace-level architecture views and generate/update `ff-workspace.yaml`.
 
 ## When to Run
 
@@ -34,6 +34,17 @@ A repository can match multiple domains.
 > **Critical**: Each repository MUST be analyzed by a **single dedicated subagent** that performs
 > both analysis and artifact generation within its own context window. This prevents the parent
 > agent's context from overflowing with large analysis payloads.
+
+#### Context Isolation
+
+Each subagent type has a strictly scoped context:
+
+| Subagent | What it gets | What it does NOT get |
+|----------|-------------|---------------------|
+| RE per-repo subagent | One repo's codebase | Other repos, combined architecture, ff-workspace.yaml |
+| RE combined-architecture subagent | All per-repo `architecture.md`, `dependencies.md`, `c4-architecture.md`, `api-documentation.md` | Full codebases, knowledge-base-core |
+
+This follows the workspace loading strategy in `knowledge-base-core/manifest.md` § Workspace Artifacts.
 
 For each repository discovered in Step 1, launch **one subagent** (in parallel where possible) with a prompt that includes:
 
@@ -72,7 +83,44 @@ Each subagent populates these templates from `skills/reverse-engineering/templat
 
 Last, the subagent generates `reverse-engineering-timestamp.md` to mark completion.
 
-### 4. Present Summary
+### 4. Combined Workspace Artifacts (Workspace Mode Only)
+
+**Skip if**: no `ff-workspace.yaml` exists (single-repo mode).
+
+After all per-repo subagents complete, launch **one additional subagent** to produce combined workspace-level artifacts. This subagent receives:
+
+1. The workspace repo path
+2. The list of all repos and their `reverse-engineering/` paths
+3. The combined artifact templates from `skills/reverse-engineering/templates/`
+4. The output path: `reverse-engineering/` in the Fluid Flow Workspace repo
+
+The subagent prompt MUST instruct the agent to:
+- Read per-repo `architecture.md`, `dependencies.md`, `c4-architecture.md`, and `api-documentation.md` from each repo
+- Synthesise cross-repo relationships: inter-repo data flows (Kafka topics, REST API calls, shared library dependencies)
+- Produce `combined-architecture.md` using the template — system-level architecture with Mermaid diagrams showing all repos and their relationships
+- Produce `combined-c4.md` using the template — C4 model where containers = repos
+- Write `reverse-engineering-timestamp.md` in the workspace `reverse-engineering/` directory
+- **Return ONLY a short status summary**: repo count, relationship count, artifacts written
+
+**Do NOT** ask the subagent to return full analysis. All findings go into the artifact files.
+
+### 5. ff-workspace.yaml Generation (Workspace Mode Only)
+
+**Skip if**: no `.code-workspace` file exists or single-repo mode.
+
+After combined artifacts are produced, generate or update `ff-workspace.yaml` from RE findings:
+
+1. **Repos**: for each repo, extract name, path, type (application/shared/library), language(s), description (from `business-overview.md`)
+2. **Teams**: from CODEOWNERS files or GitHub API if available
+3. **Governance**: default flags based on knowledge-base-core presence (e.g. `iso27001: true` if `security/iso27001-compliance.md` exists)
+
+**On incremental RE updates** (ff-workspace.yaml already exists):
+- Compare discovered state against existing `ff-workspace.yaml`
+- Propose updates for changed repos (new repos, removed repos, language/type changes)
+- **Preserve human-edited fields**: `change_coordination`, team `slack` channels, `governance` flags
+- Present proposed changes via human-gate before writing
+
+### 6. Present Summary
 
 Collect the short status lines from each subagent. Present a consolidated summary table:
 
@@ -85,6 +133,18 @@ Collect the short status lines from each subagent. Present a consolidated summar
 │ {repo}       │ {domain} │ {n}   │ 11/11 ✓       │
 │ ...          │ ...      │ ...   │ ...           │
 └──────────────┴──────────┴───────┴───────────────┘
+```
+
+If workspace mode, also report:
+
+```
+┌─────────────────────────────────────────────────┐
+│  COMBINED ARTIFACTS                             │
+├─────────────────────────┬───────────────────────┤
+│ combined-architecture   │ ✓                     │
+│ combined-c4             │ ✓                     │
+│ ff-workspace.yaml       │ Generated / Updated   │
+└─────────────────────────┴───────────────────────┘
 ```
 
 **Wait for user approval** before proceeding.

@@ -4,7 +4,7 @@ Display:
 
 ```
 ═══════════════════════════════════════════════════
-  FLUID-FLOW AI v0.9 WORKFLOW ACTIVATED
+  FLUID-FLOW AI v1.0 WORKFLOW ACTIVATED
   All development follows the unified lifecycle.
   Reading workflow instructions now...
 ═══════════════════════════════════════════════════
@@ -33,13 +33,47 @@ Display:
 
 1. Read all `workflow/*/wf-*.md` frontmatter to know available workflows
 2. Check `initiatives/` for any existing initiative folders with incomplete `metadata/state.md`
-3. Based on the user's prompt, classify the intent:
+3. Check for `ff-workspace.yaml` in the workspace root
+4. Based on the user's prompt, classify the intent:
 
 | Intent | Criteria | Action |
 |--------|----------|--------|
 | **Question** | No development needed | Answer directly. Stop here. |
 | **Continue** | Matches an existing incomplete initiative | Confirm with user, run Stages 0-2, then resume from last completed stage in its `metadata/state.md` |
 | **New** | Development request, no matching initiative | Run all stages (0-6) |
+| **Workspace Setup** | No `ff-workspace.yaml` found AND workspace has multiple repos, OR user explicitly requests workspace setup | Load `skills/workspace-setup/workspace-setup.md` |
+
+### Multi-Repo Detection Prompt
+
+When multiple repos are detected in the workspace without an `ff-workspace.yaml`, present this prompt before proceeding to Stages 0-6:
+
+```
+══════════════════════════════════════════════════════════
+  MULTI-REPO WORKSPACE DETECTED
+══════════════════════════════════════════════════════════
+
+  This workspace contains {N} repositories.
+  Fluid Flow can set this up as a Fluid Flow Workspace,
+  which gives you:
+
+  • Unified codebase awareness — the AI sees architecture,
+    dependencies, and contracts across all {N} repos
+  • Cross-repo initiative specs — plan features that span
+    multiple repos in a single specification
+  • Conflict detection — catch contract and file conflicts
+    between parallel initiatives before construction
+  • Single version of Fluid Flow — no copies in each repo,
+    one source of truth for workflows and governance
+
+  A) Set up as Fluid Flow Workspace (recommended)
+  B) Continue with single-repo mode
+
+══════════════════════════════════════════════════════════
+```
+
+If the user selects **B**, proceed with single-repo behaviour (standard Stages 0-6). No disruption.
+
+If the user selects **A**, load `skills/workspace-setup/workspace-setup.md`.
 
 ---
 
@@ -51,12 +85,32 @@ Load `skills/shell-detection/shell-detection.md`. Store `SHELL_TYPE`.
 
 1. Scan for source code (`src/`, `package.json`, `*.csproj`, `go.mod`, etc.)
 2. Classify: **greenfield** or **brownfield**
+3. Check for `ff-workspace.yaml` in the workspace root:
+   - If found: read it, store `WORKSPACE_NAME`, `REPO_LIST`, and `SHARED_REPOS` (repos with `shared: true`) for the session
+   - **Do NOT** load any RE artifacts, combined architecture, or incident learnings at this stage
+   - Report in workspace status:
+
+```
+  Workspace: {WORKSPACE_NAME}
+  Repos: {count} repositories
+  Shared repos: {list of shared: true repos, if any}
+```
+
+> **Context loading rule**: `ff-workspace.yaml` is the map — always loaded here. Everything else is territory — loaded on demand. See `knowledge-base-core/manifest.md` § Workspace Artifacts.
 
 ## Stage 2: Reverse Engineering (brownfield, run-once)
 
 **Skip if**: greenfield or `reverse-engineering/reverse-engineering-timestamp.md` exists.
 
 Load `skills/reverse-engineering/reverse-engineering.md`. **Wait for user approval.**
+
+If `ff-workspace.yaml` exists (Fluid Flow Workspace mode):
+- Per-repo RE artifacts are written to `{repo}/reverse-engineering/` (unchanged)
+- Combined architecture artifacts are written to `reverse-engineering/` in the workspace repo
+- Validate and update `ff-workspace.yaml` from RE findings
+
+If no `ff-workspace.yaml` (single-repo mode):
+- Standard v0.9 behaviour — per-repo artifacts only
 
 **Continue stops here** -- resume the ongoing initiative from its last completed stage.
 
@@ -106,11 +160,48 @@ Present workflows grouped by source. Suggest best match with `-->`. **Wait for u
 3. **After every step completes**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`
 4. **After the last step of each phase** (phase transition or workflow end): additionally run `primitives/kb-compliance.md`
 
+### Context Loading During Workflow (Workspace Mode)
+
+When entering a workflow's planning phase:
+
+1. If the workflow may produce `target-repos.md` (cross-repo scope):
+   a. Load `reverse-engineering/combined-architecture.md` into the planning step's context
+   b. Load `reverse-engineering/incident-learnings.md` filtered to repos mentioned in the spec/request
+2. After planning produces `target-repos.md`:
+   a. Load `target-repos.md`
+   b. Load conflict detection skill (which loads `combined-architecture.md` in its own context)
+3. During construction, for each target repo:
+   a. Subagent loads ONLY that repo's RE artifacts from `{repo}/reverse-engineering/`
+   b. Subagent loads `incident-learnings.md` filtered to that repo
+   c. Subagent does NOT load other repos' RE artifacts
+
+### Conflict Detection Hook (Workspace Mode)
+
+After the planning phase completes, if `initiatives/{INITIATIVE_NAME}/target-repos.md` exists:
+
+1. Load `skills/conflict-detection/conflict-detection.md`
+2. Run conflict detection against all active initiatives
+3. Present `conflict-report.md` via `primitives/human-gate.md`
+4. For BLOCKING or CROSS-CONTEXT severity: the human gate **MUST NOT** be skipped
+5. If approved and target repos need branches: create feature branches in target repos (lazy branching — same branch name across all repos)
+
 ## Stage 6: Completion
+
+### Single-Repo Mode
 
 1. **Commit**: present summary + conventional commit --> **wait for approval** --> commit
 2. **PR**: push branch, create PR, present link
-3. **Risk Report**: generate at `initiatives/{BRANCH_NAME}/operations/risk-report.md`, attach to PR
+3. **Risk Report**: generate at `initiatives/{INITIATIVE_NAME}/operations/risk-report.md`, attach to PR
+
+### Multi-Repo Mode (when `target-repos.md` exists)
+
+1. **Commit workspace**: commit initiative artifacts and RE updates in the Fluid Flow Workspace repo
+2. **Per-repo commits**: for each target repo in dependency order from `target-repos.md`:
+   a. Stage and commit changes
+   b. Push branch
+   c. Create PR referencing the workspace initiative spec
+3. **Risk Report**: generate risk report covering all repos at `initiatives/{INITIATIVE_NAME}/operations/risk-report.md`
+4. **Attach**: attach risk report to all PRs
 
 ---
 
