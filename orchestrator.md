@@ -227,3 +227,72 @@ After the planning phase completes, if `initiatives/{INITIATIVE_NAME}/target-rep
 - Never auto-commit. Never skip stages. Wait for user approval at gates.
 - **After every step**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`.
 - **After the last step of each phase** (phase transition): additionally run `primitives/kb-compliance.md`.
+
+---
+
+## Status Prefix
+
+Every response from the orchestrator or a workflow step MUST begin with a compact status prefix:
+
+```
+[FF · {workspace-or-repo} · {location}]
+```
+
+| Situation | Example |
+|-----------|---------|
+| Workflow step | `[FF · sportsbook · inception/specify]` |
+| Orchestrator stage | `[FF · sportsbook · stage:workspace-detection]` |
+| Workspace setup | `[FF · setup · workspace-setup]` |
+| Single-repo mode | `[FF · sportsbook-api · inception/specify]` |
+| Question (no Fluid Flow) | No prefix |
+
+- `FF` identifies the response as Fluid Flow-orchestrated
+- Workspace name from `ff-workspace.yaml`, or repo name in single-repo mode
+- Current phase/step or stage name
+- When triage classifies as **Question**: NO prefix — this signals Fluid Flow is not active
+
+---
+
+## Context Loading Announcements
+
+When Fluid Flow loads workspace artifacts into context, announce what was loaded:
+
+```
+  ┌ CONTEXT LOADED ────────────────────────
+  │ {filename}                     ~{N}K tokens
+  │ {filename} ({detail})          ~{N}K tokens
+  └────────────────────────────────────────
+```
+
+Token estimation: `tokens ≈ file_bytes / 4` (markdown/English), `≈ file_bytes / 3` (code). Label with `~`.
+
+| Loading Event | Announce? |
+|---------------|-----------|
+| `ff-workspace.yaml` at Stage 1 | Yes |
+| KB always-load files at step start | No (v0.9 behaviour, expected) |
+| `combined-architecture.md` during planning | Yes |
+| `incident-learnings.md` (filtered) | Yes |
+| `target-repos.md` at conflict detection | Yes |
+| Per-repo RE in implementation subagent | No (subagent context, announced via subagent launch) |
+| `domain-catalog.yaml` in multi-workspace scope | Yes (if large) |
+
+---
+
+## Context-Heavy Step Warning
+
+Before a step that loads significant context, display a heads-up:
+
+```
+  ┌ NOTE ──────────────────────────────────
+  │ This step loads cross-repo architecture
+  │ context. Expect context usage to increase.
+  └────────────────────────────────────────
+```
+
+| Step | Warn? |
+|------|-------|
+| Planning phase loading combined-architecture.md | Yes |
+| Conflict detection with 5+ active initiatives | Yes |
+| Implementation in repo with extensive RE | No (subagent) |
+| Multi-workspace scope reading large domain-catalog.yaml | Yes |
+| KB compliance subagent | No (own context) |

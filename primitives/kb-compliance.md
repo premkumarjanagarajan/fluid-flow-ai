@@ -10,6 +10,18 @@ After the **last step of each phase** (i.e. on phase transitions and workflow en
 
 Launch a **dedicated subagent** with its own context window. The subagent loads the entire knowledge base, reviews the step output, and returns a short verdict. The main conversation never loads the full KB -- only the subagent does.
 
+### Subagent Announcement
+
+Before launching, display:
+
+```
+───────────────────────────────────────
+  SUBAGENT LAUNCHED
+  Type: kb-compliance
+  Purpose: Phase {N} boundary check
+───────────────────────────────────────
+```
+
 ## Subagent Prompt
 
 The parent agent must launch a single subagent with the following inputs:
@@ -66,9 +78,31 @@ Recommendations:
 
 ## On PASS
 
+Display:
+
+```
+───────────────────────────────────────
+  SUBAGENT COMPLETE
+  Type: kb-compliance
+  Result: PASS
+───────────────────────────────────────
+```
+
 Proceed to the next step. No action required.
 
 ## On FAIL
+
+Display:
+
+```
+───────────────────────────────────────
+  SUBAGENT COMPLETE
+  Type: kb-compliance
+  Result: FAIL — {N} violations found
+───────────────────────────────────────
+```
+
+Then present the detailed violations as per the verdict format below.
 
 1. The main agent MUST address every listed violation before proceeding
 2. After remediation, re-run this primitive to confirm compliance

@@ -24,6 +24,28 @@ Conflict detection runs as a subagent with a focused context window:
 
 This follows the workspace loading strategy in `knowledge-base-core/manifest.md` § Workspace Artifacts.
 
+## Subagent Announcement
+
+Before running, announce:
+
+```
+───────────────────────────────────────
+  SUBAGENT LAUNCHED
+  Type: conflict-detection
+  Purpose: Check active initiatives for conflicts
+───────────────────────────────────────
+```
+
+On completion, announce:
+
+```
+───────────────────────────────────────
+  SUBAGENT COMPLETE
+  Type: conflict-detection
+  Result: {CLEAR / N conflicts found}
+───────────────────────────────────────
+```
+
 ## Algorithm
 
 ### 1. Load Context

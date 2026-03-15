@@ -66,6 +66,19 @@ For each repository discovered in Step 1 (**`full` mode only**), launch **one su
 5. The output path: `{repo}/reverse-engineering/`
 6. The current ISO 8601 timestamp and workspace path (for the timestamp file)
 
+Before launching, announce:
+
+```
+───────────────────────────────────────
+  SUBAGENTS LAUNCHED (parallel)
+  Type: reverse-engineering
+  Targets: {repo1}, {repo2}, ...
+  Purpose: Per-repo codebase analysis ({N} repos)
+───────────────────────────────────────
+```
+
+For a single repo, use `SUBAGENT LAUNCHED` (singular) with `Target:` instead.
+
 The subagent prompt MUST instruct the agent to:
 - Explore the repository (package.json files, config files, source code, directory structure)
 - Perform all analysis internally (multi-package discovery, business context, architecture mapping, code analysis)
@@ -74,6 +87,17 @@ The subagent prompt MUST instruct the agent to:
 - **Return ONLY a short status summary** (max 5 lines): repo name, domain, package count, and confirmation of files written
 
 **Do NOT** ask the subagent to return the full analysis. All detailed findings go into the artifact files, not the return payload.
+
+When each subagent completes, announce:
+
+```
+───────────────────────────────────────
+  SUBAGENT COMPLETE
+  Type: reverse-engineering
+  Target: {repo}
+  Result: 11/11 artifacts written
+───────────────────────────────────────
+```
 
 ### 3. Artifact Templates
 
@@ -98,7 +122,19 @@ Last, the subagent generates `reverse-engineering-timestamp.md` to mark completi
 
 **Skip if**: no `ff-workspace.yaml` exists (single-repo mode).
 
-After all per-repo subagents complete, launch **one additional subagent** to produce combined workspace-level artifacts. This subagent receives:
+After all per-repo subagents complete, launch **one additional subagent** to produce combined workspace-level artifacts.
+
+Announce:
+
+```
+───────────────────────────────────────
+  SUBAGENT LAUNCHED
+  Type: combined-architecture
+  Purpose: Cross-repo architecture synthesis
+───────────────────────────────────────
+```
+
+This subagent receives:
 
 1. The workspace repo path
 2. The list of all repos and their `reverse-engineering/` paths
