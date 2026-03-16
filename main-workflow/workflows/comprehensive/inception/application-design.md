@@ -65,15 +65,12 @@ AI must escalate and invoke the ADR Integrity Gate.
 - Ensure plan covers all design aspects
 
 ### 6. Request User Input
-- **MANDATORY**: Offer the user the choice between **Answer Manually** or **AI Best Judgement** mode (see `../memory/common/question-format-guide.md` for full details):
-  - **Answer Manually**: Ask user to fill [Answer]: tags directly in the plan document
-  - **AI Best Judgement**: AI fills all [Answer]: tags with best judgement, adds [Reasoning]: for each, flags low-confidence answers; user reviews and overrides as needed
+- Ask user to fill [Answer]: tags directly in the plan document
 - Emphasize importance of design decisions
-- Provide clear instructions on completing the [Answer]: tags (or how to review AI-generated answers)
+- Provide clear instructions on completing the [Answer]: tags
 
 ### 7. Collect Answers
-- **Answer Manually**: Wait for user to provide answers to all questions using [Answer]: tags in the document
-- **AI Best Judgement**: Wait for user to confirm review of AI-generated answers is complete
+- Wait for user to provide answers to all questions using [Answer]: tags in the document
 - Do not proceed until ALL [Answer]: tags are completed
 - Review the document to ensure no [Answer]: tags are left blank
 

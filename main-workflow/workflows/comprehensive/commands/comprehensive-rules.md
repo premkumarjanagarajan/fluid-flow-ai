@@ -91,7 +91,6 @@ Load when the project uses Coralogix for observability, monitoring, or log manag
 - Multiple choice format (A, B, C, D, E options)
 - [Answer]: tag usage
 - Answer validation and ambiguity resolution
-- **AI Best Judgement mode**: For every question iteration, offer the user the choice between answering manually or letting the AI use its best judgement. See the "AI Best Judgement Mode" section in the question format guide for full details.
 
 ## MANDATORY: Per-Phase Analytics Updates
 **CRITICAL**: Update `main-workflow/analytics/{BRANCH_NAME}.md` after every stage completes (executed or skipped).

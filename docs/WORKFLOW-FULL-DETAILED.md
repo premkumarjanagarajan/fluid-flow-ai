@@ -895,15 +895,14 @@ flowchart TD
     K --> L
     L --> M["Generate clarifying questions"]
     M --> N["Write requirement-verification-questions.md"]
-    N --> O["Offer Manual or AI Best Judgement"]
-    O --> P["Collect and resolve all answers"]
-    P --> Q["Generate requirements.md"]
-    Q --> R["Update state.md"]
-    R --> S["WAIT for approval"]
-    S --> T["Record analytics completion"]
+    N --> O["Collect and resolve all answers"]
+    O --> P["Generate requirements.md"]
+    P --> Q["Update state.md"]
+    Q --> R["WAIT for approval"]
+    R --> S["Record analytics completion"]
 
     style H fill:#FFD54F,stroke:#F57F17
-    style S fill:#EF5350,stroke:#B71C1C,stroke-width:2px
+    style R fill:#EF5350,stroke:#B71C1C,stroke-width:2px
 ```
 
 | Action | File Path |
@@ -956,19 +955,18 @@ flowchart TD
     C -->|No - simple/infra| D["Skip BDD Specification"]
     C -->|Yes| E["PART 1: Create BDD Plan"]
     E --> F["Generate questions<br/>(framework, organisation, granularity,<br/>language, data, tagging, edge cases)"]
-    F --> G["Offer Manual or AI Best Judgement"]
-    G --> H["Collect and resolve all answers"]
-    H --> I["WAIT for plan approval"]
-    I --> J["PART 2: Load approved plan"]
-    J --> K["Generate .feature files<br/>(Gherkin scenarios with story traceability)"]
-    K --> L["Generate bdd-strategy.md"]
-    L --> M["Generate step-catalogue.md"]
-    M --> N["WAIT for scenario approval"]
-    N --> O["Update state.md + analytics"]
+    F --> G["Collect and resolve all answers"]
+    G --> H["WAIT for plan approval"]
+    H --> I["PART 2: Load approved plan"]
+    I --> J["Generate .feature files<br/>(Gherkin scenarios with story traceability)"]
+    J --> K["Generate bdd-strategy.md"]
+    K --> L["Generate step-catalogue.md"]
+    L --> M["WAIT for scenario approval"]
+    M --> N["Update state.md + analytics"]
 
     style C fill:#FFD54F,stroke:#F57F17,stroke-width:2px
-    style I fill:#EF5350,stroke:#B71C1C,stroke-width:2px
-    style N fill:#EF5350,stroke:#B71C1C,stroke-width:2px
+    style H fill:#EF5350,stroke:#B71C1C,stroke-width:2px
+    style M fill:#EF5350,stroke:#B71C1C,stroke-width:2px
 ```
 
 | Action | File Path |
@@ -1104,13 +1102,12 @@ flowchart TD
 
 Each stage follows the pattern:
 1. Create plan with `[Answer]:` tags
-2. Offer Manual or AI Best Judgement mode
-3. Collect and analyze answers
-4. Resolve ambiguities with follow-ups
-5. Generate artifacts
-6. Present 2-option completion message (Request Changes / Continue)
-7. WAIT for explicit approval
-8. Update analytics
+2. Collect and analyze answers
+3. Resolve ambiguities with follow-ups
+4. Generate artifacts
+5. Present 2-option completion message (Request Changes / Continue)
+6. WAIT for explicit approval
+7. Update analytics
 
 #### Build and Test (ALWAYS)
 
