@@ -13,7 +13,7 @@ After any workflow's planning phase produces `initiatives/{INITIATIVE_NAME}/targ
 
 ## Context Isolation
 
-Conflict detection runs as the **`.github/agents/conflict-detection.agent.md`** subagent. This agent inherits the model selected in the IDE's model picker. It has a focused context window:
+Conflict detection runs as a **dedicated subagent** with its own context window:
 
 | Loaded | NOT Loaded |
 |--------|-----------|
