@@ -28,11 +28,15 @@ After every step completion, before state-manager and analytics. This is the fir
   Artifacts:
     - {list of files created or modified}
 
-  A) Approve and continue
-  B) Clarify (provide feedback)
-  C) Redo step
 ───────────────────────────────────────────────────
 ```
+
+Then present the choices using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`):
+- **A**: Approve and continue
+- **B**: Clarify (provide feedback)
+- **C**: Redo step
+
+> **Tool note**: `vscode_askQuestions` and `AskQuestion` are deferred tools. You **must** load them via `tool_search_tool_regex` before calling them.
 
 ## On Approve (A)
 

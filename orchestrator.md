@@ -85,6 +85,13 @@ When multiple repos are detected in the workspace without an `ff-workspace.yaml`
 ══════════════════════════════════════════════════════════
 ```
 
+Present choices using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`):
+- **A**: Set up as Fluid Flow Workspace
+- **B**: Continue with single-repo mode
+- **C**: Create a new Fluid Flow Workspace repo
+
+> **Tool note**: `vscode_askQuestions` and `AskQuestion` are deferred tools. You **must** load them via `tool_search_tool_regex` before calling them.
+
 If the user selects **B**, proceed with single-repo behaviour (standard Stages 0-6). No disruption.
 
 If the user selects **A**, load `skills/workspace-setup/workspace-setup.md`.
@@ -154,9 +161,12 @@ Present workflows grouped by source. Suggest best match with `-->`. **Wait for u
   Local:
     {N}. {workflow-name} -- {description}  {--> if suggested}
 
-  Reply with number or name.
 -------------------------------------------
 ```
+
+Present workflow choices using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`) with one option per workflow.
+
+> **Tool note**: `vscode_askQuestions` and `AskQuestion` are deferred tools. You **must** load them via `tool_search_tool_regex` before calling them.
 
 - **Core**: workflows shipped with this repository (`workflow/`)
 - **Local**: workflows added by the working repository (future support)

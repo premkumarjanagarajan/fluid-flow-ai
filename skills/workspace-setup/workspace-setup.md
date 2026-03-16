@@ -30,12 +30,14 @@ Present:
   {N}. {repo-name} — {path}
   ...
 
-  A) Confirm and proceed
-  B) Edit list (add/remove repos)
 ───────────────────────────────────────────────────
 ```
 
-Wait for user approval via `primitives/human-gate.md`.
+Then present a multi-choice question using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`):
+- **A**: Confirm and proceed
+- **B**: Edit list (add/remove repos)
+
+> **Tool note**: `vscode_askQuestions` and `AskQuestion` are deferred tools. You **must** load them via `tool_search_tool_regex` before calling them.
 
 ### 2. Shell Detection
 
@@ -65,6 +67,10 @@ Before running RE, ask the user how much reverse engineering to perform:
 
 ───────────────────────────────────────────────────
 ```
+
+Present using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`):
+- **A**: Full (default)
+- **B**: Combined only
 
 Store the choice as `RE_MODE` (`full` or `combined-only`).
 
@@ -139,11 +145,13 @@ Present the generated file via `primitives/human-gate.md`:
 
   The full ff-workspace.yaml is ready for review.
 
-  A) Approve and save
-  B) Request changes
-  C) Redo generation
 ───────────────────────────────────────────────────
 ```
+
+Present using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`):
+- **A**: Approve and save
+- **B**: Request changes
+- **C**: Redo generation
 
 On **A**: write `ff-workspace.yaml` to the workspace root.
 
