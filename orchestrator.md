@@ -48,7 +48,8 @@ Display:
 | **Question** | No development needed | Answer directly. Stop here. |
 | **Continue** | Matches an existing incomplete initiative | Confirm with user, run Stages 0-2, then resume from last completed stage in its `metadata/state.md` |
 | **New** | Development request, no matching initiative | Run all stages (0-6) |
-| **Workspace Setup** | No `ff-workspace.yaml` found AND workspace has multiple repos, OR user explicitly requests workspace setup | Load `skills/workspace-setup/workspace-setup.md` |
+| **Workspace Setup (multi-repo)** | No `ff-workspace.yaml` found AND workspace has multiple repos, OR user explicitly requests workspace setup | Entry A: Load `skills/workspace-setup/workspace-setup.md` |
+| **Workspace Creation (empty folder)** | No `ff-workspace.yaml` found AND no source code detected (empty or near-empty folder) AND user says "create FF workspace" or similar | Entry B: Load `skills/workspace-setup/workspace-setup.md` in catalog-guided mode |
 
 ### Multi-Repo Detection Prompt
 
@@ -105,6 +106,45 @@ If the user selects **C**, run workspace repo creation:
 5. Copy the IDE entry points (`.cursor/rules/instructions.mdc`, `.github/copilot-instructions.md`)
 6. Update the `.code-workspace` file: add `{context}-ff-workspace` as the **first** folder entry
 7. Load `skills/workspace-setup/workspace-setup.md` to complete setup (RE, ff-workspace.yaml, shared repo discovery)
+
+### Catalog-Guided Workspace Creation (Entry B)
+
+When the workspace is an empty or near-empty folder with Fluid Flow installed and the user requests workspace creation:
+
+```
+══════════════════════════════════════════════════════════
+  WORKSPACE CREATION — Catalog-Guided
+══════════════════════════════════════════════════════════
+
+  This folder has Fluid Flow installed but no source code.
+  I can help you build a workspace from the domain catalog.
+
+  Workspace name: {suggest from folder name, e.g. sbbonus}
+
+  Do you have a domain catalog to work from?
+
+  A) Yes — I have domain-catalog.yaml (provide path or
+     it's already in this folder)
+
+  B) No — I'll name the repos manually
+
+══════════════════════════════════════════════════════════
+```
+
+Present using the IDE question tool.
+
+**If A (catalog-guided):**
+1. Load `domain-catalog.yaml` and any `*-domain-catalog.yaml` files
+2. Present domains and key repos for the user to select
+3. For each selected repo: clone as sibling directory (`../{repo-name}/`)
+4. Generate `.code-workspace` file with this folder + all cloned repos
+5. Load `skills/workspace-setup/workspace-setup.md` to complete setup (RE, `ff-workspace.yaml`)
+
+**If B (manual):**
+1. Ask the user to list repos (org/repo format or URLs)
+2. Clone each as sibling directory
+3. Generate `.code-workspace` file
+4. Load `skills/workspace-setup/workspace-setup.md` to complete setup
 
 ---
 

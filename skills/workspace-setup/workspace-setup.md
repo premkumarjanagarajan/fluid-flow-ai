@@ -4,18 +4,30 @@ Bootstrap a Fluid Flow Workspace from a multi-root VS Code workspace. Generates 
 
 ## When to Run
 
-- Triage classifies intent as **Workspace Setup**: no `ff-workspace.yaml` found AND workspace has multiple repos, OR user explicitly requests workspace setup
-- Loaded by the orchestrator after the user selects **A** on the multi-repo detection prompt
+- **Entry A**: Triage classifies intent as **Workspace Setup (multi-repo)**: no `ff-workspace.yaml` found AND workspace has multiple repos
+- **Entry B**: Triage classifies intent as **Workspace Creation (empty folder)**: no `ff-workspace.yaml` found AND no source code AND user requests workspace creation
+- Loaded by the orchestrator after user selection
 
 ## Flow
 
-### 1. Read `.code-workspace`
+### 0. Determine Entry Mode
+
+Check which entry path triggered this skill:
+
+- **Entry A** (multi-repo detected): repos already exist in `.code-workspace`. Proceed to Step 1A.
+- **Entry B** (empty folder, catalog-guided): repos need to be cloned. The orchestrator has already handled domain/repo selection and cloning. Proceed to Step 1B.
+
+### 1A. Read `.code-workspace` (Entry A only)
 
 Read the `.code-workspace` file in the workspace root. Extract the repo list from the `folders` array. This is the **only time** `.code-workspace` is used — once `ff-workspace.yaml` is generated, it becomes the source of truth for all subsequent operations.
 
-Store:
+### 1B. Read Cloned Repos (Entry B only)
+
+The orchestrator has already cloned repos as sibling directories and generated a `.code-workspace` file. Read it to get the repo list. The workspace name was set by the orchestrator from the folder name or user input.
+
+For both entry modes, store:
 - `WORKSPACE_REPOS`: list of repo names and paths
-- `WORKSPACE_NAME`: derived from the `.code-workspace` filename (e.g. `sportsbook` from `sportsbook.code-workspace`)
+- `WORKSPACE_NAME`: derived from the `.code-workspace` filename or folder name
 
 Present:
 
