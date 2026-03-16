@@ -8,7 +8,7 @@ After the **last step of each phase** (i.e. on phase transitions and workflow en
 
 ## How It Works
 
-Launch a **dedicated subagent** with its own context window. The subagent loads the entire knowledge base, reviews the step output, and returns a short verdict. The main conversation never loads the full KB -- only the subagent does.
+Launch a **dedicated subagent** with its own context window. **The subagent MUST use the same model as the parent agent** — do NOT allow it to default to a smaller model. The subagent loads the entire knowledge base, reviews the step output, and returns a short verdict. The main conversation never loads the full KB -- only the subagent does.
 
 ### Subagent Announcement
 

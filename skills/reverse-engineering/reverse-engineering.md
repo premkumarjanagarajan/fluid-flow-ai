@@ -34,6 +34,8 @@ A repository can match multiple domains.
 > **Critical**: Each repository MUST be analyzed by a **single dedicated subagent** that performs
 > both analysis and artifact generation within its own context window. This prevents the parent
 > agent's context from overflowing with large analysis payloads.
+>
+> **Model rule**: ALL subagents (per-repo RE, combined-architecture) MUST use the **same model** as the parent agent. Do NOT allow subagents to default to a smaller model — explicitly specify the model parameter.
 
 #### Context Isolation
 
