@@ -219,7 +219,8 @@ Present workflow choices using the IDE question tool (Cursor: `AskQuestion` / VS
 3. Present a multi-choice question using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`):
    - **A**: `{suggested-name}` (generated)
    - **B**: Other (user provides custom name)
-4. Create the initiative folder structure:
+4. **Create a feature branch in the workspace repo** using the chosen name (e.g. `feature/{chosen-name}`). All initiative artifacts live on this branch.
+5. Create the initiative folder structure:
    ```
    initiatives/{chosen-name}/
      metadata/
@@ -227,7 +228,7 @@ Present workflow choices using the IDE question tool (Cursor: `AskQuestion` / VS
        audit.md
        analytics.md
    ```
-5. Store `INITIATIVE_NAME` for the session
+6. Store `INITIATIVE_NAME` for the session
 
 ## Stage 5: Workflow Routing
 
