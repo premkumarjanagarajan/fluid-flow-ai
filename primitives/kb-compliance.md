@@ -8,7 +8,7 @@ After the **last step of each phase** (i.e. on phase transitions and workflow en
 
 ## How It Works
 
-Launch a **dedicated subagent** with its own context window. The subagent loads the entire knowledge base, reviews the step output, and returns a short verdict. The main conversation never loads the full KB -- only the subagent does.
+Launch the **`.github/agents/kb-compliance.agent.md`** subagent. This agent file defines model selection (Claude Opus 4.5 / GPT-5.2) to prevent model downgrade. The subagent loads the entire knowledge base, reviews the step output, and returns a short verdict. The main conversation never loads the full KB -- only the subagent does.
 
 ### Subagent Announcement
 

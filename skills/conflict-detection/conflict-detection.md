@@ -13,7 +13,7 @@ After any workflow's planning phase produces `initiatives/{INITIATIVE_NAME}/targ
 
 ## Context Isolation
 
-Conflict detection runs as a subagent with a focused context window:
+Conflict detection runs as the **`.github/agents/conflict-detection.agent.md`** subagent. This agent file defines model selection (Claude Opus 4.5 / GPT-5.2) to prevent model downgrade. It has a focused context window:
 
 | Loaded | NOT Loaded |
 |--------|-----------|
