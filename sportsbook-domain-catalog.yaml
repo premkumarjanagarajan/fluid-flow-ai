@@ -1,0 +1,1081 @@
+# =============================================================================
+# BetssonGroup Sportsbook Domain — Deep-Dive Catalog
+# =============================================================================
+# Breaks the top-level "sportsbook" domain (~243 repos) into functional
+# sub-domains. Each sub-domain lists its key active repos, primary language,
+# and purpose. Archived/deprecated repos are noted but not listed as key repos.
+#
+# Agents use this catalog + GitHub MCP tools (search_code, get_file_contents,
+# list_issues, search_pull_requests) to query repos on-demand.
+#
+# Maintenance:
+#   - Review quarterly or when team structure changes
+#   - Run `org:BetssonGroup sb-<prefix>` searches to discover new repos
+#   - Cross-reference with the top-level domain-catalog.yaml
+#
+# Last updated: 2026-03-16
+# =============================================================================
+
+org: BetssonGroup
+parent_domain: sportsbook
+
+sub_domains:
+
+  # ---------------------------------------------------------------------------
+  # COUPON PLACEMENT & SETTLEMENT (Bet placement, payout, settling)
+  # ---------------------------------------------------------------------------
+  coupon-placement:
+    description: >
+      Coupon lifecycle — bet/coupon placement, coupon management,
+      bet settlement and payout, the bet-updater that persists state
+      changes, and the wallet adapter that bridges bets to the wallet.
+    name_patterns:
+      - "sb-betting-coupon*"
+      - "sb-betting-betpayout"
+      - "sb-betting-wallet*"
+      - "sb-betting-settling*"
+    estimated_repo_count: 12
+    primary_language: C#
+    key_repos:
+      - name: sb-betting-couponplacement
+        description: Core coupon/bet placement service
+        language: C#
+      - name: sb-betting-couponplacement-betupdater
+        description: Persists bet updates from coupon placement to the SB database
+        language: C#
+      - name: sb-betting-couponmanagement
+        description: Coupon management service
+        language: C#
+      - name: sb-betting-couponmanagement-database
+        description: Coupon management database (PostgreSQL)
+        language: PLpgSQL
+      - name: sb-betting-couponpayout
+        description: Coupon payout/settlement service
+        language: C#
+      - name: sb-betting-betpayout
+        description: Bet payout processing
+        language: C#
+      - name: sb-betting-settlingeventapi
+        description: Settling event API
+        language: C#
+      - name: sb-betting-walletadapter
+        description: Adapter bridging betting services to the wallet domain
+        language: C#
+      - name: sb-betting-walletrollback
+        description: Wallet rollback handling for failed bets
+        language: C#
+      - name: sb-betting-legacyupdateservice
+        description: Legacy bet update service
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # CASH-OUT (Live cash-out for in-play bets)
+  # ---------------------------------------------------------------------------
+  cashout:
+    description: >
+      Cash-out sub-domain — allows customers to settle bets early,
+      including the core service and the BetTracer cash-out push channel.
+    name_patterns:
+      - "sb-betting-cashout"
+      - "sb-bettracer2-push-cashout"
+    estimated_repo_count: 2
+    primary_language: C#
+    key_repos:
+      - name: sb-betting-cashout
+        description: Cash-out service
+        language: C#
+      - name: sb-bettracer2-push-cashout
+        description: BetTracer cash-out push notifications
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # BET HISTORY (Bet history API, processing, and storage)
+  # ---------------------------------------------------------------------------
+  bet-history:
+    description: >
+      Bet history — API for querying past bets, event processor for
+      ingesting settled bets, data reloader, customer analytics,
+      and the underlying datastore.
+    name_patterns:
+      - "sb-betting-bethistory-*"
+      - "sb-bethistory-*"
+    estimated_repo_count: 5
+    primary_language: C#
+    key_repos:
+      - name: sb-betting-bethistory-api
+        description: Bet history API (v3)
+        language: C#
+      - name: sb-betting-bethistory-processor
+        description: Bet history event processor
+        language: C#
+      - name: sb-betting-bethistory-reloader
+        description: Bet history data reloader
+        language: C#
+      - name: sb-betting-bethistory-database
+        description: Bet history datastore
+        language: TSQL
+      - name: sb-bethistory-customeranalytics-api
+        description: Bet history customer analytics
+        language: PLpgSQL
+
+  # ---------------------------------------------------------------------------
+  # BONUS SYSTEM (Sportsbook bonus logic and integration)
+  # ---------------------------------------------------------------------------
+  bonus-system:
+    description: >
+      Sportsbook bonus sub-domain — bonus rules engine, bonus integration
+      with the betting pipeline, and the bonus system database.
+    name_patterns:
+      - "sb-betting-bonus*"
+    estimated_repo_count: 3
+    primary_language: C#
+    key_repos:
+      - name: sb-betting-bonus
+        description: Betting bonus integration
+        language: C#
+      - name: sb-betting-bonussystem
+        description: Bonus system logic for betting
+        language: C#
+      - name: sb-betting-bonussystem-database
+        description: Bonus system database
+        language: TSQL
+
+  # ---------------------------------------------------------------------------
+  # CURRENCY CONVERSION (FX rates for multi-currency betting)
+  # ---------------------------------------------------------------------------
+  currency-conversion:
+    description: >
+      Currency conversion — API for converting bet amounts across
+      currencies, rate updater service, and the rates database.
+    name_patterns:
+      - "sb-betting-currencyconverter-*"
+    estimated_repo_count: 3
+    primary_language: C#
+    key_repos:
+      - name: sb-betting-currencyconverter-api
+        description: Currency conversion API for bets
+        language: C#
+      - name: sb-betting-currencyconverter-updater
+        description: Currency rate updater
+        language: C#
+      - name: sb-betting-currencyconverter-database
+        description: Currency converter rates database
+        language: TSQL
+
+  # ---------------------------------------------------------------------------
+  # BETTING CORE & SHARED (Common libs, contracts, settings, tools)
+  # ---------------------------------------------------------------------------
+  betting-core:
+    description: >
+      Shared betting foundations — contracts/DTOs, common utilities,
+      internal APIs, configuration/settings, content management,
+      operational tooling, and monitoring dashboards.
+    name_patterns:
+      - "sb-betting-common"
+      - "sb-betting-contracts"
+      - "sb-betting-utilities"
+      - "sb-betting-settings"
+      - "sb-betting-internal*"
+      - "sb-betting-content"
+      - "sb-betting-tools"
+      - "sb-betting-logging"
+      - "sb-betting-github"
+      - "sb-betting-mds"
+      - "sb-betting-splunk"
+      - "sb-betting-wiremock"
+      - "sb-betting-gpiwalletmock"
+    estimated_repo_count: 15
+    primary_language: C#
+    key_repos:
+      - name: sb-betting-contracts
+        description: Shared contracts/DTOs for betting services
+        language: C#
+      - name: sb-betting-common
+        description: Common betting utilities
+        language: C#
+      - name: sb-betting-utilities
+        description: Betting utility libraries
+        language: C#
+      - name: sb-betting-internalapi
+        description: Internal betting API
+        language: C#
+      - name: sb-betting-settings
+        description: Betting configuration/settings service
+        language: C#
+      - name: sb-betting-content
+        description: Betting content management
+        language: C#
+      - name: sb-betting-logging
+        description: Betting logging library
+        language: C#
+      - name: sb-betting-mds
+        description: Betting MDS service
+        language: C#
+      - name: sb-betting-github
+        description: Tool for auto-updating common files across repos
+        language: C#
+      - name: sb-betting-tools
+        description: Betting operational tools
+        language: TSQL
+      - name: sb-betting-splunk
+        description: Splunk dashboards for betting monitoring
+        language: PowerShell
+      - name: sb-betting-wiremock
+        description: WireMock stubs for betting testing
+        language: PowerShell
+      - name: sb-betting-gpiwalletmock
+        description: GPI wallet mock for testing
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # BETTING — CUSTOMER DOMAIN (Customer-centric betting services)
+  # ---------------------------------------------------------------------------
+  betting-customer:
+    description: >
+      Customer-facing betting services — customer management within the
+      sportsbook context, customer favourites, user domain, and the
+      customer-core persistor/query layer.
+    name_patterns:
+      - "sb-betting-customer*"
+      - "sb-customer-*"
+    estimated_repo_count: 18
+    primary_language: C#
+    key_repos:
+      - name: sb-betting-customer-management
+        description: Customer management within betting domain
+        language: C#
+      - name: sb-customer-management
+        description: B2B customer management engine
+        language: C#
+      - name: sb-customer-management-datastore
+        description: Customer database
+        language: TSQL
+      - name: sb-betting-customerfavorites
+        description: Customer favourites/preferences
+        language: C#
+      - name: sb-betting-user-domain
+        description: Betting user domain service
+        language: C#
+      - name: sb-betting-customercore-persistor
+        description: Customer core data persistor
+        language: C#
+      - name: sb-betting-customercore-queryapi
+        description: Customer core query API
+        language: C#
+      - name: sb-betting-customercore-contracts
+        description: Customer core shared contracts
+        language: C#
+      - name: sb-betting-customer-sportsbookpersistor
+        description: Persists customer data to the sportsbook database
+        language: C#
+      - name: sb-customer-handler
+        description: Customer event handler
+        language: C#
+      - name: sb-customer-request-handler
+        description: Customer request handler
+        language: C#
+      - name: sb-customer-data-processor
+        description: Customer data transfer processing
+        language: C#
+      - name: sb-customer-wallet-datastore
+        description: Customer wallet datastore
+        language: TSQL
+
+  # ---------------------------------------------------------------------------
+  # TRADING ENGINE (Odds management, trading tools, trader-facing backend)
+  # ---------------------------------------------------------------------------
+  trading:
+    description: >
+      Trading platform — odds compilation, market management, the trading
+      engine itself, and the Trading Tools (Sportsbook Manager) back-office
+      for traders.
+    name_patterns:
+      - "sb-trading*"
+      - "sb-tradingtools-*"
+    estimated_repo_count: 18
+    primary_language: C#
+    key_repos:
+      - name: sb-trading
+        description: Core sportsbook trading engine
+        language: C#
+      - name: sb-tradingtools-backend
+        description: Trading Tools (Sportsbook Manager) backend
+        language: C#
+      - name: sb-tradingtools-spa
+        description: Trading Tools single-page application (frontend)
+        language: TypeScript
+      - name: sb-tradingtools-common
+        description: Shared libraries for Trading Tools
+        language: C#
+      - name: sb-tradingtools-datastore
+        description: Trading Tools database (DbUp)
+        language: TSQL
+      - name: sb-tradingtools-sportsbook-datastore
+        description: Sportsbook datastore used by Trading Tools
+        language: TSQL
+      - name: sb-tradingtools-mocksson
+        description: Mock service for Trading Tools testing
+        language: C#
+      - name: sb-tradingtools-devtools
+        description: Developer tooling for Trading Tools
+        language: C#
+      - name: sb-tradingtools-testautomation
+        description: Trading Tools test automation
+        language: C#
+      - name: sb-tradingtools-figma-tokens
+        description: Figma design tokens for Sportsbook Manager
+      - name: sb-trendaggregator
+        description: Bet distribution and statistics calculation
+        language: C#
+      - name: sb-trendaggregator-datastore
+        description: Trend aggregator datastore
+        language: TSQL
+
+  # ---------------------------------------------------------------------------
+  # RISK MANAGEMENT (Risk scoring, warnings, fraud indicators)
+  # ---------------------------------------------------------------------------
+  risk-management:
+    description: >
+      Risk management sub-domain — risk scoring engine (v4), warning
+      manager for manual review, and risk-related adapters/watchers.
+    name_patterns:
+      - "sb-riskv4*"
+      - "sb-warningmanager-*"
+      - "sb-betting-risk*"
+    estimated_repo_count: 10
+    primary_language: C#
+    key_repos:
+      - name: sb-riskv4
+        description: Sportsbook risk management engine (v4)
+        language: C#
+      - name: sb-betting-risk
+        description: Betting risk assessment service
+        language: C#
+      - name: sb-warningmanager-manualreviewapi
+        description: Warning manager — manual review API for risk alerts
+        language: C#
+      - name: sb-warningmanager-streamgenerator
+        description: Warning event stream generator
+        language: C#
+      - name: sb-warningmanager-contracts
+        description: Warning manager shared contracts
+        language: C#
+      - name: sb-warningmanager-datastore
+        description: Warning manager database
+        language: TSQL
+      - name: sb-watcher-riskadapter
+        description: Watcher risk adapter
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # B2B INTEGRATION (Partner integration layer)
+  # ---------------------------------------------------------------------------
+  b2b-integration:
+    description: >
+      B2B partner integration — inbound/outbound integration layer,
+      event streams to partners, partner mock tools, Redis sync,
+      data transport, and B2B-specific infrastructure.
+    name_patterns:
+      - "sb-b2b-*"
+      - "terraform-aws-sb_b2b*"
+    estimated_repo_count: 30
+    primary_language: C#
+    key_repos:
+      - name: sb-b2b-integration
+        description: SB Integration Layer (Inbound, Outbound & Handler services)
+        language: C#
+      - name: sb-b2b-eventstreams
+        description: Event streaming for B2B partners
+        language: C#
+      - name: sb-b2b-techsson-wrapper
+        description: Techsson wrapper for B2B integration
+        language: C#
+      - name: sb-b2b-techsson-wrapper-datastore
+        description: Techsson wrapper datastore
+        language: TSQL
+      - name: sb-b2b-rediscopy
+        description: Redis content copy utility
+        language: C#
+      - name: sb-b2b-redissync
+        description: Redis sync service
+        language: C#
+      - name: sb-b2b-partnerintegration-mock
+        description: Mock for partner integration testing
+        language: C#
+      - name: sb-b2b-tools
+        description: B2B value stream tools and scripts
+        language: C#
+      - name: sb-b2b-sportsbook-datastore
+        description: B2B sportsbook datastore (testing)
+        language: TSQL
+      - name: sb-b2b-data-transporter
+        description: B2B data transport utility
+        language: Shell
+      - name: sb-b2b-load-testing
+        description: B2B load testing
+        language: JavaScript
+      - name: sb-b2b-splunk
+        description: Splunk dashboards for B2B monitoring
+        language: PowerShell
+      - name: sb-b2b-brandmanagement-scripts
+        description: B2B brand management scripts
+        language: PowerShell
+
+  # ---------------------------------------------------------------------------
+  # B2B FRONT-END (Partner-facing UI)
+  # ---------------------------------------------------------------------------
+  b2b-frontend:
+    description: >
+      B2B sportsbook front-end — the iframe-based partner UI, its
+      configuration, core libraries, mock partner for demos, and
+      the branding/design-system tooling.
+    name_patterns:
+      - "sb-b2b-fe-*"
+    estimated_repo_count: 18
+    primary_language: TypeScript
+    key_repos:
+      - name: sb-b2b-fe-app
+        description: B2B sportsbook front-end application
+        language: TypeScript
+      - name: sb-b2b-fe-core
+        description: B2B front-end core libraries
+        language: TypeScript
+      - name: sb-b2b-fe-config
+        description: B2B front-end configuration
+        language: TypeScript
+      - name: sb-b2b-fe-betting
+        description: B2B front-end betting module
+        language: TypeScript
+      - name: sb-b2b-fe-mockpartner
+        description: B2B demo/mock partner application
+        language: TypeScript
+      - name: sb-b2b-branding-creator
+        description: B2B design system — real-time theme changes
+        language: JavaScript
+      - name: sb-b2b-fe-load-testing
+        description: B2B front-end load testing (k6)
+        language: TypeScript
+      - name: sb-b2b-ui-component-catalogue
+        description: Static catalogue of B2B UI components
+        language: HTML
+      - name: sb-seo-data-explorer
+        description: SEO data explorer for B2B
+        language: HTML
+
+  # ---------------------------------------------------------------------------
+  # EXPERIENCE API / X-API (BFF layer between FE and SB backend)
+  # ---------------------------------------------------------------------------
+  experience-api:
+    description: >
+      Experience API (X-API) — the backend-for-frontend aggregation layer
+      that exposes sportsbook data to consumer-facing front-ends.
+      Covers offering, context, customer, authentication, and widget builder.
+    name_patterns:
+      - "sb-experience-*"
+    estimated_repo_count: 14
+    primary_language: C#
+    key_repos:
+      - name: sb-experience-core
+        description: Core X-API services
+        language: C#
+      - name: sb-experience-offering-api
+        description: Offering/markets API
+        language: C#
+      - name: sb-experience-context-api
+        description: Context API (event/market context)
+        language: C#
+      - name: sb-experience-customer-api
+        description: Customer-facing experience API
+        language: C#
+      - name: sb-experience-authentication
+        description: Authentication module for X-API
+        language: C#
+      - name: sb-experience-widgetbuilder-api
+        description: Widget builder API
+        language: C#
+      - name: sb-experience-integration-contracts
+        description: Integration contracts for X-API
+        language: C#
+      - name: sb-experience-integration-offering-contracts
+        description: Offering-specific integration contracts
+        language: C#
+      - name: sb-experience-integration-context-contracts
+        description: Context-specific integration contracts
+        language: C#
+      - name: sb-experience-integration-customer-contracts
+        description: Customer-specific integration contracts
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # SPORTSBOOK UI BFF (Backend-for-frontend for the B2C sportsbook UI)
+  # ---------------------------------------------------------------------------
+  sportsbookui-bff:
+    description: >
+      Sportsbook UI BFF — modular backend-for-frontend services powering
+      the consumer (B2C) sportsbook UI. Split by domain: offering,
+      content, customer, setup, proxy, and common.
+    name_patterns:
+      - "sb.sportsbookui.bff.*"
+    estimated_repo_count: 8
+    primary_language: C#
+    key_repos:
+      - name: sb.sportsbookui.bff.offering
+        description: BFF for sportsbook offering/markets
+        language: C#
+      - name: sb.sportsbookui.bff.content
+        description: BFF for sportsbook content
+        language: C#
+      - name: sb.sportsbookui.bff.customer
+        description: BFF for customer-facing features
+        language: C#
+      - name: sb.sportsbookui.bff.setup
+        description: BFF setup/configuration
+        language: C#
+      - name: sb.sportsbookui.bff.proxy
+        description: BFF proxy layer
+        language: C#
+      - name: sb.sportsbookui.bff.common
+        description: Shared BFF components
+        language: C#
+      - name: sb.sportsbookui.bff.b2c
+        description: B2C-specific BFF
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # B2C FRONT-END (Consumer-facing sportsbook UI)
+  # ---------------------------------------------------------------------------
+  b2c-frontend:
+    description: >
+      Consumer-facing sportsbook front-end — micro-frontend architecture,
+      design tokens, and the OBG horse racing wrapper.
+    name_patterns:
+      - "sb-fe-*"
+      - "sb-figma-tokens"
+      - "sb-obg-mfe-*"
+    estimated_repo_count: 6
+    primary_language: TypeScript
+    key_repos:
+      - name: sb-fe-mfe
+        description: New sportsbook built with micro-frontends
+        language: TypeScript
+      - name: sb-figma-tokens
+        description: Multi-brand design tokens (light/dark themes)
+        language: SCSS
+      - name: sb-obg-mfe-horse-racing
+        description: Horse racing wrapper micro-frontend
+        language: TypeScript
+      - name: sb-fe-chrome-tools
+        description: Chrome developer tools for OBG sportsbook FE
+        language: TypeScript
+
+  # ---------------------------------------------------------------------------
+  # SITE MANAGER (SBSM — back-office for sportsbook content/config)
+  # ---------------------------------------------------------------------------
+  site-manager:
+    description: >
+      Sportsbook Site Manager (SBSM) — back-office tool for managing
+      sportsbook content, configuration, and site setup across brands.
+    name_patterns:
+      - "sb-sitemanager-*"
+    estimated_repo_count: 9
+    primary_language: C#
+    key_repos:
+      - name: sb-sitemanager-fe
+        description: Site Manager front-end
+        language: TypeScript
+      - name: sb-sitemanager-bff-api
+        description: Site Manager BFF API
+        language: C#
+      - name: sb-sitemanager-configuration-api
+        description: Site Manager configuration API
+        language: C#
+      - name: sb-sitemanager-configuration-shared
+        description: Shared configuration libraries
+        language: C#
+      - name: sb-sitemanager-configuration-api-datastore
+        description: Configuration API database
+        language: TSQL
+      - name: sb-sitemanager-content-api
+        description: Site Manager content management API
+        language: C#
+      - name: sb-sitemanager-content-shared
+        description: Shared content libraries
+        language: C#
+      - name: sb-sitemanager-e2e-tests
+        description: End-to-end tests for Site Manager
+        language: C#
+      - name: sb-sitemanager-tools
+        description: Local Docker tooling for Site Manager
+        language: PowerShell
+
+  # ---------------------------------------------------------------------------
+  # OBG SPORTSBOOK CORE (Legacy OBG backend — real-time & API hosts)
+  # ---------------------------------------------------------------------------
+  obg-sportsbook-core:
+    description: >
+      OBG (Operator Backend Gateway) sportsbook — the core sportsbook
+      backend, real-time push services, API/dev hosts, and admin tooling.
+    name_patterns:
+      - "obg-sportsbook*"
+    estimated_repo_count: 10
+    primary_language: C#
+    key_repos:
+      - name: obg-sportsbook
+        description: Core OBG sportsbook backend
+        language: C#
+      - name: obg-sportsbook-realtime
+        description: Real-time data push service
+        language: C#
+      - name: obg-sportsbook-apihost
+        description: OBG sportsbook API host
+        language: C#
+      - name: obg-sportsbook-devhost
+        description: OBG sportsbook development host
+        language: C#
+      - name: obg-sportsbook-tools
+        description: OBG sportsbook tooling
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # DATA PROVIDERS & FEED INTEGRATION (External data feeds)
+  # ---------------------------------------------------------------------------
+  provider-integration:
+    description: >
+      External data provider integration — sports data feeds, provider
+      components, bet builder providers, and the ISA (In-Stream Alerts)
+      cache management.
+    name_patterns:
+      - "sb-provider-*"
+      - "sb-betbuilder-*"
+      - "sb-isa*"
+      - "sb-cyborg-*"
+    estimated_repo_count: 16
+    primary_language: C#
+    key_repos:
+      - name: sb-provider-integration
+        description: Sportsbook data provider components
+        language: C#
+      - name: sb-isa
+        description: In-Stream Alerts (ISA) service
+        language: C#
+      - name: sb-isa-cachemanipulator-datastore
+        description: ISA cache manipulator database
+        language: TSQL
+      - name: sb-betbuilder-integration
+        description: Bet builder integration service
+        language: C#
+      - name: sb-betbuilder-integration-entities
+        description: Bet builder integration entities
+        language: C#
+      - name: sb-cyborg-foundation
+        description: Cyborg (automated trading) foundation
+        language: C#
+      - name: sb-cyborg-mapping
+        description: Cyborg entity mapping
+        language: C#
+      - name: sb-cyborg-providers
+        description: Cyborg provider integrations
+        language: C#
+      - name: sb-cyborg-pricing
+        description: Cyborg pricing engine
+        language: C#
+      - name: sb-cyborg-pricing-web
+        description: Cyborg pricing web interface
+        language: TypeScript
+      - name: sb-cyborg-infrastructure
+        description: Cyborg infrastructure (Terraform)
+        language: HCL
+
+  # ---------------------------------------------------------------------------
+  # ENTITY & CONTEXT MANAGEMENT (Sports events, markets, selections)
+  # ---------------------------------------------------------------------------
+  entity-context:
+    description: >
+      Entity and context management — sports entities (events, markets,
+      selections), context management, brand management, and the
+      regulation sub-domain.
+    name_patterns:
+      - "sb-entitymanagement*"
+      - "sb-contextmanagement*"
+      - "sb-brandmanagement*"
+      - "sb-regulation*"
+    estimated_repo_count: 8
+    primary_language: C#
+    key_repos:
+      - name: sb-entitymanagement
+        description: Sports entity management service
+        language: C#
+      - name: sb-contextmanagement
+        description: Context management domain
+        language: C#
+      - name: sb-brandmanagement
+        description: Brand management service
+        language: C#
+      - name: sb-brandmanagement-datastore
+        description: Brand management database
+        language: TSQL
+      - name: sb-regulation
+        description: Sportsbook regulation sub-domain
+        language: C#
+      - name: sb-betting-regulationreporting
+        description: Regulation reporting service
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # WATCHER & MONITORING (Event monitoring, alerts, first-bet tracking)
+  # ---------------------------------------------------------------------------
+  watcher:
+    description: >
+      Watcher services — monitoring sportsbook events, deadlines,
+      customer first bets, and streaming generated alerts.
+    name_patterns:
+      - "sb-watcher-*"
+    estimated_repo_count: 8
+    primary_language: C#
+    key_repos:
+      - name: sb-watcher-watcherapi
+        description: Watcher API service
+        language: C#
+      - name: sb-watcher-customersfirstbet
+        description: First-bet tracking for new customers
+        language: C#
+      - name: sb-watcher-eventdeadline
+        description: Event deadline alerts (20-min threshold)
+        language: C#
+      - name: sb-watcher-streamgenerator
+        description: Watcher stream generator
+        language: C#
+      - name: sb-watcher-contracts
+        description: Shared watcher contracts
+        language: C#
+      - name: sb-watcher-datastore
+        description: Watcher database
+        language: TSQL
+
+  # ---------------------------------------------------------------------------
+  # BETTRACER (Live bet tracking and push notifications)
+  # ---------------------------------------------------------------------------
+  bettracer:
+    description: >
+      BetTracer — live bet tracking, real-time push notifications for
+      bet status, search/filtering, and cash-out push updates.
+    name_patterns:
+      - "sb-bettracer*"
+    estimated_repo_count: 8
+    primary_language: C#
+    key_repos:
+      - name: sb-bettracer2-api
+        description: BetTracer API
+        language: C#
+      - name: sb-bettracer2-push
+        description: BetTracer real-time push service
+        language: C#
+      - name: sb-bettracer2-persistor
+        description: BetTracer data persistor
+        language: C#
+      - name: sb-bettracer2-searchprocessor
+        description: BetTracer search/query processor
+        language: C#
+      - name: sb-bettracer2-datastore
+        description: BetTracer database
+        language: TSQL
+
+  # ---------------------------------------------------------------------------
+  # STREAMING & SEARCH (Real-time data streaming, search index)
+  # ---------------------------------------------------------------------------
+  streaming-search:
+    description: >
+      Real-time data streaming and search indexing for the sportsbook
+      — event streams, search services, and the OBG content scraper.
+    name_patterns:
+      - "sb-stream*"
+      - "sb-search*"
+    estimated_repo_count: 4
+    primary_language: C#
+    key_repos:
+      - name: sb-stream
+        description: Sportsbook data streaming service
+        language: C#
+      - name: sb-search
+        description: Sportsbook search/indexing service
+        language: C#
+      - name: sb-obg-crs-scraper
+        description: OBG CRS content scraper
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # TECHSSON INTEGRATION (Platform integration adapters)
+  # ---------------------------------------------------------------------------
+  techsson-integration:
+    description: >
+      Integration adapters between the sportsbook and the Techsson
+      platform — campaign sender, communication center adapter,
+      and message bus bridging (Rabbit→Kafka).
+    name_patterns:
+      - "sb-techssonint-*"
+      - "sb-techssonintegration-*"
+      - "sb-ti-*"
+    estimated_repo_count: 10
+    primary_language: C#
+    key_repos:
+      - name: sb-ti-sportsbook
+        description: Techsson integration — sportsbook service
+        language: C#
+      - name: sb-ti-frontenddispatcher
+        description: Techsson integration — front-end dispatcher
+        language: C#
+      - name: sb-ti-merchantservice
+        description: Techsson integration — merchant service
+        language: C#
+      - name: sb-ti-gameaction
+        description: Techsson integration — game action service
+        language: C#
+      - name: sb-techssonint-commcenteradapter
+        description: Communication center adapter
+        language: C#
+      - name: sb-techssonint-campaignsender
+        description: Campaign sender integration
+        language: C#
+      - name: sb-techssonint-rabbit2kafka
+        description: RabbitMQ to Kafka bridge
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # COMMUNITY (Shared libraries and frameworks)
+  # ---------------------------------------------------------------------------
+  community-libs:
+    description: >
+      SB.Community — shared NuGet libraries and frameworks used across
+      all sportsbook services: messaging, serialisation, Redis, DI,
+      logging, compression, HTTP clients, and toolkit collections.
+    name_patterns:
+      - "sb-community*"
+    estimated_repo_count: 26
+    primary_language: C#
+    key_repos:
+      - name: sb-community
+        description: Core community framework
+        language: C#
+      - name: sb-community-messaging
+        description: Messaging abstractions (RabbitMQ, Kafka)
+        language: C#
+      - name: sb-community-messaging-interconnector
+        description: Message bus bridging (e.g. Kafka↔Rabbit)
+        language: C#
+      - name: sb-community-rabbitmq-topologycreator
+        description: RabbitMQ topology creator
+        language: C#
+      - name: sb-community-redis
+        description: Redis client abstractions
+        language: C#
+      - name: sb-community-hive
+        description: Hive shared library
+        language: C#
+      - name: sb-community-log
+        description: Logging framework
+        language: C#
+      - name: sb-community-serialisation
+        description: Serialisation library
+        language: C#
+      - name: sb-community-serializer-json
+        description: JSON serialiser
+        language: C#
+      - name: sb-community-compression
+        description: Compression utilities
+        language: C#
+      - name: sb-community-httpclient
+        description: HTTP client wrapper
+        language: C#
+      - name: sb-community-toolkit
+        description: General-purpose toolkit
+        language: C#
+      - name: sb-community-toolkit-collections
+        description: Smart collection types
+        language: C#
+      - name: sb-community-toolkit-cachemanager
+        description: Cache manager toolkit
+        language: C#
+      - name: sb-community-correlation
+        description: Correlation ID propagation
+        language: C#
+      - name: sb-community-di-autofac
+        description: Autofac DI integration
+        language: C#
+      - name: sb-community-di-ninject
+        description: Ninject DI integration
+        language: C#
+      - name: sb-community-shovel
+        description: Message shovel utility
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # DATA, REPORTING & AI/ML (Sportsbook-specific analytics and AI)
+  # ---------------------------------------------------------------------------
+  data-reporting:
+    description: >
+      Sportsbook data engineering, reporting, analytics, and AI/ML —
+      DWH databases, Power BI datasets, Splunk monitoring, SSAS cubes,
+      the cloud data platform, and the AI agent/recommendation PoCs.
+    name_patterns:
+      - "sb-data-*"
+      - "sb-reporting-*"
+      - "sb-cube*"
+      - "sbdw-*"
+      - "sbanalytics-*"
+      - "sb-aiml*"
+      - "sb-cloud-data-*"
+      - "SBAnalytics*"
+      - "SBCustomer*"
+      - "SBDW*"
+    estimated_repo_count: 20
+    primary_language: TSQL
+    key_repos:
+      - name: sb-data-reporting
+        description: Sportsbook data reporting service
+        language: C#
+      - name: sb-dataplatform-gatewayapi
+        description: Data platform gateway API
+        language: C#
+      - name: sb-dataplatform-reportingapi
+        description: Data platform reporting API
+        language: C#
+      - name: sbdw-databases
+        description: SBStaging, SBDW, SBReportingUSCO databases
+        language: TSQL
+      - name: sbanalytics-database
+        description: SB Analytics database
+        language: TSQL
+      - name: sb-cube
+        description: SSAS cube for sportsbook reporting
+      - name: sb-statistics-database
+        description: Competition statistics database
+        language: TSQL
+      - name: sb-cloud-data-platform
+        description: Cloud data platform
+        language: Python
+      - name: sb-aiml
+        description: Sportsbook AI/ML service
+        language: C#
+      - name: sb-aiml-ai-agent
+        description: SB AI agent use case
+        language: Python
+      - name: sb-aiml-mcp-time-server
+        description: MCP server for SB AI/ML search agent
+        language: Python
+      - name: sb-aiml-entity-translation-poc
+        description: Entity translation PoC
+        language: Jupyter Notebook
+      - name: SBCustomerBetAnalytics
+        description: Customer bet analytics
+        language: PLpgSQL
+
+  # ---------------------------------------------------------------------------
+  # DEVOPS & INFRASTRUCTURE (SB-specific CI/CD, Terraform, tooling)
+  # ---------------------------------------------------------------------------
+  devops-infra:
+    description: >
+      Sportsbook-specific DevOps and infrastructure — Terraform modules
+      for load balancers, CloudFront, CDN; Ansible playbooks; health
+      checks; Kubernetes PoC; deployment automation; and Splunk config.
+    name_patterns:
+      - "sb-devops-*"
+      - "sb-kubernetes-*"
+      - "terraform-aws-sb_*"
+      - "terraform-sb_*"
+      - "sb-workflows"
+    estimated_repo_count: 20
+    primary_language: HCL
+    key_repos:
+      - name: sb-devops-boxon
+        description: Health check boxes service
+        language: Python
+      - name: sb-devops-boxon-ui
+        description: Health check boxes UI
+        language: TypeScript
+      - name: sb-devops-scripts
+        description: DevOps automation scripts
+        language: PowerShell
+      - name: sb-devops-ansible
+        description: Ansible playbooks
+        language: Jinja
+      - name: sb-devops-e2e
+        description: E2E environment workflow actions
+        language: Python
+      - name: sb-kubernetes-app-of-apps
+        description: Kubernetes app-of-apps PoC
+      - name: sb-workflows
+        description: SB GitHub Actions workflows
+        language: JavaScript
+      - name: terraform-aws-sb_lb
+        description: Terraform module for SB load balancers
+        language: HCL
+      - name: terraform-aws-sb_fecdn
+        description: Terraform module for FE CDN
+        language: HCL
+      - name: terraform-aws-sb_cloudfront
+        description: Terraform module for CloudFront
+        language: HCL
+      - name: sb-dba-scripts
+        description: DBA operational scripts
+        language: TSQL
+      - name: sb-dba-dbup
+        description: DbUp database migration tooling
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # TEST AUTOMATION (SB-specific testing frameworks)
+  # ---------------------------------------------------------------------------
+  test-automation:
+    description: >
+      Sportsbook test automation — dedicated test frameworks, E2E tests,
+      Selenium suites, and the central core-testautomation repo that
+      hosts SB backend test projects.
+    name_patterns:
+      - "sb-testautomation*"
+      - "core-testautomation"
+      - "sb-profile-goatomation"
+    estimated_repo_count: 6
+    primary_language: C#
+    key_repos:
+      - name: core-testautomation
+        description: Central E2E test framework (hosts sportsbook test projects)
+        language: C#
+      - name: sb-testautomation
+        description: Sportsbook-specific test automation
+        language: C#
+      - name: sb-testautomation-core
+        description: Sportsbook test automation core libraries
+        language: C#
+      - name: sb-profile-goatomation
+        description: Profile test automation
+        language: C#
+
+  # ---------------------------------------------------------------------------
+  # NATIVE MOBILE (SB-specific mobile repos)
+  # ---------------------------------------------------------------------------
+  native-mobile:
+    description: >
+      Native sportsbook mobile — Android/iOS sportsbook modules, and
+      the management/scheduling tools for the native SB team.
+    name_patterns:
+      - "NextGen.Android.Sportsbook*"
+      - "NextGen.iOS.*Sportsbook*"
+      - "Native-Management-*"
+    estimated_repo_count: 6
+    primary_language: Kotlin
+    key_repos:
+      - name: NextGen.Android.Sportsbook
+        description: Android sportsbook app
+        language: Kotlin
+      - name: NextGen.iOS.Features.SportsbookModule
+        description: iOS sportsbook feature module
+        language: Swift
+      - name: Native-Management-Sportsbooksson
+        description: Native SB delivery management tool
+        language: TypeScript
+      - name: Native-Management-hybrid-support-scheduler
+        description: Hybrid support scheduling with Slack integration
+        language: TypeScript
+      - name: Native-Management-anna-bot
+        description: Ceremonies coordination chat-bot
+        language: TypeScript

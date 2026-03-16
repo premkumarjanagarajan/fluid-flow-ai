@@ -8,6 +8,7 @@ subagent: false
 | Load | Do NOT Load |
 |------|------------|
 | `domain-catalog.yaml` (if scope mode uses it) | `reverse-engineering/combined-architecture.md` |
+| `*-domain-catalog.yaml` (domain-specific catalogs, if they exist) | |
 | `ff-workspace.yaml` (already loaded at Stage 1) | Per-repo RE artifacts |
 | | `reverse-engineering/combined-c4.md` |
 | | `reverse-engineering/incident-learnings.md` |
@@ -57,6 +58,7 @@ Present the scope mode prompt and wait for user choice:
 
 **Mode B — Domain catalog**:
 - Read `domain-catalog.yaml` from the workspace or a provided path
+- Also scan for `*-domain-catalog.yaml` files (domain-specific deep-dive catalogs, e.g. `sportsbook-domain-catalog.yaml`). These have a `parent_domain:` field linking back to the top-level catalog. Load any that match a confirmed or evaluated domain.
 - If not found: ask the user to provide the path or fall back to Mode C/D
 - Run domain impact analysis (step 2 below)
 
@@ -67,13 +69,14 @@ Present the scope mode prompt and wait for user choice:
 
 **Mode D — AI-analysed description**:
 - Parse the user's initiative description
-- Check against `ff-workspace.yaml` repos, `domain-catalog.yaml` domains, and any other available context
+- Check against `ff-workspace.yaml` repos, `domain-catalog.yaml` domains, `*-domain-catalog.yaml` sub-domain catalogs, and any other available context
 - Propose affected repos/domains with reasoning
 
 ### 2. Domain Impact Analysis (Mode B only)
 
 For each domain in the catalog:
 - Read the domain description and key repo descriptions
+- If a domain-specific catalog exists (e.g. `sportsbook-domain-catalog.yaml` with `parent_domain: sportsbook`), load it for sub-domain detail — this gives granular repo-level insight beyond the top-level catalog
 - Classify as:
   - **Confirmed** — directly required by the initiative
   - **Evaluate** — possibly required, needs human decision
