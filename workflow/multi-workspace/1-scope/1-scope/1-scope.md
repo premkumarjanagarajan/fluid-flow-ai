@@ -84,11 +84,22 @@ For each domain in the catalog:
 
 ### 3. Out-of-Workspace Repos
 
-After identifying confirmed targets, check which repos are NOT in `ff-workspace.yaml`. Any confirmed repo outside the workspace is automatically classified as **external reference**:
+After identifying confirmed targets, check which repos are NOT in `ff-workspace.yaml`. For each, classify:
 
-- Marked as `location: external` in the scope analysis
-- The seed step will generate spec stubs for manual distribution to the owning team
-- No cloning, no workspace modification — this is initiative planning, not workspace setup
+| Classification | Meaning | Action |
+|----------------|---------|--------|
+| **Pull for implementation** | This initiative will write code in this repo | Clone (if needed) + add to VS Code `.code-workspace`. NOT added to `ff-workspace.yaml` — Fluid Flow does not manage it (no RE, no conflict detection). |
+| **External reference** | Dependency or context only — no code changes needed | Spec stubs generated in seed step for manual handoff to owning team. No cloning. |
+
+Present the list of out-of-workspace repos and for each ask: "Will this initiative implement changes in this repo, or is it reference only?"
+
+Use the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`) for per-repo classification.
+
+**For repos classified as "Pull for implementation":**
+1. Clone as sibling directory (`../{repo-name}/`) if not already local
+2. Add to `.code-workspace` file
+3. Do NOT add to `ff-workspace.yaml` — it remains outside Fluid Flow's managed scope
+4. Note in scope analysis as `location: pulled (unmanaged)` — implementation subagents can work in it but no RE artifacts are produced
 
 ### 4. Identify Integration Points
 
@@ -126,7 +137,7 @@ Present the analysis for human review.
 ### {Target Name} (repo / domain / workspace)
 - **Reason**: {Why this target is in scope}
 - **Key repos**: {repo1}, {repo2}, {repo3}
-- **Location**: In workspace (in ff-workspace.yaml) / External reference
+- **Location**: In workspace (ff-workspace.yaml) / Pulled for implementation (unmanaged) / External reference
 - **FF Workspace**: {workspace-name} (exists) | not found | this workspace
 
 {Repeat for each confirmed target.}
