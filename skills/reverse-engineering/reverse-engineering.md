@@ -35,7 +35,7 @@ A repository can match multiple domains.
 > both analysis and artifact generation within its own context window. This prevents the parent
 > agent's context from overflowing with large analysis payloads.
 >
-> **Agent files**: Use the `.github/agents/reverse-engineering.agent.md` agent for per-repo RE and `.github/agents/combined-architecture.agent.md` for the combined synthesis. These agent files define model selection (Claude Opus 4.5 / GPT-5.2) to prevent model downgrade.
+> **Agent files**: Use the `.github/agents/reverse-engineering.agent.md` agent for per-repo RE and `.github/agents/combined-architecture.agent.md` for the combined synthesis. These agents inherit the model selected in the IDE's model picker.
 
 #### Context Isolation
 

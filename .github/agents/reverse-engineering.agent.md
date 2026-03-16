@@ -1,16 +1,13 @@
 ---
 name: "Reverse Engineering"
 description: "Analyze a single repository's codebase and generate 11 design artifacts in reverse-engineering/"
-model:
-  - "Claude Opus 4.5 (copilot)"
-  - "GPT-5.2 (copilot)"
 tools:
   - read
   - edit
   - search
   - search/codebase
-  - runCommands
-  - new
+  - execute/runInTerminal
+  - execute/getTerminalOutput
 user-invocable: false
 ---
 

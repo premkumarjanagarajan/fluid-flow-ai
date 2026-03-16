@@ -1,15 +1,12 @@
 ---
 name: "Combined Architecture"
 description: "Synthesize cross-repo architecture views from per-repo RE artifacts or direct codebase analysis"
-model:
-  - "Claude Opus 4.5 (copilot)"
-  - "GPT-5.2 (copilot)"
 tools:
   - read
   - edit
   - search
   - search/codebase
-  - new
+  - vscode/runCommand
 user-invocable: false
 ---
 

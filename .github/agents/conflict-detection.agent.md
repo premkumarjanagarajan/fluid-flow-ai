@@ -1,9 +1,6 @@
 ---
 name: "Conflict Detection"
 description: "Detect conflicts between active initiatives targeting the same repos, files, or contracts"
-model:
-  - "Claude Opus 4.5 (copilot)"
-  - "GPT-5.2 (copilot)"
 tools:
   - read
   - search

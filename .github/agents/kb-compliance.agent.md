@@ -1,9 +1,6 @@
 ---
 name: "KB Compliance"
 description: "Validate workflow step output against the full knowledge base"
-model:
-  - "Claude Opus 4.5 (copilot)"
-  - "GPT-5.2 (copilot)"
 tools:
   - read
   - search
