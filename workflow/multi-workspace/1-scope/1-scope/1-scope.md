@@ -88,12 +88,16 @@ After identifying confirmed targets, check which repos are NOT in `ff-workspace.
 
 | Classification | Meaning | Action |
 |----------------|---------|--------|
+| **External reference** (recommended) | Dependency, context, or owned by another team | Spec stubs + implementation guide generated in seed step for handoff to the owning team. No cloning. This is the preferred approach — it respects domain ownership and avoids unmanaged code changes. |
 | **Pull for implementation** | This initiative will write code in this repo | Clone (if needed) + add to VS Code `.code-workspace`. NOT added to `ff-workspace.yaml` — Fluid Flow does not manage it (no RE, no conflict detection). |
-| **External reference** | Dependency or context only — no code changes needed | Spec stubs generated in seed step for manual handoff to owning team. No cloning. |
 
-Present the list of out-of-workspace repos and for each ask: "Will this initiative implement changes in this repo, or is it reference only?"
+> **Strong recommendation**: Prefer **external reference + handoff** over pulling repos for implementation. Repos outside your `ff-workspace.yaml` are owned by other teams. Making unmanaged changes without their RE context, conflict detection, or KB compliance increases risk. The seed step generates detailed implementation specs and guides so the owning team can implement with full context in their own Fluid Flow workspace.
+>
+> Only use "Pull for implementation" when you are the owner of the repo and it simply hasn't been added to this workspace yet.
 
-Use the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`) for per-repo classification.
+Present the list of out-of-workspace repos. Default all to **external reference**. Ask: "Any of these repos that you own and want to pull locally instead?"
+
+Use the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`).
 
 **For repos classified as "Pull for implementation":**
 1. Clone as sibling directory (`../{repo-name}/`) if not already local
