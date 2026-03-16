@@ -104,7 +104,6 @@ Load `skills/shell-detection/shell-detection.md`. Store `SHELL_TYPE`.
 2. Classify: **greenfield** or **brownfield**
 3. Check for `ff-workspace.yaml` in the workspace root:
    - If found: read it, store `WORKSPACE_NAME`, `REPO_LIST`, and `SHARED_REPOS` (repos with `shared: true`) for the session
-   - **Display context loaded announcement** (mandatory — see § Context Loading Announcements)
    - **Do NOT** load any RE artifacts, combined architecture, or incident learnings at this stage
    - Report in workspace status:
 
@@ -229,7 +228,6 @@ After the planning phase completes, if `initiatives/{INITIATIVE_NAME}/target-rep
 - **After every step**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`.
 - **After the last step of each phase** (phase transition): additionally run `primitives/kb-compliance.md`.
 - **STATUS PREFIX**: You MUST start EVERY response with the `[FF · ...]` prefix (see § Status Prefix below). This is non-negotiable. The ONLY exception is when triage classifies the request as a Question answered directly.
-- **SUBAGENT MODEL**: When launching ANY subagent (RE, kb-compliance, conflict-detection, combined-architecture, implementation), you MUST use the **same model** as the parent agent. Do NOT let subagents default to a smaller model. Explicitly specify the model parameter when creating subagents.
 
 ---
 
@@ -258,46 +256,3 @@ Every response from the orchestrator or a workflow step MUST begin with a compac
 
 ---
 
-## Context Loading Announcements
-
-**MANDATORY**: Every time you read/load a file listed in the table below with "Announce: Yes", you MUST display this box immediately after loading it. Use `wc -c` or file size to estimate tokens.
-
-```
-  ┌ CONTEXT LOADED ────────────────────────
-  │ {filename}                     ~{N}K tokens
-  │ {filename} ({detail})          ~{N}K tokens
-  └────────────────────────────────────────
-```
-
-Token estimation: `tokens ≈ file_bytes / 4` (markdown/English), `≈ file_bytes / 3` (code). Label with `~`. You can batch multiple files loaded at the same time into one box.
-
-| Loading Event | Announce? |
-|---------------|-----------|
-| `ff-workspace.yaml` at Stage 1 | Yes |
-| KB always-load files at step start | No (v0.9 behaviour, expected) |
-| `combined-architecture.md` during planning | Yes |
-| `incident-learnings.md` (filtered) | Yes |
-| `target-repos.md` at conflict detection | Yes |
-| Per-repo RE in implementation subagent | No (subagent context, announced via subagent launch) |
-| `domain-catalog.yaml` in multi-workspace scope | Yes (if large) |
-
----
-
-## Context-Heavy Step Warning
-
-Before a step that loads significant context, display a heads-up:
-
-```
-  ┌ NOTE ──────────────────────────────────
-  │ This step loads cross-repo architecture
-  │ context. Expect context usage to increase.
-  └────────────────────────────────────────
-```
-
-| Step | Warn? |
-|------|-------|
-| Planning phase loading combined-architecture.md | Yes |
-| Conflict detection with 5+ active initiatives | Yes |
-| Implementation in repo with extensive RE | No (subagent) |
-| Multi-workspace scope reading large domain-catalog.yaml | Yes |
-| KB compliance subagent | No (own context) |

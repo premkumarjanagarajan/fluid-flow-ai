@@ -54,18 +54,16 @@ Load when the change affects infrastructure, performance, or Significant Energy 
 
 These rules apply only when `ff-workspace.yaml` exists (Fluid Flow Workspace mode). They follow the same principle as KB tiered loading: **load the map, not the territory**.
 
-**Announcement rule**: When loading a workspace artifact marked with "Announce: Yes" below, display a context loading announcement box showing filename and approximate token size (`~{N}K tokens`, estimated as `file_bytes / 4`). See `orchestrator.md` § Context Loading Announcements for format.
-
 ### Always Load
-- Load `ff-workspace.yaml` at Stage 1 (Workspace Detection) — repo list, teams, shared flags. **Announce: Yes**
+- Load `ff-workspace.yaml` at Stage 1 (Workspace Detection) — repo list, teams, shared flags
 
 ### On-Demand: Cross-Repo Planning
-- Load `reverse-engineering/combined-architecture.md` during planning phases that may produce `target-repos.md`. **Announce: Yes** + context-heavy warning
-- Load `reverse-engineering/incident-learnings.md` filtered to target repos during planning and implementation. **Announce: Yes**
+- Load `reverse-engineering/combined-architecture.md` during planning phases that may produce `target-repos.md`
+- Load `reverse-engineering/incident-learnings.md` filtered to target repos during planning and implementation
 
 ### On-Demand: Conflict Detection
-- Load `reverse-engineering/combined-architecture.md` in conflict detection subagent. **Announce: No** (subagent context)
-- Load all active `initiatives/*/target-repos.md` in conflict detection subagent. **Announce: Yes** (loaded by orchestrator before subagent launch)
+- Load `reverse-engineering/combined-architecture.md` in conflict detection subagent
+- Load all active `initiatives/*/target-repos.md` in conflict detection subagent
 
 ### On-Demand: Per-Repo Implementation
 - Load `{repo}/reverse-engineering/` artifacts ONLY for the repo being implemented
