@@ -117,7 +117,8 @@ Load `skills/shell-detection/shell-detection.md`. Store `SHELL_TYPE`.
 1. Scan for source code (`src/`, `package.json`, `*.csproj`, `go.mod`, etc.)
 2. Classify: **greenfield** or **brownfield**
 3. Check for `ff-workspace.yaml` in the workspace root:
-   - If found: read it, store `WORKSPACE_NAME`, `REPO_LIST`, and `SHARED_REPOS` (repos with `shared: true`) for the session
+   - If found: this is the **source of truth** for repo list, teams, and workspace config. Read it, store `WORKSPACE_NAME`, `REPO_LIST`, and `SHARED_REPOS` (repos with `shared: true`) for the session. Do NOT fall back to `.code-workspace` — `ff-workspace.yaml` takes precedence.
+   - If NOT found: fall back to `.code-workspace` for repo discovery (used only during initial workspace setup)
    - **Do NOT** load any RE artifacts, combined architecture, or incident learnings at this stage
    - Report in workspace status:
 

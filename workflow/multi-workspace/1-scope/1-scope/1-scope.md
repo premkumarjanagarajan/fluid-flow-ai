@@ -82,57 +82,13 @@ For each domain in the catalog:
   - **Evaluate** — possibly required, needs human decision
   - **Not affected** — no relationship to the initiative
 
-### 3. Handle Out-of-Workspace Repos
+### 3. Out-of-Workspace Repos
 
-After identifying confirmed targets, check which repos are NOT in the current VS Code workspace or `ff-workspace.yaml`. For each out-of-workspace repo, present:
+After identifying confirmed targets, check which repos are NOT in `ff-workspace.yaml`. Any confirmed repo outside the workspace is automatically classified as **external reference**:
 
-```
-───────────────────────────────────────────────────
-  SCOPE — Out-of-Workspace Repos Detected
-───────────────────────────────────────────────────
-
-  The following confirmed repos are not in this
-  workspace:
-
-  1. {repo-name} — {reason it's needed}
-  2. {repo-name} — {reason it's needed}
-
-  For each, choose:
-
-  A) Add to workspace
-     Clone (if needed) and add to .code-workspace.
-     {If ff-workspace.yaml exists: also updates
-     ff-workspace.yaml and runs incremental RE.}
-
-  B) Reference only
-     Keep as external dependency. Specs will be
-     generated for manual handoff in the seed step.
-
-  C) Skip — not needed for this initiative
-
-───────────────────────────────────────────────────
-```
-
-Present choices using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`). Allow per-repo selection.
-
-**If user selects A for any repo:**
-
-- **No ff-workspace.yaml** (first time):
-  1. Clone the repo as a sibling directory (`../{repo-name}/`)
-  2. Add it to the `.code-workspace` file
-  3. Workspace setup will pick it up when it runs later
-
-- **ff-workspace.yaml exists** (subsequent runs):
-  1. Clone the repo as a sibling directory if not already local
-  2. Add it to the `.code-workspace` file
-  3. Add a new entry to `ff-workspace.yaml` (preserve all existing entries and human-edited fields)
-  4. Run incremental RE for the new repo only (existing `reverse-engineering-timestamp.md` prevents re-running others)
-  5. Re-run the combined architecture subagent to include the new repo
-  6. Present updated `ff-workspace.yaml` for approval via human-gate
-
-**If user selects B:**
-- Mark the repo as `location: external` in the scope analysis
-- The seed step will generate spec stubs for manual distribution
+- Marked as `location: external` in the scope analysis
+- The seed step will generate spec stubs for manual distribution to the owning team
+- No cloning, no workspace modification — this is initiative planning, not workspace setup
 
 ### 4. Identify Integration Points
 
@@ -170,7 +126,7 @@ Present the analysis for human review.
 ### {Target Name} (repo / domain / workspace)
 - **Reason**: {Why this target is in scope}
 - **Key repos**: {repo1}, {repo2}, {repo3}
-- **Location**: In workspace / Added to workspace (this session) / Reference only (external) / Skipped
+- **Location**: In workspace (in ff-workspace.yaml) / External reference
 - **FF Workspace**: {workspace-name} (exists) | not found | this workspace
 
 {Repeat for each confirmed target.}
@@ -201,7 +157,6 @@ in the seed step for manual distribution.
 
 [ ] Confirm in-scope targets
 [ ] Include or exclude evaluated targets
-[ ] Confirm out-of-workspace repo handling (added / reference only / skipped)
 ```
 
 ## Gate

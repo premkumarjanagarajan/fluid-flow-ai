@@ -11,7 +11,7 @@ Bootstrap a Fluid Flow Workspace from a multi-root VS Code workspace. Generates 
 
 ### 1. Read `.code-workspace`
 
-Read the `.code-workspace` file in the workspace root. Extract the repo list from the `folders` array.
+Read the `.code-workspace` file in the workspace root. Extract the repo list from the `folders` array. This is the **only time** `.code-workspace` is used — once `ff-workspace.yaml` is generated, it becomes the source of truth for all subsequent operations.
 
 Store:
 - `WORKSPACE_REPOS`: list of repo names and paths
