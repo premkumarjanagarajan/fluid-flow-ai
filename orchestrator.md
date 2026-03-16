@@ -137,13 +137,13 @@ Present using the IDE question tool.
 1. Load `domain-catalog.yaml` and any `*-domain-catalog.yaml` files
 2. Present domains and key repos for the user to select
 3. For each selected repo: clone as sibling directory (`../{repo-name}/`)
-4. Generate `.code-workspace` file with this folder + all cloned repos
+4. Add cloned repos to the existing `.code-workspace` file (created by the CLI). Read the file, append entries to `folders`, write it back. Do NOT create a new workspace file.
 5. Load `skills/workspace-setup/workspace-setup.md` to complete setup (RE, `ff-workspace.yaml`)
 
 **If B (manual):**
 1. Ask the user to list repos (org/repo format or URLs)
 2. Clone each as sibling directory
-3. Generate `.code-workspace` file
+3. Add cloned repos to the existing `.code-workspace` file (same as above)
 4. Load `skills/workspace-setup/workspace-setup.md` to complete setup
 
 ---
