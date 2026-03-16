@@ -7,6 +7,13 @@ Display:
   FLUID-FLOW AI v1.0 WORKFLOW ACTIVATED
   All development follows the unified lifecycle.
   Reading workflow instructions now...
+
+  ⚠ MODEL CHECK: Subagents are capped at the model
+  you selected for this chat. If you're using Haiku
+  or a free-tier model, ALL subagents (RE, KB
+  compliance, conflict detection) will also use it.
+  For best results, select Claude Opus / GPT-5.2+
+  BEFORE starting the workflow.
 ═══════════════════════════════════════════════════
 ```
 
