@@ -43,7 +43,7 @@ Map logical software components to actual infrastructure choices for deployment 
 - Focus on ambiguities and missing information specific to this unit
 - Generate questions only where user input is needed for infrastructure decisions
 
-**Question format**: See `../../../knowledge-core/question-format-guide.md`
+**Question format**: See `../../knowledge-core/question-format-guide.md`
 
 **Example question categories** (adapt as needed):
 - **Deployment Environment** - Only if cloud provider or environment setup is unclear
