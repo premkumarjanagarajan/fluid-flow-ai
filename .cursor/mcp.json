@@ -21,43 +21,6 @@
           "NODE_ENV": "production"
         }
       },
-      "filesystem": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "@modelcontextprotocol/server-filesystem",
-          "${workspaceFolder}"
-        ],
-        "disabled": false,
-        "autoApprove": [
-          "read_file",
-          "list_directory",
-          "search_files"
-        ],
-        "env": {
-          "LOG_LEVEL": "INFO",
-          "NODE_ENV": "production",
-          "MAX_FILE_SIZE": "10485760",
-          "ALLOWED_EXTENSIONS": ".js,.ts,.tsx,.jsx,.py,.json,.md,.txt,.yaml,.yml,.toml,.dockerfile"
-        }
-      },
-      "web-search": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "@modelcontextprotocol/server-web-search"
-        ],
-        "disabled": true,
-        "autoApprove": [
-          "search_web"
-        ],
-        "env": {
-          "LOG_LEVEL": "INFO",
-          "NODE_ENV": "production",
-          "SEARCH_ENGINE": "google",
-          "MAX_RESULTS": "10"
-        }
-      },
       "aws-document-loader": {
         "command": "uvx",
         "args": [
