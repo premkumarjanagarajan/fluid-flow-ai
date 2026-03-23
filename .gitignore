@@ -1,12 +1,4 @@
-# OS files
 .DS_Store
-Thumbs.db
-
-# IDE
-.idea/
-*.swp
-*.swo
-
-# Build outputs
-bin/
-obj/
+node_modules/
+.env
+*.log
