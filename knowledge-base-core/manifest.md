@@ -29,7 +29,7 @@ These files MUST be loaded at the start of every command or workflow stage:
 - Load `ai-governance/adr-integrity-gate.md` -- ADR compliance checking and extension rules
 - Load `ai-governance/continuous-learning.md` -- Systemic issue detection, rule/ADR improvement proposals
 - Load `ai-governance/overconfidence-prevention.md` -- Prevents confidence without evidence
-- Load `ai-governance/no-assumption-policy.md` -- Prohibits filling gaps with "best judgment"; always ask the user
+- Load `ai-governance/no-assumption-policy.md` -- Default: ask for missing info; do not guess; Prohibits filling gaps with "AI best judgment".
 
 ---
 

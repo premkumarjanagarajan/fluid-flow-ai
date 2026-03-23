@@ -68,11 +68,10 @@ subagent: false
 
 #### Step 5: Request User Input
 
-- **MANDATORY**: Offer the user the choice between **Answer Manually** or **AI Best Judgement** mode (see `../../knowledge-core/question-format-guide.md` for full details):
-  - **Answer Manually**: Ask user to fill `[Answer]:` tags directly in the plan document
-  - **AI Best Judgement**: AI fills all `[Answer]:` tags with best judgement, adds `[Reasoning]:` for each, flags low-confidence answers; user reviews and overrides as needed
+- **MANDATORY**: Ask the user to fill `[Answer]:` tags directly in the plan document (see `../../knowledge-core/question-format-guide.md`).
+- Wait for the user to confirm completion before proceeding.
 - Emphasize importance of decomposition decisions
-- Provide clear instructions on completing the `[Answer]:` tags (or how to review AI-generated answers)
+- Provide clear instructions on completing the `[Answer]:` tags
 
 #### Step 6: Collect Answers
 

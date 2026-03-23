@@ -158,9 +158,8 @@ Explain trade-offs and recommend the best fit based on the project context.
 
 #### Step 7: Request User Input
 
-- **MANDATORY**: Offer the user the choice between **Answer Manually** or **AI Best Judgement** mode (see `../../knowledge-core/question-format-guide.md` for full details):
-  - **Answer Manually**: Ask user to fill in all `[Answer]:` tags directly in the plan document
-  - **AI Best Judgement**: AI fills all `[Answer]:` tags with best judgement, adds `[Reasoning]:` for each, flags low-confidence answers; user reviews and overrides as needed
+- **MANDATORY**: Ask the user to fill in all `[Answer]:` tags directly in the plan document (see `../../knowledge-core/question-format-guide.md`).
+- Wait for the user to confirm completion before proceeding.
 - Emphasise importance of domain language decisions — incorrect ubiquitous language is costly to change later
 - Provide clear instructions on how to complete the `[Answer]:` tags
 

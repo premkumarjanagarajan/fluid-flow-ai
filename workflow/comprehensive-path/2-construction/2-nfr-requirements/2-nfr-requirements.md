@@ -63,9 +63,8 @@ Determine non-functional requirements for the unit and make tech stack choices.
 
 ### Step 5: Collect and Analyze Answers
 
-- **MANDATORY**: Offer the user the choice between **Answer Manually** or **AI Best Judgement** mode (see `../../../knowledge-core/question-format-guide.md` for full details):
-  - **Answer Manually**: Wait for user to complete all [Answer]: tags
-  - **AI Best Judgement**: AI fills all [Answer]: tags with best judgement, adds [Reasoning]: for each, flags low-confidence answers; user reviews and overrides as needed; wait for user to confirm review is complete
+- **MANDATORY**: Wait for user to complete all [Answer]: tags (see `../../knowledge-core/question-format-guide.md`).
+- Wait for the user to confirm completion before proceeding.
 - **MANDATORY**: Carefully review ALL responses for vague or ambiguous answers
 - **CRITICAL**: Add follow-up questions for ANY unclear responses - do not proceed with ambiguity
 - Look for responses like "depends", "maybe", "not sure", "mix of", "somewhere between", "standard", "typical"

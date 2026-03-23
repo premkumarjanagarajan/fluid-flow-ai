@@ -31,7 +31,8 @@ The text the user typed is the feature description. Do not ask the user to repea
    2. Extract key concepts from description
       Identify: actors, actions, data, constraints
    3. For unclear aspects:
-      - Make informed guesses based on context and industry standards
+      - Identify possible interpretations and propose clearly labeled options (include a recommended option only if you can justify it from provided context)
+      - Do not silently guess or assume. If user input is needed, mark with `[NEEDS CLARIFICATION: specific question]`
       - Only mark with [NEEDS CLARIFICATION: specific question] if:
         - The choice significantly impacts feature scope or user experience
         - Multiple reasonable interpretations exist with different implications
@@ -42,7 +43,7 @@ The text the user typed is the feature description. Do not ask the user to repea
       If no clear user flow: ERROR "Cannot determine user scenarios"
    5. Generate Functional Requirements
       Each requirement must be testable
-      Use reasonable defaults for unspecified details (document assumptions in Assumptions section)
+      If proposing defaults, record them as **provisional** in the Assumptions section and require explicit user approval before treating them as final
    6. Define Success Criteria
       Create measurable, technology-agnostic outcomes
       Include both quantitative metrics and qualitative measures
@@ -83,8 +84,8 @@ The text the user typed is the feature description. Do not ask the user to repea
 
 ### For AI Generation
 
-1. **Make informed guesses**: Use context, industry standards, and common patterns to fill gaps
-2. **Document assumptions**: Record reasonable defaults in the Assumptions section
+1. **Propose options, don’t guess**: When details are missing, propose options or mark `[NEEDS CLARIFICATION]`
+2. **Document assumptions**: If you propose a default, record it as **provisional** in the Assumptions section and request user approval
 3. **Limit clarifications**: Maximum 3 [NEEDS CLARIFICATION] markers
 4. **Prioritize clarifications**: scope > security/privacy > user experience > technical details
 5. **Think like a tester**: Every vague requirement should fail the "testable and unambiguous" checklist item

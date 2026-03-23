@@ -19,7 +19,7 @@ Generate a structured change risk report for CAB reviewers. This primitive runs 
 
 ### 1. Determine Report Mode
 
-Check if a previous report exists at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/operations/risk-report.md`.
+Check if a previous report exists at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`.
 
 - **No previous report**: default to Full Report
 - **Previous report exists**: present the choice:
@@ -67,9 +67,9 @@ Gather all available context from the initiative:
 
 ### 4. Generate the Report
 
-Create the directory `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/operations/` if it does not exist.
+Create the directory `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/` if it does not exist.
 
-Generate at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/operations/risk-report.md`
+Generate at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`
 
 Report structure:
 

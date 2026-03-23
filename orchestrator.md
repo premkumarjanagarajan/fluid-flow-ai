@@ -148,7 +148,7 @@ Present workflows grouped by source. Suggest best match with `-->`. **Wait for u
 Post-implementation actions, executed in order:
 
 1. **VAPT**: Load `primitives/vapt.md`. Run the vulnerability assessment and penetration testing. Must pass its human gate (Critical/High findings) before proceeding.
-2. **Risk Report**: Load `primitives/risk-report.md`. Generate the change risk report at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/operations/risk-report.md`.
+2. **Risk Report**: Load `primitives/risk-report.md`. Generate the change risk report at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`.
 3. **Reverse Engineering Update** (brownfield only): Load `skills/reverse-engineering/reverse-engineering.md` to refresh project-level documentation with the new changes.
 4. **Analytics Reconciliation**: Load `primitives/analytics.md` to finalize initiative-level timing and metrics.
 5. **Commit**: Present summary + conventional commit --> **wait for approval** --> commit.

@@ -23,7 +23,6 @@
 ## Your Team's Role:
 • **Answer questions** in dedicated question files using [Answer]: tags with letter choices (A, B, C, D, E)
 • **Option E available**: Choose "Other" and describe your custom response if provided options don't match
-• **AI Best Judgement option**: For every question iteration, you can choose to let the AI answer using its best judgement. The AI fills all answers with reasoning, flags low-confidence items, and you review and override any you disagree with before proceeding.
 • **Work as a team** to review and approve each phase before proceeding
 • **Collectively decide** on architectural approach when needed
 • **Important**: This is a team effort - involve relevant stakeholders for each phase
