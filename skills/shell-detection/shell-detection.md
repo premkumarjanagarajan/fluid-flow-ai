@@ -4,8 +4,8 @@ Detect the user's OS and shell to route script execution for the session.
 
 ## How to Run
 
-1. Try `scripts/shell-detection.bash` first
-2. If it fails (not found, permission denied, or error), try `scripts/shell-detection.ps1`
+1. Try `skills/shell-detection/scripts/shell-detection.bash` first
+2. If it fails (not found, permission denied, or error), try `skills/shell-detection/scripts/shell-detection.ps1`
 3. Parse the output and store `SHELL_TYPE` and `OS` for the session
 
 ## Output Format
