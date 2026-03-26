@@ -16,17 +16,17 @@ Open an empty workspace in VS Code / Cursor (no folders added yet).
 git clone https://github.com/BetssonGroup/fluid-flow-ai.git
 ```
 
-### 3. Create your local Fluid Flow repo
+### 3. Add your department Fluid Flow repo
 
-Create a new repository for your team / department — this is where initiative artifacts will live (e.g. `fluid-flow-ai-pam`).
+Each department has its own Fluid Flow repository where initiative artifacts, local knowledge base, and workflows live (e.g. `data-fluid-flow`, `payment-fluid-flow`).
 
-You can start with an empty folder, or copy the skeleton shipped with Fluid Flow:
+If your department already has one, clone it:
 
 ```bash
-cp -R fluid-flow-ai/local-fluid-flow my-local-fluid-flow
+git clone <your-department-fluid-flow-repo-url>
 ```
 
-The skeleton includes empty `initiatives/`, `knowledge-base-local/`, `skills/`, and `workflows/` folders.
+If your department doesn't have one yet, reach out to your Head of Engineering to discuss the best approach for creating it.
 
 ### 4. Add your working repositories
 
@@ -40,7 +40,7 @@ Your workspace should now look like this:
 
 ```
 fluid-flow-ai/            # Core framework (this repo)
-my-local-fluid-flow/      # Your local Fluid Flow repo (artifacts live here)
+data-fluid-flow/          # Your department Fluid Flow repo (artifacts live here)
 my-working-repo/           # The code you change and ship
 ```
 
