@@ -22,8 +22,8 @@ This stage generates code for each unit of work through two integrated parts:
 
 **Read from**:
 - Unit design artifacts from previous construction steps
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md` (if BDD Specification was executed)
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/code-structure.md` (brownfield only)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md` (if BDD Specification was executed)
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/code-structure.md` (brownfield only)
 
 ## Guidance
 
@@ -71,7 +71,7 @@ This stage generates code for each unit of work through two integrated parts:
 
 #### Step 4: Create Unit Plan Document
 
-- [ ] Save complete plan as `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-code-generation-plan.md`
+- [ ] Save complete plan as `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-code-generation-plan.md`
 - [ ] Include step numbering (Step 1, Step 2, etc.)
 - [ ] Include unit context and dependencies
 - [ ] Include story traceability
@@ -95,7 +95,7 @@ This stage generates code for each unit of work through two integrated parts:
 
 #### Step 10: Load Unit Code Generation Plan
 
-- [ ] Read the complete plan from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-code-generation-plan.md`
+- [ ] Read the complete plan from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-code-generation-plan.md`
 - [ ] Identify the next uncompleted step (first [ ] checkbox)
 - [ ] Load the context for that step (unit, dependencies, stories)
 
@@ -108,7 +108,7 @@ This stage generates code for each unit of work through two integrated parts:
   - **If file doesn't exist**: Create new file
 - [ ] Write to correct locations:
   - **Application Code**: Workspace root per project structure
-  - **Documentation**: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/code/` (markdown only)
+  - **Documentation**: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/code/` (markdown only)
   - **Build/Config Files**: Workspace root
 - [ ] Follow unit story requirements
 - [ ] Respect dependencies and interfaces
@@ -130,7 +130,7 @@ This stage generates code for each unit of work through two integrated parts:
 #### Code Location Rules
 
 - **Application code**: Workspace root only (NEVER artefacts/)
-- **Documentation**: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/code/` (markdown summaries)
+- **Documentation**: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/code/` (markdown summaries)
 
 **Structure patterns by project type**:
 - **Brownfield**: Use existing structure (e.g., `src/main/java/`, `lib/`, `pkg/`)
@@ -147,13 +147,13 @@ This stage generates code for each unit of work through two integrated parts:
 
 #### BDD Step Definitions Rules (Conditional — when BDD Specification was executed)
 
-- **Source**: Read `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md` before generating step definitions
+- **Source**: Read `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md` before generating step definitions
 - **Location**: Step definition files are application code — place them in the workspace root under the project's existing test structure (e.g., `tests/steps/`, `src/test/java/.../steps/`, `Features/StepDefinitions/`)
 - **One class per feature file**: Group step definitions by the feature file they serve to keep them cohesive and maintainable
-- **No duplicate steps**: Before generating a new step definition, check the step catalogue (`{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/step-catalogue.md`) for existing equivalent steps
+- **No duplicate steps**: Before generating a new step definition, check the step catalogue (`{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/step-catalogue.md`) for existing equivalent steps
 - **Binding only, no assertions in steps**: Step definitions wire Gherkin language to service/domain calls; assertions belong in the domain/service layer, not the step body
 - **Hooks**: Generate `Before` / `After` hooks for test setup and teardown only if the BDD plan specifies shared state requirements
-- **Documentation**: Generate a markdown summary at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/code/bdd-step-definitions-summary.md` listing all generated step definition files and the Gherkin steps they implement
+- **Documentation**: Generate a markdown summary at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/code/bdd-step-definitions-summary.md` listing all generated step definition files and the Gherkin steps they implement
 
 #### Planning Phase Rules
 
@@ -172,9 +172,9 @@ This stage generates code for each unit of work through two integrated parts:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-code-generation-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-code-generation-plan.md`
 - Application code in workspace root
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/code/` (documentation)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/code/` (documentation)
 
 ## Gate
 
@@ -196,7 +196,7 @@ This stage generates code for each unit of work through two integrated parts:
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
 > Please examine the generated code at:
 > - **Application Code**: [actual-workspace-path]
-> - **Documentation**: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/code/`
+> - **Documentation**: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/code/`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

@@ -23,4 +23,4 @@ last-update: 11/03/2026
 
 ## Shared Knowledge
 
-Workflow-wide reference material is at `knowledge-core/` within this workflow folder.
+Workflow-wide reference material is under `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/` and `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/` (enterprise KB repo).

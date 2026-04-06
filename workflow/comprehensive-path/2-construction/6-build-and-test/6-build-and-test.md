@@ -31,7 +31,7 @@ Analyze the project to determine appropriate testing strategy:
 
 ### Step 2: Generate Build Instructions
 
-Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-instructions.md`:
+Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-instructions.md`:
 
 ```markdown
 # Build Instructions
@@ -80,7 +80,7 @@ Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/b
 
 ### Step 3: Generate Unit Test Execution Instructions
 
-Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/unit-test-instructions.md`:
+Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/unit-test-instructions.md`:
 
 ```markdown
 # Unit Test Execution
@@ -108,7 +108,7 @@ If tests fail:
 
 ### Step 4: Generate Integration Test Instructions
 
-Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/integration-test-instructions.md`:
+Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/integration-test-instructions.md`:
 
 ```markdown
 # Integration Test Instructions
@@ -164,7 +164,7 @@ Test interactions between units/services to ensure they work together correctly.
 
 ### Step 5: Generate Performance Test Instructions (If Applicable)
 
-Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/performance-test-instructions.md`:
+Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/performance-test-instructions.md`:
 
 ```markdown
 # Performance Test Instructions
@@ -200,7 +200,7 @@ Validate system performance under load to ensure it meets requirements.
 
 ### Step 6: Generate Additional Test Instructions (As Needed)
 
-**BDD Tests** (If BDD Specification was executed): Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/bdd-test-instructions.md`:
+**BDD Tests** (If BDD Specification was executed): Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/bdd-test-instructions.md`:
 
 ```markdown
 # BDD Test Execution Instructions
@@ -210,12 +210,12 @@ Execute the Gherkin feature files against their step definitions to validate tha
 behaves exactly as specified in the living documentation.
 
 ## Prerequisites
-- BDD framework installed and configured (see `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/bdd-strategy.md`)
+- BDD framework installed and configured (see `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/bdd-strategy.md`)
 - Step definitions generated for all units (see Code Generation outputs)
 - Test environment running with required services available
 
 ## Feature Files Location
-`{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/`
+`{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/`
 
 ## Run BDD Tests
 
@@ -245,34 +245,34 @@ behaves exactly as specified in the living documentation.
 
 ### 4. Fix Undefined or Failing Steps
 If steps are undefined or failing:
-1. Check `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/step-catalogue.md` for correct step wording
+1. Check `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/step-catalogue.md` for correct step wording
 2. Verify step definition binding matches the Gherkin text exactly
-3. Review `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md` for the intended implementation
+3. Review `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md` for the intended implementation
 4. Re-run after fix to confirm green
 
 ## Scenario Traceability
 Each scenario includes a story ID comment — use these to trace failures back to the originating user story and acceptance criteria.
 ```
 
-**Contract Tests** (For Microservices): Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/contract-test-instructions.md`:
+**Contract Tests** (For Microservices): Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/contract-test-instructions.md`:
 - API contract validation between services
 - Consumer-driven contract testing
 - Schema validation
 
-**Security Tests**: Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/security-test-instructions.md`:
+**Security Tests**: Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/security-test-instructions.md`:
 - Vulnerability scanning
 - Dependency security checks
 - Authentication/authorization testing
 - Input validation testing
 
-**End-to-End Tests**: Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/e2e-test-instructions.md`:
+**End-to-End Tests**: Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/e2e-test-instructions.md`:
 - Complete user workflow testing
 - Cross-service scenarios
 - UI testing (if applicable)
 
 ### Step 7: Generate Test Summary
 
-Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-and-test-summary.md`:
+Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-and-test-summary.md`:
 
 ```markdown
 # Build and Test Summary
@@ -329,7 +329,7 @@ Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/b
 
 ### Step 8: Test Coverage Delta & Improvement Plan (CONDITIONAL - Post-Implementation)
 
-**Execute IF**: Reverse engineering artifacts exist at `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/test-coverage-analysis.md`
+**Execute IF**: Reverse engineering artifacts exist at `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/test-coverage-analysis.md`
 
 **Skip IF**: No test coverage baseline exists (greenfield project or test-coverage-analysis.md not generated)
 
@@ -340,19 +340,19 @@ Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/b
 2. Load the Phase 1 baseline from reverse-engineering
 3. Re-run coverage commands to get current metrics (post-implementation)
 4. Execute Phase 2: Coverage Delta Report, Improvement Plan, Test Templates, Quality Gate Recommendations, Continuous Coverage Improvement Loop
-5. Generate output at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/coverage-improvement-plan.md`
+5. Generate output at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/coverage-improvement-plan.md`
 6. Present coverage delta summary to user
 
 ### Step 9: Reverse Engineering Update (CONDITIONAL - Post-Implementation)
 
-**Execute IF**: Reverse engineering artifacts exist at `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/`
+**Execute IF**: Reverse engineering artifacts exist at `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/`
 
 **Skip IF**: No reverse engineering artifacts (greenfield project)
 
 **Purpose**: Keep all reverse engineering artifacts — including the C4 architecture model — up to date after every implementation cycle. This is the **final step** of the Construction phase and must not be skipped when artifacts exist.
 
 **Execution**:
-1. Execute incremental update of ALL `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` artifacts based on changes made during this feature's implementation, including:
+1. Execute incremental update of ALL `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` artifacts based on changes made during this feature's implementation, including:
    - `business-overview.md`, `architecture.md`, `c4-architecture.md`, `code-structure.md`, `api-documentation.md`, `component-inventory.md`, `technology-stack.md`, `dependencies.md`, `code-quality-assessment.md`, `test-coverage-analysis.md`
 2. Update `reverse-engineering-timestamp.md` with feature reference and change summary
 
@@ -362,16 +362,16 @@ Present comprehensive message with build status, test results (unit, integration
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-instructions.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/unit-test-instructions.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/integration-test-instructions.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/performance-test-instructions.md` (if applicable)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/bdd-test-instructions.md` (if BDD executed)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/contract-test-instructions.md` (for microservices)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/security-test-instructions.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/e2e-test-instructions.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-and-test-summary.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/coverage-improvement-plan.md` (conditional)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-instructions.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/unit-test-instructions.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/integration-test-instructions.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/performance-test-instructions.md` (if applicable)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/bdd-test-instructions.md` (if BDD executed)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/contract-test-instructions.md` (for microservices)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/security-test-instructions.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/e2e-test-instructions.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-and-test-summary.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/coverage-improvement-plan.md` (conditional)
 - Updated reverse-engineering artifacts (conditional)
 
 ## Gate
@@ -398,7 +398,7 @@ Present comprehensive message with build status, test results (unit, integration
 6. ✅ [additional test files as needed]
 7. ✅ build-and-test-summary.md
 
-Review the summary in `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-and-test-summary.md`
+Review the summary in `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/build-and-test/build-and-test-summary.md`
 
 **Ready to proceed to Operations stage for deployment planning?**
 ```

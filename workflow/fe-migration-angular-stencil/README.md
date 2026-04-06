@@ -137,7 +137,7 @@ Output templates live in each step's `templates/` folder:
 
 ## Knowledge Core
 
-Cross-cutting reference material shared across multiple phases and steps. Lives in `knowledge-core/`:
+Cross-cutting reference material shared across multiple phases and steps. In the enterprise KB repo, coding standards live under `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/` and troubleshooting under `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/`:
 
 | File | Covers | Referenced by |
 |------|--------|---------------|
@@ -145,7 +145,7 @@ Cross-cutting reference material shared across multiple phases and steps. Lives 
 | `event-bus-access.md` | Mandatory `window.sbXpEventBus` rule (never import `EventBus` directly) | 1.5, 2.2, 2.4, 2.5 |
 | `bff-data-fetching.md` | Three mandatory BFF rules (named type alias, dual guard, full envelope in mocks) | 2.2, 2.4, 2.5 |
 | `typescript-standards.md` | TypeScript standards (explicit return types, enum guidance, null handling) | 2.2 |
-| `troubleshooting.md` | Documented root causes and exact fixes for common issues | 2.2, 2.3, 2.4, 2.5 |
+| `angular-to-stencil.md` (under `troubleshooting/`) | Documented root causes and exact fixes for common issues | 2.2, 2.3, 2.4, 2.5 |
 | `typography-and-genos-rules.md` | fds-sb-typography mandatory + Genos CSS variables forbidden | 1.2, 1.5, 2.2, 2.5 |
 
 ## Instructions
@@ -181,7 +181,7 @@ No governance configuration is needed within this workflow.
 fe-migration-angular-stencil/
   wf-fe-migration-angular-stencil.md    -- workflow definition (loaded by orchestrator)
   README.md                              -- this file (human reference)
-  knowledge-core/                        -- shared workflow knowledge
+  knowledge-core/                        -- README only (domain files in enterprise KB repo)
   1-inception/
     1-inception.md                       -- phase orchestrator
     1-specify/  2-analyze/  3-clarify/  4-requirements/  5-design/  6-plan/
@@ -200,4 +200,4 @@ Each step folder can contain:
 - `knowledge-base/` -- reference material for this step
 - `commands/` -- executable commands
 
-The `knowledge-core/` folder contains cross-cutting reference material shared by multiple steps (shadow DOM rules, Event Bus access, BFF data fetching, TypeScript standards, troubleshooting).
+Domain reference files for those topics live under `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/` and `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/`. The local `knowledge-core/` folder retains a README; preload domain files from those KB paths.

@@ -7,7 +7,7 @@ steps: 6
 
 Goal: produce verified requirements, a component design, and an approved plan before any code.
 
-KB note: `ai-governance/overconfidence-prevention.md` is critical during this phase -- ask when uncertain, do not assume.
+KB note: `ai-governance/no-assumption-policy.md` is critical during this phase -- ask when uncertain, do not assume.
 
 ## Step Chain
 

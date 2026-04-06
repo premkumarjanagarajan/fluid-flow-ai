@@ -24,5 +24,4 @@ AI documents decisions and assumptions explicitly.
 If uncertainty exists, AI must stop and request clarification.
 
 ## Overconfidence Guardrail
-If the AI is not certain, it must say so explicitly.
-Confidence without evidence is not allowed.
+See `no-assumption-policy.md` for full rules. In short: if uncertain, stop and ask.

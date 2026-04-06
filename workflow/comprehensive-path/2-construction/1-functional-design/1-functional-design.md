@@ -15,8 +15,8 @@ subagent: false
 - Execution plan must indicate Functional Design stage should execute
 
 **Read from**:
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-story-map.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-story-map.md`
 
 ## Guidance
 
@@ -32,8 +32,8 @@ Functional Design focuses on:
 
 ### Step 1: Analyze Unit Context
 
-- Read unit definition from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work.md`
-- Read assigned stories from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-story-map.md`
+- Read unit definition from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work.md`
+- Read assigned stories from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-story-map.md`
 - Understand unit responsibilities and boundaries
 
 ### Step 2: Create Functional Design Plan
@@ -63,11 +63,11 @@ Functional Design focuses on:
 - **Integration Points** - Ask about external system interactions, APIs, and data exchange
 - **Error Handling** - Ask about error scenarios, validation failures, and exception handling
 - **Business Scenarios** - Ask about edge cases, alternative flows, and complex business situations
-- **BDD Coverage** (if BDD Specification was executed) - Ask which BDD scenarios from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/` directly exercise this unit's business logic, and whether any new edge-case scenarios should be added to the feature files based on the logic being designed
+- **BDD Coverage** (if BDD Specification was executed) - Ask which BDD scenarios from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/` directly exercise this unit's business logic, and whether any new edge-case scenarios should be added to the feature files based on the logic being designed
 
 ### Step 4: Store Plan
 
-- Save as `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-functional-design-plan.md`
+- Save as `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-functional-design-plan.md`
 - Include all [Answer]: tags for user input
 
 ### Step 5: Collect and Analyze Answers
@@ -82,21 +82,21 @@ Functional Design focuses on:
 
 ### Step 6: Generate Functional Design Artifacts
 
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/business-logic-model.md`
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/business-rules.md`
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/domain-entities.md`
-- **If BDD Specification was executed**: Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/business-logic-model.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/business-rules.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/domain-entities.md`
+- **If BDD Specification was executed**: Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md`
   - Map each Gherkin `Given / When / Then` step from the relevant feature files to the specific domain entity, business rule, or service method that implements it
   - Identify any BDD scenarios that cannot be mapped (gaps) and flag them for scenario update or new scenario creation
   - This artifact is the technical contract between the Gherkin specification and the implementation, and is used by Code Generation to produce accurate step definitions
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-functional-design-plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/business-logic-model.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/business-rules.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/domain-entities.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md` (if BDD Specification was executed)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-functional-design-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/business-logic-model.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/business-rules.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/domain-entities.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/bdd-step-mapping.md` (if BDD Specification was executed)
 
 ## Gate
 
@@ -118,7 +118,7 @@ Functional Design focuses on:
 
 ```markdown
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the functional design artifacts at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/functional-design/`
+> Please examine the functional design artifacts at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/functional-design/`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

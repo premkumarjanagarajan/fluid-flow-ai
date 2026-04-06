@@ -7,11 +7,11 @@ steps: 8
 
 Goal: planning, requirements gathering, and architectural decisions. Determine WHAT to build and WHY.
 
-KB note: `ai-governance/overconfidence-prevention.md` and `ai-governance/no-assumption-policy.md` are critical during this phase.
+KB note: `ai-governance/no-assumption-policy.md` is critical during this phase -- ask when uncertain, do not assume.
 
 Workspace Detection and Reverse Engineering are handled by the orchestrator before this workflow is invoked. Their artifacts are available at:
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/workspace-detection.md`
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` (if brownfield)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/workspace-detection.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` (if brownfield)
 
 ## Step Chain
 

@@ -16,10 +16,10 @@ subagent: false
 - Reverse Engineering artifacts loaded as context (if brownfield)
 
 **IF brownfield project**:
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/architecture.md`
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/component-inventory.md`
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/technology-stack.md`
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/business-overview.md` (if exists)
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/architecture.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/component-inventory.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/technology-stack.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/business-overview.md` (if exists)
 
 ## Guidance
 
@@ -54,7 +54,7 @@ Reply **YES** to run Technical Scoping, or **NO** to proceed directly to Require
 ### Step 1: Load Context
 
 **IF brownfield project**:
-- Load reverse-engineering artifacts from `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/`
+- Load reverse-engineering artifacts from `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/`
 
 Use these artifacts to understand the existing system boundary, domain ownership, and integration topology when evaluating the incoming request.
 
@@ -162,7 +162,7 @@ If decomposition is recommended, propose a delivery sequence:
 
 ### Step 6: Generate Technical Scoping Report
 
-Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/technical-scoping/technical-scoping-report.md`:
+Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/technical-scoping/technical-scoping-report.md`:
 
 ```markdown
 # Technical Scoping & Engineering Discovery Report
@@ -269,7 +269,7 @@ If the user opted out:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/technical-scoping/technical-scoping-report.md` (when executed)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/technical-scoping/technical-scoping-report.md` (when executed)
 
 ## Gate
 
@@ -288,7 +288,7 @@ Then end with:
 
 ```markdown
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the scoping report at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/technical-scoping/technical-scoping-report.md`
+> Please examine the scoping report at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/technical-scoping/technical-scoping-report.md`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

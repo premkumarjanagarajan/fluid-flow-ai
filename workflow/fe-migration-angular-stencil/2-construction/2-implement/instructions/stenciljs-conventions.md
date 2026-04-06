@@ -1,11 +1,11 @@
 # StencilJS Conventions
 
 Also read before implementing:
-- `knowledge-core/shadow-dom-css-rules.md` — two mandatory Shadow DOM CSS rules
-- `knowledge-core/event-bus-access.md` — mandatory `window.sbXpEventBus` rule
-- `knowledge-core/bff-data-fetching.md` — three mandatory BFF data fetching rules
-- `knowledge-core/typescript-standards.md` — TypeScript standards (return types, enums, null handling)
-- `knowledge-core/typography-and-genos-rules.md` — fds-sb-typography mandatory, Genos CSS variables forbidden
+- `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/shadow-dom-css-rules.md` — two mandatory Shadow DOM CSS rules
+- `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/event-bus-access.md` — mandatory `window.sbXpEventBus` rule
+- `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/bff-data-fetching.md` — three mandatory BFF data fetching rules
+- `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/typescript-standards.md` — TypeScript standards (return types, enums, null handling)
+- `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/typography-and-genos-rules.md` — fds-sb-typography mandatory, Genos CSS variables forbidden
 - `tsx-structure-semantics.md` — semantic HTML5 in TSX
 - `sass-standards.md` — SCSS formatting
 - `performance-best-practices.md` — performance rules
@@ -27,7 +27,7 @@ Also read before implementing:
 
 - `shadow: true` by default
 - `shadow: false` must be justified (e.g. global styling dependency)
-- **Mandatory**: read `knowledge-core/shadow-dom-css-rules.md` — never put BEM root class on `<Host>`, never use `&-` BEM nesting in SCSS
+- **Mandatory**: read `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/shadow-dom-css-rules.md` — never put BEM root class on `<Host>`, never use `&-` BEM nesting in SCSS
 
 ## Rendering Rules
 
@@ -39,7 +39,7 @@ Also read before implementing:
 
 ## Event Bus Access (mandatory)
 
-**NEVER** import `EventBus` from `@sb-xp/event-bus` directly. **ALWAYS** use `window.sbXpEventBus`. See `knowledge-core/event-bus-access.md` for the full rule and reasoning.
+**NEVER** import `EventBus` from `@sb-xp/event-bus` directly. **ALWAYS** use `window.sbXpEventBus`. See `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/event-bus-access.md` for the full rule and reasoning.
 
 ```typescript
 // ❌ WRONG — creates isolated singleton, breaks Storybook and cross-MFE comms
@@ -62,7 +62,7 @@ connectedCallback(): void {
 
 - Fetch in `componentWillLoad` (async)
 - Use `@State()` for loading/error/data states
-- **Mandatory**: follow all three rules in `knowledge-core/bff-data-fetching.md`:
+- **Mandatory**: follow all three rules in `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/bff-data-fetching.md`:
   1. Export a named response type alias (`GetMyWidgetResponse = HttpResponse<MyWidgetData>`)
   2. Guard on `responseCode === ResponseCode.Failure` AND `!ok`
   3. Include full BFF response envelope in mocks and test stubs

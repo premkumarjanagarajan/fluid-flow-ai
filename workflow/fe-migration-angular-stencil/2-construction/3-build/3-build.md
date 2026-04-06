@@ -9,7 +9,7 @@ subagent: false
 
 ## Guidance
 
-Pre-load `knowledge-core/troubleshooting.md` — contains documented root causes for common build failures (ENOENT for workspace libs, Nx cache issues, dependency reinstall).
+Pre-load `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/angular-to-stencil.md` — contains documented root causes for common build failures (ENOENT for workspace libs, Nx cache issues, dependency reinstall).
 
 ### 1. Run Build
 
@@ -19,7 +19,7 @@ Execute the build command for the target project (e.g. `stencil build`, `pnpm bu
 
 If the build fails:
 - Read the error output
-- Check `knowledge-core/troubleshooting.md` for known root causes before diagnosing from first principles
+- Check `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/angular-to-stencil.md` for known root causes before diagnosing from first principles
 - Fix the source files causing the failure
 - Re-run the build
 - Repeat until build succeeds

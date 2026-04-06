@@ -6,7 +6,7 @@ subagent: false
 ## Inputs
 
 - User's checklist request describing domain/focus area
-- Feature artifacts at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/` (spec.md, plan.md, tasks.md)
+- Feature artifacts at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/` (spec.md, plan.md, tasks.md)
 
 ## Guidance
 
@@ -108,7 +108,7 @@ Prohibited patterns: any item starting with "Verify", "Test", "Confirm", "Check"
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/checklists/{domain}.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/checklists/{domain}.md`
 
 ## Gate
 

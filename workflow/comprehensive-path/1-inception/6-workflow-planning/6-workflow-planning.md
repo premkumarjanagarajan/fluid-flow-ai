@@ -7,11 +7,11 @@ subagent: false
 
 **ALWAYS**: This step always executes after understanding requirements and scope.
 
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` (if brownfield): architecture.md, component-inventory.md, technology-stack.md, dependencies.md
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md` (includes intent analysis)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirement-verification-questions.md` (with answers)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` (if executed)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/personas.md` (if executed)
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` (if brownfield): architecture.md, component-inventory.md, technology-stack.md, dependencies.md
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md` (includes intent analysis)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirement-verification-questions.md` (with answers)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` (if executed)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/personas.md` (if executed)
 
 ## Guidance
 
@@ -237,7 +237,7 @@ linkStyle default stroke:#333,stroke-width:2px
 
 ### Step 7: Create Execution Plan Document
 
-Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/execution-plan.md`:
+Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/execution-plan.md`:
 
 ```markdown
 # Execution Plan
@@ -412,7 +412,7 @@ I recommend skipping [Y] stages:
 **Estimated Timeline**: [Duration]
 
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the execution plan at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/execution-plan.md`
+> Please examine the execution plan at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/execution-plan.md`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >
@@ -432,7 +432,7 @@ I recommend skipping [Y] stages:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/execution-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/execution-plan.md`
 
 ## Gate
 

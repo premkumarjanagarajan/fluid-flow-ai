@@ -17,7 +17,7 @@ The orchestrator Stage 7 will recommend this skill as a follow-up after commit/P
 ## Prerequisites
 
 1. **Same chat session** (preferred): Full conversation context available from the workflow execution. If this is a new session, offer degraded mode (audit-only analysis).
-2. **Initiative directory exists**: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/` with `metadata/audit.md` and `metadata/state.md`.
+2. **Initiative directory exists**: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/` with `metadata/audit.md` and `metadata/state.md`.
 3. **Workflow has completed**: Check `metadata/state.md` — the workflow should have reached its final stage. If still in progress, warn and ask whether to proceed with a partial retrospective.
 
 ---
@@ -32,10 +32,10 @@ Load all available data sources:
 - Full interaction history: questions asked, decisions made, blockers encountered, rework cycles
 
 **From initiative artifacts**:
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/metadata/audit.md` — structured interaction log
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/metadata/state.md` — stage progression
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/metadata/analytics.md` — timing and metrics (if exists)
-- All artefacts in `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/metadata/audit.md` — structured interaction log
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/metadata/state.md` — stage progression
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/metadata/analytics.md` — timing and metrics (if exists)
+- All artefacts in `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`
 
 ### Step 2: 8-Dimension Analysis
 
@@ -70,13 +70,13 @@ Priority levels:
 
 ### Step 4: Write Outputs
 
-1. **Retrospective report** at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/retrospective.md`:
+1. **Retrospective report** at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/retrospective.md`:
    - Summary (overall workflow health rating)
    - Dimension ratings table
    - Detailed findings per dimension
    - Metrics (total duration, rework cycles, human gates triggered, etc.)
 
-2. **Improvement backlog** at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/improvement-backlog.md`:
+2. **Improvement backlog** at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/improvement-backlog.md`:
    - Table of all improvement items with ID, dimension, priority, description, target file, proposed change
    - Grouped by priority
 

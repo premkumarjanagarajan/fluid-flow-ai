@@ -30,7 +30,7 @@ Using `ENTRY_POINT` in the source Angular repository:
 - Identify services: API calls, stores/NgRx, config, feature flags
 - Map data flow, event flow, styling/SCSS usage
 - Note config usage that will be omitted in the MFE (replaced by props, Event Bus, or BFF)
-- **Typography classes**: scan all HTML templates for Genos typography classes (e.g. `genos-heading-h2`, `genos-body-regular`). Record each occurrence and mark as → replace with `<fds-sb-typography>`. See `knowledge-core/typography-and-genos-rules.md`.
+- **Typography classes**: scan all HTML templates for Genos typography classes (e.g. `genos-heading-h2`, `genos-body-regular`). Record each occurrence and mark as → replace with `<fds-sb-typography>`. See `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/typography-and-genos-rules.md`.
 - **Genos CSS variables**: scan all SCSS/CSS files for `var(--genos-*)` usage. List every occurrence. Mark as → MUST NOT be used in new architecture.
 - **Analytics tracking**: scan for analytics/tracking calls (`track()`, `trackEvent()`, `dataLayer.push()`, GTM triggers). Record event names, trigger conditions, and payloads. If none found, state "No analytics tracking found."
 

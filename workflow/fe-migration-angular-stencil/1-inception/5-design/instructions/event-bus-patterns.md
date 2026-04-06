@@ -1,6 +1,6 @@
 # Event Bus Patterns
 
-**Critical prerequisite**: read `knowledge-core/event-bus-access.md` — the mandatory `window.sbXpEventBus` rule. Components must NEVER import `EventBus` from `@sb-xp/event-bus` directly.
+**Critical prerequisite**: read `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/event-bus-access.md` — the mandatory `window.sbXpEventBus` rule. Components must NEVER import `EventBus` from `@sb-xp/event-bus` directly.
 
 ## Topic Naming
 

@@ -5,13 +5,13 @@ subagent: false
 
 ## Inputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` (required)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md` (required)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/data-model.md` (optional)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/contracts/` (optional)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/research.md` (optional)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/checklists/` (optional)
-- Brownfield context from `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` (if available)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/data-model.md` (optional)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/contracts/` (optional)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/research.md` (optional)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/checklists/` (optional)
+- Brownfield context from `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` (if available)
 
 ## Guidance
 
@@ -28,7 +28,7 @@ subagent: false
    - **If all complete**: Automatically proceed
 
 3. **Load brownfield context** (if available):
-   - Check if `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` exists
+   - Check if `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` exists
    - If found, load: `architecture.md`, `c4-architecture.md`, `code-structure.md`, `technology-stack.md`, `dependencies.md`
    - Use this context to generate code consistent with the existing codebase
 
@@ -113,7 +113,7 @@ subagent: false
 ## Outputs
 
 - All files created/modified as specified in the task plan
-- Updated `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` with completed task checkboxes
+- Updated `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` with completed task checkboxes
 
 ## Gate
 

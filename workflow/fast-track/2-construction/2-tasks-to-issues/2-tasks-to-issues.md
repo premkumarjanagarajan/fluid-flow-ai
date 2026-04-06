@@ -5,7 +5,7 @@ subagent: false
 
 ## Inputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` (required)
 - JIRA project key (from initiative name, user input, or `.fluid-flow-local.json`)
 - Atlassian MCP (required for JIRA operations)
 
@@ -52,7 +52,7 @@ Present the user with: "Create JIRA issues from the task breakdown?" (A: Yes, B:
 
 ## Outputs
 
-- Updated `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` with JIRA Mapping section
+- Updated `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` with JIRA Mapping section
 - JIRA issues created in the target project
 
 ## Gate

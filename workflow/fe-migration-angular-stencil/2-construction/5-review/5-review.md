@@ -12,7 +12,7 @@ checkpoint: initiatives/{INITIATIVE_NAME}/artefacts/2.5-code-review.md
 
 ## Guidance
 
-Pre-load `knowledge-core/troubleshooting.md` for reference when diagnosing any issues found during review. Also reference `knowledge-core/shadow-dom-css-rules.md`, `knowledge-core/event-bus-access.md`, `knowledge-core/bff-data-fetching.md`, and `knowledge-core/typography-and-genos-rules.md` when verifying implementation correctness.
+Pre-load `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/angular-to-stencil.md` for reference when diagnosing any issues found during review. Also reference `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/shadow-dom-css-rules.md`, `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/event-bus-access.md`, `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/bff-data-fetching.md`, and `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/typography-and-genos-rules.md` when verifying implementation correctness.
 
 ### Per-Group Review (during 2-implement)
 

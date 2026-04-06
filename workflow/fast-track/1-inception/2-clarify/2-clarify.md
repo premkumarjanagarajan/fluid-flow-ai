@@ -5,7 +5,7 @@ subagent: false
 
 ## Inputs
 
-- Feature specification at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`
+- Feature specification at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`
 - User arguments (if any)
 
 ## Guidance
@@ -75,7 +75,7 @@ This step always runs before the plan step. Even when no critical ambiguities ar
    - Markdown structure valid
    - Terminology consistency across updated sections
 
-7. Write the updated spec back to `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`.
+7. Write the updated spec back to `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`.
 
 8. Report completion: number of questions asked, path to updated spec, sections touched, coverage summary table with statuses:
 
@@ -98,7 +98,7 @@ Behavior rules:
 
 ## Outputs
 
-- Updated `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md` with clarifications integrated
+- Updated `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md` with clarifications integrated
 
 ## Gate
 

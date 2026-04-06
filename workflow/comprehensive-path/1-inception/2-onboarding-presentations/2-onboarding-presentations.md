@@ -9,7 +9,7 @@ subagent: false
 
 ## Inputs
 
-- Reverse engineering artifacts under `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` including:
+- Reverse engineering artifacts under `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` including:
   - Business overview
   - Architecture documentation
   - Code structure
@@ -26,7 +26,7 @@ subagent: false
 ### Step 1: Create/Update Feature Registry (Mandatory)
 
 Ensure a feature registry exists:
-- File: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/features/features-registry.md`
+- File: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/features/features-registry.md`
 
 If missing, create it with this structure:
 
@@ -70,7 +70,7 @@ If missing, create it with this structure:
 
 ### Step 3: Generate Engineer Onboarding Deck
 
-Create or update: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/engineers/onboarding-engineers.md`
+Create or update: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/engineers/onboarding-engineers.md`
 
 #### Required outline
 
@@ -111,7 +111,7 @@ flowchart LR
 Text alternative: <describe diagram in 1-3 sentences>
 
 Source anchors:
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/architecture.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/architecture.md`
 
 ## 4. Domain and ownership map
 - <domains/services ownership summary>
@@ -164,7 +164,7 @@ Source anchors:
 
 ### Step 4: Generate Product Manager Onboarding Deck
 
-Create or update: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/product/onboarding-product.md`
+Create or update: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/product/onboarding-product.md`
 
 #### Required outline
 
@@ -190,7 +190,7 @@ Create or update: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inc
 ## 2. Capabilities overview
 - Capability: <name> - <description>
 Source anchors:
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/business-overview.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/business-overview.md`
 
 ## 3. Customer journeys
 ### Journey: <name>
@@ -238,13 +238,13 @@ Before writing any files:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/engineers/onboarding-engineers.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/product/onboarding-product.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/features/features-registry.md` (created or updated)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/engineers/onboarding-engineers.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/product/onboarding-product.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/features/features-registry.md` (created or updated)
 
 **Optional build outputs** (if sli-dev build is configured in the repo):
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/slides/engineers/` (HTML/PDF as configured)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/slides/product/` (HTML/PDF as configured)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/slides/engineers/` (HTML/PDF as configured)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/slides/product/` (HTML/PDF as configured)
 
 ## Gate
 
@@ -254,9 +254,9 @@ Before writing any files:
 # 📚 Onboarding Presentations Complete
 
 ## Generated/Updated
-- Engineer onboarding: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/engineers/onboarding-engineers.md`
-- Product onboarding: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/product/onboarding-product.md`
-- Feature registry: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/features/features-registry.md` (created or updated)
+- Engineer onboarding: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/engineers/onboarding-engineers.md`
+- Product onboarding: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/onboarding/product/onboarding-product.md`
+- Feature registry: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/features/features-registry.md` (created or updated)
 
 ## Notes
 - Any major assumptions

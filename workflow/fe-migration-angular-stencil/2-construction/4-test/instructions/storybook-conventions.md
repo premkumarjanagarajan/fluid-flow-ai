@@ -1,6 +1,6 @@
 # Storybook Conventions
 
-Also read: `knowledge-core/event-bus-access.md` (why `window.sbXpEventBus`), `knowledge-core/bff-data-fetching.md` (full envelope in mocks).
+Also read: `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/event-bus-access.md` (why `window.sbXpEventBus`), `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/bff-data-fetching.md` (full envelope in mocks).
 
 ## Principles
 
@@ -71,7 +71,7 @@ Rules:
 
 - Place global mocks in `.storybook/mocks/` (one file per widget)
 - Place component-specific mocks in `tests/*.mock.ts`
-- Include full BFF `Response<T>` envelope in mocks (see `knowledge-core/bff-data-fetching.md` Rule 3)
+- Include full BFF `Response<T>` envelope in mocks (see `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/bff-data-fetching.md` Rule 3)
 - Use `MOCK_{COMPONENT}_{VARIANT}` naming for mock constants
 - Mock Event Bus to isolate stories
 - Use `mockTranslations()` if i18n is involved

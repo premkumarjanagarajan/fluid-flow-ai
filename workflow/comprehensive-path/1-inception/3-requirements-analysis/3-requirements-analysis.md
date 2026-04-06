@@ -17,9 +17,9 @@ subagent: false
 - Reverse Engineering must be complete (if brownfield)
 
 **IF brownfield project**:
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/architecture.md`
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/component-inventory.md`
-- `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/technology-stack.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/architecture.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/component-inventory.md`
+- `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/technology-stack.md`
 
 ## Guidance
 
@@ -36,7 +36,7 @@ Missing context requires AI to stop and request clarification.
 ### Step 1: Load Reverse Engineering Context (if available)
 
 **IF brownfield project**:
-- Load reverse-engineering artifacts from `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/`
+- Load reverse-engineering artifacts from `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/`
 - Use these to understand existing system when analyzing request
 
 ### Step 2: Analyze User Request (Intent Analysis)
@@ -115,7 +115,7 @@ Analyze whatever the user has provided:
 
 ### Step 6: Generate Clarifying Questions (PROACTIVE APPROACH)
 
-- **ALWAYS** create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirement-verification-questions.md` unless requirements are exceptionally clear and complete
+- **ALWAYS** create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirement-verification-questions.md` unless requirements are exceptionally clear and complete
 - Ask questions about ANY missing, unclear, or ambiguous areas
 - Focus on functional requirements, non-functional requirements, user scenarios, and business context
 - If presenting multiple-choice options for answers:
@@ -129,7 +129,7 @@ Analyze whatever the user has provided:
 
 ### Step 7: Generate Requirements Document
 
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md`
 - Include intent analysis summary at the top:
   - User request
   - Request type
@@ -141,8 +141,8 @@ Analyze whatever the user has provided:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirement-verification-questions.md` (when questions needed)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirement-verification-questions.md` (when questions needed)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md`
 
 ## Gate
 
@@ -164,7 +164,7 @@ Analyze whatever the user has provided:
 
 ```markdown
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the requirements document at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md`
+> Please examine the requirements document at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

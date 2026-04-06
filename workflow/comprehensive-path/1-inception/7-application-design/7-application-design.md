@@ -7,8 +7,8 @@ subagent: false
 
 **CONDITIONAL**: This step executes when the execution plan indicates Application Design should run.
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md` (required)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` (required)
 - Execution plan must indicate Application Design stage should execute
 
 ## Guidance
@@ -36,7 +36,7 @@ AI must escalate and invoke the ADR Integrity Gate. See `../../knowledge-core/ad
 
 #### Step 1: Analyze Context
 
-- Read `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md` and `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md`
+- Read `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/requirements.md` and `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md`
 - Identify key business capabilities and functional areas
 - Determine design scope and complexity
 
@@ -74,7 +74,7 @@ AI must escalate and invoke the ADR Integrity Gate. See `../../knowledge-core/ad
 
 #### Step 5: Store Application Design Plan
 
-- Save as `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/application-design-plan.md`
+- Save as `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/application-design-plan.md`
 - Include all `[Answer]:` tags for user input
 - Ensure plan covers all design aspects
 
@@ -114,20 +114,20 @@ If the analysis in step 8 reveals ANY ambiguous answers, you MUST:
 #### Step 10: Generate Application Design Artifacts
 
 - Execute the approved plan to generate design artifacts
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/components.md` with:
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/components.md` with:
   - Component name and purpose
   - Component responsibilities
   - Component interfaces
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/component-methods.md` with:
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/component-methods.md` with:
   - Method signatures for each component
   - High-level purpose of each method
   - Input/output types
   - Note: Detailed business rules will be defined in Functional Design (per-unit, CONSTRUCTION phase)
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/services.md` with:
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/services.md` with:
   - Service definitions
   - Service responsibilities
   - Service interactions and orchestration
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/component-dependency.md` with:
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/component-dependency.md` with:
   - Dependency matrix showing relationships
   - Communication patterns between components
   - Data flow diagrams
@@ -144,11 +144,11 @@ If the analysis in step 8 reveals ANY ambiguous answers, you MUST:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/application-design-plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/components.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/component-methods.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/services.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/component-dependency.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/application-design-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/components.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/component-methods.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/services.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/component-dependency.md`
 
 ## Gate
 
@@ -165,7 +165,7 @@ If the analysis in step 8 reveals ANY ambiguous answers, you MUST:
 [AI-generated summary of application design artifacts created in bullet points]
 
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the application design artifacts at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/`
+> Please examine the application design artifacts at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

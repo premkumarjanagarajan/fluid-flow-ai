@@ -1,6 +1,6 @@
 # Unit Testing Conventions
 
-Also read: `knowledge-core/event-bus-access.md` (why `window.sbXpEventBus`), `knowledge-core/bff-data-fetching.md` (full envelope rule), `knowledge-core/troubleshooting.md` (test TypeError fixes).
+Also read: `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/event-bus-access.md` (why `window.sbXpEventBus`), `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/bff-data-fetching.md` (full envelope rule), `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/angular-to-stencil.md` (test TypeError fixes).
 
 ## Framework
 

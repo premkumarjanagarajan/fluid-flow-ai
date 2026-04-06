@@ -5,9 +5,9 @@ subagent: false
 
 ## Inputs
 
-- Feature specification at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`
+- Feature specification at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`
 - Constitution at `../../knowledge-core/constitution.md`
-- Brownfield context from `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` (if available)
+- Brownfield context from `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` (if available)
 
 ## Guidance
 
@@ -20,7 +20,7 @@ subagent: false
 2. **Load context**: Read FEATURE_SPEC and `../../knowledge-core/constitution.md`. Load IMPL_PLAN template (already copied).
 
 3. **Load brownfield context** (if available):
-   - Check if `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` exists
+   - Check if `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` exists
    - If found, load: `architecture.md`, `code-structure.md`, `technology-stack.md`, `dependencies.md`, `api-documentation.md`
    - Use this context to generate plans consistent with the existing codebase
 
@@ -76,10 +76,10 @@ subagent: false
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/research.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/data-model.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/contracts/`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/research.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/data-model.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/contracts/`
 
 ## Gate
 

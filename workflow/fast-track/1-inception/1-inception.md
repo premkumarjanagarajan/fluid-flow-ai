@@ -7,7 +7,7 @@ steps: 4
 
 Goal: produce a complete specification, implementation plan, and quality analysis before any code is written.
 
-KB note: `ai-governance/overconfidence-prevention.md` and `ai-governance/no-assumption-policy.md` are critical during this phase -- ask when uncertain, do not assume.
+KB note: `ai-governance/no-assumption-policy.md` is critical during this phase -- ask when uncertain, do not assume.
 
 ## Step Chain
 

@@ -7,9 +7,9 @@ subagent: false
 
 **CONDITIONAL**: This step executes when Workflow Planning indicates BDD Specification should run.
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` (required)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/personas.md` (required)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/` (recommended)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/personas.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/` (recommended)
 - Workflow Planning must indicate BDD Specification stage should execute
 
 ## Guidance
@@ -58,7 +58,7 @@ BDD Specification focuses on:
 **CRITICAL**: Before proceeding, perform this assessment:
 
 1. **Analyze story context**:
-   - Review `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md`
+   - Review `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md`
    - Identify stories with multiple acceptance criteria or scenario paths
    - Assess whether business stakeholders would benefit from readable specs
    - Determine if QA team requires executable specifications
@@ -66,7 +66,7 @@ BDD Specification focuses on:
 2. **Apply assessment criteria** above
 
 3. **Document the assessment decision**:
-   - Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-assessment.md`
+   - Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-assessment.md`
    - Include reasoning for why BDD adds value for this feature
    - Reference specific assessment criteria that apply
    - List the BDD framework to be used (see Step 3 questions)
@@ -152,7 +152,7 @@ Explain trade-offs and recommend the best fit based on the project context.
 
 #### Step 6: Store BDD Plan
 
-- Save the complete plan with embedded questions to `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-plan.md`
+- Save the complete plan with embedded questions to `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-plan.md`
 - Include all `[Answer]:` tags for user input
 - Ensure plan includes story-to-scenario traceability matrix
 
@@ -199,10 +199,10 @@ If Step 9 reveals ANY ambiguous answers:
 
 #### Step 12: Load BDD Specification Plan
 
-- `[ ]` Read the complete plan from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-plan.md`
+- `[ ]` Read the complete plan from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-plan.md`
 - `[ ]` Identify the next uncompleted step (first `[ ]` checkbox)
-- `[ ]` Load user stories from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md`
-- `[ ]` Load requirements from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/` (if available)
+- `[ ]` Load user stories from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md`
+- `[ ]` Load requirements from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/` (if available)
 
 #### Step 13: Execute Current Step
 
@@ -228,7 +228,7 @@ If Step 9 reveals ANY ambiguous answers:
 
 - `[ ]` If more steps remain, return to Step 12
 - `[ ]` If all steps complete, verify all mandatory artifacts are generated:
-  - All `.feature` files present in `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/`
+  - All `.feature` files present in `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/`
   - `bdd-strategy.md` written
   - `step-catalogue.md` written
   - All user story acceptance criteria covered
@@ -253,11 +253,11 @@ If Step 9 reveals ANY ambiguous answers:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-assessment.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/` (`.feature` files)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/bdd-strategy.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/step-catalogue.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-assessment.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/bdd-specification-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/` (`.feature` files)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/bdd-strategy.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/step-catalogue.md`
 
 ## Gate
 
@@ -279,10 +279,10 @@ If Step 9 reveals ANY ambiguous answers:
 # BDD Specification Complete
 
 > **REVIEW REQUIRED:**
-> Please examine the BDD artifacts at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/`
-> - Feature files: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/`
-> - Strategy: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/bdd-strategy.md`
-> - Step catalogue: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/step-catalogue.md`
+> Please examine the BDD artifacts at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/`
+> - Feature files: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/features/`
+> - Strategy: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/bdd-strategy.md`
+> - Step catalogue: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/bdd/step-catalogue.md`
 
 > **WHAT'S NEXT?**
 >

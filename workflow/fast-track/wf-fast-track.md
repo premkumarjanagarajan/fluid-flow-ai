@@ -22,10 +22,10 @@ last-update: 16/03/2026
 | Variable | Source | Used by |
 |----------|--------|---------|
 | `SHELL_TYPE` | Stage 0 (shell detection) | All steps (script selection) |
-| `LOCAL_REPO_PATH` | Stage 3 (local repo detection) | All steps (artifact paths) |
+| `DEPT_FF_PATH` | Stage 3 (local repo detection) | All steps (artifact paths) |
 | `INITIATIVE_NAME` | Stage 5 (initiative creation) | All steps (artifact paths) |
 
-Artifact root: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`
+Artifact root: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`
 
 ## Phases
 

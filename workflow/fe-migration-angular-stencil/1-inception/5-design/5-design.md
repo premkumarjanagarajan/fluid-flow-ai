@@ -13,7 +13,7 @@ checkpoint: initiatives/{INITIATIVE_NAME}/artefacts/1.5-architecture.md
 ## Guidance
 
 Load `instructions/event-bus-patterns.md` and `instructions/naming-conventions.md`.
-Also load `knowledge-core/typography-and-genos-rules.md` for typography and Genos CSS variable constraints.
+Also load `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/typography-and-genos-rules.md` for typography and Genos CSS variable constraints.
 
 ### 1. Reusability Scan
 

@@ -13,13 +13,13 @@ Generate a structured change risk report for CAB reviewers. This primitive runs 
 
 - Implementation is complete (Construction phase gate passed)
 - VAPT has passed its human gate
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/` exists with metadata and artefacts
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/` exists with metadata and artefacts
 
 ## Execution
 
 ### 1. Determine Report Mode
 
-Check if a previous report exists at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`.
+Check if a previous report exists at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`.
 
 - **No previous report**: default to Full Report
 - **Previous report exists**: present the choice:
@@ -59,17 +59,17 @@ git diff main...HEAD
 ### 3. Load Lifecycle Context
 
 Gather all available context from the initiative:
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/security/vapt-report.md` (if exists)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/metadata/audit.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/security/vapt-report.md` (if exists)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/metadata/audit.md`
 
 ### 4. Generate the Report
 
-Create the directory `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/` if it does not exist.
+Create the directory `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/` if it does not exist.
 
-Generate at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`
+Generate at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`
 
 Report structure:
 

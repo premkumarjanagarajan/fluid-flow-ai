@@ -33,10 +33,10 @@ Many inception and construction steps are **CONDITIONAL** -- they execute only w
 | Variable | Source | Used by |
 |----------|--------|---------|
 | `SHELL_TYPE` | Stage 0 (shell detection) | Steps using scripts |
-| `LOCAL_REPO_PATH` | Stage 3 (local repo detection) | All steps (artifact paths) |
+| `DEPT_FF_PATH` | Stage 3 (local repo detection) | All steps (artifact paths) |
 | `INITIATIVE_NAME` | Stage 5 (initiative creation) | All steps (artifact paths) |
 
-Artifact root: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`
+Artifact root: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`
 
 ## Phases
 

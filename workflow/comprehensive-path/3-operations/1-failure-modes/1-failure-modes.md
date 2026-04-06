@@ -11,7 +11,7 @@ subagent: false
 
 - Build and Test must be complete
 - All construction artifacts available (functional design, NFR design, infrastructure design, code)
-- Change Risk Report (if generated) at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`
+- Change Risk Report (if generated) at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`
 
 ## Guidance
 
@@ -39,7 +39,7 @@ Reference `../../../knowledge-core/adrs-technical-principles.md` for resilience 
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/failure-modes-analysis.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/failure-modes-analysis.md`
 
 ## Gate
 

@@ -42,7 +42,7 @@ Reference `../../../knowledge-core/adrs-technical-principles.md` for observabili
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/oncall-impact-assessment.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/oncall-impact-assessment.md`
 
 ## Gate
 

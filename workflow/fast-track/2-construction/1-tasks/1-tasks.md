@@ -5,11 +5,11 @@ subagent: false
 
 ## Inputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md` (required)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md` (required)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/data-model.md` (optional)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/contracts/` (optional)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/research.md` (optional)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md` (required)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/data-model.md` (optional)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/contracts/` (optional)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/research.md` (optional)
 
 ## Guidance
 
@@ -93,7 +93,7 @@ Every task MUST strictly follow this format:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md`
 
 ## Gate
 

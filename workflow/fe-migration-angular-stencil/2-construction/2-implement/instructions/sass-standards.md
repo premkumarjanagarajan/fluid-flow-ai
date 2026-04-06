@@ -1,6 +1,6 @@
 # SASS/SCSS Standards
 
-SASS/SCSS-specific conventions. For general CSS rules (specificity, shadow DOM scoping, responsive layout), see `css-conventions.md` and `knowledge-core/shadow-dom-css-rules.md`.
+SASS/SCSS-specific conventions. For general CSS rules (specificity, shadow DOM scoping, responsive layout), see `css-conventions.md` and `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/shadow-dom-css-rules.md`.
 
 ## Syntax & Formatting
 
@@ -25,7 +25,7 @@ SASS/SCSS-specific conventions. For general CSS rules (specificity, shadow DOM s
 
 ## Ampersand (`&`) Usage
 
-Use `&` for pseudo-classes/elements. **Do NOT use `&-suffix` for BEM nesting** — see `knowledge-core/shadow-dom-css-rules.md` Rule 2.
+Use `&` for pseudo-classes/elements. **Do NOT use `&-suffix` for BEM nesting** — see `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/shadow-dom-css-rules.md` Rule 2.
 
 ```scss
 // ✅ Pseudo-classes and modifiers — these are safe

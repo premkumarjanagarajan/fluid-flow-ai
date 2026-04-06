@@ -6,7 +6,7 @@ subagent: false
 ## Inputs
 
 - User's feature description (from the triggering message)
-- Brownfield context from `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` (if available)
+- Brownfield context from `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` (if available)
 
 ## Guidance
 
@@ -19,7 +19,7 @@ The text the user typed is the feature description. Do not ask the user to repea
    Parse the output to get FEATURE_DIR and BRANCH_NAME.
 
 2. **Load brownfield context** (if available):
-   - Check if `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` exists
+   - Check if `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/` exists
    - If found, load: `business-overview.md`, `architecture.md`, `code-structure.md`, `api-documentation.md`, `component-inventory.md`
    - Use this context to write more informed specifications
 
@@ -51,11 +51,11 @@ The text the user typed is the feature description. Do not ask the user to repea
    7. Identify Key Entities (if data involved)
    8. Return: SUCCESS (spec ready for planning)
 
-5. Write the specification to `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md` using the template structure.
+5. Write the specification to `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md` using the template structure.
 
 6. **Specification Quality Validation**: After writing the initial spec, validate it against quality criteria:
 
-   a. **Create Spec Quality Checklist**: Generate a checklist file at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/checklists/requirements.md` with validation items covering:
+   a. **Create Spec Quality Checklist**: Generate a checklist file at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/checklists/requirements.md` with validation items covering:
       - Content Quality (no implementation details, focused on user value, written for non-technical stakeholders)
       - Requirement Completeness (testable, unambiguous, measurable success criteria)
       - Feature Readiness (clear acceptance criteria, user scenarios cover primary flows)
@@ -112,8 +112,8 @@ Success criteria must be:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/checklists/requirements.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/checklists/requirements.md`
 
 ## Gate
 

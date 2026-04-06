@@ -1,6 +1,6 @@
 # CSS Conventions
 
-Also read: `knowledge-core/shadow-dom-css-rules.md` (two mandatory rules that cause invisible styling failures), `knowledge-core/typography-and-genos-rules.md` (fds-sb-typography + Genos CSS variables forbidden), and `sass-standards.md` (SCSS-specific formatting).
+Also read: `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/shadow-dom-css-rules.md` (two mandatory rules that cause invisible styling failures), `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/typography-and-genos-rules.md` (fds-sb-typography + Genos CSS variables forbidden), and `sass-standards.md` (SCSS-specific formatting).
 
 ## Design Tokens (FDS)
 
@@ -15,7 +15,7 @@ Use FDS tokens only. No hardcoded values.
 
 ## Shadow DOM CSS Scoping (mandatory)
 
-See `knowledge-core/shadow-dom-css-rules.md` for full details. Summary:
+See `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/shadow-dom-css-rules.md` for full details. Summary:
 
 1. **Never put the BEM root class on `<Host>`** — put it on a wrapper `<div>` inside `<Host>`
 2. **Write flat SCSS selectors only** — no `&-` BEM nesting (Stencil's bundler emits CSS Nesting which silently fails in shadow DOM)

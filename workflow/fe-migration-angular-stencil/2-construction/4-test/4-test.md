@@ -15,10 +15,10 @@ Load these instructions before testing:
 - `instructions/unit-testing-conventions.md` — Jest setup, EventBus mock pattern, moduleNameMapper, BFF envelope in test stubs
 - `instructions/storybook-conventions.md` — required stories, container-query layouts, mock timing, central mock registry, Actions tab
 
-Also pre-load from `knowledge-core/`:
+Also pre-load from `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/` and `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/`:
 - `event-bus-access.md` — why `window.sbXpEventBus` and impact on test setup
 - `bff-data-fetching.md` — full envelope rule (applies to both test stubs and story mocks)
-- `troubleshooting.md` — unit test TypeError fixes, component not loading in Storybook
+- `troubleshooting/angular-to-stencil.md` — unit test TypeError fixes, component not loading in Storybook
 
 ### 1. Unit Tests
 

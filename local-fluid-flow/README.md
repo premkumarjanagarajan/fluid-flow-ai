@@ -1,47 +1,93 @@
-# `local-fluid-flow/` (reference kit)
+# Department Fluid Flow Repository (reference skeleton)
 
-This folder is a **starter kit you copy** into a separate “local fluid-flow repository”.
+This folder is a **starter kit** for creating a new department fluid-flow repository. Copy it, configure it, and use it as your team's workspace anchor.
 
-- It lives inside `fluid-flow-ai-core/` only so it’s easy to find and copy.
-- It is **not meant to be used in-place**.
-- Do **not** configure Fluid Flow to use this folder inside Core.
+## What is a department fluid-flow repo?
 
-## What is a “local fluid-flow repository”?
+The department repo is where your team's initiative artifacts, local knowledge, and custom workflows live. It sits alongside `fluid-flow-ai` and `betsson-kb-docs` in a multi-root workspace.
 
-A local fluid-flow repository is a **separate folder (often a separate git repo)** for a domain/area that Fluid Flow uses as the home for:
+It contains:
 
-- **Workflows**: area-specific workflows / steps / conventions (now or later, depending on your setup)
-- **Knowledge base**: prompts/instructions, architecture notes, gotchas, compliance constraints, team standards
-- **Artifacts storage**: specs, plans, tasks, checklists, reports, metadata, and any other initiative outputs
+- **`initiatives/`** — all initiative artifacts (specs, plans, tasks, code, metadata)
+- **`knowledge-base-local/`** — optional domain/team-specific knowledge loaded during workflows
+- **`skills/`** — optional local skills your team wants to add
+- **`workflows/`** — optional custom workflows for your department
 
-Keeping this separate from Core is intentional:
+## Required workspace structure
 
-- **Isolation**: knowledge/workflows don’t pollute work (and vice versa)
-- **Customization**: each domain can evolve its own instructions and workflow variants safely
-- **Durability**: artifacts have a stable home across many initiatives without cluttering `fluid-flow-ai-core/`
+A Fluid Flow workspace is a multi-root IDE workspace with four types of repos cloned side by side:
 
-## What’s in this reference kit?
+```
+fluid-flow-ai/                     # FF core (cloned, auto-updated to latest main)
+betsson-kb-docs/                   # Enterprise KB (cloned, auto-updated to latest main)
+{dept}-fluid-flow/                 # This repo — department FF (workspace root)
+  .department-fluid-flow.json      # department config (committed)
+  initiatives/                     # initiative artifacts
+  knowledge-base-local/            # optional local KB
+  workflows/                       # optional custom workflows
 
-- `initiatives/` — the folder the orchestrator expects in a local repo (this kit keeps it empty for structure)
-- `knowledge-base-local/` — optional domain/team knowledge you want loaded during workflows
-- `skills/` — optional local skills your team wants to keep alongside the local repo
-- `workflows/` — optional place for local workflows (future support / conventions)
-
-## Quick start (copy into your own local repo)
-
-1. Create a folder (outside `fluid-flow-ai-core/`) for your domain, and make sure it has `initiatives/`.
-2. Copy the kit folders you want into that folder.
-3. Run Fluid Flow and, when asked for the local repo path, point to **your** local repo folder.
-4. On future runs, Fluid Flow will re-use the saved local-repo pointer automatically.
-
-Example:
-
-```bash
-LOCAL_REPO="/path/to/your-local-fluid-flow-repo"
-mkdir -p "$LOCAL_REPO/initiatives"
-
-cp -R "local-fluid-flow/knowledge-base-local" "$LOCAL_REPO/"
-cp -R "local-fluid-flow/skills" "$LOCAL_REPO/"
-cp -R "local-fluid-flow/workflows" "$LOCAL_REPO/"
+{source-repo}/                     # Source code repo (workspace root, at least 1)
+{source-repo-2}/                   # Additional source repos (optional)
 ```
 
+## Quick start
+
+### 1. Create your department repo
+
+```bash
+mkdir bx-fluid-flow && cd bx-fluid-flow
+git init
+```
+
+### 2. Copy the skeleton files
+
+```bash
+# From the fluid-flow-ai core repo:
+cp -R local-fluid-flow/.department-fluid-flow.json .
+cp -R local-fluid-flow/.cursor .
+cp -R local-fluid-flow/.vscode .
+cp -R local-fluid-flow/initiatives .
+cp -R local-fluid-flow/knowledge-base-local .
+cp -R local-fluid-flow/skills .
+cp -R local-fluid-flow/workflows .
+```
+
+### 3. Configure your department
+
+Edit `.department-fluid-flow.json`:
+
+```json
+{
+  "department": "brand-experience",
+  "name": "bx-fluid-flow",
+  "knowledgeBaseLocal": false,
+  "workflows": []
+}
+```
+
+### 4. Initial commit
+
+```bash
+git add .
+git commit -m "chore: initialise department fluid-flow repo"
+```
+
+### 5. Clone the core repos
+
+Clone `fluid-flow-ai` and `betsson-kb-docs` alongside your department repo:
+
+```bash
+cd ..
+git clone https://github.com/BetssonGroup/fluid-flow-ai.git
+git clone https://github.com/BetssonGroup/betsson-kb-docs.git
+```
+
+### 6. Set up the workspace
+
+In your IDE, create a multi-root workspace with:
+1. `fluid-flow-ai/`
+2. `betsson-kb-docs/`
+3. Your department repo (e.g., `bx-fluid-flow/`)
+4. Your source code repo(s) (e.g., `sb-b2b-fe-app/`)
+
+The orchestrator detects the workspace structure automatically on first run and auto-updates the core repos to latest `main`.

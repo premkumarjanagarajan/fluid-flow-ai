@@ -14,8 +14,8 @@ subagent: false
 - Execution plan must indicate Infrastructure Design stage should execute
 
 **Read from**:
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/` (if exists)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/` (if exists)
 
 ## Guidance
 
@@ -25,8 +25,8 @@ Map logical software components to actual infrastructure choices for deployment 
 
 ### Step 1: Analyze Design Artifacts
 
-- Read functional design from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/`
-- Read NFR design from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/` (if exists)
+- Read functional design from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/`
+- Read NFR design from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/` (if exists)
 - Identify logical components needing infrastructure
 
 ### Step 2: Create Infrastructure Design Plan
@@ -56,7 +56,7 @@ Map logical software components to actual infrastructure choices for deployment 
 
 ### Step 4: Store Plan
 
-- Save as `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-infrastructure-design-plan.md`
+- Save as `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-infrastructure-design-plan.md`
 - Include all [Answer]: tags for user input
 
 ### Step 5: Collect and Analyze Answers
@@ -68,16 +68,16 @@ Map logical software components to actual infrastructure choices for deployment 
 
 ### Step 6: Generate Infrastructure Design Artifacts
 
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/infrastructure-design/infrastructure-design.md`
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/infrastructure-design/deployment-architecture.md`
-- If shared infrastructure: Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/shared-infrastructure.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/infrastructure-design/infrastructure-design.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/infrastructure-design/deployment-architecture.md`
+- If shared infrastructure: Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/shared-infrastructure.md`
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-infrastructure-design-plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/infrastructure-design/infrastructure-design.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/infrastructure-design/deployment-architecture.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/shared-infrastructure.md` (if shared infrastructure)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-infrastructure-design-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/infrastructure-design/infrastructure-design.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/infrastructure-design/deployment-architecture.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/shared-infrastructure.md` (if shared infrastructure)
 
 ## Gate
 
@@ -99,7 +99,7 @@ Map logical software components to actual infrastructure choices for deployment 
 
 ```markdown
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the infrastructure design at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/infrastructure-design/`
+> Please examine the infrastructure design at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/infrastructure-design/`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

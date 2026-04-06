@@ -14,7 +14,7 @@ subagent: false
 - Execution plan must indicate NFR Requirements stage should execute
 
 **Read from**:
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/`
 
 ## Guidance
 
@@ -24,7 +24,7 @@ Determine non-functional requirements for the unit and make tech stack choices.
 
 ### Step 1: Analyze Functional Design
 
-- Read functional design artifacts from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/`
+- Read functional design artifacts from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/functional-design/`
 - Understand business logic complexity and requirements
 
 ### Step 2: Create NFR Requirements Plan
@@ -58,7 +58,7 @@ Determine non-functional requirements for the unit and make tech stack choices.
 
 ### Step 4: Store Plan
 
-- Save as `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-nfr-requirements-plan.md`
+- Save as `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-nfr-requirements-plan.md`
 - Include all [Answer]: tags for user input
 
 ### Step 5: Collect and Analyze Answers
@@ -73,14 +73,14 @@ Determine non-functional requirements for the unit and make tech stack choices.
 
 ### Step 6: Generate NFR Requirements Artifacts
 
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/nfr-requirements.md`
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/tech-stack-decisions.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/nfr-requirements.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/tech-stack-decisions.md`
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-nfr-requirements-plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/nfr-requirements.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/tech-stack-decisions.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-nfr-requirements-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/nfr-requirements.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/tech-stack-decisions.md`
 
 ## Gate
 
@@ -102,7 +102,7 @@ Determine non-functional requirements for the unit and make tech stack choices.
 
 ```markdown
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the NFR requirements at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/nfr-requirements/`
+> Please examine the NFR requirements at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/nfr-requirements/`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

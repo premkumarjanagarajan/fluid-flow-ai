@@ -7,9 +7,9 @@ subagent: false
 
 **CONDITIONAL**: This step executes when the execution plan indicates Units Planning/Generation should run.
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/` (recommended)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` (recommended)
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/` (required: components.md, component-methods.md, services.md, component-dependency.md)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/requirements/` (recommended)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` (recommended)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/` (required: components.md, component-methods.md, services.md, component-dependency.md)
 - Execution plan must indicate Design phase (Units Planning/Generation) should execute
 
 ## Guidance
@@ -62,7 +62,7 @@ subagent: false
 
 #### Step 4: Store UOW Plan
 
-- Save as `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/unit-of-work-plan.md`
+- Save as `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/unit-of-work-plan.md`
 - Include all `[Answer]:` tags for user input
 - Ensure plan covers all aspects of system decomposition
 
@@ -101,7 +101,7 @@ If the analysis in step 7 reveals ANY ambiguous answers, you MUST:
 
 #### Step 9: Request Approval
 
-- Ask: "**Unit of work plan complete. Review the plan in `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/unit-of-work-plan.md`. Ready to proceed to generation?**"
+- Ask: "**Unit of work plan complete. Review the plan in `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/unit-of-work-plan.md`. Ready to proceed to generation?**"
 - DO NOT PROCEED until user confirms
 
 ---
@@ -110,7 +110,7 @@ If the analysis in step 7 reveals ANY ambiguous answers, you MUST:
 
 #### Step 10: Load Unit of Work Plan
 
-- `[ ]` Read the complete plan from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/unit-of-work-plan.md`
+- `[ ]` Read the complete plan from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/unit-of-work-plan.md`
 - `[ ]` Identify the next uncompleted step (first `[ ]` checkbox)
 - `[ ]` Load the context and requirements for that step
 
@@ -122,9 +122,9 @@ If the analysis in step 7 reveals ANY ambiguous answers, you MUST:
 - `[ ]` Use the criteria and boundaries specified in the plan
 
 **Artifact locations**:
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-dependency.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-story-map.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-dependency.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-story-map.md`
 
 #### Step 12: Update Progress
 
@@ -157,10 +157,10 @@ If the analysis in step 7 reveals ANY ambiguous answers, you MUST:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/unit-of-work-plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-dependency.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-story-map.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/unit-of-work-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-dependency.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/unit-of-work-story-map.md`
 
 ## Gate
 
@@ -178,7 +178,7 @@ If the analysis in step 7 reveals ANY ambiguous answers, you MUST:
 [AI-generated summary of units and decomposition created in bullet points]
 
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the units generation artifacts at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/`
+> Please examine the units generation artifacts at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/application-design/`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

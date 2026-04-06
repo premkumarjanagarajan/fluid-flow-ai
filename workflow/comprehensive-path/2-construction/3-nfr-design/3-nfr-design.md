@@ -14,7 +14,7 @@ subagent: false
 - Execution plan must indicate NFR Design stage should execute
 
 **Read from**:
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/`
 
 ## Guidance
 
@@ -24,7 +24,7 @@ Incorporate NFR requirements into unit design using patterns and logical compone
 
 ### Step 1: Analyze NFR Requirements
 
-- Read NFR requirements from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/`
+- Read NFR requirements from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-requirements/`
 - Understand scalability, performance, availability, security needs
 
 ### Step 2: Create NFR Design Plan
@@ -52,7 +52,7 @@ Incorporate NFR requirements into unit design using patterns and logical compone
 
 ### Step 4: Store Plan
 
-- Save as `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-nfr-design-plan.md`
+- Save as `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-nfr-design-plan.md`
 - Include all [Answer]: tags for user input
 
 ### Step 5: Collect and Analyze Answers
@@ -64,14 +64,14 @@ Incorporate NFR requirements into unit design using patterns and logical compone
 
 ### Step 6: Generate NFR Design Artifacts
 
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/nfr-design-patterns.md`
-- Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/logical-components.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/nfr-design-patterns.md`
+- Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/logical-components.md`
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-nfr-design-plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/nfr-design-patterns.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/logical-components.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/plans/{unit-name}-nfr-design-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/nfr-design-patterns.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/{unit-name}/nfr-design/logical-components.md`
 
 ## Gate
 
@@ -93,7 +93,7 @@ Incorporate NFR requirements into unit design using patterns and logical compone
 
 ```markdown
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the NFR design at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/nfr-design/`
+> Please examine the NFR design at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/construction/[unit-name]/nfr-design/`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

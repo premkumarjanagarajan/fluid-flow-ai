@@ -96,7 +96,7 @@ For medium priority cases, execute user stories if ANY of these apply:
    - Confirm this isn't a simple case that should be skipped
 
 3. **Document Assessment Decision**:
-   - Create `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/user-stories-assessment.md`
+   - Create `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/user-stories-assessment.md`
    - Include reasoning for why user stories are valuable for this request
    - Reference specific assessment criteria that apply
    - Explain expected benefits (clarity, testing, stakeholder alignment)
@@ -183,7 +183,7 @@ For medium priority cases, execute user stories if ANY of these apply:
 
 ### Step 6: Store Story Plan
 
-- Save the complete story plan with embedded questions in `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/` directory
+- Save the complete story plan with embedded questions in `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/` directory
 - Filename: `story-generation-plan.md`
 - Include all [Answer]: tags for user input
 - Ensure plan is comprehensive and covers all story development aspects
@@ -247,7 +247,7 @@ If the analysis in step 9 reveals ANY ambiguous answers, you MUST:
 
 ### Step 13: Load Story Generation Plan
 
-- [ ] Read the complete story plan from `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/story-generation-plan.md`
+- [ ] Read the complete story plan from `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/story-generation-plan.md`
 - [ ] Identify the next uncompleted step (first [ ] checkbox)
 - [ ] Load the context and requirements for that step
 
@@ -289,7 +289,7 @@ If the analysis in step 9 reveals ANY ambiguous answers, you MUST:
 
 ```markdown
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the user stories and personas at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` and `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/personas.md`
+> Please examine the user stories and personas at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md` and `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/personas.md`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >
@@ -337,10 +337,10 @@ If the analysis in step 9 reveals ANY ambiguous answers, you MUST:
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/user-stories-assessment.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/story-generation-plan.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md`
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/personas.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/user-stories-assessment.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/plans/story-generation-plan.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/stories.md`
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/inception/user-stories/personas.md`
 
 ## Gate
 

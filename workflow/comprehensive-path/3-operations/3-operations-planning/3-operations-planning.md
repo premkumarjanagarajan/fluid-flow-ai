@@ -12,7 +12,7 @@ subagent: false
 - Failure Modes analysis complete
 - On-call Impact assessment complete
 - All construction artifacts
-- Change Risk Report (if generated) at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`
+- Change Risk Report (if generated) at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`
 
 ## Guidance
 
@@ -24,7 +24,7 @@ Placeholder for future operational phases (deployment, monitoring, maintenance).
 
 ### Change Risk Report (Implemented)
 
-The Change Risk Report is generated automatically at the end of the Construction phase (after Build and Test). It produces a structured CAB-grade risk analysis at `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md` that includes:
+The Change Risk Report is generated automatically at the end of the Construction phase (after Build and Test). It produces a structured CAB-grade risk analysis at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md` that includes:
 
 - Executive summary with risk level and approval recommendation
 - Detailed technical risk analysis (infrastructure, operational, execution risks)
@@ -49,7 +49,7 @@ Any production-impacting change must consider:
 
 ### Observability Platform — Coralogix
 
-When the project uses Coralogix, all dashboard, alert, and log management decisions must follow the rules in `../../../../knowledge-base-core/technology/coralogix/general.md`. This includes:
+When the project uses Coralogix, all dashboard, alert, and log management decisions must follow the rules in the enterprise KB at `$KB_PATH/knowledge/shared/engineering-standards/coralogix/general.md`. This includes:
 
 - Dashboard design following the three-tier hierarchy (overview, drill-down, investigation)
 - Alert design with correct severity mapping and alert type selection
@@ -74,7 +74,7 @@ This Operations Planning step consolidates findings and prepares for future expa
 
 ## Outputs
 
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/operations-readiness-summary.md` (optional)
+- `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/operations-readiness-summary.md` (optional)
 
 ## Gate
 
@@ -89,7 +89,7 @@ This Operations Planning step consolidates findings and prepares for future expa
 - Change Risk Report: [location if generated]
 
 > **📋 <u>**REVIEW REQUIRED:**</u>**  
-> Please examine the operational artifacts at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/`
+> Please examine the operational artifacts at: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/`
 
 > **🚀 <u>**WHAT'S NEXT?**</u>**
 >

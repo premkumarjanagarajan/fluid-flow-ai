@@ -21,12 +21,12 @@ Load these instructions before implementing:
 - `instructions/sass-standards.md` — SCSS formatting, ordering, modules
 - `instructions/performance-best-practices.md` — lazy loading, bundle size, observers
 
-Also pre-load from `knowledge-core/`:
+Also pre-load from `$KB_PATH/knowledge/shared/engineering-standards/fabric/coding-standards/` and `$KB_PATH/knowledge/shared/engineering-standards/fabric/troubleshooting/`:
 - `shadow-dom-css-rules.md` — two mandatory rules (class placement, flat selectors)
 - `event-bus-access.md` — mandatory `window.sbXpEventBus` rule
 - `bff-data-fetching.md` — three mandatory BFF data fetching rules
 - `typescript-standards.md` — explicit return types, enum guidance, null handling
-- `troubleshooting.md` — common build/test/styling issues and fixes
+- `troubleshooting/angular-to-stencil.md` — common build/test/styling issues and fixes
 - `typography-and-genos-rules.md` — fds-sb-typography mandatory, Genos CSS variables forbidden
 
 ### Group-Based Implementation

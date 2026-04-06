@@ -1,6 +1,6 @@
 # VAPT Report Template
 
-Use this template when generating `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/security/vapt-report.md` during the VAPT primitive.
+Use this template when generating `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/security/vapt-report.md` during the VAPT primitive.
 
 ---
 
