@@ -48,7 +48,7 @@ data-fluid-flow/                 # Your department Fluid Flow repo (artifacts li
 my-working-repo/               # The source code you change and ship
 ```
 
-Start a development request — the orchestrator handles the rest.
+Type `/fluid-flow` in the chat to enter the workflow.
 
 ## Repository Boundary
 
