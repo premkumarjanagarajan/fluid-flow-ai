@@ -12,24 +12,54 @@ Display:
 
 ## Stage 0A: Environment Detection
 
-Load `skills/environment-detection/environment-detection.md`. Store session variables:
+Check if `{FF_CORE_PATH}/.local-environment.json` exists.
 
-- `SHELL_TYPE` (bash / powershell)
-- `OS` (darwin / linux / windows)
-- `IDE` (cursor / vscode) — inferred by the AI from the runtime context
-- `PACKAGE_MANAGERS` (comma-separated list)
-- `TECH_STACK` (comma-separated list)
-
-Display:
+**If the file exists** — load cached values. Store all session variables from the JSON and skip the detection scripts:
 
 ```
-  Environment:
+  Environment (cached):
     OS            : {OS}
     Shell         : {SHELL_TYPE}
     IDE           : {IDE}
     Package mgrs  : {PACKAGE_MANAGERS}
     Tech stack    : {TECH_STACK}
+    Cached at     : {detectedAt}
+    (delete .local-environment.json to force re-detection)
 ```
+
+**If the file does not exist** — run fresh detection:
+
+1. Load `skills/environment-detection/environment-detection.md`. Store session variables:
+
+   - `SHELL_TYPE` (bash / powershell)
+   - `OS` (darwin / linux / windows)
+   - `IDE` (cursor / vscode) — inferred by the AI from the runtime context
+   - `PACKAGE_MANAGERS` (comma-separated list)
+   - `TECH_STACK` (comma-separated list)
+
+2. Write results to `{FF_CORE_PATH}/.local-environment.json`:
+
+   ```json
+   {
+     "detectedAt": "{ISO-8601 timestamp}",
+     "os": "{OS}",
+     "shellType": "{SHELL_TYPE}",
+     "ide": "{IDE}",
+     "packageManagers": "{PACKAGE_MANAGERS}",
+     "techStack": "{TECH_STACK}"
+   }
+   ```
+
+3. Display:
+
+   ```
+     Environment (detected — cached for next session):
+       OS            : {OS}
+       Shell         : {SHELL_TYPE}
+       IDE           : {IDE}
+       Package mgrs  : {PACKAGE_MANAGERS}
+       Tech stack    : {TECH_STACK}
+   ```
 
 ## Stage 0B: Workspace Detection
 

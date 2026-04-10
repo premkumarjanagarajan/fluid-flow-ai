@@ -54,6 +54,12 @@ The scripts scan workspace source repos for these markers:
 | `azure-pipelines.yml` | `azure` |
 | `*.py`, `requirements.txt`, `pyproject.toml` | `python` |
 
+## Caching
+
+The orchestrator (Stage 0A) caches the detection output to `{FF_CORE_PATH}/.local-environment.json` after the first run. On subsequent sessions the cached file is loaded directly and this skill is skipped. The cache file is gitignored so it persists across `git pull` and is never committed.
+
+To force a fresh detection, delete `.local-environment.json` from the `fluid-flow-ai` root.
+
 ## Downstream Usage
 
 - **Workflow selection**: `TECH_STACK` helps suggest the best-matching workflow
