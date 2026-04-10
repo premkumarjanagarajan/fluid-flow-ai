@@ -1,24 +1,23 @@
 {
     "mcpServers": {
       "atlassian": {
-        "url": "https://mcp.atlassian.com/v1/mcp"
+        "url": "https://mcp.atlassian.com/v1/mcp",
+        "headers": {
+          "Authorization": "Bearer ${env:ATLASSIAN_API_TOKEN}",
+          "X-Atlassian-User-Email": "${env:ATLASSIAN_EMAIL}"
+        }
+      },
+      "slack": {
+        "url": "https://mcp.slack.com/mcp",
+        "headers": {
+          "Authorization": "Bearer ${env:SLACK_BOT_TOKEN}"
+        }
       },
       "github": {
         "command": "npx",
-        "args": [
-          "-y",
-          "@modelcontextprotocol/server-github"
-        ],
-        "disabled": false,
-        "autoApprove": [
-          "search_repositories",
-          "get_file_contents",
-          "list_repository_contents"
-        ],
+        "args": ["-y", "@modelcontextprotocol/server-github"],
         "env": {
-          "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}",
-          "LOG_LEVEL": "INFO",
-          "NODE_ENV": "production"
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}"
         }
       },
       "aws-document-loader": {
@@ -26,7 +25,6 @@
         "args": [
           "awslabs.document-loader-mcp-server@latest"
         ],
-        "disabled": false,
         "env": {
           "FASTMCP_LOG_LEVEL": "ERROR"
         }

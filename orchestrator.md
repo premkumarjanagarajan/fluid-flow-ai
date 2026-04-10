@@ -170,20 +170,15 @@ Display:
 
 ## MCP Check
 
-1. Based on `IDE`, read the appropriate MCP config:
-   - Cursor: `{DEPT_FF_PATH}/.cursor/mcp.json`
-   - VS Code: `{DEPT_FF_PATH}/.vscode/mcp.json`
-2. For each configured server, verify it is running and accessible
-3. Report status:
+Load `skills/mcp-check/mcp-check.md`. The skill will:
 
-```
-  MCP Status:
-    {server-name}: OK | FAIL ({error})
-```
+1. Read MCP configs from both core and department repos (merged, department overrides)
+2. Scaffold `.env` from `.env.example` if missing in either repo
+3. Verify each server (HTTP connectivity or command existence)
+4. On failure, diagnose the error category and present a targeted fix guide
+5. Ask the user: **Retry** / **Continue without** / **Stop and fix**
 
-4. If any server fails: present a multi-choice question using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`):
-   - **A**: Continue without failed server(s)
-   - **B**: Stop and fix
+Store `MCP_SERVERS_OK[]` for downstream use.
 
 ---
 
