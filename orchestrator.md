@@ -46,7 +46,24 @@ Scan all workspace root folders and classify each by its markers:
 | Contains `.department-fluid-flow.json` | Department FF | `DEPT_FF_PATH` |
 | None of the above | Source repo | `SOURCE_REPOS[]` |
 
-If any of the three mandatory repos is missing, halt:
+If `DEPT_FF_PATH` is unset (no repo contained `.department-fluid-flow.json`), apply a **fallback heuristic** before halting:
+
+1. Scan `SOURCE_REPOS[]` for any repo that contains an `initiatives/` directory at its root
+2. If exactly one candidate is found, it is likely a department repo missing its config file. Offer to scaffold it:
+
+```
+  Department repo detected by structure: {candidate folder name}
+  Missing: .department-fluid-flow.json
+
+  Scaffolding from template...
+```
+
+3. Copy `{FF_CORE_PATH}/local-fluid-flow/.department-fluid-flow.json` into the candidate repo root
+4. Prompt the user to configure the `department` and `name` fields via `AskQuestion` (pre-fill `name` from the repo folder name)
+5. Write the configured values, reclassify the repo as Department FF (`DEPT_FF_PATH`), remove it from `SOURCE_REPOS[]`, and continue
+6. If zero or multiple candidates are found, do not attempt remediation — fall through to the halt below
+
+If any of the three mandatory repos is still missing after the fallback, halt:
 
 ```
   Workspace Validation: FAIL
@@ -90,7 +107,9 @@ Validate at least 1 source repo is present in `SOURCE_REPOS[]`. If none found, h
 
 ### Step 4 — Read department config
 
-Read `{DEPT_FF_PATH}/.department-fluid-flow.json`. Store:
+Read `{DEPT_FF_PATH}/.department-fluid-flow.json`. Validate the file is valid JSON and that `department` is set (not `"CHANGE_ME"` or empty). If validation fails, prompt the user to provide the value before continuing.
+
+Store:
 - `DEPARTMENT` — department identifier (used for KB overlay routing)
 
 If `knowledgeBaseLocal` is `true`, check if `{DEPT_FF_PATH}/knowledge-base-local/manifest.md` exists:
