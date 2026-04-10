@@ -152,9 +152,15 @@ Display:
 
 ---
 
-## Stage 1: Reverse Engineering (brownfield, run-once)
+## Stage 1: Reverse Engineering (brownfield, mandatory)
 
-**Skip if**: all source repos are greenfield, or **every** brownfield source repo already contains `reverse-engineering/reverse-engineering-timestamp.md`. If some repos have the timestamp and others do not, run the skill — it will only process the repos that are missing it.
+For each brownfield source repo, check whether `reverse-engineering/reverse-engineering-timestamp.md` exists **in that repo's root**.
+
+- **If the timestamp file is missing** → RE is **mandatory**. Load `skills/reverse-engineering/reverse-engineering.md` and execute it. There are **no other valid reasons to skip** — scope, feature size, JIRA context, or "existing familiarity" are never grounds for bypass.
+- **If the timestamp file exists** → skip that repo (already done).
+- **If all source repos are greenfield** → skip this stage entirely.
+
+When some repos have the timestamp and others do not, run the skill — it will only process the repos that are missing it.
 
 Load `skills/reverse-engineering/reverse-engineering.md`. **Wait for user approval.**
 
@@ -215,7 +221,7 @@ Post-implementation actions, executed in order:
 
 1. **VAPT**: Load `primitives/vapt.md`. Run the vulnerability assessment and penetration testing. Must pass its human gate (Critical/High findings) before proceeding.
 2. **Risk Report**: Load `primitives/risk-report.md`. Generate the change risk report at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`.
-3. **Reverse Engineering Update** (brownfield only): Load `skills/reverse-engineering/reverse-engineering.md` to refresh project-level documentation with the new changes.
+3. **Reverse Engineering Update** (brownfield only): Load `skills/reverse-engineering/reverse-engineering.md` to refresh project-level documentation with the new changes. Update the **Commit** and **Branch** fields in `reverse-engineering-timestamp.md` to the current HEAD, and append a new entry to the Update History.
 4. **Analytics Reconciliation**: Load `primitives/analytics.md` to finalise initiative-level timing and metrics.
 5. **Commit**: Present summary + conventional commit --> **wait for approval** --> commit.
 6. **PR**: Push branch, create PR, attach risk report, present link.
