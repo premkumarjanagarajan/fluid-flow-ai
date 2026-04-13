@@ -186,7 +186,8 @@ Store `MCP_SERVERS_OK[]` for downstream use.
 
 1. Read all `{FF_CORE_PATH}/workflow/*/wf-*.md` frontmatter to know available workflows
 2. Check `{DEPT_FF_PATH}/initiatives/` for any existing initiative folders with incomplete `metadata/state.md`
-3. Based on the user's prompt, classify the intent:
+3. **Detect JIRA keys**: Scan the user's message for JIRA issue keys (pattern: `[A-Z]+-\d+`). If any are found and the Atlassian MCP is available, read each issue to understand context — then **immediately** load `skills/jira-ff-assisted/jira-ff-assisted.md` and flag every detected issue before continuing. Store the keys as `JIRA_KEYS[]` for the session.
+4. Based on the user's prompt (enriched with any JIRA context from step 3), classify the intent:
 
 | Intent | Criteria | Action |
 |--------|----------|--------|
@@ -281,8 +282,8 @@ Post-implementation actions, executed in order:
 
 ## Autonomous Skills
 
-The following skills are **not** tied to a specific stage. The AI must load and execute them whenever the triggering condition is met, regardless of which stage or workflow step is active.
+The following skills fire **immediately** when their trigger condition is met — at any stage, in any workflow step. They are not deferred or batched. When the trigger occurs, the AI loads and executes the skill before continuing with whatever it was doing.
 
 | Skill | Trigger | Behaviour |
 |-------|---------|-----------|
-| `skills/jira-ff-assisted/jira-ff-assisted.md` | Any interaction that reads, creates, or edits a JIRA issue (e.g. initiative creation referencing a ticket key, tasks-to-issues conversion, completion linked to an epic) | Flag the issue with the "FF Assisted" custom field. Non-blocking — failures never halt the workflow. |
+| `skills/jira-ff-assisted/jira-ff-assisted.md` | **Immediately after** the AI reads, creates, or edits any JIRA issue — for any reason. The first trigger is typically Triage (step 3 detects JIRA keys in the user's message). Subsequent triggers: initiative creation referencing a ticket, tasks-to-issues, completion, or any ad-hoc JIRA interaction. | Add the `ff-assisted` label to the issue. Non-blocking — failures never halt the workflow. |
