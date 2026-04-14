@@ -1,0 +1,3 @@
+# Prevent GitHub Copilot from accessing sensitive environment files
+.env
+.env.*
