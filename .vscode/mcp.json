@@ -1,17 +1,8 @@
 {
-  "mcpServers": {
+  "servers": {
     "atlassian": {
-      "url": "https://mcp.atlassian.com/v1/mcp",
-      "headers": {
-        "Authorization": "Bearer ${env:ATLASSIAN_API_TOKEN}",
-        "X-Atlassian-User-Email": "${env:ATLASSIAN_EMAIL}"
-      }
-    },
-    "slack": {
-      "url": "https://mcp.slack.com/mcp",
-      "headers": {
-        "Authorization": "Bearer ${env:SLACK_BOT_TOKEN}"
-      }
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp"
     },
     "github": {
       "command": "npx",
@@ -22,12 +13,10 @@
     },
     "aws-document-loader": {
       "command": "uvx",
-      "args": [
-        "awslabs.document-loader-mcp-server@latest"
-      ],
+      "args": ["awslabs.document-loader-mcp-server@latest"],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       }
     }
   }
-}
+}  
