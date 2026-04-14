@@ -1,3 +1,4 @@
 # Prevent Cursor from accessing sensitive environment files
 .env
 .env.*
+!.env.example
