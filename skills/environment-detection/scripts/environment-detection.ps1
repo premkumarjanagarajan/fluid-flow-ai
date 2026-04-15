@@ -1,5 +1,17 @@
 $ErrorActionPreference = "Stop"
 
+# ──────────────────────────────────────────────────────────────
+# environment-detection.ps1
+# ──────────────────────────────────────────────────────────────
+# Usage:
+#   pwsh environment-detection.ps1 [dir1 dir2 ...]
+#
+# Pass workspace root directories as arguments. If none given,
+# falls back to $env:WORKSPACE_ROOTS (path-separated) or ".".
+#
+# Output: single JSON object to stdout.
+# ──────────────────────────────────────────────────────────────
+
 # --- OS and Shell ---
 $os = "windows"
 $shellType = "powershell"
@@ -12,11 +24,8 @@ if ($IsLinux) {
     $shellType = "bash"
 }
 
-Write-Output "SHELL_TYPE=$shellType"
-Write-Output "OS=$os"
-
 # --- Package Managers ---
-$commands = @("dotnet", "npm", "yarn", "pnpm", "terraform", "az", "docker")
+$commands = @("dotnet", "npm", "yarn", "pnpm", "terraform", "az", "docker", "pip")
 $found = @()
 foreach ($cmd in $commands) {
     if (Get-Command $cmd -ErrorAction SilentlyContinue) {
@@ -24,60 +33,114 @@ foreach ($cmd in $commands) {
     }
 }
 
-$pkgManagers = if ($found.Count -gt 0) { $found -join "," } else { "none" }
-Write-Output "PACKAGE_MANAGERS=$pkgManagers"
+$pkgCsv = if ($found.Count -gt 0) { $found -join "," } else { "none" }
 
-# --- Tech Stack ---
-$techStack = @()
+# --- Resolve scan directories from args, env, or fallback ---
 $scanDirs = @()
-
-if ($env:WORKSPACE_ROOTS) {
+if ($args.Count -gt 0) {
+    $scanDirs = $args
+} elseif ($env:WORKSPACE_ROOTS) {
     $scanDirs = $env:WORKSPACE_ROOTS -split [IO.Path]::PathSeparator
 } else {
     $scanDirs = @(".")
 }
 
+# --- Tech Stack + Source Repo Classification (single pass) ---
+$techStack = @()
+$repoJsonItems = @()
+
 foreach ($dir in $scanDirs) {
     if (-not (Test-Path $dir -PathType Container)) { continue }
 
-    if ((Get-ChildItem -Path $dir -Filter "*.csproj" -ErrorAction SilentlyContinue) -or
-        (Get-ChildItem -Path $dir -Filter "*.sln" -ErrorAction SilentlyContinue) -or
-        (Get-ChildItem -Path $dir -Filter "*.fsproj" -ErrorAction SilentlyContinue)) {
-        $techStack += "dotnet"
+    $repoName = Split-Path -Leaf $dir
+    $repoType = "greenfield"
+    $hasCode = $false
+
+    # .csproj / .sln / .fsproj → dotnet
+    if (Get-ChildItem -Path $dir -Recurse -Depth 2 -Include "*.csproj","*.sln","*.fsproj" -ErrorAction SilentlyContinue | Select-Object -First 1) {
+        $techStack += "dotnet"; $hasCode = $true
     }
 
-    if (Test-Path "$dir/package.json") {
-        $content = Get-Content "$dir/package.json" -Raw -ErrorAction SilentlyContinue
+    # package.json → typescript or javascript
+    $pkgJson = Get-ChildItem -Path $dir -Recurse -Depth 1 -Filter "package.json" -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($pkgJson) {
+        $content = Get-Content $pkgJson.FullName -Raw -ErrorAction SilentlyContinue
         if ($content -match '"typescript"') {
             $techStack += "typescript"
         } else {
             $techStack += "javascript"
         }
+        $hasCode = $true
     }
 
-    if ((Get-ChildItem -Path $dir -Filter "*.tf" -ErrorAction SilentlyContinue) -or
-        (Test-Path "$dir/terraform" -PathType Container)) {
-        $techStack += "terraform"
+    # *.tf / terraform/ → terraform
+    $tfFile = Get-ChildItem -Path $dir -Recurse -Depth 1 -Filter "*.tf" -ErrorAction SilentlyContinue | Select-Object -First 1
+    $tfDir = if (Test-Path "$dir/terraform" -PathType Container) { $true } else { $false }
+    if ($tfFile -or $tfDir) {
+        $techStack += "terraform"; $hasCode = $true
     }
 
-    if (Test-Path "$dir/go.mod") { $techStack += "go" }
-    if (Test-Path "$dir/Cargo.toml") { $techStack += "rust" }
-
-    if ((Test-Path "$dir/docker-compose.yml") -or
-        (Test-Path "$dir/docker-compose.yaml") -or
-        (Test-Path "$dir/Dockerfile")) {
-        $techStack += "docker"
+    # go.mod → go
+    if (Get-ChildItem -Path $dir -Recurse -Depth 1 -Filter "go.mod" -ErrorAction SilentlyContinue | Select-Object -First 1) {
+        $techStack += "go"; $hasCode = $true
     }
 
-    if (Test-Path "$dir/azure-pipelines.yml") { $techStack += "azure" }
-
-    if ((Test-Path "$dir/requirements.txt") -or
-        (Test-Path "$dir/pyproject.toml") -or
-        (Get-ChildItem -Path $dir -Filter "*.py" -ErrorAction SilentlyContinue)) {
-        $techStack += "python"
+    # Cargo.toml → rust
+    if (Get-ChildItem -Path $dir -Recurse -Depth 1 -Filter "Cargo.toml" -ErrorAction SilentlyContinue | Select-Object -First 1) {
+        $techStack += "rust"; $hasCode = $true
     }
+
+    # docker-compose.yml / Dockerfile → docker
+    if (Get-ChildItem -Path $dir -Recurse -Depth 1 -Include "docker-compose.yml","docker-compose.yaml","Dockerfile" -ErrorAction SilentlyContinue | Select-Object -First 1) {
+        $techStack += "docker"; $hasCode = $true
+    }
+
+    # azure-pipelines.yml → azure
+    if (Get-ChildItem -Path $dir -Recurse -Depth 1 -Filter "azure-pipelines.yml" -ErrorAction SilentlyContinue | Select-Object -First 1) {
+        $techStack += "azure"; $hasCode = $true
+    }
+
+    # *.py / requirements.txt / pyproject.toml → python
+    if (Get-ChildItem -Path $dir -Recurse -Depth 2 -Include "*.py","requirements.txt","pyproject.toml" -ErrorAction SilentlyContinue | Select-Object -First 1) {
+        $techStack += "python"; $hasCode = $true
+    }
+
+    # *.sql → sql
+    if (Get-ChildItem -Path $dir -Recurse -Depth 2 -Filter "*.sql" -ErrorAction SilentlyContinue | Select-Object -First 1) {
+        $techStack += "sql"; $hasCode = $true
+    }
+
+    if ($hasCode) {
+        $repoType = "brownfield"
+    }
+
+    # Check reverse-engineering timestamp
+    $reTs = "null"
+    $reFile = Join-Path $dir "reverse-engineering/reverse-engineering-timestamp.md"
+    if (Test-Path $reFile) {
+        $reContent = Get-Content $reFile -Raw -ErrorAction SilentlyContinue
+        if ($reContent -match '(\d{4}-\d{2}-\d{2}T[\d:ZT+\-]+)') {
+            $reTs = "`"$($Matches[1])`""
+        }
+    }
+
+    $repoJsonItems += "{`"name`":`"$repoName`",`"type`":`"$repoType`",`"reTimestamp`":$reTs}"
 }
 
+# Deduplicate tech stack
 $uniqueTech = ($techStack | Sort-Object -Unique) -join ","
 if (-not $uniqueTech) { $uniqueTech = "none" }
-Write-Output "TECH_STACK=$uniqueTech"
+
+# Build repos JSON array
+$reposJson = "[" + ($repoJsonItems -join ",") + "]"
+
+# --- Output JSON ---
+@"
+{
+  "os": "$os",
+  "shellType": "$shellType",
+  "packageManagers": "$pkgCsv",
+  "techStack": "$uniqueTech",
+  "sourceRepos": $reposJson
+}
+"@
