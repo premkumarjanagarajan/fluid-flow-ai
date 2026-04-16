@@ -6,7 +6,7 @@ tools:
   [execute/runInTerminal, execute/getTerminalOutput, execute/awaitTerminal, read/readFile, search/fileSearch, search/listDirectory, search/textSearch, edit/createDirectory, edit/createFile, edit/editFiles, agent/runSubagent, todo]
 ---
 
-version: 1.0
+version: 1.1
 last-updated: 2026-04-16
 
 # Updater Agent
@@ -89,7 +89,19 @@ Write the merged result to `<target_repo>/.github/mcp.json`, formatted with 2-sp
 }
 ```
 
-### Step 4 — Report
+### Step 4 — Update `.gitignore`
+
+1. Open (or create) `<target_repo>/.gitignore`.
+2. Locate or append a section headed `# fluid-flow managed files — do not edit manually`.
+3. Ensure the following entries are present in that section:
+   - `.github/mcp.json`
+   - `.github/fluid-flow/` (entire directory)
+4. If entries were already present, leave them unchanged. If they were missing, append them.
+5. Save the file.
+
+---
+
+### Step 5 — Report
 
 Output a summary in this format:
 
@@ -109,6 +121,10 @@ Output a summary in this format:
 - ✅ github (@modelcontextprotocol/server-github → pinned to 1.2.0)
 
 ### .github/mcp.json written to <target_repo>/.github/mcp.json
+
+### .gitignore updated
+- ✅ .github/mcp.json — added to .gitignore
+- ✅ .github/fluid-flow/ — added to .gitignore
 ```
 
 Flag any `⚠️` items clearly so the caller can act on them.
@@ -122,3 +138,4 @@ Flag any `⚠️` items clearly so the caller can act on them.
 - **Do not recurse** into `updater.agent.md` when processing agent dependencies.
 - If `npm view` fails for a package, keep the unversioned form and add a `⚠️` note in the report.
 - If `mcp.json` already exists in the target repo, merge new entries and overwrite changed ones; do not silently drop entries that belong to other agents unless a full-replace mode is requested.
+- When updating `.gitignore`, never remove or reorder existing entries — only append the managed-files section if it is absent.
