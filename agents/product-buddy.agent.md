@@ -6,8 +6,40 @@ tools:
   [execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/getNotebookSummary, read/problems, read/readFile, read/terminalSelection, read/terminalLastCommand, agent/runSubagent, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/usages, search/searchSubagent, atlassian/*, todo]
 ---
 
-version: 1.11
+version: 1.12
 last-updated: 2026-04-10
+
+dependencies:
+  mcps:
+  - mcps/atlassian
+  - mcps/github
+  prompts:
+  - prompts/artefacts/big-bet.prompt.md
+  - prompts/artefacts/epic-brief.prompt.md
+  - prompts/artefacts/jira-epic.prompt.md
+  - prompts/artefacts/jpd-idea.prompt.md
+  - prompts/artefacts/jpd-need-opportunity.prompt.md
+  - prompts/artefacts/jpd-solution.prompt.md
+  - prompts/artefacts/user-story.prompt.md
+  - prompts/artefacts/test-case.prompt.md
+  - prompts/discovery/discover.prompt.md
+  - prompts/discovery/questions.prompt.md
+  - prompts/governance/decision-log.prompt.md
+  - prompts/governance/glossary.prompt.md
+  - prompts/governance/review.prompt.md
+  skills:
+  - skills/branch-creation/branch-creation.md
+  - skills/compliance-summary/compliance-summary.md
+  - skills/discovery/discovery-questions/discovery-questions.skill.md
+  - skills/environment-detection/environment-detection.md
+  - skills/governance/glossary/glossary.skill.md
+  - skills/governance/review-document/review-document.skill.md
+  - skills/jira-ff-assisted/jira-ff-assisted.md
+  - skills/mcp-check/mcp-check.md
+  agents:
+  - agents/kb-librarian.agent.md
+  - agents/updater.agent.md
+
 
 # Product Buddy — Product Discovery Agent
 
