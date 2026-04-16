@@ -218,31 +218,40 @@ For each repo that has a `.env.example` but no `.env`:
 
 The `load-env.sh` script accepts **file paths as arguments** — pass both `.env` files in a single call. Department vars override core vars when the same key appears in both.
 
-**Briefing**: Before running the load-env script, print a visible chat message: _"Loading environment variables from .env files into the current shell session (session-only, nothing is persisted to disk)."_ — this must appear in the conversation before the terminal tool call.
+**Briefing**: Before running the load-env script, print a visible chat message: _"Loading environment variables from .env files and persisting them to your shell profile (~/.zshrc or equivalent). You will need to restart VS Code afterwards so MCP servers can pick up the new values."_ — this must appear in the conversation before the terminal tool call.
+
+The script runs with `--persist` by default so that environment variables survive across terminal sessions and are available to VS Code's MCP client via `${env:...}` references.
 
 **bash** (`OS` = `darwin` or `linux`):
 
 ```bash
-source "{FF_CORE_PATH}/skills/ff-init/scripts/load-env.sh" "{FF_CORE_PATH}/.env" "{DEPT_FF_PATH}/.env"
+source "{FF_CORE_PATH}/skills/ff-init/scripts/load-env.sh" --persist "{FF_CORE_PATH}/.env" "{DEPT_FF_PATH}/.env"
 ```
 
 If the department has no `.env`, pass only the core one:
 
 ```bash
-source "{FF_CORE_PATH}/skills/ff-init/scripts/load-env.sh" "{FF_CORE_PATH}/.env"
+source "{FF_CORE_PATH}/skills/ff-init/scripts/load-env.sh" --persist "{FF_CORE_PATH}/.env"
 ```
 
 **powershell** (`OS` = `windows`):
 
 ```powershell
-. "{FF_CORE_PATH}\skills\ff-init\scripts\load-env.ps1" "{FF_CORE_PATH}\.env" "{DEPT_FF_PATH}\.env"
+. "{FF_CORE_PATH}\skills\ff-init\scripts\load-env.ps1" -Persist "{FF_CORE_PATH}\.env" "{DEPT_FF_PATH}\.env"
 ```
-
-The script defaults to **session-only** loading. No user prompt is needed. If the user wants persistence, they can re-run with `--persist` manually at any time.
 
 The script outputs a `LOAD_ENV_RESULT` JSON line at the end — parse it for loaded/skipped counts.
 
-Store loaded/skipped counts (persisted is always `false` during init).
+Store loaded/skipped counts (persisted is always `true` during init).
+
+After env loading completes, display a restart notice to the user:
+
+```
+  ⚠️  VS Code restart required
+  Environment variables have been persisted to your shell profile.
+  Please quit and reopen VS Code (Cmd+Q / Ctrl+Q) so MCP servers
+  can read the updated tokens via ${env:...}.
+```
 
 **Write progressive cache** after this step — update `{FF_CORE_PATH}/.local-environment.json` with the `envVars` block.
 
@@ -387,6 +396,7 @@ Blockers (if BLOCKED):
 
 - This skill can be run standalone via the `/ff-init` slash command — it always performs a full run when invoked directly.
 - The `load-env.sh` / `load-env.ps1` scripts are located in `{FF_CORE_PATH}/skills/ff-init/scripts/`. They accept `.env` file paths as arguments — no department-specific copy is needed.
+- The load-env scripts run with `--persist` by default during init, saving variables to the shell profile (`~/.zshrc`, `~/.bashrc`, or User env vars on Windows). This ensures VS Code's MCP client can read them via `${env:...}` after restart.
 - Variables with placeholder values (containing `your-` or `CHANGE_ME`) are automatically skipped by the load-env scripts.
 - The environment-detection script outputs JSON and accepts workspace root paths as arguments. It performs tech stack detection and repo classification in a single pass.
 - **Progressive caching**: each step writes its portion of `.local-environment.json` as it completes. If a later step fails, the next run can detect what was already cached and potentially skip completed steps.

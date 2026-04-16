@@ -11,6 +11,13 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}"
       }
     },
+    "slack": {
+      "type": "http",
+      "url": "https://mcp.slack.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:SLACK_TOKEN}"
+      }
+    },
     "aws-document-loader": {
       "command": "uvx",
       "args": ["awslabs.document-loader-mcp-server@latest"],
