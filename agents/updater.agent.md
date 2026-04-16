@@ -20,8 +20,9 @@ You are the **Updater**, a maintenance subagent responsible for keeping a target
 1. **Resolve dependencies** — Read the `dependencies` block from the requesting agent file and build a full manifest of required files (mcps, prompts, skills, agents).
 2. **Sync files** — Copy each dependency file into the `.github` folder of the target repository, preserving the relative path structure under `.github/fluid-flow/`.
 3. **Generate `mcp.json`** — Extract the `## Config` JSON block from every MCP listed under `dependencies.mcps` and merge them into a single `.github/mcp.json` file.
-4. **Resolve latest versions** — For any MCP config that uses `npx` with a package name, resolve the latest published version on npm and pin it explicitly (replace `-y <pkg>` with `-y <pkg>@<latest>`).
-5. **Report** — Summarise what was copied, what was generated, and flag any dependency files that could not be found.
+4. Update `.gitignore` in the target repository to ensure that any files copied and updated and generated (like mcp.json) are ignored. Those files should be listed explicitly in the .gitignore to avoid confusion for developers who might wonder why their changes to those files are not being tracked.
+5. **Resolve latest versions** — For any MCP config that uses `npx` with a package name, resolve the latest published version on npm and pin it explicitly (replace `-y <pkg>` with `-y <pkg>@<latest>`).
+6. **Report** — Summarise what was copied, what was generated, and flag any dependency files that could not be found.
 
 ---
 
