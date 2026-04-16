@@ -23,13 +23,7 @@ Pass the workspace root folder paths and whether the user explicitly invoked `/f
 1. Read all `{FF_CORE_PATH}/workflow/*/wf-*.md` frontmatter to know available workflows
 2. Check `{DEPT_FF_PATH}/initiatives/` for any existing initiative folders with incomplete `metadata/state.md`
 3. **Detect JIRA keys**: Scan the user's message for JIRA issue keys (pattern: `[A-Z]+-\d+`). If any are found and the Atlassian MCP is available, read each issue to understand context — then **immediately** load `skills/jira-ff-assisted/jira-ff-assisted.md` and flag every detected issue before continuing. Store the keys as `JIRA_KEYS[]` for the session.
-4. Based on the user's prompt (enriched with any JIRA context from step 3), classify the intent:
-
-| Intent | Criteria | Action |
-|--------|----------|--------|
-| **Question** | No development needed | Answer directly. Stop here. |
-| **Continue** | Matches an existing incomplete initiative | Confirm with user, then resume from last completed stage in its `metadata/state.md` |
-| **New** | Development request, no matching initiative | Run all stages (1-4) |
+4. **Route**: If an existing incomplete initiative matches the request, confirm with the user and resume from the last completed stage in its `metadata/state.md`. Otherwise treat as **New** and run all stages (1-4).
 
 ---
 
