@@ -10,7 +10,7 @@
       "slack": {
         "url": "https://mcp.slack.com/mcp",
         "headers": {
-          "Authorization": "Bearer ${env:SLACK_BOT_TOKEN}"
+          "Authorization": "Bearer ${env:SLACK_TOKEN}"
         }
       },
       "github": {

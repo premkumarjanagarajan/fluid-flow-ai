@@ -4,6 +4,16 @@ Verify all configured MCP servers are reachable and guide the user through fixin
 
 ## How to Run
 
+### Pre-Execution Briefing
+
+Before running **any** terminal command for MCP verification (HTTP requests, command lookups), you **MUST** print a visible one-liner explanation **as a chat message** to the user describing what the command does. This message must appear in the conversation **before** the terminal tool call — setting the tool's `explanation` parameter alone is NOT sufficient, because the user needs context in the chat history, not only in the IDE approval dialog.
+
+Examples of good briefings (print these as chat text before the tool call):
+- _"I'll check if MCP servers are reachable (lightweight HTTP ping — no data is sent)."_
+- _"Verifying that required CLI tools (npx, uvx) are installed on your system."_
+
+> **Rule**: Every terminal invocation in this skill must be preceded by a visible chat briefing. No exceptions.
+
 ### Step 1 — Locate MCP configs
 
 Read MCP configs from **both** repos (core provides shared servers, department provides team-specific ones):
@@ -36,6 +46,8 @@ For each repo that has a `.env.example`:
 ```
 
 ### Step 3 — Verify each server
+
+**Briefing**: Before running the verification commands, explain to the user: _"Check connectivity to configured MCP servers (lightweight HTTP pings and command lookups — no data is sent)"_.
 
 For each server in the merged config, attempt a lightweight connectivity check:
 
