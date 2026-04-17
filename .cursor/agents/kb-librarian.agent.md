@@ -155,6 +155,17 @@ Example:
 
 ---
 
+## Single Source of Truth — KB Access Policy
+
+The KB Librarian is the **only** agent authorised to read files directly from the knowledge base (`knowledge/` directory and all sub-paths). All other agents — including Product Buddy, BetssonAIte, and any future agents — **must delegate every knowledge base query to the KB Librarian** via `agent/runSubagent`. No other agent may open, read, or search knowledge base files directly.
+
+This policy ensures:
+- Consistent navigation via the overlay map (no ad-hoc file reads)
+- Accurate source citation in every answer
+- A single point of control for KB access patterns and gap reporting
+
+---
+
 ## Handoff Logic
 
 The Librarian retrieves information only. For anything else try to hand off to other agents.
