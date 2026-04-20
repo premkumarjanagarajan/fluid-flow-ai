@@ -1,44 +1,132 @@
 ---
 name: mcp-check
-description: Verifies all configured MCP servers are reachable and guides the user through fixing failures.
+description: Lets the user select which MCPs to enable, generates mcp.json, and verifies connectivity.
 execution: inline
 scope: shared
-version: 1.0
+version: 2.0
 last-updated: 2026-04-20
 ---
 
 # MCP Check
 
-Verify all configured MCP servers are reachable and guide the user through fixing any failures.
+Select which MCP servers to enable, generate a local `mcp.json`, and verify connectivity. The generated file is gitignored — it's local to the user's machine and regenerated on each run.
 
-## How to Run
+## Pre-Execution Briefing
 
-### Pre-Execution Briefing
-
-Before running **any** terminal command for MCP verification (HTTP requests, command lookups), you **MUST** print a visible one-liner explanation **as a chat message** to the user describing what the command does. This message must appear in the conversation **before** the terminal tool call — setting the tool's `explanation` parameter alone is NOT sufficient, because the user needs context in the chat history, not only in the IDE approval dialog.
-
-Examples of good briefings (print these as chat text before the tool call):
-- _"I'll check if MCP servers are reachable (lightweight HTTP ping — no data is sent)."_
-- _"Verifying that required CLI tools (npx, uvx) are installed on your system."_
+Before running **any** terminal command in this skill, you **MUST** print a visible one-liner explanation **as a chat message** to the user. This must appear in the conversation **before** the terminal tool call — setting the tool's `explanation` parameter alone is NOT sufficient.
 
 > **Rule**: Every terminal invocation in this skill must be preceded by a visible chat briefing. No exceptions.
 
-### Step 1 — Locate MCP configs
+---
 
-Read MCP configs from **both** repos (core provides shared servers, department provides team-specific ones):
+## Step 1 — Discover available MCPs
 
-| Source | Cursor | VS Code |
-|--------|--------|---------|
-| Core | `{FF_CORE_PATH}/.cursor/mcp.json` | `{FF_CORE_PATH}/.vscode/mcp.json` |
-| Department | `{DEPT_FF_PATH}/.cursor/mcp.json` | `{DEPT_FF_PATH}/.vscode/mcp.json` |
+Scan both repos for MCP definition files:
 
-Use the `IDE` session variable (from Stage 0A) to pick the right config files. Merge both server lists — if the same server name appears in both, the department config takes precedence.
+| Source | Path | Tag |
+|--------|------|-----|
+| Core | `{FF_CORE_PATH}/mcps/*.md` | `[core]` |
+| Core (local) | `{FF_CORE_PATH}/mcps/local/*.md` | `[core/local]` |
+| Department | `{DEPT_FF_PATH}/mcps/*.md` (if exists) | `[dept]` |
+| Department (local) | `{DEPT_FF_PATH}/mcps/local/*.md` (if exists) | `[dept/local]` |
 
-### Step 2 — Check .env file
+For each MCP file found, read:
+- The `# MCP: {name}` heading → display name
+- The `## Description` section → one-line summary
+- The `## Config` JSON block → the config to write if selected
+
+Build a list of all available MCPs with their source tag.
+
+---
+
+## Step 2 — Check existing mcp.json
+
+Read the current `{FF_CORE_PATH}/.github/mcp.json` if it exists. Extract the list of server names already configured — these will be **pre-selected** in the next step.
+
+If no `mcp.json` exists, nothing is pre-selected.
+
+---
+
+## Step 3 — Ask the user
+
+Use the IDE question tool with multi-select enabled:
+
+```
+Which MCP servers do you want to enable?
+(Pre-selected items are already configured)
+
+  ☑ github          — GitHub repos, PRs, issues, code search           [core]
+  ☑ atlassian       — Jira & Confluence access                         [core]
+  ☐ figma           — Figma remote endpoint (OAuth)                    [core]
+  ☐ aws-document-loader — AWS Labs document loader                     [core]
+  ☐ figma-dev-mode  — Figma desktop Dev Mode (local)                   [core/local]
+  ☐ playwright      — Browser automation                               [core/local]
+  ☐ {name}          — {description}                                    [dept]
+```
+
+> **Do not hardcode this list** — always build it from the scan in Step 1. The example above shows a typical result.
+
+If the user's selection matches exactly what's already in `mcp.json` (same servers, no additions, no removals):
+- Print: `No changes — MCP configuration is up to date.`
+- Skip to Step 5 (verify).
+
+If the user selects nothing:
+- Print: `No MCPs selected — skipping mcp.json generation.`
+- Store `MCP_SERVERS_OK[]` as empty and return.
+
+---
+
+## Step 4 — Generate mcp.json
+
+For each selected MCP:
+
+1. Read its `## Config` JSON block from the MCP definition file.
+2. **Version pinning** (npm packages only): If the config contains `"command": "npx"` and the `args` array includes a package name without an explicit version:
+   a. Run `npm view <package-name> version` to get the latest published version.
+   b. Replace the unversioned entry with `<package-name>@<latest>`.
+   c. If `npm view` fails, keep the unversioned form and note a ⚠️ in the report.
+
+3. Merge all selected configs under a top-level `"mcpServers"` key.
+
+4. Write the result to `{FF_CORE_PATH}/.github/mcp.json`, formatted with 2-space indentation. **This overwrites the file completely** — only selected servers are included.
+
+**Example output:**
+```json
+{
+  "mcpServers": {
+    "atlassian": {
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github@1.2.0"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+Report what was generated:
+
+```
+  MCP Configuration:
+    ✅ atlassian (http)
+    ✅ github (npx → pinned to 1.2.0)
+    ⚠️  figma (npm view failed — using unversioned)
+
+  Written to: {FF_CORE_PATH}/.github/mcp.json
+```
+
+---
+
+## Step 5 — Check .env file
 
 For each repo that has a `.env.example`:
 
-1. Check if `.env` exists alongside it
+1. Check if `.env` exists alongside it.
 2. If missing, copy `.env.example` to `.env` and inform the user:
 
 ```
@@ -54,18 +142,20 @@ For each repo that has a `.env.example`:
   for instructions on where to generate each one.
 ```
 
-### Step 3 — Verify each server
+---
 
-**Briefing**: Before running the verification commands, explain to the user: _"Check connectivity to configured MCP servers (lightweight HTTP pings and command lookups — no data is sent)"_.
+## Step 6 — Verify each server
 
-For each server in the merged config, attempt a lightweight connectivity check:
+**Briefing**: _"Checking connectivity to configured MCP servers (lightweight HTTP pings and command lookups — no data is sent)."_
+
+For each server in the generated `mcp.json`:
 
 - **HTTP servers** (have `url` property): make a HEAD or GET request to the URL
 - **stdio servers** (have `command` property): verify the command exists (`which {command}` on bash, `Get-Command {command}` on PowerShell)
 
 Record result per server: `OK` or `FAIL` with error category.
 
-### Step 4 — Report status
+### Report status
 
 ```
   MCP Status:
@@ -73,9 +163,11 @@ Record result per server: `OK` or `FAIL` with error category.
     {server-name}: FAIL ({error category})
 ```
 
-If all servers pass, stop here — MCP Check is complete.
+If all servers pass, MCP Check is complete.
 
-### Step 5 — Diagnose failures
+---
+
+## Step 7 — Diagnose failures
 
 For each failed server, classify the error and present the matching troubleshooting guide:
 
@@ -107,8 +199,6 @@ The server uses `command: {cmd}` but the command is not found on PATH.
 
 #### Authentication failure (401 / 403)
 
-The server is reachable but rejected the credentials.
-
 ```
   {server-name}: FAIL (auth error: {status code})
 
@@ -125,8 +215,6 @@ The server is reachable but rejected the credentials.
 
 #### Network / connection error
 
-The server URL is unreachable (timeout, DNS failure, etc.).
-
 ```
   {server-name}: FAIL (connection error: {details})
 
@@ -139,8 +227,6 @@ The server URL is unreachable (timeout, DNS failure, etc.).
 
 #### Conflict with global MCP config
 
-The user may have a global `mcp.json` installed at the machine level that conflicts with the workspace configs (duplicate server names, different auth, or outdated URLs).
-
 Based on `IDE`, check for a global config at:
 
 **Cursor** (`IDE=cursor`):
@@ -152,7 +238,7 @@ Based on `IDE`, check for a global config at:
 - Windows: `%APPDATA%\Code\User\settings.json` (look for `mcp.servers` key)
 - Linux: `~/.config/Code/User/settings.json` (look for `mcp.servers` key)
 
-If a global config exists and defines servers that overlap with the workspace configs:
+If a global config defines servers that overlap:
 
 ```
   {server-name}: FAIL (possible conflict with global MCP config)
@@ -164,7 +250,6 @@ If a global config exists and defines servers that overlap with the workspace co
   Fix:
     1. Open {global-config-path}
     2. Remove or rename the conflicting server entry
-       (workspace configs should take precedence)
     3. Alternatively, remove the global config entirely if all
        your servers are defined per-workspace
 ```
@@ -174,18 +259,22 @@ If a global config exists and defines servers that overlap with the workspace co
 ```
   {server-name}: FAIL ({raw error message})
 
-  Check the MCP config in {repo} and the server's documentation.
+  Check the MCP config and the server's documentation.
 ```
 
-### Step 6 — User decision
+---
 
-After presenting all diagnostics, ask the user via `AskQuestion`:
+## Step 8 — User decision
 
-- **A**: Retry — run Step 3 again (useful after the user fixes something)
+After presenting all diagnostics, use the IDE question tool:
+
+- **A**: Retry — run Step 6 again (useful after the user fixes something)
 - **B**: Continue without failed server(s) — proceed with the workflow; disabled servers will not be available during the session
-- **C**: Stop and fix — halt the workflow so the user can resolve issues outside the session
+- **C**: Stop and fix — halt so the user can resolve issues outside the session
 
 Store which servers are available as `MCP_SERVERS_OK[]` for downstream steps.
+
+---
 
 ## Session Variables
 
@@ -196,5 +285,6 @@ Store which servers are available as `MCP_SERVERS_OK[]` for downstream steps.
 ## Notes
 
 - This skill is non-blocking by design. Failing MCP servers never halt the workflow unless the user chooses option C.
-- OAuth-based servers (Atlassian, Slack) may show as FAIL on first run if the user hasn't completed the browser auth flow yet. This is expected — guide them through it rather than treating it as a hard error.
+- OAuth-based servers (Atlassian, Slack) may show as FAIL on first run if the user hasn't completed the browser auth flow yet. Guide them through it rather than treating it as a hard error.
 - The `.env` scaffold step ensures first-time users get a working template before the check runs.
+- The generated `mcp.json` is gitignored — it is local to the user's machine and rebuilt on each run.

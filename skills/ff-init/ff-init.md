@@ -270,11 +270,13 @@ After env loading completes, display a restart notice to the user:
 
 Load `skills/mcp-check/mcp-check.md` and execute it. The skill will:
 
-1. Read MCP configs from both core and department repos (merged, department overrides)
-2. Scaffold `.env` from `.env.example` if missing in either repo
-3. Verify each server (HTTP connectivity or command existence)
-4. On failure, diagnose the error category and present a targeted fix guide
-5. Ask the user: **Retry** / **Continue without** / **Stop and fix**
+1. Scan available MCP definitions from `{FF_CORE_PATH}/mcps/` and `{DEPT_FF_PATH}/mcps/`
+2. Ask the user which MCPs to enable (multi-select, pre-selecting already configured ones)
+3. Generate `{FF_CORE_PATH}/.github/mcp.json` from the selected configs (with npm version pinning)
+4. Scaffold `.env` from `.env.example` if missing in either repo
+5. Verify each selected server (HTTP connectivity or command existence)
+6. On failure, diagnose the error category and present a targeted fix guide
+7. Ask the user: **Retry** / **Continue without** / **Stop and fix**
 
 Store `MCP_SERVERS_OK[]` for downstream use.
 

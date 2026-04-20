@@ -13,8 +13,6 @@ dependencies:
   skills:
   - skills/jira-ff-assisted/jira-ff-assisted.md
   - skills/kb-retrieval/kb-retrieval.skill.md
-  agents:
-  - agents/updater.agent.md
   primitives:
   - primitives/kb-compliance.md
   - primitives/human-gate.md
