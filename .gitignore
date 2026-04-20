@@ -4,3 +4,5 @@ node_modules/
 *.log
 .local-environment.json
 .github/mcp.json
+.vscode/mcp.json
+.cursor/mcp.json

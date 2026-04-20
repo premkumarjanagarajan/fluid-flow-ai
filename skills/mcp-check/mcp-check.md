@@ -11,6 +11,30 @@ last-updated: 2026-04-20
 
 Select which MCP servers to enable, generate a local `mcp.json`, and verify connectivity. The generated file is gitignored — it's local to the user's machine and regenerated on each run.
 
+## Pre-Execution: Resolve IDE config path
+
+Before any step, determine the target `mcp.json` path based on the user's IDE:
+
+1. Read `{FF_CORE_PATH}/.local-environment.json` and extract `environment.ide`.
+2. Set `MCP_CONFIG_DIR` based on the value:
+
+| `environment.ide` | `MCP_CONFIG_DIR` | Target file |
+|-------------------|------------------|-------------|
+| `vscode` | `{FF_CORE_PATH}/.vscode` | `{FF_CORE_PATH}/.vscode/mcp.json` |
+| `cursor` | `{FF_CORE_PATH}/.cursor` | `{FF_CORE_PATH}/.cursor/mcp.json` |
+
+3. If `.local-environment.json` is missing or has no `environment.ide` value, **ask the user**:
+
+```
+Which IDE are you using?
+  A) VS Code
+  B) Cursor
+```
+
+Use this resolved path (`MCP_CONFIG_DIR/mcp.json`) for all references to `mcp.json` throughout this skill.
+
+---
+
 ## Pre-Execution Briefing
 
 Before running **any** terminal command in this skill, you **MUST** print a visible one-liner explanation **as a chat message** to the user. This must appear in the conversation **before** the terminal tool call — setting the tool's `explanation` parameter alone is NOT sufficient.
@@ -41,7 +65,7 @@ Build a list of all available MCPs with their source tag.
 
 ## Step 2 — Check existing mcp.json
 
-Read the current `{FF_CORE_PATH}/.github/mcp.json` if it exists. Extract the list of server names already configured — these will be **pre-selected** in the next step.
+Read the current `{MCP_CONFIG_DIR}/mcp.json` if it exists. Extract the list of server names already configured — these will be **pre-selected** in the next step.
 
 If no `mcp.json` exists, nothing is pre-selected.
 
@@ -88,7 +112,7 @@ For each selected MCP:
 
 3. Merge all selected configs under a top-level `"mcpServers"` key.
 
-4. Write the result to `{FF_CORE_PATH}/.github/mcp.json`, formatted with 2-space indentation. **This overwrites the file completely** — only selected servers are included.
+4. Write the result to `{MCP_CONFIG_DIR}/mcp.json`, formatted with 2-space indentation. **This overwrites the file completely** — only selected servers are included.
 
 **Example output:**
 ```json
@@ -117,7 +141,7 @@ Report what was generated:
     ✅ github (npx → pinned to 1.2.0)
     ⚠️  figma (npm view failed — using unversioned)
 
-  Written to: {FF_CORE_PATH}/.github/mcp.json
+  Written to: {MCP_CONFIG_DIR}/mcp.json
 ```
 
 ---
@@ -287,4 +311,6 @@ Store which servers are available as `MCP_SERVERS_OK[]` for downstream steps.
 - This skill is non-blocking by design. Failing MCP servers never halt the workflow unless the user chooses option C.
 - OAuth-based servers (Atlassian, Slack) may show as FAIL on first run if the user hasn't completed the browser auth flow yet. Guide them through it rather than treating it as a hard error.
 - The `.env` scaffold step ensures first-time users get a working template before the check runs.
-- The generated `mcp.json` is gitignored — it is local to the user's machine and rebuilt on each run.
+- The generated `mcp.json` is gitignored (both `.vscode/mcp.json` and `.cursor/mcp.json`) — it is local to the user's machine and rebuilt on each run.
+
+> **AI Agent rule:** Do NOT attempt to read, search for, or access `.env`, `.env.*`, or any environment variable files. These files are listed in `.copilotignore` and are intentionally excluded from AI context. Never inspect, reference, or infer token values from the filesystem. When scaffolding `.env` from `.env.example`, copy the template — do not read existing `.env` contents.

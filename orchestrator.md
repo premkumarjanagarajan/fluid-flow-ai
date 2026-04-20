@@ -12,9 +12,7 @@ Display:
 
 ## Init
 
-Launch the **`ff-init`** subagent (`skills/ff-init/ff-init.agent.md`). It runs in its own context window — all environment detection, workspace scanning, MCP verification, env loading, and reverse engineering work stays out of the main conversation.
-
-Pass the workspace root folder paths and whether the user explicitly invoked `/ff-init` (force flag). Parse the returned payload, store session variables, and continue to Triage — or halt if blocked.
+Launch **`ff-init`** (`skills/ff-init/ff-init.md`). Pass the workspace root folder paths and whether the user explicitly invoked `/ff-init` (force flag). Parse the returned payload, store session variables, and continue to Triage — or halt if blocked.
 
 ---
 

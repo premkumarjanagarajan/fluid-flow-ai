@@ -272,7 +272,7 @@ Load `skills/mcp-check/mcp-check.md` and execute it. The skill will:
 
 1. Scan available MCP definitions from `{FF_CORE_PATH}/mcps/` and `{DEPT_FF_PATH}/mcps/`
 2. Ask the user which MCPs to enable (multi-select, pre-selecting already configured ones)
-3. Generate `{FF_CORE_PATH}/.github/mcp.json` from the selected configs (with npm version pinning)
+3. Generate `{FF_CORE_PATH}/.vscode/mcp.json` or `{FF_CORE_PATH}/.cursor/mcp.json` (based on detected IDE) from the selected configs (with npm version pinning)
 4. Scaffold `.env` from `.env.example` if missing in either repo
 5. Verify each selected server (HTTP connectivity or command existence)
 6. On failure, diagnose the error category and present a targeted fix guide

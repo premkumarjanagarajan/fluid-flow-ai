@@ -1,3 +1,14 @@
+---
+name: figma-dev-mode
+description: Figma Dev Mode (local) — design specs, component props, Code Connect via desktop app.
+type: http
+scope: local
+auth: none
+requires: [figma-desktop]
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # MCP: Figma Dev Mode MCP (Local)
 
 ## Description
@@ -18,3 +29,5 @@ Provides AI access to Figma design context via the **Figma desktop app's** local
 - Requires the **Figma desktop app** to be running with Dev Mode MCP enabled (`Figma menu → Preferences → Enable Dev Mode MCP Server`).
 - The server runs on `localhost:3845` by default — no installation or token needed.
 - Only works on the machine where the Figma desktop app is running; not suitable for CI or headless environments.
+
+> **AI Agent rule:** Do NOT attempt to read, search for, or access `.env`, `.env.*`, or any environment variable files. These files are listed in `.copilotignore` and are intentionally excluded from AI context. Never inspect, reference, or infer token values from the filesystem. Token setup is the user's responsibility — guide them to the instructions above if needed.

@@ -1,3 +1,14 @@
+---
+name: figma
+description: Figma access — design files, components, tokens, Code Connect.
+type: http
+scope: remote
+auth: oauth
+requires: []
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # MCP: Figma
 
 ## Description
@@ -20,3 +31,5 @@ Provides AI access to Figma design files via the official Figma remote MCP endpo
 - Requires a Figma account with access to the files you want to work with.
 - Dev Mode features (detailed design context, code snippets, Code Connect) require a Figma Dev Mode seat on the relevant team/organisation.
 - FigJam files are supported separately via the FigJam-specific tool surface.
+
+> **AI Agent rule:** Do NOT attempt to read, search for, or access `.env`, `.env.*`, or any environment variable files. These files are listed in `.copilotignore` and are intentionally excluded from AI context. Never inspect, reference, or infer token values from the filesystem. Token setup is the user's responsibility — guide them to the instructions above if needed.

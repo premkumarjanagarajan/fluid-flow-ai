@@ -1,3 +1,14 @@
+---
+name: aws-document-loader
+description: AWS documentation loader — docs, whitepapers, reference material.
+type: stdio
+scope: remote
+auth: none
+requires: [uvx]
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # MCP: AWS Document Loader
 
 ## Description
@@ -22,3 +33,5 @@ Provides AI access to AWS documentation and knowledge sources via the AWS Labs D
 - The server package is fetched and executed on demand via `uvx`; no separate installation step is required.
 - `FASTMCP_LOG_LEVEL` is set to `ERROR` to suppress verbose stdout logging that can interfere with the MCP stdio transport.
 - No AWS credentials are required — the server only reads publicly available AWS documentation.
+
+> **AI Agent rule:** Do NOT attempt to read, search for, or access `.env`, `.env.*`, or any environment variable files. These files are listed in `.copilotignore` and are intentionally excluded from AI context. Never inspect, reference, or infer token values from the filesystem. Token setup is the user's responsibility — guide them to the instructions above if needed.
