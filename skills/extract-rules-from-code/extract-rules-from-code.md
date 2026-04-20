@@ -1,3 +1,12 @@
+---
+name: extract-rules-from-code
+description: Extracts reusable rules from existing code patterns into a betsson-kb-docs pattern document.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # Prompt: Extract reusable rules from an existing code pattern
 
 Goal:

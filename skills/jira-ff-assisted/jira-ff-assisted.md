@@ -1,3 +1,12 @@
+---
+name: jira-ff-assisted
+description: Marks a JIRA issue with the ff-assisted label to indicate Fluid Flow AI participated in the development lifecycle.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # JIRA "FF Assisted" Flag
 
 Marks a JIRA issue with the **`ff-assisted`** label to indicate that Fluid Flow AI participated in the development lifecycle for this card.

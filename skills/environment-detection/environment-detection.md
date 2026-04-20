@@ -1,3 +1,12 @@
+---
+name: environment-detection
+description: Detects OS, shell, IDE, package managers, tech stack, and classifies source repos in a single script call.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # Environment Detection
 
 Detect the user's OS, shell, IDE, available package managers, project tech stack, and classify source repos — all in a single script call.

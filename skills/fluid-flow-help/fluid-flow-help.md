@@ -1,3 +1,12 @@
+---
+name: fluid-flow-help
+description: Interactive skill that teaches Fluid Flow concepts and guides users through customising their department repository.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # Fluid Flow Help
 
 Interactive skill that teaches Fluid Flow concepts and guides users through customising their department repository. Delivers information progressively — never overwhelm the user with everything at once.

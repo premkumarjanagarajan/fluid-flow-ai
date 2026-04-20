@@ -1,3 +1,12 @@
+---
+name: reverse-engineering
+description: Analyses existing codebases and generates design artefacts per repository for brownfield workspaces.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # Reverse Engineering
 
 Analyze existing codebase(s) in the workspace and generate design artifacts per repository.

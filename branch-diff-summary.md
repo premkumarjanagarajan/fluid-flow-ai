@@ -1,0 +1,124 @@
+# Branch Diff Summary
+
+**Base:** `feature/kb-ff-merge`
+**Target:** `feature/ARC-375-product-buddy-and-init`
+**Date:** 20 April 2026
+**Stats:** 7 commits, 85 files changed, +1,876 lines added
+
+---
+
+## 1. Directory Rename: `workflow/` → `workflows/`
+
+All files under the old `workflow/` directory were renamed to `workflows/` (plural). This affects **57 files** across `comprehensive-path/` and `fast-track/` — content unchanged, purely a structural rename for naming consistency.
+
+---
+
+## 2. New Agents (5 files)
+
+| File | Purpose | Status |
+|------|---------|--------|
+| `agents/product-buddy.agent.md` | Product-discovery agent with full 5-phase pipeline (~871 lines). | **Deleted** — all content incorporated into `workflows/product-buddy/wf-product-buddy.md`. |
+| `agents/kb-librarian.agent.md` | KB navigation agent using overlay maps (~171 lines). | **Converted** to shared skill at `skills/kb-retrieval/kb-retrieval.skill.md`. The retrieval protocol is a repeatable procedure, not a persona. |
+| `agents/updater.agent.md` | Agent for updating/maintaining fluid-flow-ai dependencies and configurations (~141 lines). | Kept |
+| `agents/betssonAIte.agent.md` | Betsson-specific AI agent definition (~42 lines). | Kept |
+| `.github/agents/technician.agent.md` | Technician agent for maintaining root-level tooling folders — validates file formats, naming conventions, and index files (~162 lines). | Kept |
+
+---
+
+## 3. New MCP Configurations (6 files)
+
+| File | Integration |
+|------|-------------|
+| `mcps/github.md` | GitHub MCP via `@modelcontextprotocol/server-github` (PAT-based auth) |
+| `mcps/atlassian.md` | Atlassian MCP (Jira/Confluence access) |
+| `mcps/figma.md` | Figma remote MCP endpoint (OAuth-based) |
+| `mcps/aws-document-loader.md` | AWS Labs Document Loader MCP via `uvx` |
+| `mcps/local/figma-dev-mode.md` | Figma desktop Dev Mode MCP (local `127.0.0.1:3845`) |
+| `mcps/local/playwright.md` | Playwright browser automation MCP |
+
+---
+
+## 4. Prompt Files — DELETED
+
+All 13 prompt files under `prompts/` have been **deleted**. Their functionality is now handled directly by the product-buddy workflow:
+
+- **Artefact prompts** (8 files: big-bet, epic-brief, jira-epic, jpd-idea, jpd-need-opportunity, jpd-solution, user-story, test-case) — template loading is handled by workflow Step 2.7 (`7-load-template.md`)
+- **Discovery prompts** (2 files: discover, questions) — discovery entry is via `/product-buddy` slash command → workflow Phase 1; question generation is available via workflow-local `skills/discovery-questions/`
+- **Governance prompts** (3 files: decision-log, glossary, review) — decision log is handled by workflow Step 4.1; glossary and review are now workflow-local skills under `workflows/product-buddy/skills/`
+
+**Rationale:** The prompts were standalone shortcut entry points that bypassed the workflow's discovery and gate requirements, contradicting Non-Negotiable Principle #2 ("Discovery before definition"). All template paths and trigger logic are now in the workflow steps.
+
+---
+
+## 5. Skills — Moved to Workflow
+
+The 3 product-buddy-specific skills have been **moved** from `skills/` into the workflow folder at `workflows/product-buddy/skills/`, scoping them to this workflow only:
+
+| Original Location | New Location | Purpose |
+|-------------------|-------------|---------|
+| `skills/discovery/discovery-questions/` | `workflows/product-buddy/skills/discovery-questions/` | Generates topic-tailored discovery questions before/during Phase 1 |
+| `skills/governance/glossary/` | `workflows/product-buddy/skills/glossary/` | On-demand KB term resolution (any phase) |
+| `skills/governance/review-document/` | `workflows/product-buddy/skills/review-document/` | Section-by-section artefact review before PR (Step 3.1) |
+
+**Rationale:** These skills are specific to the product-buddy flow and should not be shared globally across all workflows. The `skills/discovery/` and `skills/governance/` folders have been deleted.
+
+---
+
+## Summary of Themes
+
+1. **Product Buddy workflow** — The flagship addition: a complete self-contained workflow (`workflows/product-buddy/`) with 5 phases, 16 steps, full persona, operating rules, anti-patterns, and template trigger maps. No separate agent file — everything is in the workflow.
+2. **MCP expansion** — 6 new MCP configs (GitHub, Atlassian, Figma, AWS Docs, Playwright, Figma Dev Mode) adding integrations for the agents to use.
+3. **Tooling agents** — Technician, Updater, and BetssonAIte agents for maintenance.
+4. **Skills** — `kb-retrieval` (shared, converted from kb-librarian agent) + 3 workflow-local skills (discovery-questions, glossary, review-document).
+5. **Structural cleanup** — `workflow/` → `workflows/` rename.
+6. **Prompt deletion** — All 13 product-buddy prompts removed; functionality absorbed into workflow steps.
+
+---
+---
+
+# Adjustments & Changes Required
+
+Items below document what needs to change to align the new files with the fluid-flow architecture.
+
+---
+
+## ADJ-1: Product Buddy — Extract workflow from agent ✅ COMPLETED
+
+**Problem:** `agents/product-buddy.agent.md` (~871 lines) embedded the entire multi-phase pipeline directly inside the agent file. In the fluid-flow pattern, agents are lightweight persona/role definitions; the pipeline logic belongs in a workflow.
+
+**Resolution:**
+
+The agent file has been **deleted**. All content has been incorporated into the workflow:
+
+| Content | Now lives in |
+|---------|-------------|
+| Persona, principles, objectives | `wf-product-buddy.md` → Agent Persona, Non-Negotiable Principles, Objectives |
+| Terminology & aliases | `wf-product-buddy.md` → Terminology & Aliases |
+| Uncertainty protocol | `wf-product-buddy.md` → Uncertainty & Escalation Protocol |
+| Operating rules | `wf-product-buddy.md` → Operating Rules |
+| Artefact selection rules + traceability | `wf-product-buddy.md` → Artefact Selection Rules, Traceability Rule |
+| Anti-patterns | `wf-product-buddy.md` → Anti-Patterns to Watch For |
+| Out of scope | `wf-product-buddy.md` → Out of Scope |
+| Authoritative references | `wf-product-buddy.md` → Authoritative References |
+| Template trigger map | `wf-product-buddy.md` → Template Trigger Map |
+| Phase 1 (Discover) | `1-discover/` → 5 step files |
+| Phase 2 (Artefact Selection) | `2-artefact-selection/` → 8 step files |
+| Phase 3 (Define) | `3-define/` → 1 step file |
+| Phase 4 (Decide) | `4-decide/` → 1 step file |
+| Phase 5 (Handshake) | `5-handshake/` → 1 step file + flow closing gate |
+| 13 standalone prompts | **Deleted** — template loading handled by Step 2.7 |
+
+**Actions:**
+- [x] Create `workflows/product-buddy/wf-product-buddy.md` with frontmatter
+- [x] Extract all 5 phases into folder/file structure (16 step files total)
+- [x] Validate all step files match original agent content exactly
+- [x] Incorporate full persona, rules, anti-patterns, references into workflow
+- [x] Delete `agents/product-buddy.agent.md`
+- [x] Delete all 13 prompt files under `prompts/`
+- [x] Trim dependencies to only directly-invoked items
+- [ ] Decide how the orchestrator triage routes to this workflow (new intent type? explicit user selection?)
+
+**Open questions:**
+- Should the orchestrator automatically detect "product discovery" intent and route to this workflow, or should it only be triggered via explicit prompts?
+- Does the workflow need integration with `{DEPT_FF_PATH}/initiatives/` for artefact storage, same as fast-track and comprehensive-path?
+

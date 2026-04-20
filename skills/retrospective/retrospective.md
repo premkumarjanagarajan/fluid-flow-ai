@@ -1,3 +1,12 @@
+---
+name: retrospective
+description: Performs a critical retrospective of the completed workflow and generates improvement backlog items.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # Workflow Retrospective
 
 Perform a critical retrospective analysis of the workflow conversation that just completed. Generate a feature-level retrospective and concrete improvement backlog items that propose specific edits to knowledge-base files, primitives, templates, and workflow configuration.

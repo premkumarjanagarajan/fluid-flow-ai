@@ -1,3 +1,12 @@
+---
+name: mcp-check
+description: Verifies all configured MCP servers are reachable and guides the user through fixing failures.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # MCP Check
 
 Verify all configured MCP servers are reachable and guide the user through fixing any failures.

@@ -1,3 +1,12 @@
+---
+name: compliance-summary
+description: Generates a jurisdiction compliance summary in betsson-kb-docs canonical format.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # Prompt: Create or Refine a Jurisdiction Compliance Summary (betsson-kb-docs Canonical Format)
 
 You are generating a jurisdiction compliance summary for the betsson-kb-docs repository.

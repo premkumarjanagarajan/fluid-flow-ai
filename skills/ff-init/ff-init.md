@@ -1,3 +1,12 @@
+---
+name: ff-init
+description: Initialises the Fluid-Flow workspace — detects environment, validates structure, loads env vars, verifies MCPs, and runs reverse engineering for brownfield repos.
+execution: subagent
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # FF Init
 
 Initialize the Fluid-Flow workspace: detect environment, validate workspace structure, load environment variables, verify MCP servers, and run reverse engineering for brownfield repos. Results are cached to `.local-environment.json` — subsequent runs on the same day with the same workspace skip all work.
