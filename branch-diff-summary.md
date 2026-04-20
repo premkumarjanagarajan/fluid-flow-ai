@@ -64,14 +64,27 @@ The 3 product-buddy-specific skills have been **moved** from `skills/` into the 
 
 ---
 
+## 6. Skills — Deleted (duplicates of betsson-kb-docs prompts)
+
+| Deleted Skill | Duplicate of (betsson-kb-docs) |
+|---------------|-------------------------------|
+| `skills/extract-rules-from-code/` | `.github/prompts/extract_rules_from_code_pattern.md` |
+| `skills/compliance-summary/` | `.github/prompts/create_compliance_summary_doc.md` |
+
+**Rationale:** Both were standalone prompt templates for authoring betsson-kb-docs content. They already exist as prompts in the KB repo and were not invoked by any fluid-flow workflow or agent.
+
+---
+
 ## Summary of Themes
 
 1. **Product Buddy workflow** — The flagship addition: a complete self-contained workflow (`workflows/product-buddy/`) with 5 phases, 16 steps, full persona, operating rules, anti-patterns, and template trigger maps. No separate agent file — everything is in the workflow.
 2. **MCP expansion** — 6 new MCP configs (GitHub, Atlassian, Figma, AWS Docs, Playwright, Figma Dev Mode) adding integrations for the agents to use.
 3. **Tooling agents** — Technician, Updater, and BetssonAIte agents for maintenance.
-4. **Skills** — `kb-retrieval` (shared, converted from kb-librarian agent) + 3 workflow-local skills (discovery-questions, glossary, review-document).
+4. **Skills** — `kb-retrieval` (shared, converted from kb-librarian agent) + 3 workflow-local skills (discovery-questions, glossary, review-document). 2 duplicate skills deleted (extract-rules-from-code, compliance-summary — already in betsson-kb-docs prompts).
 5. **Structural cleanup** — `workflow/` → `workflows/` rename.
 6. **Prompt deletion** — All 13 product-buddy prompts removed; functionality absorbed into workflow steps.
+7. **Skill frontmatter** — YAML frontmatter added to all skill files (name, description, execution, scope, version, last-updated).
+8. **Orchestrator filter** — `orchestrator-listed: false` excludes product-buddy from the `/fluid-flow` workflow menu.
 
 ---
 ---

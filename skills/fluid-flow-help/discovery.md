@@ -44,8 +44,6 @@ Here's what's available in your workspace:
     - environment-detection     [core]
     - retrospective             [core]
     - jira-ff-assisted          [core]
-    - extract-rules-from-code   [core]
-    - compliance-summary        [core]
     - shell-detection           [core]
     - fluid-flow-help           [core]
     - {name}                    [dept]
