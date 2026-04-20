@@ -9,7 +9,7 @@ last-updated: 2026-04-20
 
 # Branch Creation
 
-Creates a Git branch in the source repository following the naming convention defined in `templates/branch-template.md`.
+Creates a Git branch in the source repository following the naming convention defined in the **Naming Convention** section below.
 
 ---
 

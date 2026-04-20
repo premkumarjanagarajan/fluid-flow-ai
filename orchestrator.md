@@ -49,7 +49,7 @@ Present workflows grouped by source. Suggest best match with `-->`, using `TECH_
 
 ## Stage 2: Initiative Creation (new only)
 
-1. Load `{FF_CORE_PATH}/templates/branch-template.md` for naming convention
+1. Load `{FF_CORE_PATH}/skills/branch-creation/branch-creation.md` for naming convention
 2. Generate a suggested name based on user's request and the template pattern
 3. Present a multi-choice question using the IDE question tool (Cursor: `AskQuestion` / VS Code: `vscode_askQuestions`):
    - **A**: `{suggested-name}` (generated)
