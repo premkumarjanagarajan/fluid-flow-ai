@@ -21,7 +21,7 @@ All files under the old `workflow/` directory were renamed to `workflows/` (plur
 | `agents/kb-librarian.agent.md` | KB navigation agent using overlay maps (~171 lines). | **Converted** to shared skill at `skills/kb-retrieval/kb-retrieval.skill.md`. The retrieval protocol is a repeatable procedure, not a persona. |
 | `agents/updater.agent.md` | Agent for updating/maintaining fluid-flow-ai dependencies and configurations (~141 lines). | Kept |
 | `agents/betssonAIte.agent.md` | Betsson-specific AI agent definition (~42 lines). | Kept |
-| `.github/agents/technician.agent.md` | Technician agent for maintaining root-level tooling folders — validates file formats, naming conventions, and index files (~162 lines). | Kept |
+| `.github/agents/technician.agent.md` | Technician agent for maintaining root-level tooling folders — validates file formats, naming conventions, and index files (~162 lines). | **Deleted** — replaced by `skills/ff-audit/ff-audit.skill.md`. The procedural audit logic is a skill, not a persona. Invoked via `/ff-audit` slash command. |
 
 ---
 
@@ -79,8 +79,8 @@ The 3 product-buddy-specific skills have been **moved** from `skills/` into the 
 
 1. **Product Buddy workflow** — The flagship addition: a complete self-contained workflow (`workflows/product-buddy/`) with 5 phases, 16 steps, full persona, operating rules, anti-patterns, and template trigger maps. No separate agent file — everything is in the workflow.
 2. **MCP expansion** — 6 new MCP configs (GitHub, Atlassian, Figma, AWS Docs, Playwright, Figma Dev Mode) adding integrations for the agents to use.
-3. **Tooling agents** — Technician, Updater, and BetssonAIte agents for maintenance.
-4. **Skills** — `kb-retrieval` (shared, converted from kb-librarian agent) + 3 workflow-local skills (discovery-questions, glossary, review-document). 2 duplicate skills deleted (extract-rules-from-code, compliance-summary — already in betsson-kb-docs prompts).
+3. **Tooling agents** — Updater and BetssonAIte agents for maintenance. Technician deleted (replaced by ff-audit skill).
+4. **Skills** — `kb-retrieval` (shared, converted from kb-librarian agent), `ff-audit` (shared, replaced technician agent) + 3 workflow-local skills (discovery-questions, glossary, review-document). 2 duplicate skills deleted (extract-rules-from-code, compliance-summary — already in betsson-kb-docs prompts).
 5. **Structural cleanup** — `workflow/` → `workflows/` rename.
 6. **Prompt deletion** — All 13 product-buddy prompts removed; functionality absorbed into workflow steps.
 7. **Skill frontmatter** — YAML frontmatter added to all skill files (name, description, execution, scope, version, last-updated).

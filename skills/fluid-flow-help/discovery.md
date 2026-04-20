@@ -46,11 +46,13 @@ Here's what's available in your workspace:
     - jira-ff-assisted          [core]
     - shell-detection           [core]
     - fluid-flow-help           [core]
+    - ff-audit                  [core]
     - {name}                    [dept]
 
   Commands:
     /fluid-flow                 [core]
     /ff-reverse-engineer        [core]
+    /ff-audit                   [core]
     /ff-help                    [core]
     /{name}                     [dept]
 
