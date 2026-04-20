@@ -52,7 +52,7 @@ Present only the one the user asks about.
 
 **Tool (MCP)**: An external service the AI can call. Core ships with Atlassian, Slack, GitHub, and AWS document loader. Configured in `.cursor/mcp.json`. Department config merges with core — if your team needs a specific API, add it to your department's mcp.json.
 
-**Prompt / Command**: A short entry-point file (1-5 lines) that tells the AI "load X and follow it." Cursor uses `.cursor/commands/{name}.md`, GitHub Copilot uses `.github/prompts/{name}.prompt.md`. Core ships `/fluid-flow` and `/ff-reverse-engineer`.
+**Prompt / Command**: A short entry-point file (1-5 lines) that tells the AI "load X and follow it." Cursor uses `.cursor/commands/{name}.md`, GitHub Copilot uses `.github/prompts/{name}.prompt.md`. Core ships `/fluid-flow` and `/ff-reverse-engineering`.
 
 **Knowledge Base**: The enterprise KB (`betsson-kb-docs`) contains org-wide standards: ISO compliance, security rules, engineering standards per tech stack. The AI loads relevant files before every step and runs a compliance check at phase boundaries. Departments can add a **local KB** with team-specific knowledge.
 

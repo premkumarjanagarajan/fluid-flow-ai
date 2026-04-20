@@ -51,7 +51,7 @@ Here's what's available in your workspace:
 
   Commands:
     /fluid-flow                 [core]
-    /ff-reverse-engineer        [core]
+    /ff-reverse-engineering      [core]
     /ff-audit                   [core]
     /ff-help                    [core]
     /{name}                     [dept]

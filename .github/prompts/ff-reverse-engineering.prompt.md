@@ -1,4 +1,4 @@
-Run the reverse engineering skill from `skills/reverse-engineering/reverse-engineering.md`.
+Run the reverse-engineering skill from `skills/reverse-engineering/reverse-engineering.md`.
 
 If a repository already contains `reverse-engineering/reverse-engineering-timestamp.md`, treat this as an **update run** — re-analyze the repository and overwrite all existing artifacts with fresh results. Do NOT skip repositories that already have a timestamp file.
 
