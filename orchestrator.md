@@ -10,175 +10,11 @@ Display:
 ═══════════════════════════════════════════════════
 ```
 
-## Stage 0A: Environment Detection
+## Init
 
-Check if `{FF_CORE_PATH}/.local-environment.json` exists.
+Launch the **`ff-init`** subagent (`skills/ff-init/ff-init.agent.md`). It runs in its own context window — all environment detection, workspace scanning, MCP verification, env loading, and reverse engineering work stays out of the main conversation.
 
-**If the file exists** — load cached values. Store all session variables from the JSON and skip the detection scripts:
-
-```
-  Environment (cached):
-    OS            : {OS}
-    Shell         : {SHELL_TYPE}
-    IDE           : {IDE}
-    Package mgrs  : {PACKAGE_MANAGERS}
-    Tech stack    : {TECH_STACK}
-    Cached at     : {detectedAt}
-    (delete .local-environment.json to force re-detection)
-```
-
-**If the file does not exist** — run fresh detection:
-
-1. Load `skills/environment-detection/environment-detection.md`. Store session variables:
-
-   - `SHELL_TYPE` (bash / powershell)
-   - `OS` (darwin / linux / windows)
-   - `IDE` (cursor / vscode) — inferred by the AI from the runtime context
-   - `PACKAGE_MANAGERS` (comma-separated list)
-   - `TECH_STACK` (comma-separated list)
-
-2. Write results to `{FF_CORE_PATH}/.local-environment.json`:
-
-   ```json
-   {
-     "detectedAt": "{ISO-8601 timestamp}",
-     "os": "{OS}",
-     "shellType": "{SHELL_TYPE}",
-     "ide": "{IDE}",
-     "packageManagers": "{PACKAGE_MANAGERS}",
-     "techStack": "{TECH_STACK}"
-   }
-   ```
-
-3. Display:
-
-   ```
-     Environment (detected — cached for next session):
-       OS            : {OS}
-       Shell         : {SHELL_TYPE}
-       IDE           : {IDE}
-       Package mgrs  : {PACKAGE_MANAGERS}
-       Tech stack    : {TECH_STACK}
-   ```
-
-## Stage 0B: Workspace Detection
-
-The workspace is a multi-root IDE workspace with separate repos cloned side by side. Three repos are mandatory; at least one source repo is required.
-
-### Step 1 — Identify repos
-
-Scan all workspace root folders and classify each by its markers:
-
-| Marker | Repo type | Variable |
-|--------|-----------|----------|
-| Contains `orchestrator.md` | FF Core | `FF_CORE_PATH` |
-| Contains `knowledge/` directory | Enterprise KB | `KB_PATH` |
-| Contains `.department-fluid-flow.json` | Department FF | `DEPT_FF_PATH` |
-| None of the above | Source repo | `SOURCE_REPOS[]` |
-
-If `DEPT_FF_PATH` is unset (no repo contained `.department-fluid-flow.json`), apply a **fallback heuristic** before halting:
-
-1. Scan `SOURCE_REPOS[]` for any repo that contains an `initiatives/` directory at its root
-2. If exactly one candidate is found, it is likely a department repo missing its config file. Offer to scaffold it:
-
-```
-  Department repo detected by structure: {candidate folder name}
-  Missing: .department-fluid-flow.json
-
-  Scaffolding from template...
-```
-
-3. Copy `{FF_CORE_PATH}/local-fluid-flow/.department-fluid-flow.json` into the candidate repo root
-4. Prompt the user to configure the `department` and `name` fields via `AskQuestion` (pre-fill `name` from the repo folder name)
-5. Write the configured values, reclassify the repo as Department FF (`DEPT_FF_PATH`), remove it from `SOURCE_REPOS[]`, and continue
-6. If zero or multiple candidates are found, do not attempt remediation — fall through to the halt below
-
-If any of the three mandatory repos is still missing after the fallback, halt:
-
-```
-  Workspace Validation: FAIL
-  Missing: {list of missing repo types}
-
-  Required workspace structure:
-    fluid-flow-ai/                 (FF core — contains orchestrator.md)
-    betsson-kb-docs/               (enterprise KB — contains knowledge/)
-    {dept}-fluid-flow/             (department repo — contains .department-fluid-flow.json)
-    {source-repo}/                 (at least 1 working repo)
-```
-
-### Step 2 — Auto-update immutable repos
-
-FF Core and the Enterprise KB are immutable — development teams do not modify them. Pull latest `main` for both, using the appropriate shell from `SHELL_TYPE` (Stage 0A):
-
-**Bash / Zsh** (`SHELL_TYPE=bash`):
-
-```bash
-cd "$FF_CORE_PATH" && git pull origin main
-cd "$KB_PATH" && git pull origin main
-```
-
-**PowerShell** (`SHELL_TYPE=powershell`):
-
-```powershell
-Push-Location $FF_CORE_PATH; git pull origin main; Pop-Location
-Push-Location $KB_PATH; git pull origin main; Pop-Location
-```
-
-If either pull fails (e.g. network, auth), warn but do not halt — continue with the local version.
-
-### Step 3 — Find source repos
-
-Validate at least 1 source repo is present in `SOURCE_REPOS[]`. If none found, halt:
-
-```
-  Workspace Validation: FAIL
-  No source code repositories found. Add at least one working repo to the workspace.
-```
-
-### Step 4 — Read department config
-
-Read `{DEPT_FF_PATH}/.department-fluid-flow.json`. Validate the file is valid JSON and that `department` is set (not `"CHANGE_ME"` or empty). If validation fails, prompt the user to provide the value before continuing.
-
-Store:
-- `DEPARTMENT` — department identifier (used for KB overlay routing)
-
-If `knowledgeBaseLocal` is `true`, check if `{DEPT_FF_PATH}/knowledge-base-local/manifest.md` exists:
-- If found: read the manifest and load all files under its "Always Load" section. Store `LOCAL_KB_MANIFEST` path. Report: `Local KB: loaded ({N} domain files)`
-- If not found: `LOCAL_KB_MANIFEST` remains empty. No error — local KB is optional even when flagged.
-
-### Step 5 — Classify source repos
-
-For each repo in `SOURCE_REPOS[]`, scan for source code (`src/`, `package.json`, `*.csproj`, `go.mod`, etc.):
-- If source code found: **brownfield**
-- If empty or no code markers: **greenfield**
-
-Store classification per repo.
-
-Display:
-
-```
-  Workspace:
-    FF Core       : {FF_CORE_PATH folder name} (updated to latest main)
-    Betsson KB    : {KB_PATH folder name} (updated to latest main)
-    Department FF : {DEPT_FF_PATH folder name}
-    Department    : {DEPARTMENT}
-    Local KB      : {loaded (N files) | not configured}
-    Source repos  : {repo1} ({brownfield|greenfield}), {repo2} ({brownfield|greenfield})
-```
-
----
-
-## MCP Check
-
-Load `skills/mcp-check/mcp-check.md`. The skill will:
-
-1. Read MCP configs from both core and department repos (merged, department overrides)
-2. Scaffold `.env` from `.env.example` if missing in either repo
-3. Verify each server (HTTP connectivity or command existence)
-4. On failure, diagnose the error category and present a targeted fix guide
-5. Ask the user: **Retry** / **Continue without** / **Stop and fix**
-
-Store `MCP_SERVERS_OK[]` for downstream use.
+Pass the workspace root folder paths and whether the user explicitly invoked `/ff-init` (force flag). Parse the returned payload, store session variables, and continue to Triage — or halt if blocked.
 
 ---
 
@@ -187,31 +23,11 @@ Store `MCP_SERVERS_OK[]` for downstream use.
 1. Read all `{FF_CORE_PATH}/workflow/*/wf-*.md` frontmatter to know available workflows
 2. Check `{DEPT_FF_PATH}/initiatives/` for any existing initiative folders with incomplete `metadata/state.md`
 3. **Detect JIRA keys**: Scan the user's message for JIRA issue keys (pattern: `[A-Z]+-\d+`). If any are found and the Atlassian MCP is available, read each issue to understand context — then **immediately** load `skills/jira-ff-assisted/jira-ff-assisted.md` and flag every detected issue before continuing. Store the keys as `JIRA_KEYS[]` for the session.
-4. Based on the user's prompt (enriched with any JIRA context from step 3), classify the intent:
-
-| Intent | Criteria | Action |
-|--------|----------|--------|
-| **Question** | No development needed | Answer directly. Stop here. |
-| **Continue** | Matches an existing incomplete initiative | Confirm with user, then resume from last completed stage in its `metadata/state.md` |
-| **New** | Development request, no matching initiative | Run all stages (1-5) |
+4. **Route**: If an existing incomplete initiative matches the request, confirm with the user and resume from the last completed stage in its `metadata/state.md`. Otherwise treat as **New** and run all stages (1-4).
 
 ---
 
-## Stage 1: Reverse Engineering (brownfield, mandatory)
-
-For each brownfield source repo, check whether `reverse-engineering/reverse-engineering-timestamp.md` exists **in that repo's root**.
-
-- **If the timestamp file is missing** → RE is **mandatory**. Load `skills/reverse-engineering/reverse-engineering.md` and execute it. There are **no other valid reasons to skip** — scope, feature size, JIRA context, or "existing familiarity" are never grounds for bypass.
-- **If the timestamp file exists** → skip that repo (already done).
-- **If all source repos are greenfield** → skip this stage entirely.
-
-When some repos have the timestamp and others do not, run the skill — it will only process the repos that are missing it.
-
-Load `skills/reverse-engineering/reverse-engineering.md`. **Wait for user approval.**
-
-**Continue stops here** — resume the ongoing initiative from its last completed stage.
-
-## Stage 2: Workflow Selection
+## Stage 1: Workflow Selection
 
 Present workflows grouped by source. Suggest best match with `-->`, using `TECH_STACK` and `DEPARTMENT` to inform the suggestion. **Wait for user choice.**
 
@@ -233,7 +49,7 @@ Present workflows grouped by source. Suggest best match with `-->`, using `TECH_
 - **Core**: workflows shipped with `fluid-flow-ai` (`{FF_CORE_PATH}/workflow/`)
 - **Department**: workflows added by the department repo (`{DEPT_FF_PATH}/workflows/`)
 
-## Stage 3: Initiative Creation (new only)
+## Stage 2: Initiative Creation (new only)
 
 1. Load `{FF_CORE_PATH}/templates/branch-template.md` for naming convention
 2. Generate a suggested name based on user's request and the template pattern
@@ -253,14 +69,14 @@ Present workflows grouped by source. Suggest best match with `-->`, using `TECH_
 
 **Artifacts location**: All workflow step outputs are saved to `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`. Workflow step files reference this path via the `DEPT_FF_PATH` and `INITIATIVE_NAME` session variables.
 
-## Stage 4: Workflow Routing
+## Stage 3: Workflow Routing
 
 1. Load `{FF_CORE_PATH}/workflow/{selected}/wf-{selected}.md`
 2. Execute phase->step chain: each `{N}-{phase}.md` defines its steps, each `{N}-{step}.md` is loaded and executed in order
 3. **After every step completes**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`
 4. **After the last step of each phase** (phase transition or workflow end): additionally run `primitives/kb-compliance.md`
 
-## Stage 5: Completion
+## Stage 4: Completion
 
 Post-implementation actions, executed in order:
 
