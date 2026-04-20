@@ -30,7 +30,9 @@ dependencies:
 
 ## Init
 
-Launch the **`ff-init`** subagent (`skills/ff-init/ff-init.agent.md`). It runs in its own context window — all environment detection, workspace scanning, MCP verification, env loading, and reverse engineering work stays out of the main conversation.
+Launch the **`ff-init`** subagent (`skills/ff-init/ff-init.agent.md`) with **`scope=workspace-only`**. Product Buddy does not work with source code repositories — it only needs FF Core, Enterprise KB, and the Department FF repo. The `workspace-only` scope skips package manager detection, tech stack scanning, source repo classification, and reverse engineering.
+
+The subagent runs in its own context window — all environment detection, workspace scanning, MCP verification, and env loading work stays out of the main conversation.
 
 Parse the returned payload, store session variables, and continue — or halt if blocked.
 
@@ -55,9 +57,10 @@ Display:
 | `KB_PATH` | ff-init (workspace detection) | Knowledge base lookups |
 | `DEPT_FF_PATH` | ff-init (workspace detection) | Artefact storage |
 | `DEPARTMENT` | ff-init (department config) | KB overlay routing |
-| `SOURCE_REPOS[]` | ff-init (workspace detection) | Context |
 | `MCP_SERVERS_OK[]` | ff-init (MCP check) | MCP availability |
 | `INITIATIVE_NAME` | Initiative creation (this workflow) | Artefact paths |
+
+> **Note**: `PACKAGE_MANAGERS`, `TECH_STACK`, and `SOURCE_REPOS[]` are not used by Product Buddy. The `scope=workspace-only` flag ensures ff-init skips their detection.
 
 Artefact root: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`
 

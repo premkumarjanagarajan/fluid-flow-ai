@@ -13,15 +13,30 @@ Initialize the Fluid-Flow workspace: detect environment, validate workspace stru
 
 ## Subagent Execution
 
-This skill runs as a **dedicated subagent** defined in `ff-init.agent.md` (same folder). The orchestrator launches it by agent name (`ff-init`), keeping all detection, scanning, MCP verification, and RE work out of the main conversation's context window.
+This skill runs as a **generic (unnamed) subagent** — the orchestrator launches it via `runSubagent` **without** specifying an `agentName`. This ensures it always executes as a subagent regardless of the IDE's registered agent list. The `ff-init.agent.md` file in this folder serves only as documentation of the agent contract; it is NOT required to be registered.
 
 ### Subagent Inputs
 
-The orchestrator launches a single subagent with:
+The orchestrator launches a single subagent with (no `agentName` parameter):
 
 1. **Skill path**: `skills/ff-init/ff-init.md` — the subagent reads and executes this file
 2. **Workspace roots**: all workspace root folder paths (so the subagent can scan and classify them)
 3. **Force flag**: `true` if the user explicitly invoked `/ff-init`, otherwise `false`
+4. **Scope**: `full` (default) or `workspace-only`
+
+#### Scope Modes
+
+| Scope | When to use | What it does |
+|-------|-------------|---------------|
+| `full` | Engineering workflows that work with source code repos | Runs all steps including tech stack detection, source repo classification, and reverse engineering |
+| `workspace-only` | Non-engineering workflows (e.g. Product Buddy) that only need FF Core, KB, and Dept FF | Skips: package managers, tech stack, source repo classification (Step 1), source repo validation (Step 2c), and reverse engineering (Step 5) |
+
+When `scope=workspace-only`:
+- Step 1 runs the detection script **without** source repo paths — only OS, shell, and IDE are stored
+- Step 2a still classifies repos but does **not** require source repos; remaining folders are ignored
+- Step 2c is **skipped entirely**
+- Step 5 is **skipped entirely**
+- `PACKAGE_MANAGERS`, `TECH_STACK`, and `SOURCE_REPOS[]` are set to empty
 
 ### Subagent Output
 
@@ -59,7 +74,17 @@ Before executing any steps, determine whether a full run is needed:
 When the cache is valid (today + same workspace + version 2):
 
 1. Load all session variables from the cached JSON (see **Return Payload** section below for the full list)
-2. Return the payload with status `COMPLETE` and a summary indicating cached values were used
+2. Display the cached summary to the user
+3. **Ask the user** before proceeding:
+
+```
+Which option do you prefer?
+  A) Use cached values — skip init and continue
+  B) Run full init anyway — re-detect environment, re-scan workspace, re-verify MCPs, and rebuild the cache from scratch
+```
+
+- **If A**: Return the payload with status `COMPLETE` and a summary indicating cached values were used
+- **If B**: Proceed to **Full Run Steps** (treat as a forced run)
 
 The orchestrator receives the session variables without any detection, scanning, or MCP work entering its context.
 
@@ -71,7 +96,6 @@ The orchestrator receives the session variables without any detection, scanning,
   Repos: {N} source ({N} brownfield, {N} greenfield)
   MCP: {ok}/{total} OK
   Env vars: {loaded} loaded
-  (run /ff-init to force refresh)
 ═══════════════════════════════════════════════════
 ```
 
@@ -97,10 +121,16 @@ Examples of good briefings (print these as chat text before the tool call):
 
 Load `skills/environment-detection/environment-detection.md` and execute it.
 
-Pass all **source repo paths** (identified in Step 2a) as arguments to the detection script so it can scan them for tech stack markers and classify them as brownfield/greenfield in a single pass:
+**If `scope=full`** (default): Pass all **source repo paths** (identified in Step 2a) as arguments to the detection script so it can scan them for tech stack markers and classify them as brownfield/greenfield in a single pass:
 
 ```bash
 bash skills/environment-detection/scripts/environment-detection.bash /path/to/repo1 /path/to/repo2 ...
+```
+
+**If `scope=workspace-only`**: Run the detection script **without** any source repo paths — it will detect OS and shell only:
+
+```bash
+bash skills/environment-detection/scripts/environment-detection.bash
 ```
 
 The script outputs a **single JSON object** containing:
@@ -111,15 +141,15 @@ Parse the JSON output and store session variables:
 - `OS` (darwin / linux / windows)
 - `SHELL_TYPE` (bash / powershell)
 - `IDE` (cursor / vscode) — inferred by the AI from the runtime context
-- `PACKAGE_MANAGERS` (comma-separated list)
-- `TECH_STACK` (comma-separated list)
-- `SOURCE_REPOS[]` — from the `sourceRepos` array in the JSON output
+- `PACKAGE_MANAGERS` (comma-separated list) — **empty when `scope=workspace-only`**
+- `TECH_STACK` (comma-separated list) — **empty when `scope=workspace-only`**
+- `SOURCE_REPOS[]` — from the `sourceRepos` array in the JSON output — **empty when `scope=workspace-only`**
 
 **Write progressive cache** after this step — update `{FF_CORE_PATH}/.local-environment.json` with the `environment` block so progress is preserved if later steps fail.
 
 ### Step 2 — Workspace Detection
 
-The workspace is a multi-root IDE workspace with separate repos cloned side by side. Three repos are mandatory; at least one source repo is required.
+The workspace is a multi-root IDE workspace with separate repos cloned side by side. Three repos are mandatory; at least one source repo is required when `scope=full`.
 
 #### 2a — Identify repos
 
@@ -159,7 +189,7 @@ If any of the three mandatory repos is still missing after the fallback, return 
     fluid-flow-ai/                 (FF core — contains orchestrator.md)
     betsson-kb-docs/               (enterprise KB — contains knowledge/)
     {dept}-fluid-flow/             (department repo — contains .department-fluid-flow.json)
-    {source-repo}/                 (at least 1 working repo)
+    {source-repo}/                 (at least 1 working repo — scope=full only)
 ```
 
 #### 2b — Auto-update immutable repos
@@ -186,7 +216,9 @@ If either pull fails (e.g. network, auth), warn but do not halt — continue wit
 
 #### 2c — Find source repos
 
-Validate at least 1 source repo is present in `SOURCE_REPOS[]`. If none found, return `BLOCKED`:
+**Skip this step entirely when `scope=workspace-only`** — source repos are not required.
+
+**When `scope=full`**: Validate at least 1 source repo is present in `SOURCE_REPOS[]`. If none found, return `BLOCKED`:
 
 ```
   Workspace Validation: FAIL
@@ -284,7 +316,9 @@ Store `MCP_SERVERS_OK[]` for downstream use.
 
 ### Step 5 — Reverse Engineering
 
-For each brownfield source repo, check whether `reverse-engineering/reverse-engineering-timestamp.md` exists **in that repo's root**.
+**Skip this step entirely when `scope=workspace-only`** — no source repos to scan.
+
+**When `scope=full`**: For each brownfield source repo, check whether `reverse-engineering/reverse-engineering-timestamp.md` exists **in that repo's root**.
 
 - **If the timestamp file is missing** → RE is **mandatory**. Load `skills/reverse-engineering/reverse-engineering.md` and execute it. There are **no other valid reasons to skip** — scope, feature size, JIRA context, or "existing familiarity" are never grounds for bypass.
 - **If the timestamp file exists** → skip that repo (already done). Store its timestamp.

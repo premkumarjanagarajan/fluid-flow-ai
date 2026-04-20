@@ -110,11 +110,32 @@ For each selected MCP:
    b. Replace the unversioned entry with `<package-name>@<latest>`.
    c. If `npm view` fails, keep the unversioned form and note a ⚠️ in the report.
 
-3. Merge all selected configs under a top-level `"mcpServers"` key.
+3. Merge all selected configs under the correct top-level key **based on the detected IDE**:
+   - **VS Code** (`IDE=vscode`): use `"servers"` as the top-level key
+   - **Cursor** (`IDE=cursor`): use `"mcpServers"` as the top-level key
 
 4. Write the result to `{MCP_CONFIG_DIR}/mcp.json`, formatted with 2-space indentation. **This overwrites the file completely** — only selected servers are included.
 
-**Example output:**
+**Example output (VS Code):**
+```json
+{
+  "servers": {
+    "atlassian": {
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github@1.2.0"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+**Example output (Cursor):**
 ```json
 {
   "mcpServers": {
