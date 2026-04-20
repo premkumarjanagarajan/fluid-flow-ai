@@ -3,7 +3,7 @@ name: ff-init
 description: Initialises the Fluid-Flow workspace — detects environment, validates structure, loads env vars, verifies MCPs, and runs reverse engineering for brownfield repos.
 execution: subagent
 scope: shared
-version: 1.0
+version: 1.1
 last-updated: 2026-04-20
 ---
 
@@ -40,7 +40,7 @@ When `scope=workspace-only`:
 
 ### Subagent Output
 
-The subagent must return **ONLY** the structured payload defined in the **Return Payload** section at the bottom of this file. Do NOT return detection details, MCP diagnostics, or RE analysis — all verbose output stays inside the subagent's context or is written to `.local-environment.json`.
+The subagent must return **ONLY** the structured payload defined in `return-payload.md`. Do NOT return detection details, MCP diagnostics, or RE analysis — all verbose output stays inside the subagent's context or is written to `.local-environment.json`.
 
 The orchestrator parses the returned payload:
 - **If `COMPLETE`**: stores all session variables, displays the summary, continues to Triage
@@ -73,7 +73,7 @@ Before executing any steps, determine whether a full run is needed:
 
 When the cache is valid (today + same workspace + version 2):
 
-1. Load all session variables from the cached JSON (see **Return Payload** section below for the full list)
+1. Load all session variables from the cached JSON (see `return-payload.md` for the full list)
 2. Display the cached summary to the user
 3. **Ask the user** before proceeding:
 
@@ -107,343 +107,28 @@ The orchestrator receives the session variables without any detection, scanning,
 
 Before running **any** terminal command or script, you **MUST** print a visible one-liner explanation **as a chat message** to the user describing what the command does and why it is needed. This message must appear in the conversation **before** the terminal tool call — setting the tool's `explanation` parameter alone is NOT sufficient, because the user needs context in the chat history, not only in the IDE approval dialog.
 
-The briefing should be concise and non-technical — just enough for the user to understand the action and feel confident approving it.
-
-Examples of good briefings (print these as chat text before the tool call):
-- _"I'll detect your OS, shell, package managers, and tech stack across all source repos."_
-- _"Pulling latest changes for the FF Core repository (read-only, safe to run)."_
-- _"Loading environment variables from .env files into the current shell session."_
-- _"Checking connectivity to MCP servers (HTTP ping and command availability)."_
-
 > **Rule**: Every terminal invocation in this skill must be preceded by a visible chat briefing. No exceptions.
 
-### Step 1 — Environment Detection
-
-Load `skills/environment-detection/environment-detection.md` and execute it.
-
-**If `scope=full`** (default): Pass all **source repo paths** (identified in Step 2a) as arguments to the detection script so it can scan them for tech stack markers and classify them as brownfield/greenfield in a single pass:
-
-```bash
-bash skills/environment-detection/scripts/environment-detection.bash /path/to/repo1 /path/to/repo2 ...
-```
-
-**If `scope=workspace-only`**: Run the detection script **without** any source repo paths — it will detect OS and shell only:
-
-```bash
-bash skills/environment-detection/scripts/environment-detection.bash
-```
-
-The script outputs a **single JSON object** containing:
-- `os`, `shellType`, `packageManagers`, `techStack`
-- `sourceRepos` — array with each repo's name, type (brownfield/greenfield), and RE timestamp
-
-Parse the JSON output and store session variables:
-- `OS` (darwin / linux / windows)
-- `SHELL_TYPE` (bash / powershell)
-- `IDE` (cursor / vscode) — inferred by the AI from the runtime context
-- `PACKAGE_MANAGERS` (comma-separated list) — **empty when `scope=workspace-only`**
-- `TECH_STACK` (comma-separated list) — **empty when `scope=workspace-only`**
-- `SOURCE_REPOS[]` — from the `sourceRepos` array in the JSON output — **empty when `scope=workspace-only`**
-
-**Write progressive cache** after this step — update `{FF_CORE_PATH}/.local-environment.json` with the `environment` block so progress is preserved if later steps fail.
-
-### Step 2 — Workspace Detection
-
-The workspace is a multi-root IDE workspace with separate repos cloned side by side. Three repos are mandatory; at least one source repo is required when `scope=full`.
-
-#### 2a — Identify repos
-
-Scan all workspace root folders and classify each by name or marker:
-
-| Rule | Repo type | Variable |
-|------|-----------|----------|
-| Folder name is `fluid-flow-ai` | FF Core | `FF_CORE_PATH` |
-| Folder name is `betsson-kb-docs` | Enterprise KB | `KB_PATH` |
-| Contains `.department-fluid-flow.json` | Department FF | `DEPT_FF_PATH` |
-| None of the above | Source repo | `SOURCE_REPOS[]` |
-
-If `DEPT_FF_PATH` is unset (no repo contained `.department-fluid-flow.json`), apply a **fallback heuristic** before halting:
-
-1. Scan `SOURCE_REPOS[]` for any repo that contains an `initiatives/` directory at its root
-2. If exactly one candidate is found, it is likely a department repo missing its config file. Offer to scaffold it:
-
-```
-  Department repo detected by structure: {candidate folder name}
-  Missing: .department-fluid-flow.json
-
-  Scaffolding from template...
-```
-
-3. Copy `{FF_CORE_PATH}/local-fluid-flow/.department-fluid-flow.json` into the candidate repo root
-4. Prompt the user to configure the `department` and `name` fields (pre-fill `name` from the repo folder name)
-5. Write the configured values, reclassify the repo as Department FF (`DEPT_FF_PATH`), remove it from `SOURCE_REPOS[]`, and continue
-6. If zero or multiple candidates are found, do not attempt remediation — fall through to the halt below
-
-If any of the three mandatory repos is still missing after the fallback, return `BLOCKED`:
-
-```
-  Workspace Validation: FAIL
-  Missing: {list of missing repo types}
-
-  Required workspace structure:
-    fluid-flow-ai/                 (FF core — contains orchestrator.md)
-    betsson-kb-docs/               (enterprise KB — contains knowledge/)
-    {dept}-fluid-flow/             (department repo — contains .department-fluid-flow.json)
-    {source-repo}/                 (at least 1 working repo — scope=full only)
-```
-
-#### 2b — Auto-update immutable repos
-
-FF Core and the Enterprise KB are immutable — development teams do not modify them. Pull latest `main` for both, using the appropriate shell from `SHELL_TYPE` (Step 1).
-
-**Briefing**: Before each `git pull`, print a visible chat message: _"Pulling latest changes for {repo name} (read-only repo, safe to run)."_ — this must appear in the conversation before the terminal tool call.
-
-**Bash / Zsh** (`SHELL_TYPE=bash`):
-
-```bash
-cd "$FF_CORE_PATH" && git pull origin main
-cd "$KB_PATH" && git pull origin main
-```
-
-**PowerShell** (`SHELL_TYPE=powershell`):
-
-```powershell
-Push-Location $FF_CORE_PATH; git pull origin main; Pop-Location
-Push-Location $KB_PATH; git pull origin main; Pop-Location
-```
-
-If either pull fails (e.g. network, auth), warn but do not halt — continue with the local version.
-
-#### 2c — Find source repos
-
-**Skip this step entirely when `scope=workspace-only`** — source repos are not required.
-
-**When `scope=full`**: Validate at least 1 source repo is present in `SOURCE_REPOS[]`. If none found, return `BLOCKED`:
-
-```
-  Workspace Validation: FAIL
-  No source code repositories found. Add at least one working repo to the workspace.
-```
-
-#### 2d — Read department config
-
-Read `{DEPT_FF_PATH}/.department-fluid-flow.json`. Validate the file is valid JSON and that `department` is set (not `"CHANGE_ME"` or empty). If validation fails, prompt the user to provide the value before continuing.
-
-Store:
-- `DEPARTMENT` — department identifier (used for KB overlay routing)
-
-If `knowledgeBaseLocal` is `true`, check if `{DEPT_FF_PATH}/knowledge-base-local/manifest.md` exists:
-- If found: read the manifest and load all files under its "Always Load" section. Store `LOCAL_KB_MANIFEST` path. Report: `Local KB: loaded ({N} domain files)`
-- If not found: `LOCAL_KB_MANIFEST` remains empty. No error — local KB is optional even when flagged.
-
-#### 2e — Source repo classification (already done)
-
-Repo classification (brownfield / greenfield) and RE timestamp extraction are performed by the environment-detection script in Step 1. The `sourceRepos` array from its JSON output already contains each repo's name, type, and `reTimestamp`.
-
-Build the sorted `folderList` array from all workspace root folder names (for future change detection).
-
-**Write progressive cache** after this step — update `{FF_CORE_PATH}/.local-environment.json` with the `workspace` block.
-
-### Step 3 — Env Loading
-
-Locate `.env` files in both repos:
-
-| Source | Path |
-|--------|------|
-| Core | `{FF_CORE_PATH}/.env` |
-| Department | `{DEPT_FF_PATH}/.env` |
-
-For each repo that has a `.env.example` but no `.env`:
-1. Copy `.env.example` → `.env`
-2. Inform the user to fill in their tokens
-
-The `load-env.sh` script accepts **file paths as arguments** — pass both `.env` files in a single call. Department vars override core vars when the same key appears in both.
-
-**Briefing**: Before running the load-env script, print a visible chat message: _"Loading environment variables from .env files and persisting them to your shell profile (~/.zshrc or equivalent). You will need to restart VS Code afterwards so MCP servers can pick up the new values."_ — this must appear in the conversation before the terminal tool call.
-
-The script runs with `--persist` by default so that environment variables survive across terminal sessions and are available to VS Code's MCP client via `${env:...}` references.
-
-**bash** (`OS` = `darwin` or `linux`):
-
-```bash
-source "{FF_CORE_PATH}/skills/ff-init/scripts/load-env.sh" --persist "{FF_CORE_PATH}/.env" "{DEPT_FF_PATH}/.env"
-```
-
-If the department has no `.env`, pass only the core one:
-
-```bash
-source "{FF_CORE_PATH}/skills/ff-init/scripts/load-env.sh" --persist "{FF_CORE_PATH}/.env"
-```
-
-**powershell** (`OS` = `windows`):
-
-```powershell
-. "{FF_CORE_PATH}\skills\ff-init\scripts\load-env.ps1" -Persist "{FF_CORE_PATH}\.env" "{DEPT_FF_PATH}\.env"
-```
-
-The script outputs a `LOAD_ENV_RESULT` JSON line at the end — parse it for loaded/skipped counts.
-
-Store loaded/skipped counts (persisted is always `true` during init).
-
-After env loading completes, display a restart notice to the user:
-
-```
-  ⚠️  VS Code restart required
-  Environment variables have been persisted to your shell profile.
-  Please quit and reopen VS Code (Cmd+Q / Ctrl+Q) so MCP servers
-  can read the updated tokens via ${env:...}.
-```
-
-**Write progressive cache** after this step — update `{FF_CORE_PATH}/.local-environment.json` with the `envVars` block.
-
-### Step 4 — MCP Check
-
-**Briefing**: Before running MCP verification commands, print a visible chat message: _"Checking connectivity to configured MCP servers (lightweight HTTP pings and command lookups — no data is sent)."_ — this must appear in the conversation before the terminal tool call.
-
-Load `skills/mcp-check/mcp-check.md` and execute it. The skill will:
-
-1. Scan available MCP definitions from `{FF_CORE_PATH}/mcps/` and `{DEPT_FF_PATH}/mcps/`
-2. Ask the user which MCPs to enable (multi-select, pre-selecting already configured ones)
-3. Generate `{FF_CORE_PATH}/.vscode/mcp.json` or `{FF_CORE_PATH}/.cursor/mcp.json` (based on detected IDE) from the selected configs (with npm version pinning)
-4. Scaffold `.env` from `.env.example` if missing in either repo
-5. Verify each selected server (HTTP connectivity or command existence)
-6. On failure, diagnose the error category and present a targeted fix guide
-7. Ask the user: **Retry** / **Continue without** / **Stop and fix**
-
-Store `MCP_SERVERS_OK[]` for downstream use.
-
-**Write progressive cache** after this step — update `{FF_CORE_PATH}/.local-environment.json` with the `mcp` block.
-
-### Step 5 — Reverse Engineering
-
-**Skip this step entirely when `scope=workspace-only`** — no source repos to scan.
-
-**When `scope=full`**: For each brownfield source repo, check whether `reverse-engineering/reverse-engineering-timestamp.md` exists **in that repo's root**.
-
-- **If the timestamp file is missing** → RE is **mandatory**. Load `skills/reverse-engineering/reverse-engineering.md` and execute it. There are **no other valid reasons to skip** — scope, feature size, JIRA context, or "existing familiarity" are never grounds for bypass.
-- **If the timestamp file exists** → skip that repo (already done). Store its timestamp.
-- **If all source repos are greenfield** → skip this step entirely.
-
-When some repos have the timestamp and others do not, run the skill — it will only process the repos that are missing it.
-
-**Wait for user approval** before proceeding.
-
-Store RE status per repo (timestamp or `null` if not yet done).
-
-**Write progressive cache** after this step — update the `sourceRepos[].reTimestamp` entries in `{FF_CORE_PATH}/.local-environment.json`.
-
-### Step 6 — Finalize Cache
-
-By this point, the cache file (`{FF_CORE_PATH}/.local-environment.json`) already has partial data from progressive writes in Steps 1–5. Finalize it with any remaining fields and bump the `version` and `detectedAt` timestamp to confirm a complete run.
-
-The final cache must contain the complete state:
-
-```json
-{
-  "version": 2,
-  "detectedAt": "{ISO-8601 timestamp}",
-  "environment": {
-    "os": "{OS}",
-    "shellType": "{SHELL_TYPE}",
-    "ide": "{IDE}",
-    "packageManagers": "{PACKAGE_MANAGERS}",
-    "techStack": "{TECH_STACK}"
-  },
-  "workspace": {
-    "ffCorePath": "{FF_CORE_PATH folder name}",
-    "kbPath": "{KB_PATH folder name}",
-    "deptFfPath": "{DEPT_FF_PATH folder name}",
-    "department": "{DEPARTMENT}",
-    "localKbLoaded": {true|false},
-    "localKbFiles": {N},
-    "sourceRepos": [
-      { "name": "{repo name}", "type": "{brownfield|greenfield}", "reTimestamp": "{ISO-8601|null}" }
-    ],
-    "folderList": ["{sorted list of all workspace root folder names}"]
-  },
-  "mcp": {
-    "checkedAt": "{ISO-8601 timestamp}",
-    "serversOk": ["{server names}"],
-    "serversFailed": ["{server names}"]
-  },
-  "envVars": {
-    "loadedAt": "{ISO-8601 timestamp}",
-    "loaded": {N},
-    "skipped": {N},
-    "persisted": {true|false}
-  }
-}
-```
-
-### Step 7 — Report
-
-Display the full summary:
-
-```
-═══════════════════════════════════════════════════
-  FF INIT — Complete
-═══════════════════════════════════════════════════
-  Environment:
-    OS: {os} | Shell: {shellType} | IDE: {ide}
-    Packages: {packageManagers}
-    Tech: {techStack}
-
-  Workspace:
-    FF Core       : {ffCorePath} (updated)
-    Enterprise KB : {kbPath} (updated)
-    Department FF : {deptFfPath}
-    Department    : {department}
-    Local KB      : {loaded (N files) | not configured}
-    Source repos  : {name} ({type}), ...
-
-  MCP: {ok}/{total} servers OK
-  Env: {loaded} loaded, {skipped} skipped, persisted: {yes|no}
-  RE:  {N} repos scanned, {N} pending
-
-  Cached to .local-environment.json
-  (run /ff-init to force refresh)
-═══════════════════════════════════════════════════
-```
-
----
-
-## Return Payload
-
-When called as a subagent by the orchestrator, return **ONLY** this structured payload. Do NOT return detection details, MCP diagnostics, RE analysis, or any verbose output. All detailed findings stay in the subagent context or in `.local-environment.json`.
-
-```
-FF-INIT: COMPLETE | BLOCKED
-
-Session Variables:
-  OS={value}
-  SHELL_TYPE={value}
-  IDE={value}
-  PACKAGE_MANAGERS={value}
-  TECH_STACK={value}
-  FF_CORE_PATH={value}
-  KB_PATH={value}
-  DEPT_FF_PATH={value}
-  DEPARTMENT={value}
-  LOCAL_KB_MANIFEST={value or empty}
-  SOURCE_REPOS={name:type:reStatus, name:type:reStatus, ...}
-  MCP_SERVERS_OK={comma-separated list}
-
-Summary:
-  {2-3 line status: cached vs fresh run, repos found, MCP status}
-
-Blockers (if BLOCKED):
-  {what's missing and what the user needs to do}
-```
+### Step Dispatch
+
+Execute each step sequentially by loading its file, executing it, then proceeding to the next. **Do NOT read all step files upfront** — load each one only when you reach that step.
+
+| Step | File | Skip when `scope=workspace-only` |
+|------|------|----------------------------------|
+| 1 | `steps/step-1-environment-detection.md` | No (runs in reduced mode) |
+| 2 | `steps/step-2-workspace-detection.md` | Partially (2c skipped) |
+| 3 | `steps/step-3-env-loading.md` | No |
+| 4 | `steps/step-4-mcp-check.md` | No |
+| 5 | `steps/step-5-reverse-engineering.md` | Yes (skip entirely) |
+| 6 | `steps/step-6-finalize-cache.md` | No |
+| 7 | `steps/step-7-report.md` | No |
+
+Each step file writes its portion to `.local-environment.json` (progressive caching). If a step returns `BLOCKED`, stop immediately and return the blocked payload.
+
+After all steps complete, return the payload defined in `return-payload.md`.
 
 ---
 
 ## Notes
 
 - This skill can be run standalone via the `/ff-init` slash command — it always performs a full run when invoked directly.
-- The `load-env.sh` / `load-env.ps1` scripts are located in `{FF_CORE_PATH}/skills/ff-init/scripts/`. They accept `.env` file paths as arguments — no department-specific copy is needed.
-- The load-env scripts run with `--persist` by default during init, saving variables to the shell profile (`~/.zshrc`, `~/.bashrc`, or User env vars on Windows). This ensures VS Code's MCP client can read them via `${env:...}` after restart.
-- Variables with placeholder values (containing `your-` or `CHANGE_ME`) are automatically skipped by the load-env scripts.
-- The environment-detection script outputs JSON and accepts workspace root paths as arguments. It performs tech stack detection and repo classification in a single pass.
-- **Progressive caching**: each step writes its portion of `.local-environment.json` as it completes. If a later step fails, the next run can detect what was already cached and potentially skip completed steps.
-- The `.local-environment.json` file is gitignored — it persists locally across `git pull` and is never committed.
-- When the orchestrator calls this skill as a subagent, the subagent handles caching internally and returns the structured payload regardless of whether it ran a full init or used cached values.
