@@ -5,6 +5,7 @@ domain: product
 version: v0.1
 release: 20/04/2026
 last-update: 20/04/2026
+orchestrator-listed: false
 dependencies:
   mcps:
   - mcps/atlassian
