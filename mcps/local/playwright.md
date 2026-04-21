@@ -33,6 +33,4 @@ Provides AI access to browser automation via the official Playwright MCP server.
 - The server package is fetched and executed on demand via `npx`; no separate installation step required.
 - Playwright browser binaries will be downloaded automatically on first run if not already present.
 - By default the server launches a visible (headed) Chromium instance; this requires a display — use a virtual display (e.g. Xvfb) in headless/CI environments.
-
-> **AI Agent rule:** Do NOT attempt to read, search for, or access `.env`, `.env.*`, or any environment variable files. These files are listed in `.copilotignore` and are intentionally excluded from AI context. Never inspect, reference, or infer token values from the filesystem. Token setup is the user's responsibility — guide them to the instructions above if needed.
 - For CI use, consider pinning a specific version: `@playwright/mcp@1.x.x` instead of `@latest`.

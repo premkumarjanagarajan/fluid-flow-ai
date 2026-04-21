@@ -1,4 +1,4 @@
-# Step 7 — Report
+# Step 6 — Report
 
 **Scope behavior**: Runs in both `full` and `workspace-only` modes (no differences).
 
@@ -26,7 +26,6 @@ Display the full summary:
     Source repos  : {name} ({type}), ...
 
   MCP: {ok}/{total} servers OK
-  Env: {loaded} loaded, {skipped} skipped, persisted: {yes|no}
   RE:  {N} repos scanned, {N} pending
 
   Cached to .local-environment.json

@@ -1,6 +1,6 @@
 ---
 name: ff-init
-description: Initialises the Fluid-Flow workspace — detects environment, validates structure, loads env vars, verifies MCPs, and runs reverse engineering for brownfield repos.
+description: Initialises the Fluid-Flow workspace — detects environment, validates structure, verifies MCPs, and runs reverse engineering for brownfield repos.
 execution: subagent
 scope: shared
 version: 1.1
@@ -9,7 +9,7 @@ last-updated: 2026-04-20
 
 # FF Init
 
-Initialize the Fluid-Flow workspace: detect environment, validate workspace structure, load environment variables, verify MCP servers, and run reverse engineering for brownfield repos. Results are cached to `.local-environment.json` — subsequent runs on the same day with the same workspace skip all work.
+Initialize the Fluid-Flow workspace: detect environment, validate workspace structure, verify MCP servers, and run reverse engineering for brownfield repos. Results are cached to `.local-environment.json` — subsequent runs on the same day with the same workspace skip all work.
 
 ## Subagent Execution
 
@@ -95,7 +95,6 @@ The orchestrator receives the session variables without any detection, scanning,
   OS: {os} | Shell: {shellType} | IDE: {ide}
   Repos: {N} source ({N} brownfield, {N} greenfield)
   MCP: {ok}/{total} OK
-  Env vars: {loaded} loaded
 ═══════════════════════════════════════════════════
 ```
 
@@ -117,11 +116,10 @@ Execute each step sequentially by loading its file, executing it, then proceedin
 |------|------|----------------------------------|
 | 1 | `steps/step-1-environment-detection.md` | No (runs in reduced mode) |
 | 2 | `steps/step-2-workspace-detection.md` | Partially (2c skipped) |
-| 3 | `steps/step-3-env-loading.md` | No |
-| 4 | `steps/step-4-mcp-check.md` | No |
-| 5 | `steps/step-5-reverse-engineering.md` | Yes (skip entirely) |
-| 6 | `steps/step-6-finalize-cache.md` | No |
-| 7 | `steps/step-7-report.md` | No |
+| 3 | `steps/step-3-mcp-check.md` | No |
+| 4 | `steps/step-4-reverse-engineering.md` | Yes (skip entirely) |
+| 5 | `steps/step-5-finalize-cache.md` | No |
+| 6 | `steps/step-6-report.md` | No |
 
 Each step file writes its portion to `.local-environment.json` (progressive caching). If a step returns `BLOCKED`, stop immediately and return the blocked payload.
 

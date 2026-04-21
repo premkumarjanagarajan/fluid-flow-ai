@@ -1,4 +1,4 @@
-# Step 5 — Reverse Engineering
+# Step 4 — Reverse Engineering
 
 **Scope behavior**: **Skip this step entirely when `scope=workspace-only`** — no source repos to scan.
 

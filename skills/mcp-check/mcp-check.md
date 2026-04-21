@@ -167,29 +167,7 @@ Report what was generated:
 
 ---
 
-## Step 5 — Check .env file
-
-For each repo that has a `.env.example`:
-
-1. Check if `.env` exists alongside it.
-2. If missing, copy `.env.example` to `.env` and inform the user:
-
-```
-  .env scaffolded from .env.example in {repo folder name}
-
-  Tokens are optional — OAuth servers (Atlassian, Slack) will
-  authenticate via browser on first use. However, configuring
-  personal tokens in .env provides a more stable connection
-  (no re-auth prompts, works in headless/CI environments, and
-  avoids browser popup issues).
-
-  Open {repo}/.env to set up your tokens. See .env.example
-  for instructions on where to generate each one.
-```
-
----
-
-## Step 6 — Verify each server
+## Step 5 — Verify each server
 
 **Briefing**: _"Checking connectivity to configured MCP servers (lightweight HTTP pings and command lookups — no data is sent)."_
 
@@ -212,7 +190,7 @@ If all servers pass, MCP Check is complete.
 
 ---
 
-## Step 7 — Diagnose failures
+## Step 6 — Diagnose failures
 
 For each failed server, classify the error and present the matching troubleshooting guide:
 
@@ -224,9 +202,10 @@ The server config references `${env:VAR_NAME}` but the variable is empty or unse
   {server-name}: FAIL (missing env var: {VAR_NAME})
 
   Fix:
-    1. Open {repo}/.env
-    2. Set {VAR_NAME}=your-value
-    3. See .env.example for instructions on where to get the value
+    1. Set the environment variable in your shell profile (~/.zshrc or equivalent)
+       export {VAR_NAME}=your-value
+    2. Restart VS Code so the MCP server can pick up the new value
+    3. See the MCP definition file (mcps/*.md) for instructions on where to get the value
 ```
 
 #### Missing command / dependency
@@ -249,8 +228,8 @@ The server uses `command: {cmd}` but the command is not found on PATH.
 
   Fix:
     Token-based servers:
-      1. Check that {repo}/.env has a valid, non-expired token
-      2. Regenerate the token if needed (see .env.example for links)
+      1. Check that the environment variable has a valid, non-expired token
+      2. Regenerate the token if needed (see the MCP definition file for links)
 
     OAuth servers (Atlassian, Slack):
       1. The browser auth flow should trigger automatically on first use
@@ -309,11 +288,11 @@ If a global config defines servers that overlap:
 
 ---
 
-## Step 8 — User decision
+## Step 7 — User decision
 
 After presenting all diagnostics, use the IDE question tool:
 
-- **A**: Retry — run Step 6 again (useful after the user fixes something)
+- **A**: Retry — run Step 5 again (useful after the user fixes something)
 - **B**: Continue without failed server(s) — proceed with the workflow; disabled servers will not be available during the session
 - **C**: Stop and fix — halt so the user can resolve issues outside the session
 
@@ -331,7 +310,4 @@ Store which servers are available as `MCP_SERVERS_OK[]` for downstream steps.
 
 - This skill is non-blocking by design. Failing MCP servers never halt the workflow unless the user chooses option C.
 - OAuth-based servers (Atlassian, Slack) may show as FAIL on first run if the user hasn't completed the browser auth flow yet. Guide them through it rather than treating it as a hard error.
-- The `.env` scaffold step ensures first-time users get a working template before the check runs.
 - The generated `mcp.json` is gitignored (both `.vscode/mcp.json` and `.cursor/mcp.json`) — it is local to the user's machine and rebuilt on each run.
-
-> **AI Agent rule:** Do NOT attempt to read, search for, or access `.env`, `.env.*`, or any environment variable files. These files are listed in `.copilotignore` and are intentionally excluded from AI context. Never inspect, reference, or infer token values from the filesystem. When scaffolding `.env` from `.env.example`, copy the template — do not read existing `.env` contents.

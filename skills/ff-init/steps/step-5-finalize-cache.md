@@ -1,4 +1,4 @@
-# Step 6 — Finalize Cache
+# Step 5 — Finalize Cache
 
 **Scope behavior**: Runs in both `full` and `workspace-only` modes (no differences).
 
@@ -8,7 +8,7 @@
 
 ---
 
-By this point, the cache file (`{FF_CORE_PATH}/.local-environment.json`) already has partial data from progressive writes in Steps 1–5. Finalize it with any remaining fields and bump the `version` and `detectedAt` timestamp to confirm a complete run.
+By this point, the cache file (`{FF_CORE_PATH}/.local-environment.json`) already has partial data from progressive writes in Steps 1–4. Finalize it with any remaining fields and bump the `version` and `detectedAt` timestamp to confirm a complete run.
 
 The final cache must contain the complete state:
 
@@ -39,12 +39,6 @@ The final cache must contain the complete state:
     "checkedAt": "{ISO-8601 timestamp}",
     "serversOk": ["{server names}"],
     "serversFailed": ["{server names}"]
-  },
-  "envVars": {
-    "loadedAt": "{ISO-8601 timestamp}",
-    "loaded": 0,
-    "skipped": 0,
-    "persisted": true|false
   }
 }
 ```

@@ -57,10 +57,11 @@ If you prefer PAT-based auth over OAuth:
 
 1. Go to [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens)
 2. Click **Create API token**, give it a label (e.g. "Fluid Flow")
-3. Copy and paste the token into your `.env` file along with your email
+3. Set the token and email as environment variables in your shell profile:
+   ```
+   export ATLASSIAN_API_TOKEN=your-token-here
+   export ATLASSIAN_EMAIL=you@betsson.com
+   ```
+   Then restart VS Code so the MCP server can pick up the new values.
 
 If you skip this, VS Code will prompt you to sign in via the browser on first use (OAuth flow — the default).
-
-> **Note:** VS Code reads `${env:...}` from the OS process environment, not from `.env` directly. The `/ff-init` skill persists these variables to your shell profile (`~/.zshrc`) automatically. After setting the token, restart VS Code so the MCP server can pick up the new value.
-
-> **AI Agent rule:** Do NOT attempt to read, search for, or access `.env`, `.env.*`, or any environment variable files. These files are listed in `.copilotignore` and are intentionally excluded from AI context. Never inspect, reference, or infer token values from the filesystem. Token setup is the user's responsibility — guide them to the instructions above if needed.

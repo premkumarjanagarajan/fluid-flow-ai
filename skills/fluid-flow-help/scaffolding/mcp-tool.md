@@ -41,7 +41,7 @@ Then:
    }
    ```
 
-2. If auth is needed, add the env var to `{DEPT_FF_PATH}/.env.example` with a comment explaining where to get the value
+2. If auth is needed, instruct the user to set the environment variable in their shell profile (e.g. `export VAR_NAME=value` in `~/.zshrc`) and restart VS Code
 
 3. Explain: "The MCP check skill will verify this connection on your next workflow run. If it fails, it will guide you through fixing it."
 
