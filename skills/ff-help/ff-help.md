@@ -1,5 +1,5 @@
 ---
-name: fluid-flow-help
+name: ff-help
 description: Interactive skill that teaches Fluid Flow concepts and guides users through customising their department repository.
 execution: inline
 scope: shared

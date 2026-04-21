@@ -50,6 +50,14 @@ my-working-repo/               # The source code you change and ship
 
 Type `/fluid-flow` in the chat to enter the workflow.
 
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/fluid-flow` | Start the full workflow (init → triage → stages) |
+| `/ff-init` | Re-run initialization (environment, MCPs, workspace) |
+| `/ff-help` | Interactive guide — learn concepts, explore capabilities, customize |
+
 ## Repository Boundary
 
 - **`fluid-flow-ai`** = **HOW** the AI works during development (orchestrator, workflows, skills, instructions, prompts, primitives, behavioral rules)

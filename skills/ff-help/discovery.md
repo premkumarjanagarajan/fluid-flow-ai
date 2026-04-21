@@ -45,7 +45,7 @@ Here's what's available in your workspace:
     - retrospective             [core]
     - jira-ff-assisted          [core]
     - shell-detection           [core]
-    - fluid-flow-help           [core]
+    - ff-help                   [core]
     - ff-audit                  [core]
     - {name}                    [dept]
 

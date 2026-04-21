@@ -48,7 +48,7 @@ When auditing `department`, use the core repo as a **read-only reference** for e
 
 ## Expected Patterns
 
-Do **not** hardcode required fields. Instead, derive the expected format from the scaffolding templates in `skills/fluid-flow-help/scaffolding/`:
+Do **not** hardcode required fields. Instead, derive the expected format from the scaffolding templates in `skills/ff-help/scaffolding/`:
 
 | Building block | Reference file | Expected naming | Frontmatter source of truth |
 |----------------|---------------|-----------------|----------------------------|
