@@ -53,6 +53,8 @@ If you prefer token-based auth over OAuth, replace the default config block abov
 
 ### How to get the token (optional)
 
+> **⚠️ Security warning:** Storing personal access tokens in your shell profile exposes them to any process running under your user account, including AI agents. Prefer the default **OAuth browser sign-in** for day-to-day use. Only create a token if you have a specific need (e.g. headless/CI environments) and understand the risks.
+
 If you prefer PAT-based auth over OAuth:
 
 1. Go to [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens)

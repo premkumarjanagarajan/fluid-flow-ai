@@ -35,6 +35,8 @@ Provides AI access to Slack via the official Slack remote MCP endpoint. Enables 
 
 ### How to get the token
 
+> **⚠️ Security warning:** Storing tokens in your shell profile exposes them to any process running under your user account, including AI agents. Only set up this token if you actively need Slack MCP access and understand the risks. Revoke the token when no longer needed.
+
 1. Open the Betsson Slack MCP Setup app: [slack-mcp-setup.apps.igaming-test.euc1.betsson.tech](https://slack-mcp-setup.apps.igaming-test.euc1.betsson.tech/)
 2. Click **Connect with Slack** and approve the requested permissions
 3. Copy the token from the JSON snippet shown on the success page (starts with `xoxp-`)
