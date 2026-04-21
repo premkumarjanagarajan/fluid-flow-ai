@@ -201,9 +201,8 @@ This policy ensures:
 
 ## Handoff Logic
 
-The Librarian retrieves information only. For anything else try to hand off to other agents.
+The skill retrieves information only. For anything else, hand off to the appropriate agent or workflow.
 
->>>>>>>> e7a757db10c7fe54aed6cd6b1dcec6617e4d3c86:.github/agents/kb-librarian.agent.md
 ---
 
 ## Out of Scope

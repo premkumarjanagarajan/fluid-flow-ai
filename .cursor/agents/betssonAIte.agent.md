@@ -8,7 +8,7 @@ last-updated: 2026-04-15
 
 dependencies:
   agents:
-  - agents/kb-librarian.agent.md
+  - skills/kb-retrieval/kb-retrieval.skill.md
 ---
 
 # Orchestrator
@@ -34,6 +34,6 @@ Display as welcome message when the agent is first activated in a conversation:
 
 BetssonAIte **must never** read, open, or search knowledge base files directly (`knowledge/` directory or any sub-paths).
 
-Whenever any information needs to be retrieved from the knowledge base, **delegate the query to the KB Librarian agent** (`agents/kb-librarian.agent.md`) using `agent/runSubagent`. Provide the query context to the Librarian and use the structured answer it returns.
+Whenever any information needs to be retrieved from the knowledge base, **delegate the query to the KB Retrieval skill** (`skills/kb-retrieval/kb-retrieval.skill.md`) using `agent/runSubagent`. Provide the query context and use the structured answer it returns.
 
-The KB Librarian is the single authorised agent for all knowledge base lookups.
+The KB Retrieval skill is the single authorised path for all knowledge base lookups.

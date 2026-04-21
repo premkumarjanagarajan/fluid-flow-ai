@@ -2,30 +2,33 @@
 
 **This is the single source of truth for all knowledge files loaded during Fluid Flow workflows.**
 
-Knowledge is split across two locations:
+Knowledge is split across three locations:
 - **Agent rules** (`agent-rules/`): AI behavioral rules that govern how the AI operates
-- **Enterprise KB**: Organisational knowledge (standards, compliance, technology) — retrieved by topic via `agents/kb-librarian.agent.md`
+- **Enterprise KB** (`betsson-kb-docs`): Organisational knowledge (standards, compliance, technology) — retrieved by topic via `skills/kb-retrieval/kb-retrieval.skill.md`
+- **Local KB** (`{DEPT_FF_PATH}/knowledge-base-local/`): Optional department-specific knowledge — loaded from the department repo's manifest if configured
 
 All `agent-rules/` paths below are relative to this file's directory.
-Enterprise KB content is retrieved by topic — the main agent describes what knowledge is needed and `agents/kb-librarian.agent.md` locates and returns the relevant content.
+Enterprise KB content is retrieved by topic — the orchestrator launches `skills/kb-retrieval/kb-retrieval.skill.md` as a subagent, describing what knowledge is needed. The skill navigates the KB overlay map and returns the relevant content.
 
 ---
 
 ## Loading Strategy
 
-Knowledge is enforced through two complementary layers:
+Knowledge is enforced through three complementary mechanisms:
 
-1. **Pre-step (tiered loading)**: The main agent loads a subset of files into its context before executing a step. The "Always Load" set is loaded for every step. Conditional sets are loaded only when the step's domain matches.
+1. **Boot loading (once, after Init)**: The orchestrator loads the "Always Load" sets into context once at session start. These govern the entire session and are not re-loaded per step.
 
-2. **Post-phase (compliance subagent)**: After the last step of each phase (phase transitions), `primitives/kb-compliance.md` launches a dedicated subagent that loads knowledge from both agent-rules and the enterprise KB, reviews the phase output, and returns a short PASS/FAIL verdict.
+2. **Per-step conditional loading (before each step)**: Before executing a workflow step, the orchestrator checks the conditional sections below. If the step's domain matches a trigger, the matching files and KB topics are loaded.
 
-> **KB Delegation Rule**: The main agent MUST NOT retrieve Enterprise KB content directly. All Enterprise KB retrieval MUST be delegated to **`agents/kb-librarian.agent.md`**, which is the sole agent authorised to read from the enterprise knowledge base. The main agent MUST describe the **topic or question** it needs answered (as listed in this manifest); the kb-librarian is responsible for locating the relevant files and returning the content. Do not guess or hard-code file paths.
+3. **Post-phase compliance (subagent)**: After the last step of each phase, `primitives/kb-compliance.md` launches a dedicated subagent that loads the full knowledge stack (agent-rules + enterprise KB + local KB), reviews the phase output, and returns a PASS/FAIL verdict.
+
+> **KB Delegation Rule**: The main agent MUST NOT read from `betsson-kb-docs` directly. All Enterprise KB retrieval MUST be delegated to `skills/kb-retrieval/kb-retrieval.skill.md` running as a subagent. The main agent describes the **topic or question**; the skill navigates the overlay map and returns content with source citations.
 
 ---
 
-## Always Load — Agent Rules
+## Always Load — Agent Rules (boot)
 
-These files MUST be loaded at the start of every command or workflow stage:
+These files are loaded **once at session boot** (after Init, before Triage). They govern AI behavior for the entire session:
 
 - Load `ai-governance/ai-operating-contract.md` -- AI role, authority boundaries, decision rules
 - Load `ai-governance/content-validation.md` -- Mermaid validation, character escaping, fallback rules
@@ -37,23 +40,29 @@ These files MUST be loaded at the start of every command or workflow stage:
 
 ---
 
-## Always Load — Enterprise KB
+## Always Load — Enterprise KB (boot)
 
-For every step, ask `agents/kb-librarian.agent.md` to retrieve knowledge on the following topics:
+At session boot, launch `skills/kb-retrieval/kb-retrieval.skill.md` as a subagent to retrieve:
 
 - **Topic**: Process discipline, traceability, and continuous improvement (ISO 9001 quality management)
 
 ---
 
+## Always Load — Local KB (boot, if configured)
+
+If `LOCAL_KB_MANIFEST` is set (detected by ff-init), read `{DEPT_FF_PATH}/knowledge-base-local/manifest.md` and load all files under its "Always Load" section. The local KB may also define conditional sections — these follow the same per-step matching rules as the conditional sections below.
+
+---
+
 ## Conditional: Security, Data, Identity, or Infrastructure
 
-Load these when the change affects security, data handling, identity, or infrastructure:
+Load these **before a step** when the step affects security, data handling, identity, or infrastructure:
 
 From agent-rules (AI behavioral):
 - Load `security/refusal-patterns.md` -- When AI must refuse to proceed
 - Load `primitives/templates/vapt-report-template.md` -- VAPT output template
 
-From enterprise KB (org standards) — **ask `agents/kb-librarian.agent.md`** for the following topics:
+From enterprise KB — launch `skills/kb-retrieval/kb-retrieval.skill.md` for:
 - **Topic**: ISO 27001 compliance framework and requirements
 - **Topic**: Org security rules covering authentication/authorisation, data classification, dependency management, security logging, network boundaries, secrets management, and threat modelling
 
@@ -61,7 +70,7 @@ From enterprise KB (org standards) — **ask `agents/kb-librarian.agent.md`** fo
 
 ## Conditional: Infrastructure, Performance, or Energy (SEU-Related)
 
-Load when the change affects infrastructure, performance, or Significant Energy Use. **Ask `agents/kb-librarian.agent.md`** for the following topic:
+Load **before a step** when the step affects infrastructure, performance, or Significant Energy Use. Launch `skills/kb-retrieval/kb-retrieval.skill.md` for:
 
 - **Topic**: ISO 50001 energy management standards and Significant Energy Use (SEU) controls
 
@@ -69,9 +78,9 @@ Load when the change affects infrastructure, performance, or Significant Energy 
 
 ## Conditional: Technology-Specific (auto-matched from TECH_STACK)
 
-Load engineering standards from the enterprise KB when `TECH_STACK` (detected in Stage 0A) includes a matching technology. **Ask `agents/kb-librarian.agent.md`** for the topic that matches the detected stack:
+Load **before a step** when `TECH_STACK` (detected during Init) includes a matching technology. Launch `skills/kb-retrieval/kb-retrieval.skill.md` for the topic that matches:
 
-| TECH_STACK value | Topic to request from kb-librarian |
+| TECH_STACK value | Topic to request from kb-retrieval |
 |-----------------|------------------------------------|
 | `dotnet` | General engineering standards for .NET |
 | `dotnet` | General engineering standards for C# |
@@ -82,9 +91,9 @@ Load engineering standards from the enterprise KB when `TECH_STACK` (detected in
 
 ## Conditional: Department Overlay
 
-When `DEPARTMENT` is set (from `.department-fluid-flow.json`), **ask `agents/kb-librarian.agent.md`** for the following topic:
+When `DEPARTMENT` is set (from `.department-fluid-flow.json`), load **before a step** that involves department-specific context. Launch `skills/kb-retrieval/kb-retrieval.skill.md` for:
 
 - **Topic**: AI engineering overlay for the `{DEPARTMENT}` department, including any department-specific compliance rules, market context, and capability documentation
 
-The kb-librarian will locate and return the overlay content. Any additional topics identified within the overlay must also be requested from `agents/kb-librarian.agent.md`.
+The kb-retrieval skill will locate and return the overlay content. Any additional topics identified within the overlay must also be requested via `skills/kb-retrieval/kb-retrieval.skill.md`.
 

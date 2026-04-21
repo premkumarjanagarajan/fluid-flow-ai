@@ -12,7 +12,21 @@ Display:
 
 ## Init
 
-Launch **`ff-init`** (`skills/ff-init/ff-init.md`). Pass the workspace root folder paths and whether the user explicitly invoked `/ff-init` (force flag). Parse the returned payload, store session variables, and continue to Triage — or halt if blocked.
+Launch **`ff-init`** (`skills/ff-init/ff-init.md`). Pass the workspace root folder paths and whether the user explicitly invoked `/ff-init` (force flag). Parse the returned payload, store session variables, and continue — or halt if blocked.
+
+---
+
+## Knowledge Loading (after Init, before Triage)
+
+Read `agent-rules/manifest.md` and execute the **boot loading** sequence:
+
+1. **Agent Rules (always):** Load all files listed under "Always Load — Agent Rules" (7 files). These govern AI behavior for the entire session — loaded once, not re-read per step.
+
+2. **Enterprise KB (always):** Launch `skills/kb-retrieval/kb-retrieval.skill.md` as a subagent. Request the "Always Load — Enterprise KB" topics from the manifest (ISO 9001 process discipline). Store the returned content for the session.
+
+3. **Local KB (if configured):** If `LOCAL_KB_MANIFEST` is set (detected by ff-init), read `{DEPT_FF_PATH}/knowledge-base-local/manifest.md` and load all files under its "Always Load" section.
+
+This is a one-time boot load. Conditional knowledge (security, tech-specific, department overlay) is loaded per step during Stage 3 — see the manifest for trigger rules.
 
 ---
 
@@ -70,9 +84,10 @@ Present workflows grouped by source. Suggest best match with `-->`, using `TECH_
 ## Stage 3: Workflow Routing
 
 1. Load `{FF_CORE_PATH}/workflow/{selected}/wf-{selected}.md`
-2. Execute phase->step chain: each `{N}-{phase}.md` defines its steps, each `{N}-{step}.md` is loaded and executed in order
-3. **After every step completes**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`
-4. **After the last step of each phase** (phase transition or workflow end): additionally run `primitives/kb-compliance.md`
+2. Execute phase→step chain: each `{N}-{phase}.md` defines its steps, each `{N}-{step}.md` is loaded and executed in order
+3. **Before each step**: check `agent-rules/manifest.md` conditional sections. If the step's domain matches a trigger (security, infrastructure, tech-specific via `TECH_STACK`, department via `DEPARTMENT`), load the matching agent-rules files and launch `skills/kb-retrieval/kb-retrieval.skill.md` for the matching enterprise KB topics. If `LOCAL_KB_MANIFEST` is set and its manifest has conditional sections matching the step domain, load those too.
+4. **After every step completes**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`
+5. **After the last step of each phase** (phase transition or workflow end): additionally run `primitives/kb-compliance.md`
 
 ## Stage 4: Completion
 
@@ -91,6 +106,7 @@ Post-implementation actions, executed in order:
 **Rules**:
 - Never auto-commit. Never skip stages. Wait for user approval at gates.
 - All initiative artifacts are stored in the department fluid-flow repository (`DEPT_FF_PATH`), never in the core repository.
+- **Before each step**: check manifest conditionals and load matching knowledge (see Stage 3).
 - **After every step**: run `primitives/human-gate.md`, then `primitives/state-manager.md` and `primitives/analytics.md`.
 - **After the last step of each phase** (phase transition): additionally run `primitives/kb-compliance.md`.
 
