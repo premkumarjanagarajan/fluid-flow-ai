@@ -1,5 +1,5 @@
 ---
-name: ff-init
+agentName: ff-init
 description: Dedicated subagent for Fluid-Flow workspace initialization. Detects environment, validates workspace structure, loads env vars, verifies MCP servers, and runs reverse engineering. Returns only structured session variables — all verbose work stays in this agent's context.
 user-invocable: false
 

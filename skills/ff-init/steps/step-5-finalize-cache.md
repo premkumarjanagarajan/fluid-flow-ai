@@ -10,6 +10,14 @@
 
 By this point, the cache file (`{FF_CORE_PATH}/.local-environment.json`) already has partial data from progressive writes in Steps 1–4. Finalize it with any remaining fields and bump the `version` and `detectedAt` timestamp to confirm a complete run.
 
+**Timestamp capture**: Before writing the cache, run the following command to get the precise current UTC time and use the output as the value for `detectedAt` and `mcp.checkedAt`:
+
+```bash
+date -u +"%Y-%m-%dT%H:%M:%SZ"
+```
+
+Do **not** hardcode or approximate the timestamp — always capture it from the command above at write time.
+
 The final cache must contain the complete state:
 
 ```json
