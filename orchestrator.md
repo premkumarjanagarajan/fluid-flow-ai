@@ -91,15 +91,11 @@ Present workflows grouped by source. Suggest best match with `-->`, using `TECH_
 
 ## Stage 4: Completion
 
-Post-implementation actions, executed in order:
+Load `skills/completion/completion.md` and execute the full completion sequence.
 
-1. **VAPT**: Load `primitives/vapt.md`. Run the vulnerability assessment and penetration testing. Must pass its human gate (Critical/High findings) before proceeding.
-2. **Risk Report**: Load `primitives/risk-report.md`. Generate the change risk report at `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/operations/risk-report.md`.
-3. **Reverse Engineering Update** (brownfield only): Load `skills/reverse-engineering/reverse-engineering.md` to refresh project-level documentation with the new changes. Update the **Commit** and **Branch** fields in `reverse-engineering-timestamp.md` to the current HEAD, and append a new entry to the Update History.
-4. **Analytics Reconciliation**: Load `primitives/analytics.md` to finalise initiative-level timing and metrics.
-5. **Commit**: Present summary + conventional commit --> **wait for approval** --> commit.
-6. **PR**: Push branch, create PR, attach risk report, present link.
-7. **Retrospective** (recommended): After PR, suggest: "Run a workflow retrospective? Load `skills/retrospective/retrospective.md` for continuous improvement analysis." This is optional — the user may decline.
+**Skip condition**: If the active workflow has `domain: product` in its frontmatter (e.g. `product-buddy`), skip Stage 4 entirely — product workflows do not touch source code.
+
+The completion skill handles: evaluation pause, VAPT, risk report, reverse engineering update (brownfield), analytics reconciliation, commit/PR artifact generation, consolidated human gate, commit & push, and optional retrospective. See the skill file for the full protocol.
 
 ---
 
