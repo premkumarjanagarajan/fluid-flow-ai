@@ -1,4 +1,7 @@
 .DS_Store
 node_modules/
-.env
 *.log
+.local-environment.json
+.github/mcp.json
+.vscode/mcp.json
+.cursor/mcp.json

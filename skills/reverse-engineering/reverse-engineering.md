@@ -1,3 +1,12 @@
+---
+name: reverse-engineering
+description: Analyses existing codebases and generates design artefacts per repository for brownfield workspaces.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # Reverse Engineering
 
 Analyze existing codebase(s) in the workspace and generate design artifacts per repository.
@@ -5,13 +14,16 @@ Analyze existing codebase(s) in the workspace and generate design artifacts per 
 ## When to Run
 
 - **Brownfield** workspace detected (Stage 1)
-- No `reverse-engineering/reverse-engineering-timestamp.md` found in the target repository
+- No `reverse-engineering/reverse-engineering-timestamp.md` found in the target repository's root
 
-## Skip If
+**This skill is mandatory for every brownfield repo that lacks the timestamp file.** The only two valid reasons to skip are listed below — nothing else qualifies.
+
+## Skip If (exhaustive list)
 
 - Greenfield (no existing code)
-- `reverse-engineering/reverse-engineering-timestamp.md` already exists in the repository
-- Run-once per repository. Post-implementation updates are separate.
+- `reverse-engineering/reverse-engineering-timestamp.md` already exists in the repository root
+
+**DO NOT** skip because the feature is "targeted", the codebase is "well understood", JIRA context was loaded, or any other rationale. If the timestamp file is absent and the repo has code, this skill runs.
 
 ## Execution
 
@@ -43,12 +55,15 @@ For each repository discovered in Step 1, launch **one subagent** (in parallel w
 4. The templates path: `skills/reverse-engineering/templates/`
 5. The output path: `{repo}/reverse-engineering/`
 6. The current ISO 8601 timestamp and workspace path (for the timestamp file)
+7. The current branch name and HEAD commit short SHA of the target repository (run `git rev-parse --abbrev-ref HEAD` and `git rev-parse --short HEAD` in the repo)
+8. The author name (run `git config user.name` in the repo)
 
 The subagent prompt MUST instruct the agent to:
 - Explore the repository (package.json files, config files, source code, directory structure)
 - Perform all analysis internally (multi-package discovery, business context, architecture mapping, code analysis)
 - Create the `reverse-engineering/` directory in the repository
 - Write all 11 artifact files directly to disk
+- Record the branch name, commit short SHA, and author in the timestamp file (both in the metadata header and the update history entry)
 - **Return ONLY a short status summary** (max 5 lines): repo name, domain, package count, and confirmation of files written
 
 **Do NOT** ask the subagent to return the full analysis. All detailed findings go into the artifact files, not the return payload.

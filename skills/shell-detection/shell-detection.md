@@ -1,3 +1,12 @@
+---
+name: shell-detection
+description: Detects the user's OS and shell type to route script execution for the session.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # Shell Detection
 
 Detect the user's OS and shell to route script execution for the session.

@@ -1,209 +1,193 @@
 # VAPT — Vulnerability Assessment & Penetration Testing
 
-Perform a structured, AI-assisted security assessment of all generated code and infrastructure prior to deployment. The VAPT primitive identifies vulnerabilities and simulates adversarial attack scenarios. All findings are proposals for human action — the AI never self-approves, remediates silently, or makes compliance decisions.
+Performs a structured, AI-assisted security assessment of all generated code and infrastructure prior to deployment. Runs as a **dedicated subagent** to avoid bloating the main conversation context with the full security knowledge base and analysis.
 
-**Trigger**: Runs after the Construction phase completes (implementation done), before the orchestrator's Stage 7 Completion actions (risk report, commit/PR). This is a primitive because it executes automatically as part of the lifecycle.
+**Trigger**: Runs during Stage 5 (Completion), before the risk report and commit/PR steps.
 
 ---
 
-## Prerequisites
+## When to Run
 
-- Implementation is complete and all code artifacts exist
-- `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/` exists with metadata and artefacts
-- Brownfield context at `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/` (if available)
+Always. VAPT is executed for every initiative, but depth scales with risk (see Conditional Depth below).
+
+---
+
+## How It Works
+
+Launch a **dedicated subagent** with its own context window. The subagent loads all security knowledge, analyses the generated code, and returns a structured VAPT report. The main conversation never loads the full security KB — only the subagent does.
+
+---
+
+## Subagent Prompt
+
+The parent agent must launch a single subagent with the following inputs:
+
+1. **Initiative path**: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/`
+2. **Artefacts to review**: list of all files created or modified during the initiative (code, config, infrastructure)
+3. **Spec summary**: 2-3 sentence summary of the feature scope, data handled, and entry points (from `spec.md`)
+4. **Brownfield context path** (if applicable): `{DEPT_FF_PATH}/initiatives/_project/reverse-engineering/`
+5. **Security knowledge paths**:
+   - Org standards: `$KB_PATH/knowledge/shared/global/security/` (all files)
+   - AI behavioral: `agent-rules/security/refusal-patterns.md`
+6. **Report template**: `primitives/templates/vapt-report-template.md`
+7. **Report output path**: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/security/vapt-report.md`
+
+The subagent prompt MUST instruct the agent to:
+
+- Read all security knowledge files from both sources
+- Read all artefacts (spec, plan, tasks, code) from the initiative
+- If brownfield, read `architecture.md`, `dependencies.md`, `api-documentation.md` from reverse-engineering
+- Determine VAPT depth (Full or Lite) based on the conditional depth table
+- Execute the full assessment (Steps 1-5 below)
+- Generate the VAPT report at the output path using the template
+- **Return ONLY a structured verdict** (see format below)
+
+**Do NOT** ask the subagent to return the full analysis. All detailed findings go into the report file. Only the verdict comes back to the main conversation.
 
 ---
 
 ## Conditional Depth
 
-VAPT is **always executed** but depth scales with risk:
+The subagent determines depth based on these signals:
 
 | Signal | Source | Depth |
 |--------|--------|-------|
 | Complexity Assessment = High | `metadata/state.md` | Full (VA + PT) |
 | New authentication or authorisation logic | spec.md / code | Full (VA + PT) |
 | External API or third-party integrations | plan.md | Full (VA + PT) |
-| Data classification = Sensitive / PII / PHI | `knowledge-base-core/security/data-classification.md` | Full (VA + PT) |
+| Data classification = Sensitive / PII / PHI | `$KB_PATH/knowledge/shared/global/security/data-classification.md` | Full (VA + PT) |
 | Infrastructure changes (cloud resources, IAM, networking) | plan.md | Full (VA + PT) |
 | Low-complexity UI or config-only change | spec.md | Lite (VA only) |
 
-Record the determined depth (`Full` or `Lite`) in the VAPT report header.
+---
+
+## Subagent Assessment Steps
+
+### Step 1: Vulnerability Assessment (VA)
+
+Analyse all generated code and configuration for:
+
+**VA-1: Static Code Analysis (SAST)** — injection flaws, insecure deserialisation, weak cryptography, insecure randomness, path traversal, XXE, open redirects, error information disclosure
+
+**VA-2: Dependency Scanning** — packages with active CVEs, significantly outdated, or unmaintained/deprecated
+
+**VA-3: Secret and Credential Scanning** — hardcoded API keys, tokens, passwords, private keys, connection strings, Base64-encoded credential patterns
+
+**VA-4: Configuration Review** — debug mode in production, overly permissive CORS, missing security headers, insecure storage, over-permissive IAM, unencrypted transport, default credentials
+
+**VA-5: Data Classification Compliance** — cross-reference data handled against `data-classification.md`, verify each class is handled per its requirements
+
+### Step 2: Penetration Testing Simulation (PT) — Full Depth Only
+
+**Skipped for Lite depth.**
+
+**PT-1: Attack Surface Mapping** — enumerate all entry points (APIs, CLI, file uploads, WebSockets, webhooks, admin interfaces)
+
+**PT-2: Authentication & Authorisation Testing** — horizontal/vertical privilege escalation, auth bypass, IDOR, missing function-level access control, session fixation
+
+**PT-3: Injection Testing** — SQL, NoSQL, command, template, header, GraphQL injection vectors
+
+**PT-4: API Abuse Scenarios** — rate limiting bypass, mass assignment, parameter tampering, improper HTTP method handling, business logic abuse
+
+**PT-5: Infrastructure Threats** — network boundary violations, security group misconfigs, unencrypted data in transit, logging gaps, lateral movement risks
+
+### Step 3: OWASP Top 10 Coverage Matrix
+
+Map all findings to OWASP Top 10 (2021): A01-A10.
+
+### Step 4: Generate VAPT Report
+
+Write the report to the output path using the template.
+
+### Step 5: Return Verdict
+
+Return the structured verdict to the parent agent.
 
 ---
 
-## Step 1: Load Context
+## Verdict Format
 
-1. Read `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/spec.md` — feature scope, data handled, entry points
-2. Read `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/plan.md` (if exists) — tech stack, architecture, dependencies
-3. Read `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/tasks.md` (if exists) — implemented components
-4. If brownfield, load from `{LOCAL_REPO_PATH}/initiatives/_project/reverse-engineering/`:
-   - `architecture.md`, `dependencies.md`, `api-documentation.md`
-5. Load security knowledge from `knowledge-base-core/security/`:
-   - `threat-model.md`, `authz-authn.md`, `data-classification.md`, `secrets-management.md`
-   - `network-boundaries.md`, `logging-security.md`, `dependencies.md`, `iso27001-compliance.md`
+The subagent must return exactly this structure:
 
----
+```
+VAPT: PASS | FINDINGS
 
-## Step 2: Vulnerability Assessment (VA)
+Depth: Full | Lite
+Critical: {count}
+High: {count}
+Medium: {count}
+Low: {count}
+Informational: {count}
 
-Analyse all generated code and configuration for the following classes. For each finding, record: ID, category, severity, CVSS score (approximate), affected file/component, description, and remediation guidance.
+Report: {report output path}
+```
 
-### VA-1: Static Code Analysis (SAST)
+Example PASS:
 
-| Check | Description |
-|-------|-------------|
-| Injection flaws | SQL, NoSQL, LDAP, OS command, expression injection in input-handling code |
-| Insecure deserialisation | Untrusted data passed to deserialisation functions |
-| Weak cryptography | MD5, SHA1, DES, hardcoded IVs, insufficient key lengths |
-| Insecure randomness | `Math.random()`, `rand()`, or equivalent used for security-sensitive values |
-| Path traversal | User-controlled input used in file system operations |
-| XXE | XML parsers configured without disabling external entities |
-| Open redirects | User-controlled redirect targets without validation |
-| Error information disclosure | Stack traces, internal paths, or DB errors returned to clients |
+```
+VAPT: PASS
 
-### VA-2: Dependency Scanning
+Depth: Lite
+Critical: 0
+High: 0
+Medium: 0
+Low: 1
+Informational: 2
 
-- Identify all packages and frameworks from `package.json`, `requirements.txt`, `pom.xml`, `go.mod`, or equivalent
-- Flag dependencies with active CVEs, significantly outdated with known security history, or unmaintained/deprecated
-- Record: dependency name, version (if detectable), advisory reference
+Report: {DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/security/vapt-report.md
+```
 
-### VA-3: Secret and Credential Scanning
+Example FINDINGS:
 
-Scan all generated files for hardcoded secrets:
-- API keys, tokens, passwords, private keys
-- Connection strings with embedded credentials
-- Base64-encoded credential patterns
-- Common secret format patterns (`sk_live_`, `AKIA`, `-----BEGIN RSA PRIVATE KEY-----`)
+```
+VAPT: FINDINGS
 
-### VA-4: Configuration Review
+Depth: Full
+Critical: 1
+High: 2
+Medium: 3
+Low: 0
+Informational: 1
 
-| Check | Description |
-|-------|-------------|
-| Debug/verbose mode in production config | `DEBUG=true`, verbose logging of sensitive data |
-| Overly permissive CORS | `Access-Control-Allow-Origin: *` on authenticated endpoints |
-| Missing security headers | CSP, HSTS, X-Frame-Options, X-Content-Type-Options |
-| Insecure storage config | Unencrypted buckets, publicly accessible storage, missing encryption at rest |
-| Over-permissive IAM | Wildcard (`*`) actions or resources in IAM policies |
-| Unencrypted transport | HTTP where HTTPS required, TLS < 1.2 |
-| Default credentials | Default usernames/passwords left unchanged |
+Top findings:
+- [CRITICAL] VAPT-001: Hardcoded API key in config/production.json
+- [HIGH] VAPT-003: Missing authentication on /api/admin/users endpoint
+- [HIGH] VAPT-005: SQL injection vector in search query parameter
 
-### VA-5: Data Classification Compliance
-
-Cross-reference data handled by the feature against `knowledge-base-core/security/data-classification.md`:
-- Identify all data classes processed (PII, PHI, financial, credentials, etc.)
-- Verify each class is handled per its classification requirements
-- Flag mismatches between classification requirements and implementation
+Report: {DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/security/vapt-report.md
+```
 
 ---
 
-## Step 3: Penetration Testing Simulation (PT) — Full Depth Only
+## On PASS (no Critical or High)
 
-Act as an adversary. Map all entry points and simulate attacks. **Skipped for Lite depth.**
+Present the summary to the user and proceed to the next completion step:
 
-### PT-1: Attack Surface Mapping
+```
+VAPT complete — no critical or high findings.
+Medium: {n}, Low: {n}, Informational: {n}
+Full report: {report path}
+```
 
-Enumerate all entry points and present as a table:
+## On FINDINGS (Critical or High present)
 
-| Entry Point | Method | Auth Required | Data Accepted | Trust Boundary |
-|-------------|--------|---------------|---------------|----------------|
+The main agent must apply the human gate:
 
-Covers: HTTP/API endpoints, CLI arguments, file upload handlers, WebSocket connections, background job triggers, webhook callbacks, admin interfaces.
-
-### PT-2: Authentication & Authorisation Testing
-
-| Attack | Description |
-|--------|-------------|
-| Horizontal privilege escalation | User A accessing User B's resources via ID manipulation |
-| Vertical privilege escalation | Low-privilege user invoking admin operations |
-| Authentication bypass | JWT `alg:none`, token reuse, missing auth on secondary endpoints |
-| Insecure direct object reference | Sequential/predictable IDs allowing enumeration |
-| Missing function-level access control | Internal APIs reachable without authentication |
-| Session fixation / hijacking | Tokens not rotated after login, long-lived tokens without rotation |
-
-### PT-3: Injection Testing
-
-| Vector | Target |
-|--------|--------|
-| SQL injection | Database query construction using user input |
-| NoSQL injection | MongoDB `$where`, `$regex` operator abuse |
-| Command injection | Shell calls with user-controlled arguments |
-| Template injection | SSTI in server-side rendering |
-| Header injection | CRLF injection in response headers |
-| GraphQL injection | Introspection abuse, query depth attacks |
-
-### PT-4: API Abuse Scenarios
-
-| Scenario | Description |
-|----------|-------------|
-| Rate limiting bypass | Repeated requests to exhaustible resources without throttling |
-| Mass assignment | Posting unexpected fields that get persisted |
-| Parameter tampering | Altering price, quantity, role, or status fields |
-| Improper HTTP method handling | Sending PUT/DELETE to GET-only endpoints |
-| Business logic abuse | Skipping required workflow steps, replaying completed actions |
-
-### PT-5: Infrastructure Threats
-
-When infrastructure code is present:
-
-| Check | Description |
-|-------|-------------|
-| Network boundary violations | Resources in public subnets that should be private |
-| Security group misconfigurations | Overly permissive inbound rules (0.0.0.0/0 on non-public ports) |
-| Unencrypted data in transit | Internal service communication without TLS |
-| Logging and monitoring gaps | Missing audit trails or flow logs for security-sensitive paths |
-| Lateral movement risks | Excessive cross-service IAM trust relationships |
-
----
-
-## Step 4: OWASP Top 10 Coverage Matrix
-
-Map all findings to the OWASP Top 10 (2021):
-
-| # | Category | Tested | Status | Finding IDs |
-|---|----------|--------|--------|-------------|
-| A01 | Broken Access Control | Yes/No | Pass / Finding | |
-| A02 | Cryptographic Failures | Yes/No | Pass / Finding | |
-| A03 | Injection | Yes/No | Pass / Finding | |
-| A04 | Insecure Design | Yes/No | Pass / Finding | |
-| A05 | Security Misconfiguration | Yes/No | Pass / Finding | |
-| A06 | Vulnerable & Outdated Components | Yes/No | Pass / Finding | |
-| A07 | Identification & Authentication Failures | Yes/No | Pass / Finding | |
-| A08 | Software & Data Integrity Failures | Yes/No | Pass / Finding | |
-| A09 | Security Logging & Monitoring Failures | Yes/No | Pass / Finding | |
-| A10 | Server-Side Request Forgery | Yes/No | Pass / Finding | |
-
----
-
-## Step 5: Generate VAPT Report
-
-Create directory `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/security/` if it does not exist.
-
-Generate the report at: `{LOCAL_REPO_PATH}/initiatives/{INITIATIVE_NAME}/security/vapt-report.md`
-
-Follow the template at `knowledge-base-core/security/vapt-report-template.md`.
-
----
-
-## Step 6: Severity Triage & Human Gate
-
-| Overall Risk | Gate Behaviour |
-|--------------|----------------|
-| **Critical findings** | **MANDATORY STOP** — present findings and require explicit human risk-acceptance or confirmation of remediation before continuing |
-| **High findings** | Present findings and ask: "Remediate before proceeding, or proceed with documented residual risk?" Wait for response |
-| **Medium findings only** | Log in report, present summary, proceed |
-| **Low / Informational only** | Log in report, proceed |
-| **No findings** | Present clean result, proceed |
+| Severity | Gate Behaviour |
+|----------|----------------|
+| **Critical** | **MANDATORY STOP** — present findings, require explicit human risk-acceptance or remediation confirmation before continuing |
+| **High** | Present findings and ask: "Remediate before proceeding, or proceed with documented residual risk?" Wait for response |
 
 **Critical findings prompt**:
 
 ```
 ## VAPT — Critical Findings Detected
 
-The assessment identified [n] Critical severity finding(s) requiring resolution
+The assessment identified {n} Critical severity finding(s) requiring resolution
 or explicit risk acceptance before proceeding.
 
 **Critical Findings**:
-[List each with ID, description, and recommended remediation]
+{list from verdict}
 
 **Options**:
 1. Remediate and re-run VAPT
@@ -217,12 +201,14 @@ This stage cannot proceed without human approval.
 ```
 ## VAPT — High Severity Findings
 
-The assessment identified [n] High severity finding(s).
+The assessment identified {n} High severity finding(s).
 
 **High Findings**:
-[List each with ID, description, and recommended remediation]
+{list from verdict}
 
 **Options**:
 1. Remediate before proceeding
 2. Proceed with documented residual risk
 ```
+
+If the user chooses to remediate, fix the issues and **re-run the VAPT subagent** to confirm resolution.

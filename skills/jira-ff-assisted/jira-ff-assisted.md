@@ -1,19 +1,46 @@
+---
+name: jira-ff-assisted
+description: Marks a JIRA issue with the ff-assisted label to indicate Fluid Flow AI participated in the development lifecycle.
+execution: inline
+scope: shared
+version: 1.0
+last-updated: 2026-04-20
+---
+
 # JIRA "FF Assisted" Flag
 
 Marks a JIRA issue with the **`ff-assisted`** label to indicate that Fluid Flow AI participated in the development lifecycle for this card.
 
-## When to Run
+## Trigger Rule
 
-This is an **autonomous skill**. The AI must invoke it whenever it detects any interaction that reads, creates, or edits a JIRA issue during the lifecycle. There is no fixed stage -- the AI decides based on context.
+**Immediately after the AI reads, creates, or edits any JIRA issue — for any reason — it MUST run this skill on that issue before doing anything else.** This is not optional and must not be deferred.
 
-Common trigger points (non-exhaustive):
-- An initiative is created that references a JIRA ticket key
-- A workflow step creates JIRA issues (e.g. tasks-to-issues)
-- A workflow step edits or transitions a JIRA issue
-- A commit message or PR references a JIRA ticket
-- The user explicitly mentions a JIRA issue key during any conversation
+The most common trigger is the very first message: when the user references a JIRA ticket key to start work, the AI reads that ticket during triage. That read triggers this skill.
 
-The skill is **idempotent** -- calling it multiple times for the same issue is safe (it checks before writing).
+## JIRA Key Detection
+
+A JIRA issue key matches the pattern `[A-Z]+-\d+` (e.g. `DIT-322`, `DAA-235`, `GXD-1732`).
+
+Scan for JIRA keys in:
+- The user's initial message
+- Any user message during the session
+- Initiative names (e.g. `DAA-235-feature-name`)
+- Branch names (e.g. `daa-235-add-user-auth`)
+- Commit messages or PR descriptions
+
+When a key is detected and the AI reads that issue from JIRA, this skill fires.
+
+## Trigger Points
+
+These are the concrete moments when this skill MUST run:
+
+| When | What happens |
+|------|-------------|
+| **Triage** | User's request contains a JIRA key → AI reads the issue → **flag it immediately** |
+| **Initiative creation** | Initiative name references a JIRA key → **flag it** |
+| **Tasks-to-issues** | AI creates JIRA issues → **flag each one after creation** |
+| **Any workflow step** | AI reads or edits a JIRA issue for any reason → **flag it** |
+| **Completion** | PR or commit references a JIRA key → **flag it** |
 
 ## Required MCP
 
@@ -27,8 +54,8 @@ If a dedicated "FF Assisted" custom field exists in the project (checkbox or sel
 
 ## Inputs
 
-- `JIRA_ISSUE_KEY` -- the issue key (e.g. `DIT-322`, `DAA-235`)
-- `CLOUD_ID` -- the Atlassian site hostname (e.g. `betssongroup.atlassian.net`). Read from `.fluid-flow-local.json` field `atlassianCloudId`, or use the site hostname from the JIRA URL the user provides.
+- `JIRA_ISSUE_KEY` — the issue key (e.g. `DIT-322`, `DAA-235`)
+- `CLOUD_ID` — the Atlassian site hostname (e.g. `betssongroup.atlassian.net`). Read from `.fluid-flow-local.json` field `atlassianCloudId`, or use the site hostname from the JIRA URL the user provides.
 
 ## Execution Steps
 
@@ -60,7 +87,7 @@ From the response, check the `fields.labels` array.
 
 ### 3. Check Existing Flag
 
-**If `"ff-assisted"` is already in the labels array**: log "already flagged" and stop -- no update needed.
+**If `"ff-assisted"` is already in the labels array**: log "already flagged" and stop — no update needed.
 
 **If `"ff-assisted"` is NOT in the labels array**: proceed to Step 4.
 
@@ -96,4 +123,4 @@ If a JIRA admin later creates a dedicated "FF Assisted" custom field:
 - **Label update failure**: Log the error. Suggest the user check field permissions. Do not block.
 - **Issue not found**: Log: "JIRA issue {KEY} not found. FF Assisted flag skipped." Do not block.
 
-This skill is **non-blocking** -- JIRA flagging failures never halt the workflow.
+This skill is **non-blocking** — JIRA flagging failures never halt the workflow.
