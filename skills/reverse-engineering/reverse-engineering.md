@@ -62,9 +62,10 @@ A repository can match multiple domains.
 
 ### 2. Subagent Strategy
 
-> **Critical**: Each repository MUST be analyzed by a **single dedicated subagent** that performs
-> both analysis and artifact generation within its own context window. This prevents the parent
-> agent's context from overflowing with large analysis payloads.
+> **Critical**: Each repository MUST be analyzed by a **single dedicated subagent** using the
+> **Claude Opus 4.6 high** model. Each subagent performs both analysis and artifact generation
+> within its own context window. This prevents the parent agent's context from overflowing
+> with large analysis payloads.
 
 For each repository discovered in Step 1, launch **one subagent** (in parallel where possible) with a prompt that includes:
 
