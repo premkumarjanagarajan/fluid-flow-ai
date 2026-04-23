@@ -13,15 +13,17 @@ Analyze existing codebase(s) in the workspace and generate design artifacts per 
 
 ## When to Run
 
-- **Brownfield** workspace detected (Stage 1)
-- No `reverse-engineering/reverse-engineering-timestamp.md` found in the target repository's root
+- **Automatic (brownfield detection)**: Brownfield workspace detected (Stage 1) and no `reverse-engineering/reverse-engineering-timestamp.md` found — runs as a **first-time** analysis.
+- **Explicit invocation**: User explicitly calls this skill (e.g. via prompt) — runs as an **update**, re-analyzing and overwriting all existing artifacts even if the timestamp file already exists.
 
 **This skill is mandatory for every brownfield repo that lacks the timestamp file.** The only two valid reasons to skip are listed below — nothing else qualifies.
 
 ## Skip If (exhaustive list)
 
 - Greenfield (no existing code)
-- `reverse-engineering/reverse-engineering-timestamp.md` already exists in the repository root
+- **Automatic mode only**: `reverse-engineering/reverse-engineering-timestamp.md` already exists in the repository root
+
+When the skill is **explicitly invoked** by the user, the presence of the timestamp file does NOT justify skipping — treat it as an update run.
 
 **DO NOT** skip because the feature is "targeted", the codebase is "well understood", JIRA context was loaded, or any other rationale. If the timestamp file is absent and the repo has code, this skill runs.
 
@@ -29,7 +31,12 @@ Analyze existing codebase(s) in the workspace and generate design artifacts per 
 
 ### 1. Repository Discovery
 
-Scan the workspace for all repositories (excluding `fluid-flow-ai-core`, local fluid-flow repositories, and `betsson-kb-docs`). For each, check if `reverse-engineering/reverse-engineering-timestamp.md` already exists — if it does, skip that repo. For the remaining repos, detect their domain:
+Scan the workspace for all repositories (excluding `fluid-flow-ai-core`, local fluid-flow repositories, and `betsson-kb-docs`). For each, check if `reverse-engineering/reverse-engineering-timestamp.md` already exists:
+
+- **Automatic mode**: If the timestamp file exists, skip that repo.
+- **Explicit invocation**: Include the repo regardless — this is an update run that overwrites existing artifacts.
+
+For the remaining repos, detect their domain:
 
 | Indicator | Domain |
 |-----------|--------|
