@@ -13,15 +13,29 @@ Analyze existing codebase(s) in the workspace and generate design artifacts per 
 
 ## When to Run
 
-- **Brownfield** workspace detected (Stage 1)
-- No `reverse-engineering/reverse-engineering-timestamp.md` found in the target repository's root
+- **Automatic (brownfield detection)**: Brownfield workspace detected (Stage 1) and no `reverse-engineering/reverse-engineering-timestamp.md` found — runs as a **first-time** analysis.
+- **Explicit invocation**: User explicitly calls this skill (e.g. via prompt) — runs as an **update**, re-analyzing and overwriting all existing artifacts even if the timestamp file already exists.
 
-**This skill is mandatory for every brownfield repo that lacks the timestamp file.** The only two valid reasons to skip are listed below — nothing else qualifies.
+**This skill is mandatory for every brownfield repo not excluded by discovery rules and that lacks the timestamp file.**
+
+## Excluded Repositories
+
+The following repositories are **always excluded** from discovery and never analyzed, regardless of mode:
+
+- `fluid-flow-ai-core` and local fluid-flow repositories (orchestration tooling, not target codebases)
+- `betsson-kb-docs` (knowledge base, not a codebase)
+- Department fluid-flow repositories, e.g. `data-fluid-flow`, `mobile-fluid-flow` (workflow orchestration, not target codebases)
+
+These are hard exclusions — they are filtered out before any skip logic is evaluated.
 
 ## Skip If (exhaustive list)
 
+After discovery exclusions, a repository is skipped only when:
+
 - Greenfield (no existing code)
-- `reverse-engineering/reverse-engineering-timestamp.md` already exists in the repository root
+- **Automatic mode only**: `reverse-engineering/reverse-engineering-timestamp.md` already exists in the repository root
+
+When the skill is **explicitly invoked** by the user, the presence of the timestamp file does NOT justify skipping — treat it as an update run.
 
 **DO NOT** skip because the feature is "targeted", the codebase is "well understood", JIRA context was loaded, or any other rationale. If the timestamp file is absent and the repo has code, this skill runs.
 
@@ -29,7 +43,12 @@ Analyze existing codebase(s) in the workspace and generate design artifacts per 
 
 ### 1. Repository Discovery
 
-Scan the workspace for all repositories (excluding `fluid-flow-ai-core` and local fluid-flow repositories). For each, check if `reverse-engineering/reverse-engineering-timestamp.md` already exists — if it does, skip that repo. For the remaining repos, detect their domain:
+Scan the workspace for all repositories, removing those listed under **Excluded Repositories** above. For each remaining repo, check if `reverse-engineering/reverse-engineering-timestamp.md` already exists:
+
+- **Automatic mode**: If the timestamp file exists, skip that repo.
+- **Explicit invocation**: Include the repo regardless — this is an update run that overwrites existing artifacts.
+
+For the remaining repos, detect their domain:
 
 | Indicator | Domain |
 |-----------|--------|
@@ -43,9 +62,10 @@ A repository can match multiple domains.
 
 ### 2. Subagent Strategy
 
-> **Critical**: Each repository MUST be analyzed by a **single dedicated subagent** that performs
-> both analysis and artifact generation within its own context window. This prevents the parent
-> agent's context from overflowing with large analysis payloads.
+> **Critical**: Each repository MUST be analyzed by a **single dedicated subagent** using the
+> **Claude Opus 4.6 high** model. Each subagent performs both analysis and artifact generation
+> within its own context window. This prevents the parent agent's context from overflowing
+> with large analysis payloads.
 
 For each repository discovered in Step 1, launch **one subagent** (in parallel where possible) with a prompt that includes:
 
