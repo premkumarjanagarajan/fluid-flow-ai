@@ -29,7 +29,7 @@ Analyze existing codebase(s) in the workspace and generate design artifacts per 
 
 ### 1. Repository Discovery
 
-Scan the workspace for all repositories (excluding `fluid-flow-ai-core` and local fluid-flow repositories). For each, check if `reverse-engineering/reverse-engineering-timestamp.md` already exists — if it does, skip that repo. For the remaining repos, detect their domain:
+Scan the workspace for all repositories (excluding `fluid-flow-ai-core`, local fluid-flow repositories, and `betsson-kb-docs`). For each, check if `reverse-engineering/reverse-engineering-timestamp.md` already exists — if it does, skip that repo. For the remaining repos, detect their domain:
 
 | Indicator | Domain |
 |-----------|--------|
