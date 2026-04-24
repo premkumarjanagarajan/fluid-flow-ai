@@ -1,9 +1,9 @@
----
+﻿---
 name: modify-component-code
-description: Modifies existing UI component code based on updated Figma designs or JIRA requirements, preserving existing behaviour while applying targeted changes using local repository conventions.
+description: Modifies an existing UI component safely, enforcing breaking-change detection for public components in microfrontend or library contexts. Creates versioned components when props/interface changes would break consumers.
 execution: inline
 scope: shared
-version: v0.1
+version: v0.2
 last-updated: 24/04/2026
 dependencies:
   mcps:
@@ -13,89 +13,214 @@ dependencies:
 
 # Modify Component Code
 
-Updates an existing UI component based on changed Figma designs or updated JIRA requirements. Framework and design system conventions are determined by the local repository's instruction files.
+Modifies an existing UI component following local repository conventions, with strict safety rules to protect consumers in microfrontend and library contexts.
 
 ---
 
 ## When to Use
 
-- When a Figma design has been updated and the existing component needs to reflect changes
-- When new acceptance criteria or variants are added to an existing JIRA ticket
-- When a component needs to be extended (new props, states, or variants) without being rebuilt from scratch
+- When a JIRA task, Figma update, or user request requires changing an existing component rather than creating a new one
+- When existing component discovery (from `generate-component-code` or `component-discovery`) has identified the component to be updated
 
 ---
 
 ## Inputs
 
-- Existing component file paths
-- JIRA ticket key (updated ticket or change request)
-- Figma design URL (updated design, with node-id)
-- Output from JIRA analysis (if applicable)
-- Output from Figma analysis (if applicable)
+- Target component file path(s)
+- Description of the required change (from JIRA, Figma analysis, or user instruction)
+- Output from JIRA analysis (optional but recommended)
+- Output from Figma analysis (optional but recommended)
 - Local repository instruction files (`.github/instructions/` or equivalent)
 
 ---
 
 ## Instructions
 
-### 1. Load Local Instruction Files
+### Step 1 - Load Local Instruction Files
 
-Before modifying any code, read all relevant local repository instruction files to understand:
-- Target framework conventions
-- Design token naming and usage
-- Component structure rules
-- Breaking change policy for public components
+Before making any changes, read all relevant local repository instruction files. These define:
+- Framework and component model (StencilJS, React, Vue, Angular, Web Components, etc.)
+- Component versioning conventions
+- Breaking-change policy
+- CSS / styling approach
+- Documentation format requirements
 
-### 2. Understand the Delta
+### Step 2 - Determine Component Visibility (Public or Private)
 
-Identify exactly what has changed before touching any code:
-- Compare updated JIRA requirements against the current implementation
-- Compare updated Figma design against the current component (use Figma MCP — metadata and screenshot only, not generated code)
-- Produce a change summary: what is added, removed, or modified
+This check is **mandatory** before any modification that touches the component's props, events, slots, or any other part of its public interface.
 
-### 3. Check for Breaking Changes
+Run the following checks in order. Stop as soon as a definitive answer is found.
 
-For any publicly exposed component API (props, events, slots, methods):
-- Identify if any changes remove, rename, or alter the signature of existing public API
-- If breaking changes are required: document them, flag for review, follow local breaking change policy before proceeding
+#### 2a. Inspect Component Source Code
 
-### 4. Apply Changes (Build-First)
+Search the component file for explicit visibility markers:
 
-> ⚠️ Do not use Figma-generated code to drive the implementation. Build from design understanding, then verify.
+- `@public` / `@private` JSDoc annotations
+- Exported vs. non-exported declarations
+- Comments such as `// public API`, `// internal`, `/* @internal */`
+- Framework-specific patterns (e.g. StencilJS `@Prop()` exposed on the element vs. internal state)
 
-1. Apply only the changes identified in the delta — do not refactor unrelated code
-2. Update design token usage as needed (no hardcoded values)
-3. Update documentation to reflect changes
-4. Update variant prop values, CSS, and tests if affected
+If a clear **public** or **private** indicator is found -> record the result and skip 2b and 2c.
 
-### 5. Verify with Figma Code (after changes)
+#### 2b. Inspect Stories File
+
+If no clear marker was found in the source, locate the component's Storybook (or equivalent) stories file and look for:
+
+- Story metadata: `status: 'public'`, `status: 'private'`, `access: 'internal'`
+- Tags or decorators indicating the component is experimental, stable, deprecated, or internal
+- Story title namespace hints (e.g. `Internal/MyComponent` vs. `Components/MyComponent`)
+
+If a clear indicator is found -> record the result and skip 2c.
+
+#### 2c. Ask the User
+
+If neither the source code nor the stories file provided a clear answer, **stop and ask the user**:
+
+> "I could not determine whether **[ComponentName]** is a public or private component. Please confirm:
+> - **Public** - it is consumed by other applications, microfrontends, or distributed as part of a library.
+> - **Private** - it is only used internally within this single application or feature."
+
+Do **not** proceed with interface-affecting changes until this is confirmed.
+
+---
+
+### Step 3 - Classify the Change
+
+Determine whether the requested modification is a **breaking change** to the component's public interface:
+
+| Change Type | Breaking? |
+|---|---|
+| Adding a new optional prop with a default value | No |
+| Adding a new required prop (no default) | **Yes** |
+| Removing an existing prop | **Yes** |
+| Renaming an existing prop | **Yes** |
+| Changing a prop's type in an incompatible way | **Yes** |
+| Changing a prop's default value | **Potentially** - flag for review |
+| Removing an existing event, slot, or CSS variable | **Yes** |
+| Adding new events, slots, or CSS variables | No (additive) |
+| Changing internal logic / styling only | No |
+
+If the change is **not breaking**, or the component is **private** -> skip to [Step 5 - Implement the Change](#step-5--implement-the-change).
+
+If the change is **breaking** and the component is **public** -> continue to Step 4.
+
+---
+
+### Step 4 - Handle Breaking Changes on Public Components
+
+Public components must **never have their existing interface broken**. Follow this versioning protocol:
+
+#### 4a. Determine the Next Version Number
+
+Scan the codebase for existing versioned files of this component:
+
+```
+MyComponent.tsx         -> v1 (current, implicit)
+MyComponent_v2.tsx      -> v2
+MyComponent_v3.tsx      -> v3  <- next would be v4
+```
+
+Determine the next version suffix (e.g. `_v2`, `_v3`, `_v4`, ...).
+
+#### 4b. Create the New Versioned Component
+
+- Copy the current component to a new file: `[ComponentName]_vN.[ext]`
+- Apply the requested breaking changes to the **new** versioned file only
+- Update the component tag name / class name / display name to include the version suffix:
+  - Web Components / StencilJS: `my-component` -> `my-component-v2`
+  - React / Vue: `MyComponent` -> `MyComponent_v2`
+- Update all internal imports, styles, and documentation references within the new file
+- Create or update the stories file for the new version
+
+#### 4c. Mark the Previous Version as Deprecated
+
+In the **original** component file, add deprecation markers:
+
+Add a `@deprecated` JSDoc block at the top of the component class or function:
+
+```ts
+/**
+ * @deprecated
+ * This component is deprecated. Use `MyComponent_v2` instead.
+ * It will be removed in a future major release.
+ */
+```
+
+If the framework supports it, emit a runtime deprecation warning on mount or construction:
+
+```ts
+// Inside constructor / connectedCallback / useEffect / onMounted:
+console.warn('[MyComponent] is deprecated. Please migrate to MyComponent_v2.');
+```
+
+In the stories file for the old component, mark it as deprecated or move it to an `Internal/` or `Deprecated/` namespace.
+
+#### 4d. Produce a Migration Note
+
+After creating the versioned component, output a migration summary:
+
+```
+## Migration: MyComponent -> MyComponent_vN
+
+**Reason**: [describe the breaking change]
+
+**Changed interface**:
+- Prop `oldPropName` -> renamed to `newPropName`
+- Prop `removedProp` -> removed; use `alternativeProp` instead
+- Event `old-event` -> renamed to `new-event`
+
+**Steps for consumers**:
+1. Replace `<my-component>` with `<my-component-vN>`
+2. Rename prop `oldPropName` to `newPropName`
+3. [additional steps as needed]
+```
+
+---
+
+### Step 5 - Implement the Change
+
+With visibility confirmed and versioning handled (if required), implement the modification:
+
+1. Apply only the changes identified in the delta - do not refactor unrelated code
+2. Use design tokens - no hardcoded values
+3. Update component documentation to reflect the change
+4. Update or add tests as required by local conventions
+5. If a Figma design was updated, verify the implementation matches using Figma analysis output (metadata and screenshot only - not generated code)
+
+### Step 6 - Verify with Figma Code (if Figma was updated - after changes)
 
 Only after implementing the changes:
 - Request Figma-generated code for the modified component
 - Compare implementation against Figma output
-- Identify any gaps still remaining
+- Document any remaining gaps
 
-### 6. Self-Validate
+### Step 7 - Self-Validate
 
-- Review modified files against local instruction files
+Before finalising:
+- Confirm no existing prop names, types, events, slots, or CSS variables were silently changed in a public component without following the versioning protocol
+- Review against all loaded instruction files
 - Confirm no regressions in existing behaviour
-- Check that tests still pass (or update them to reflect the changes)
 
 ---
 
 ## What NOT to Do
 
-- ❌ Refactor code beyond the scope of the requested change
-- ❌ Introduce breaking changes without following the local breaking change policy
-- ❌ Use Figma-generated code as the implementation source
-- ❌ Apply hardcoded design values — always use tokens
+- Do NOT modify a public component's interface without versioning - this breaks consumers
+- Do NOT skip the visibility check - always determine public/private before touching the interface
+- Do NOT guess visibility - if it cannot be determined from code or stories, ask the user
+- Do NOT use hardcoded design values - always use tokens
+- Do NOT forget to mark the old component version as `@deprecated`
+- Do NOT refactor code beyond the scope of the requested change
+- Do NOT ignore local instruction files - they define all conventions for this codebase
 
 ---
 
 ## Output
 
-- Modified component files at their existing canonical paths
-- Updated documentation reflecting the changes
+- Modified or newly versioned component file(s) at canonical paths per local repository structure
+- Updated component documentation
+- Deprecation markers added to the previous version (if a new version was created)
+- Migration note (if a breaking change created a new version)
 - Change summary (what was added / removed / modified)
-- Breaking change notice (if applicable)
-- Verification gaps from Figma comparison (if any)
+- Figma verification gaps (if Figma was involved)
+- Self-validation checklist result
