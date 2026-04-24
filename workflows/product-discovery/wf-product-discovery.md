@@ -1,5 +1,5 @@
 ---
-workflow-name: product-buddy
+workflow-name: product-discovery
 workflow-description: AI-assisted product discovery flow — from raw insight through structured discovery, artefact selection, definition, decision, and handshake ready for inception
 domain: product
 version: v0.1
@@ -20,7 +20,7 @@ dependencies:
 
 ## When to Use
 
-| Criteria | Product Buddy | Consider Fast-Track or Comprehensive-Path Instead |
+| Criteria | Product Discovery | Consider Fast-Track or Comprehensive-Path Instead |
 |----------|---------------|-----------------------------------------------------|
 | Intent | Discover, define, and align on a product problem or opportunity | Implement a feature with code |
 | Clarity | Problem is unclear, solution is unvalidated, or artefact type is unknown | Problem is understood, solution is agreed, ready to build |
@@ -40,7 +40,7 @@ Display:
 
 ```
 ═══════════════════════════════════════════════════
-  PRODUCT BUDDY v0.1 — WORKFLOW ACTIVATED
+  PRODUCT DISCOVERY v0.1 — WORKFLOW ACTIVATED
   AI-assisted product discovery flow.
   Reading workflow instructions now...
 ═══════════════════════════════════════════════════

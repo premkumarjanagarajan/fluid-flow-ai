@@ -1,4 +1,4 @@
-Read `workflows/product-buddy/wf-product-buddy.md` from the `fluid-flow-ai` repository and execute every instruction in it sequentially, in order, without skipping steps.
+Read `workflows/product-discovery/wf-product-discovery.md` from the `fluid-flow-ai` repository and execute every instruction in it sequentially, in order, without skipping steps.
 
 Do NOT jump ahead, shortcut, or bail out early — even if you encounter a blocker (e.g. auth failure, missing data). Surface blockers within the workflow flow, not instead of it.
 
