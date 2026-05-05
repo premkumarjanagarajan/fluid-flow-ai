@@ -59,8 +59,11 @@ Display:
 | `DEPARTMENT` | ff-init (department config) | KB overlay routing |
 | `MCP_SERVERS_OK[]` | ff-init (MCP check) | MCP availability |
 | `INITIATIVE_NAME` | Initiative creation (this workflow) | Artefact paths |
+| `CODE_RECON_PERMITTED` | User consent (Step 1.1, question 4) | Codebase recon activation in Step 1.3 |
+| `CODEBASE_FINDINGS` | Step 1.3 Explore subagent | Problem statement, Phase 2 routing signal |
+| `ANALYTICS_EVIDENCE` | Step 1.1 user-provided paste or link | Problem statement evidence quality rating |
 
-> **Note**: `PACKAGE_MANAGERS`, `TECH_STACK`, and `SOURCE_REPOS[]` are not used by Product Buddy. The `scope=workspace-only` flag ensures ff-init skips their detection.
+> **Note**: `PACKAGE_MANAGERS` and `TECH_STACK` are not used by Product Buddy. `SOURCE_REPOS[]` is not loaded at init — the `Explore` subagent and GitHub MCP are available for opt-in codebase reconnaissance during Step 1.3.
 
 Artefact root: `{DEPT_FF_PATH}/initiatives/{INITIATIVE_NAME}/artefacts/`
 

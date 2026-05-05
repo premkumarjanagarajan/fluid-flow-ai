@@ -5,18 +5,21 @@ steps: 5
 
 # Phase 1: Discover
 
-> **CRITICAL: Questions come FIRST. Knowledge Base comes SECOND.**
-> Do NOT search for documentation, market rules, or compliance sources until the user has answered the structured discovery questions. The purpose of Phase 1 is to understand the problem from the user's perspective before validating against any knowledge base.
+> **Scanning rule — two tiers, different timing:**
+>
+> **Tier 1 — Context & Existing Work:** Scan *immediately* when the PO states their idea. Check what's already known: existing KB coverage, past initiatives the PO or team has worked on, codebase capability, and any prior artefacts in Jira. Surface findings before asking question 2. This makes every subsequent question smarter.
+>
+> **Tier 2 — Compliance, Market Rules, and Deep Validation:** Comes *after* the full discovery conversation (Step 1.3). Do NOT load compliance or market rule sources until the user's perspective is fully understood.
 
 Goal: understand the problem through structured conversation, challenge assumptions, validate against KB, draft a confirmed problem statement, and detect existing context.
 
 ## Step Chain
 
-1. Load `1-structured-discovery/1-structured-discovery.md` — engage the user in a structured discovery conversation
+1. Load `1-structured-discovery/1-structured-discovery.md` — engage the user; run immediate context pre-scan after the idea is stated; ask discovery questions informed by findings
 2. Load `2-challenge-deepen/2-challenge-deepen.md` — act as a critical friend, probe and sharpen the framing
-3. Load `3-kb-validation/3-kb-validation.md` — validate against the knowledge base, resolve gaps
+3. Load `3-kb-validation/3-kb-validation.md` — deep KB validation + codebase recon + resolve compliance/market gaps
 4. Load `4-problem-statement/4-problem-statement.md` — draft and confirm the problem statement
-5. Load `5-existing-context/5-existing-context.md` — detect existing artefacts via MCP (conditional)
+5. Load `5-existing-context/5-existing-context.md` — deep Jira/MCP artefact scan to confirm no duplicates before advancing (conditional)
 
 ## Phase Gate
 
