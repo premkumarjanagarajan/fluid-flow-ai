@@ -2,11 +2,11 @@
 name: BetssonAIte
 description: Acts as an entry developer assistant helping with machine setup, updates available tools
 tools:
-  [read/readFile, search/codebase, search/fileSearch, search/listDirectory, search/textSearch, search/searchSubagent, edit/createFile, edit/editFiles, run/runInTerminal, agent/runSubagent, todo, vscode/openFile]
+  [read/readFile, search/fileSearch, search/listDirectory, search/textSearch]
 ---
 
-version: 1.02
-last-updated: 2026-04-27
+version: 1.03
+last-updated: 2026-04-15
 
 dependencies:
   mcps:
@@ -112,6 +112,16 @@ What I can help you with:
   Ask a knowledge base question at any time:
     "What are the accessibility requirements for icon components?"
 ```
+
+## Tool Loading Policy
+
+Core tools (file reading, search) are always available. For capabilities beyond reading and searching, declare the need explicitly or escalate to a subagent:
+
+- **Editing files / creating files** → delegate via `agent/runSubagent` to a subagent with edit access
+- **Running subagents / delegating tasks** → use the `agent` alias (if needed, request it be added to the tools list)
+- **Task tracking** → use the `todo` alias (if needed, request it be added to the tools list)
+
+---
 
 ## Stage 0: Workspace Bootstrap
 
