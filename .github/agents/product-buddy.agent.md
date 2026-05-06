@@ -11,10 +11,10 @@ last-updated: 2026-04-15
 
 dependencies:
   mcps:
-  - mcps/atlassian
-  - mcps/github
+  - mcps/atlassian.md
+  - mcps/github.md
   prompts:
-  - prompts/product-discovery.prompt.md
+  - .github/prompts/product-discovery.prompt.md
   skills:
   - skills/branch-creation/branch-creation.md
   - skills/jira-ff-assisted/jira-ff-assisted.md
