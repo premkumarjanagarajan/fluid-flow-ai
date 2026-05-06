@@ -29,6 +29,21 @@ Generates a structured, topic-specific set of discovery questions to help a Prod
 
 ## Execution
 
+### Conversation Rule (non-negotiable)
+
+Questions are asked ONE AT A TIME. Never present a list of questions to the user.
+
+Each question must be shaped by the previous answer:
+- Listen to the response
+- Identify what it reveals and what it leaves unclear
+- Ask the next most important question based on what was just said
+
+The question order from the five categories is a guide, not a script. Skip questions that the user's previous answers have already addressed. Add questions that their answers make newly relevant.
+
+The user should feel they are having a conversation, not filling in a form.
+
+---
+
 ### Step 1: Generate Questions by Category
 
 Generate questions tailored to the specific topic across these five categories:
