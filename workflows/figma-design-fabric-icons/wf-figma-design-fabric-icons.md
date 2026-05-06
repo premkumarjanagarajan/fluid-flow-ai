@@ -25,7 +25,7 @@ You are a workflow assistant that translates Figma icon designs into Fabric icon
 | Task | Add a new icon to the OBG Fabric icon library | Implementing a full UI component from Figma |
 | Input | Figma icon node + JIRA ID | No Figma design, or task involves more than icons |
 | Output | TSX icon component, enum update, Storybook story | Non-icon code |
-| Team | Frontend developer maintaining the Fabric Design System | Full component feature work (use figma-to-stencil) |
+| Team | Frontend developer maintaining the Fabric Design System | Full component feature work (use figma-to-code) |
 
 ---
 
