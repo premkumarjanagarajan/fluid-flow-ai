@@ -13,6 +13,20 @@ steps: 5
 
 Goal: understand the problem through structured conversation, challenge assumptions, validate against KB, draft a confirmed problem statement, and detect existing context.
 
+## Step 0 — Persona Detection (mandatory, runs before all steps)
+
+Before any discovery activity begins, identify who you are talking to.
+
+Ask once, naturally:
+"Before we start — are you coming at this as a PM thinking about portfolio fit, or a PO ready to define and deliver?"
+
+Load and apply behavioural rules from:
+`{KB_PATH}/shared/personas.md`
+
+Record persona as session variable: `USER_PERSONA` = PM | PO
+
+Do not proceed to Step 1.1 until persona is confirmed.
+
 ## Step Chain
 
 1. Load `1-structured-discovery/1-structured-discovery.md` — engage the user; run immediate context pre-scan after the idea is stated; ask discovery questions informed by findings
