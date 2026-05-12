@@ -53,12 +53,12 @@ Run the following checks in order. Stop as soon as a definitive answer is found.
 
 #### 2a. Inspect Component Source Code
 
-Search the component file for explicit visibility markers:
+Search the component file for explicit visibility markers using the patterns defined in the local instruction files. Common patterns include:
 
-- `@public` / `@private` JSDoc annotations
+- Visibility annotations (e.g. `@public` / `@private` TSDoc tags)
 - Exported vs. non-exported declarations
 - Comments such as `// public API`, `// internal`, `/* @internal */`
-- Framework-specific patterns (e.g. StencilJS `@Prop()` exposed on the element vs. internal state)
+- Framework-specific visibility conventions — refer to local instruction files for the exact markers used in this codebase
 
 If a clear **public** or **private** indicator is found -> record the result and skip 2b and 2c.
 
@@ -66,9 +66,9 @@ If a clear **public** or **private** indicator is found -> record the result and
 
 If no clear marker was found in the source, locate the component's Storybook (or equivalent) stories file and look for:
 
-- Story metadata: `status: 'public'`, `status: 'private'`, `access: 'internal'`
+- Story metadata indicating visibility or access level
 - Tags or decorators indicating the component is experimental, stable, deprecated, or internal
-- Story title namespace hints (e.g. `Internal/MyComponent` vs. `Components/MyComponent`)
+- Story title namespace hints — refer to local instruction files for the namespace conventions used in this codebase
 
 If a clear indicator is found -> record the result and skip 2c.
 
@@ -124,36 +124,19 @@ Determine the next version suffix (e.g. `_v2`, `_v3`, `_v4`, ...).
 
 #### 4b. Create the New Versioned Component
 
-- Copy the current component to a new file: `[ComponentName]_vN.[ext]`
+- Copy the current component to a new file using the versioning naming convention defined in local instruction files
 - Apply the requested breaking changes to the **new** versioned file only
-- Update the component tag name / class name / display name to include the version suffix:
-  - Web Components / StencilJS: `my-component` -> `my-component-v2`
-  - React / Vue: `MyComponent` -> `MyComponent_v2`
+- Update the component tag name / class name / display name to include the version suffix, following local instruction file conventions
 - Update all internal imports, styles, and documentation references within the new file
 - Create or update the stories file for the new version
 
 #### 4c. Mark the Previous Version as Deprecated
 
-In the **original** component file, add deprecation markers:
+In the **original** component file, add deprecation markers following the conventions defined in local instruction files:
 
-Add a `@deprecated` JSDoc block at the top of the component class or function:
-
-```ts
-/**
- * @deprecated
- * This component is deprecated. Use `MyComponent_v2` instead.
- * It will be removed in a future major release.
- */
-```
-
-If the framework supports it, emit a runtime deprecation warning on mount or construction:
-
-```ts
-// Inside constructor / connectedCallback / useEffect / onMounted:
-console.warn('[MyComponent] is deprecated. Please migrate to MyComponent_v2.');
-```
-
-In the stories file for the old component, mark it as deprecated or move it to an `Internal/` or `Deprecated/` namespace.
+- Add a `@deprecated` annotation at the component class or function level, referencing the new versioned component
+- Emit a runtime deprecation warning at mount or construction time if supported by the framework
+- In the stories file for the old component, mark it as deprecated or move it to the namespace designated for deprecated components per local conventions
 
 #### 4d. Produce a Migration Note
 

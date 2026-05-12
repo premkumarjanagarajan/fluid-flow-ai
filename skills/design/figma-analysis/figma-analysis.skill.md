@@ -1,6 +1,6 @@
 ---
 name: figma-analysis
-description: Analyzes Figma designs for completeness, design token coverage, layout discipline, and component instance integrity. Provides a readiness score and blocks progression if design quality is insufficient.
+description: Analyzes Figma designs for completeness, design token coverage, layout discipline, and component instance integrity. Provides a readiness score.
 execution: inline
 scope: shared
 version: v0.1
