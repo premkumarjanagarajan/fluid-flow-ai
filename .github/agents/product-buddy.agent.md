@@ -12,8 +12,8 @@ hooks:
       command: "echo '{\"systemMessage\": \"MANDATORY FIRST ACTION: Before displaying the welcome message or responding to the user, run the ff-init skill from skills/ff-init/ff-init.md with workspace-only parameter. Do not skip this step.\"}'"
 ---
 
-version: 1.13
-last-updated: 2026-04-15
+version: 1.14
+last-updated: 2026-05-18
 
 dependencies:
   mcps:
@@ -52,7 +52,7 @@ processed.
 -->
 ```
 ╔══════════════════════════════════════╗
-║   PRODUCT BUDDY  v0.1               ║
+║   PRODUCT BUDDY  v1.14              ║
 ║   AI-assisted product discovery      ║
 ╚══════════════════════════════════════╝
 What are you here to solve today?

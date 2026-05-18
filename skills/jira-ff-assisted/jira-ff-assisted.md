@@ -135,6 +135,42 @@ The current Product Buddy version is defined in the `version` field of the Produ
    ```
 4. If the update failed, log the error but do not block the workflow
 
+## Adoption Reporting — Jira Filter & Dashboard
+
+Once `pb-assisted` labels are being stamped, set up a saved filter in Jira to surface all Product Buddy artefacts.
+
+### Saved Filter Query
+
+```
+label = "pb-assisted" ORDER BY created DESC
+```
+
+To filter by a specific version:
+```
+label = "pb-v1.14" ORDER BY created DESC
+```
+
+To see artefacts across all versions:
+```
+label in ("pb-v1.13", "pb-v1.14") ORDER BY created DESC
+```
+
+### Setting Up the Filter
+
+1. In Jira, go to **Filters → View all filters → Create filter**
+2. Switch to **Advanced (JQL)** and paste the query above
+3. Save with a name like `Product Buddy — Adoption Tracker`
+4. Click **Details → Edit permissions** and share with your team
+
+### Dashboard Widget
+
+Add the saved filter to a Jira dashboard as an **Issue Statistics** or **Filter Results** gadget:
+- **Rows:** `Assignee` — shows which PMs/POs are using Product Buddy
+- **Rows:** `Issue Type` — shows which artefact types are most commonly created
+- **Rows:** `Labels` — shows version distribution across artefacts
+
+This gives a live adoption view with zero ongoing effort.
+
 ## Custom Field Upgrade Path
 
 If a JIRA admin later creates a dedicated "FF Assisted" custom field:
