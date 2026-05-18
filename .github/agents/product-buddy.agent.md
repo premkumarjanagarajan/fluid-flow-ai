@@ -1,9 +1,15 @@
 ---
 name: Product Buddy
 description: Guides the AI-assisted product discovery flow across five phases — Discover, Artefact Selection, Define, Decide, and Handshake — from initial insight through to approved handshake contracts ready for inception.
+model: claude-sonnet-4.6
 
 tools:
   [execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/getNotebookSummary, read/problems, read/readFile, read/terminalSelection, read/terminalLastCommand, agent/runSubagent, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/usages, search/searchSubagent, atlassian/*, todo]
+
+hooks:
+  SessionStart:
+    - type: command
+      command: "echo '{\"systemMessage\": \"MANDATORY FIRST ACTION: Before displaying the welcome message or responding to the user, run the ff-init skill from skills/ff-init/ff-init.md with workspace-only parameter. Do not skip this step.\"}'"
 ---
 
 version: 1.13
@@ -18,6 +24,7 @@ dependencies:
   skills:
   - skills/branch-creation/branch-creation.md
   - skills/jira-ff-assisted/jira-ff-assisted.md
+  - skills/confluence-pb-stamp/confluence-pb-stamp.md
   - skills/kb-retrieval/kb-retrieval.skill.md
   - workflows/product-discovery/skills/discovery-questions/discovery-questions.skill.md
   - workflows/product-discovery/skills/glossary/glossary.skill.md
