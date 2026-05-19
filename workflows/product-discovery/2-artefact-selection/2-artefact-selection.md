@@ -1,6 +1,6 @@
 ---
 phase: artefact-selection
-steps: 8
+steps: 9
 ---
 
 # Phase 2: Artefact Selection
@@ -13,6 +13,7 @@ Load `knowledge/Layer 1 – Global Company Knowledge (Shared)/global-principles-
 
 ## Step Chain
 
+0. Load `0-artefact-type-check/0-artefact-type-check.md` — ask the human if they already know what artefact they need. If yes, fast-track to Step 7. If no, run the full step chain below.
 1. Load `1-new-vs-existing/1-new-vs-existing.md` — determine if this is new work or extends existing context
 2. Load `2-existing-routing/2-existing-routing.md` — route existing work to the correct path (conditional: only if Step 2.1 = Existing)
 3. Load `3-discovery-necessity/3-discovery-necessity.md` — the most important gate: is discovery still needed?
