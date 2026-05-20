@@ -4,7 +4,7 @@ description: Guides the AI-assisted product discovery flow across five phases â€
 model: claude-sonnet-4.6
 
 tools:
-  [execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/getNotebookSummary, read/problems, read/readFile, read/terminalSelection, read/terminalLastCommand, agent/runSubagent, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/usages, search/searchSubagent, atlassian/*, todo]
+  [execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/getNotebookSummary, read/problems, read/readFile, read/terminalSelection, read/terminalLastCommand, agent/runSubagent, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/usages, search/searchSubagent, atlassian/*, slack/*, todo]
 
 hooks:
   SessionStart:
@@ -19,6 +19,7 @@ dependencies:
   mcps:
   - mcps/atlassian.md
   - mcps/github.md
+  - mcps/slack.md
   prompts:
   - .github/prompts/product-discovery.prompt.md
   skills:
