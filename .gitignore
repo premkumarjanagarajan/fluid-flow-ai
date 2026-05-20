@@ -5,3 +5,4 @@ node_modules/
 .github/mcp.json
 .vscode/mcp.json
 .cursor/mcp.json
+.memory-worktree/
