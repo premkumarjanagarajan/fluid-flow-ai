@@ -7,8 +7,13 @@ subagent: false
 
 - Approved Feature Brief (or selected artefact) from Phase 3
 - Phase 3 gate confirmation
+- `DECISION_LOG[]` session variable (decisions captured mid-session via `skills/decision-log/decision-log.skill.md`)
 
 ## AI Role
+
+Run `skills/decision-log/decision-log.skill.md` to produce the final decision log entry for this phase.
+
+If `DECISION_LOG[]` contains entries captured during Phase 1 or Phase 3, include them as a summary appendix rather than re-drafting them. The Phase 4 log entry focuses on the **prioritisation and approval decision** — why this feature was approved now, over alternatives.
 
 - Draft a decision log entry using the format below.
 - Summarise the prioritisation assessment against the criteria in the Product Principles (provided via authoritative references): strategic alignment, impact, effort, urgency, risk.
