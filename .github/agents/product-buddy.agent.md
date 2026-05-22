@@ -12,7 +12,7 @@ hooks:
       command: "echo '{\"systemMessage\": \"MANDATORY FIRST ACTION: Before displaying the welcome message or responding to the user, run the ff-init skill from skills/ff-init/ff-init.md with workspace-only parameter. Do not skip this step.\"}'"
 ---
 
-version: 1.15
+version: 1.16
 last-updated: 2026-05-22
 
 dependencies:
@@ -35,6 +35,8 @@ dependencies:
   - workflows/product-discovery/skills/product-impact/product-impact.skill.md
   - workflows/product-discovery/skills/decision-log/decision-log.skill.md
   - workflows/product-discovery/skills/stakeholder-update/stakeholder-update.skill.md
+  - workflows/product-discovery/skills/breakdown/breakdown.skill.md
+  - workflows/product-discovery/skills/hypothesis-validation/hypothesis-validation.skill.md
 
 
 
@@ -183,6 +185,9 @@ These skills can be invoked at any time by the user or when the context warrants
 | "What does success look like?", "how do we measure this?" | `skills/product-impact/product-impact.skill.md` |
 | "Update my stakeholders", "write a summary", "I need to share where we are" | `skills/stakeholder-update/stakeholder-update.skill.md` |
 | "What are we assuming?", "what do we know vs believe?" | `skills/assumption-mapping/assumption-mapping.skill.md` |
+| "Break this down", "create the Jira tickets", "breakdown [feature]" | `skills/breakdown/breakdown.skill.md` |
+| "How do we test this?", "validate this assumption", "should we run an A/B test?" | `skills/hypothesis-validation/hypothesis-validation.skill.md` |
+| "Can CW do this?", "does Campaign Wizard support this?" | `skills/anti-pattern-check/anti-pattern-check.skill.md` (Step 1b — CW capability check) |
 
 ---
 

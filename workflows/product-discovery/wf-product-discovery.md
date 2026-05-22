@@ -2,7 +2,7 @@
 workflow-name: product-discovery
 workflow-description: AI-assisted product discovery flow — from raw insight through structured discovery, artefact selection, definition, decision, and handshake ready for inception
 domain: product
-version: v0.2
+version: v0.3
 release: 20/04/2026
 last-update: 22/05/2026
 orchestrator-listed: false
@@ -18,6 +18,8 @@ dependencies:
   - workflows/product-discovery/skills/product-impact/product-impact.skill.md
   - workflows/product-discovery/skills/decision-log/decision-log.skill.md
   - workflows/product-discovery/skills/stakeholder-update/stakeholder-update.skill.md
+  - workflows/product-discovery/skills/breakdown/breakdown.skill.md
+  - workflows/product-discovery/skills/hypothesis-validation/hypothesis-validation.skill.md
   primitives:
   - primitives/kb-compliance.md
   - primitives/human-gate.md
@@ -211,6 +213,7 @@ When you encounter information you are not confident about:
 
 | # | Step | Conditional | Key Inputs | Key Outputs | Gate |
 |---|------|-------------|------------|-------------|------|
+| Pre-entry | **Breakdown** | Yes — if Epics/Stories don't already exist | Approved Feature Brief | JPD item (PROX), Epic(s) (BET/SWAT), User Stories via `skills/breakdown/breakdown.skill.md` | Traceability chain intact before handshake begins |
 | 5.1 | **Handshake Contract** | No | Approved artefact, decision log, all delivery artefacts | Handshake contract `[DRAFT]` | Product and Engineering reviewers both approve |
 
 ## Rules

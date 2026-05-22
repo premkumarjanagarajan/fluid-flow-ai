@@ -1,9 +1,9 @@
 ---
 name: anti-pattern-check
-description: Validates a proposed scope or approach against known product and delivery anti-patterns before a Feature Brief is written or approved.
+description: Validates a proposed scope or approach against known product and delivery anti-patterns before a Feature Brief is written or approved. Includes a CW capability check when campaigns are in scope.
 execution: inline
 scope: workflow-local
-version: 1.0
+version: 1.1
 last-updated: 2026-05-22
 ---
 
@@ -41,6 +41,34 @@ Also check internally against the built-in catalogue below (Step 2) — these do
 
 ---
 
+### Step 1b: CW Capability Check (conditional — runs when campaigns are in scope)
+
+**Trigger**: Run this check whenever the scope involves campaigns, bonuses, offers, prize draws, tournaments, or gamification mechanics.
+
+Ask the user:
+
+> *"Before I run the anti-pattern check — can you briefly describe what the campaign needs to do? I'll check whether Campaign Wizard can support it natively before we go further."*
+
+Then delegate a KB lookup via `skills/kb-retrieval/kb-retrieval.skill.md` with query: "Campaign Wizard offer types, task types, reward types, and known limitations."
+
+Evaluate the requirement against what CW supports:
+
+| CW Can Do | CW Cannot Do (or has limitations) |
+|-----------|-----------------------------------|
+| Task-based offers (deposit, wager, login) | Real-time eligibility checks mid-session |
+| Multi-step campaign flows | Complex cross-product wagering rules in a single campaign |
+| Scheduled and triggered campaigns | Fully custom fulfillment logic outside CW reward types |
+| Segmentation by player attributes | Market-specific legal text injection per player |
+| Bonus Wheel, spin mechanics | — |
+
+**Decision output:**
+
+- If CW **can** support the requirement: record as confirmed — add to `ASSUMPTION_RISKS[]` as a Known fact
+- If CW **cannot** support it: flag as anti-pattern C1 (CT Default) and ask the user to confirm CT is the correct fallback before proceeding
+- If **unclear**: state this explicitly and recommend an engineering spike via `hypothesis-validation` (Technical Spike method)
+
+---
+
 ### Step 2: Built-in Anti-Pattern Catalogue
 
 Check the proposed scope against all items in this catalogue:
@@ -73,6 +101,7 @@ Check the proposed scope against all items in this catalogue:
 | C3 | **Bonus logic in the wrong layer** | Wagering, eligibility, or wallet logic described as frontend work | 🔴 Incorrect ownership; builds technical debt |
 | C4 | **Missing RG consideration** | Feature affects bonuses, deposits, or engagement mechanics with no Responsible Gaming review flagged | 🔴 Regulatory and ethical risk |
 | C5 | **Duplicating existing CW capability** | Proposed feature replicates something already possible in Campaign Wizard | 🟡 Wasted effort; inconsistent tooling |
+| C6 | **CW capability unverified** | Campaign requirement stated but CW capability not checked — assuming it works without confirming | 🟡 Risk of designing for a tool constraint that doesn't exist, or missing one that does |
 
 ---
 
@@ -148,6 +177,9 @@ After presenting findings:
 ## Rules
 
 - Never skip this check when the scope involves campaigns, bonuses, regulated markets, or wallet logic
+- Always run Step 1b (CW capability check) when campaign mechanics are mentioned — before checking anti-patterns
 - Do not soft-pass a 🔴 match — always hard-block
 - If the KB lookup returns no anti-pattern content, fall back to the built-in catalogue and note the limitation
 - Always check C1 (CT default) whenever Campaign Tool is mentioned by the user
+- Always check C6 (CW capability unverified) whenever a campaign requirement is described without a CW capability confirmation
+- If CW capability is unclear, recommend a technical spike via `skills/hypothesis-validation/hypothesis-validation.skill.md` (Technical Spike method)
