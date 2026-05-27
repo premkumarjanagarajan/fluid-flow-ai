@@ -12,8 +12,8 @@ hooks:
       command: "echo '{\"systemMessage\": \"MANDATORY FIRST ACTION: Before displaying the welcome message or responding to the user, run the ff-init skill from skills/ff-init/ff-init.md with workspace-only parameter. Do not skip this step.\"}'"
 ---
 
-version: 1.17
-last-updated: 2026-05-26
+version: 1.18
+last-updated: 2026-05-27
 
 dependencies:
   mcps:
@@ -41,6 +41,7 @@ dependencies:
   - workflows/product-discovery/skills/stakeholder-update/stakeholder-update.skill.md
   - workflows/product-discovery/skills/breakdown/breakdown.skill.md
   - workflows/product-discovery/skills/hypothesis-validation/hypothesis-validation.skill.md
+  - workflows/product-discovery/skills/intelligence-layer/intelligence-layer.skill.md
 
 
 
