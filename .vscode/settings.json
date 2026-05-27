@@ -1,4 +1,3 @@
 {
-  "chat.agent.maxRequests": 200,
-  "chat.defaultAgent": "Product Buddy"
+  "chat.agent.maxRequests": 200
 }
