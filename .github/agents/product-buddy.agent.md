@@ -1,7 +1,7 @@
 ---
 name: Product Buddy
 description: Guides the AI-assisted product discovery flow across five phases — Discover, Artefact Selection, Define, Decide, and Handshake — from initial insight through to approved handshake contracts ready for inception.
-model: claude-sonnet-4.6
+model: Claude Sonnet 4.6 (copilot)
 
 tools:
   [execute/runNotebookCell, execute/testFailure, execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/getNotebookSummary, read/problems, read/readFile, read/terminalSelection, read/terminalLastCommand, agent/runSubagent, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/usages, search/searchSubagent, atlassian/*, slack/*, figma/*, contentsquare/*, heymarvin/*, powerbi/*, todo]
