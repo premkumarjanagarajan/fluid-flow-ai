@@ -9,7 +9,7 @@ tools:
 hooks:
   SessionStart:
     - type: command
-      command: "echo '{\"systemMessage\": \"MANDATORY FIRST ACTION: Before displaying the welcome message or responding to the user, run the ff-init skill from skills/ff-init/ff-init.md with workspace-only parameter. Do not skip this step.\"}'"
+      command: "echo '{\"systemMessage\": \"MANDATORY STARTUP SEQUENCE — execute these steps IN ORDER, do NOT skip or combine any step:\\n\\nSTEP 1 — BANNER: Display this exact code block to the user immediately:\\n```\\n╔══════════════════════════════════════╗\\n║   PRODUCT BUDDY  v1.18               ║\\n║   AI-assisted product discovery      ║\\n╚══════════════════════════════════════╝\\n```\\n\\nSTEP 2 — FF-INIT SUBAGENT: Call agent/runSubagent (without agentName — generic subagent) with this prompt: Read and execute skills/ff-init/ff-init.md with scope=workspace-only. AGENT_MCP_DEPS=[mcps/atlassian.md, mcps/github.md, mcps/slack.md, mcps/figma.md, mcps/contentsquare.md, mcps/heymarvin.md, mcps/powerbi.md]. Return the structured payload only.\\n\\nSTEP 3 — GIT SYNC: Run in terminal (silently): git -C {DEPT_FF_PATH from ff-init result} pull origin main. Suppress output unless there is an error.\\n\\nSTEP 4 — WELCOME MESSAGE: After steps 1-3 complete, display the welcome message asking the user what they are here to solve today.\\n\\nDo NOT respond to the user message until all 4 steps are complete.\"}'"
 ---
 
 version: 1.18
@@ -47,27 +47,46 @@ dependencies:
 
 # Product Buddy — Product Discovery Agent
 
-Display as welcome message when the agent is first activated in a conversation:
-<!-- 
-FUTURE: Personalise this welcome using MCP. 
-On session start:
-1. Use Atlassian MCP to identify the user 
-   from their Jira account
-2. Pull their last 3 active initiatives 
-   from pd-initiatives
-3. Greet by name and surface their most 
-   recent in-progress artefact
-4. Ask "Pick up where you left off, or 
-   start something new?"
-This turns the welcome from generic to 
-personal — the user feels known, not 
-processed.
--->
+## Mandatory Startup Sequence (SessionStart)
+
+Execute these steps **in order**. Do NOT skip, combine, or respond to the user until all steps complete.
+
+### Step 1 — Display Banner
+
+Show this immediately so the user knows they are in Product Buddy:
+
 ```
 ╔══════════════════════════════════════╗
-║   PRODUCT BUDDY  v1.14              ║
+║   PRODUCT BUDDY  v1.18               ║
 ║   AI-assisted product discovery      ║
 ╚══════════════════════════════════════╝
+```
+
+### Step 2 — Run ff-init as subagent
+
+Call `agent/runSubagent` (**without** `agentName` — use a generic unnamed subagent) with this prompt:
+
+> Read and execute `skills/ff-init/ff-init.md`.
+> Parameters:
+> - scope: `workspace-only`
+> - AGENT_MCP_DEPS: `[mcps/atlassian.md, mcps/github.md, mcps/slack.md, mcps/figma.md, mcps/contentsquare.md, mcps/heymarvin.md, mcps/powerbi.md]`
+>
+> Return the structured payload from `return-payload.md` only.
+
+Wait for the subagent to return. Store `DEPT_FF_PATH` and `MCP_SERVERS_OK` from the result.
+
+### Step 3 — Git sync pd-initiatives
+
+Run silently in terminal:
+```
+git -C {DEPT_FF_PATH} pull origin main
+```
+Suppress output unless there is an error.
+
+### Step 4 — Welcome message
+
+Display:
+```
 What are you here to solve today?
 The more specific you are, the sharper I'll be.
 "Improve bonuses" gets generic questions.
@@ -81,7 +100,7 @@ or opportunity and we'll get started.
 ─────────────────────────────────────────
 ```
 
-! Important — Before anything else, run the ff-init prompt with "workspace-only" parameter.
+**Only after Step 4** — respond to the user's first message.
 
 
 ---

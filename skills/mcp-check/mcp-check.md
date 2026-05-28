@@ -11,6 +11,16 @@ last-updated: 2026-04-20
 
 Select which MCP servers to enable, generate a local `mcp.json`, and verify connectivity. The generated file is gitignored — it's local to the user's machine and regenerated on each run.
 
+## Inputs
+
+| Input | Source | Required |
+|-------|--------|----------|
+| `FF_CORE_PATH` | Session variable from ff-init | Yes |
+| `DEPT_FF_PATH` | Session variable from ff-init | Yes |
+| `AGENT_MCP_DEPS` | Calling agent's `dependencies.mcps[]` (passed via ff-init) | No |
+
+`AGENT_MCP_DEPS` is a list of MCP file paths (e.g. `mcps/heymarvin.md`, `mcps/powerbi.md`). When provided, MCPs matching these filenames are pre-selected and tagged `[recommended]` in the selection UI.
+
 ## Pre-Execution: Resolve IDE config path
 
 Before any step, determine the target `mcp.json` path based on the user's IDE:
@@ -73,22 +83,35 @@ If no `mcp.json` exists, nothing is pre-selected.
 
 ## Step 3 — Ask the user
 
+### Pre-selection logic
+
+Determine which MCPs should be pre-selected (checked by default):
+
+1. **Already configured**: any server present in the existing `mcp.json` → pre-selected
+2. **Agent-recommended**: any MCP whose filename matches an entry in `AGENT_MCP_DEPS` (passed from ff-init) → pre-selected and tagged `[recommended]`
+
+Both conditions are additive — if an MCP is both already configured and agent-recommended, it shows as pre-selected with the `[recommended]` tag.
+
+### Display
+
 Use the IDE question tool with multi-select enabled:
 
 ```
 Which MCP servers do you want to enable?
-(Pre-selected items are already configured)
+(☑ = already configured or recommended by your agent)
 
-  ☑ github          — GitHub repos, PRs, issues, code search           [core]
-  ☑ atlassian       — Jira & Confluence access                         [core]
+  ☑ github          — GitHub repos, PRs, issues, code search           [core] [recommended]
+  ☑ atlassian       — Jira & Confluence access                         [core] [recommended]
+  ☑ heymarvin       — Research projects, insights, transcripts         [dept] [recommended]
+  ☑ powerbi         — Reports, dashboards, datasets                    [dept] [recommended]
   ☐ figma           — Figma remote endpoint (OAuth)                    [core]
   ☐ aws-document-loader — AWS Labs document loader                     [core]
   ☐ figma-dev-mode  — Figma desktop Dev Mode (local)                   [core/local]
   ☐ playwright      — Browser automation                               [core/local]
-  ☐ {name}          — {description}                                    [dept]
+  ☐ {name}          — {description}                                    [{source}]
 ```
 
-> **Do not hardcode this list** — always build it from the scan in Step 1. The example above shows a typical result.
+> **Do not hardcode this list** — always build it from the scan in Step 1. The example above shows a typical result. `[recommended]` tags come from `AGENT_MCP_DEPS` matching.
 
 If the user's selection matches exactly what's already in `mcp.json` (same servers, no additions, no removals):
 - Print: `No changes — MCP configuration is up to date.`

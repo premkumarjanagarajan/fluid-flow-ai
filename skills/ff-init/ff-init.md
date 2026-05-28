@@ -15,7 +15,7 @@ Detect environment, validate workspace structure, verify MCP servers, and run re
 
 Runs as an **generic (unnamed) subagent** (`runSubagent` without `agentName`). The `ff-init.agent.md` file is documentation only — not registered.
 
-**Inputs:** skill path, workspace root paths, force flag (`true` when `/ff-init`), scope (`full` | `workspace-only`).
+**Inputs:** skill path, workspace root paths, force flag (`true` when `/ff-init`), scope (`full` | `workspace-only`), agent MCP dependencies (optional list from calling agent's `dependencies.mcps`).
 
 **Output:** structured payload from `return-payload.md` only. No detection details, MCP diagnostics, or RE analysis — verbose output stays in subagent context or `.local-environment.json`.
 
@@ -28,6 +28,18 @@ Runs as an **generic (unnamed) subagent** (`runSubagent` without `agentName`). T
 |-------|----------|-----------|
 | `full` | Engineering workflows with source repos | All steps, including tech stack, source repo classification, RE |
 | `workspace-only` | Non-engineering (e.g. Product Buddy) | Step 1 reduced (OS/shell/IDE only), Step 2c skipped, Step 4 skipped. `PACKAGE_MANAGERS`, `TECH_STACK`, `SOURCE_REPOS[]` = empty |
+
+### Agent MCP Dependencies
+
+When called by an agent that declares `dependencies.mcps` in its `.agent.md` file, the orchestrator passes that list to `ff-init`. These are the MCPs the agent **needs** to function fully.
+
+**How it flows:**
+1. The orchestrator reads the calling agent's `.agent.md` → extracts `dependencies.mcps[]`
+2. Passes the list to the `ff-init` subagent as `AGENT_MCP_DEPS`
+3. `ff-init` forwards `AGENT_MCP_DEPS` to Step 3 (MCP Check)
+4. `mcp-check` uses it to mark those MCPs as `[recommended]` and pre-select them
+
+If `AGENT_MCP_DEPS` is empty or not provided, `mcp-check` behaves as before (nothing pre-recommended).
 
 ---
 
