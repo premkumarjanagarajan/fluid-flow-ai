@@ -10,7 +10,7 @@
 
 **Briefing**: Before running MCP verification commands, print a visible chat message: _"Checking connectivity to configured MCP servers (lightweight HTTP pings and command lookups — no data is sent)."_ — this must appear in the conversation before the terminal tool call.
 
-Load `skills/mcp-check/mcp-check.md` and execute it. The skill will:
+Load `skills/mcp-check/mcp-check.md` and execute it, passing `AGENT_MCP_DEPS` (the list of MCP file paths from the calling agent's `dependencies.mcps`). The skill will:
 
 1. Scan available MCP definitions from `{FF_CORE_PATH}/mcps/` and `{DEPT_FF_PATH}/mcps/`
 2. Ask the user which MCPs to enable (multi-select, pre-selecting already configured ones)

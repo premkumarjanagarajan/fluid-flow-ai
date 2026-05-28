@@ -62,7 +62,13 @@ Workspace change = sorted folder names differ from stored `folderList`.
 
 ### Skip Path
 
-When cache is valid: load session variables, display cached summary, then ask:
+When cache is valid: load session variables from cache.
+
+**Before offering the skip option**, check if `AGENT_MCP_DEPS` was provided. If so, compare it against the cached `mcp.serversOk[]` in `.local-environment.json`:
+- If ALL agent-required MCPs are already in `serversOk` → offer the skip option below
+- If ANY agent-required MCPs are MISSING from `serversOk` → **do NOT offer skip**. Instead, display: *"Cache is valid but your agent requires MCPs that aren't configured yet. Running MCP setup."* Then proceed directly to Step 3 (MCP Check) only — skip Steps 1, 2, 4 but run Step 3, 5, 6.
+
+If skip is offered, display cached summary, then ask:
 
 ```
   A) Use cached values — skip init and continue
