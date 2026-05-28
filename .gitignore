@@ -2,6 +2,9 @@
 node_modules/
 *.log
 .local-environment.json
+agent-debug-log-*.json
+chat.json
 .github/mcp.json
 .vscode/mcp.json
 .cursor/mcp.json
+.memory-worktree/

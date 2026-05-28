@@ -86,6 +86,7 @@ The reframe is the signal that Product Buddy is a thinking partner, not a form.
 4. **What evidence supports this?** — Is there user research, analytics, customer feedback, support tickets, competitor analysis, or A/B test results?
    - If the user provides evidence, record it. Then ask: *"Can you share analytics data — a metric, funnel, or dashboard screenshot from Amplitude, Mixpanel, Looker, or Power BI? Paste it here and I'll interpret it."* Record as `ANALYTICS_EVIDENCE`.
    - If none: flag as a gap. *"Discovery without evidence increases risk."*
+   - **Competitor analysis:** If the user mentions competitor research, market benchmarking, or asks Product Buddy to research what competitors offer, invoke the **Internet Research Gate** (`agent-rules/ai-governance/internet-research-gate.md`) immediately. Do not proceed past this point until the gate resolves (Approved / Skipped / User-Provided). The gate handles disclosure, approval, and audit logging.
    - **Before moving on, ask both enrichment questions:**
      - *"Shall I run a deeper codebase check — beyond the quick scan — to look at integration points and in-flight work in detail?"* Record as `CODE_RECON_PERMITTED = true/false`.
      - *"Do you have analytics data to share (Amplitude, Mixpanel, Looker, Power BI)? Paste a metric or dashboard link and I'll interpret it."* Record as `ANALYTICS_EVIDENCE` or `UNVALIDATED`.

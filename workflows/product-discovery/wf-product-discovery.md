@@ -2,9 +2,9 @@
 workflow-name: product-discovery
 workflow-description: AI-assisted product discovery flow — from raw insight through structured discovery, artefact selection, definition, decision, and handshake ready for inception
 domain: product
-version: v0.1
+version: v0.3
 release: 20/04/2026
-last-update: 20/04/2026
+last-update: 22/05/2026
 orchestrator-listed: false
 dependencies:
   mcps:
@@ -13,6 +13,13 @@ dependencies:
   skills:
   - skills/jira-ff-assisted/jira-ff-assisted.md
   - skills/kb-retrieval/kb-retrieval.skill.md
+  - workflows/product-discovery/skills/assumption-mapping/assumption-mapping.skill.md
+  - workflows/product-discovery/skills/anti-pattern-check/anti-pattern-check.skill.md
+  - workflows/product-discovery/skills/product-impact/product-impact.skill.md
+  - workflows/product-discovery/skills/decision-log/decision-log.skill.md
+  - workflows/product-discovery/skills/stakeholder-update/stakeholder-update.skill.md
+  - workflows/product-discovery/skills/breakdown/breakdown.skill.md
+  - workflows/product-discovery/skills/hypothesis-validation/hypothesis-validation.skill.md
   primitives:
   - primitives/kb-compliance.md
   - primitives/human-gate.md
@@ -170,9 +177,11 @@ When you encounter information you are not confident about:
 |---|------|-------------|------------|-------------|------|
 | 1.1 | **Structured Discovery Conversation** | No | User's topic or idea | Answers to 8 framing questions, summary confirmed by user | User confirms summary is accurate |
 | 1.2 | **Challenge & Deepen** | No | Step 1.1 summary | Probing follow-up answers, sharpened framing | User acknowledges challenges addressed |
-| 1.3 | **Knowledge Base Validation** | No | Step 1.1 + 1.2 context | Relevant market rules, compliance touchpoints, knowledge gaps resolved | All gaps addressed or deferred with owner |
-| 1.4 | **Draft Problem Statement** | No | All Phase 1 context | `problem-statement.md` `[DRAFT]` | User confirms problem statement |
-| 1.5 | **Existing Context Detection** | Yes — requires Atlassian MCP | Problem statement | Overlap report (existing Big Bets, N&Os, Solutions, Epics) | User decides: attach to existing or create new |
+| 1.3 | **Assumption Mapping** | No | Steps 1.1 + 1.2 context | Assumption map with Known / Believed / Unknown classified; 🔴 items validated or accepted as risks | User makes validation decision on all 🔴 Critical items |
+| 1.4 | **Knowledge Base Validation** | No | Steps 1.1–1.3 context, `ASSUMPTION_RISKS[]` | Relevant market rules, compliance touchpoints, knowledge gaps resolved | All gaps addressed or deferred with owner |
+| 1.5 | **Draft Problem Statement** | No | All Phase 1 context | `problem-statement.md` `[DRAFT]` — includes all unresolved 🔴 assumptions as flagged risks | User confirms problem statement |
+| 1.6 | **Anti-Pattern Check** | No | Problem statement, scope direction | Anti-pattern report — hard stop on any 🔴 Critical match | All 🔴 matches resolved; 🟡 matches acknowledged |
+| 1.7 | **Existing Context Detection** | Yes — requires Atlassian MCP | Problem statement | Overlap report (existing Big Bets, N&Os, Solutions, Epics) | User decides: attach to existing or create new |
 
 ### Phase 2: Artefact Selection
 
@@ -191,18 +200,20 @@ When you encounter information you are not confident about:
 
 | # | Step | Conditional | Key Inputs | Key Outputs | Gate |
 |---|------|-------------|------------|-------------|------|
-| 3.1 | **Build Artefact** | No | Confirmed artefact type, canonical template, KB context | Completed artefact `[DRAFT]`, Section Progress Log | PR created, peer reviewed, Area Director/Head of Area approved |
+| Pre-flight | **Anti-Pattern Check** | No | Confirmed scope + problem statement | Anti-pattern report — hard stop on 🔴 match | Clean or 🟡 acknowledged |
+| 3.1 | **Build Artefact** | No | Confirmed artefact type, canonical template, KB context | Completed artefact `[DRAFT]`, Section Progress Log, product impact statement | PR created, peer reviewed, Area Director/Head of Area approved |
 
 ### Phase 4: Decide
 
 | # | Step | Conditional | Key Inputs | Key Outputs | Gate |
 |---|------|-------------|------------|-------------|------|
-| 4.1 | **Decision Log** | No | Approved artefact, prioritisation criteria | Decision log entry `[DRAFT]` | Decision-maker identified, rationale recorded, conflicts acknowledged |
+| 4.1 | **Decision Log** | No | Approved artefact, prioritisation criteria, `DECISION_LOG[]` from session | Decision log entry `[DRAFT]` — includes mid-session decisions from Phase 1/3 | Decision-maker identified, rationale recorded, conflicts acknowledged |
 
 ### Phase 5: Handshake
 
 | # | Step | Conditional | Key Inputs | Key Outputs | Gate |
 |---|------|-------------|------------|-------------|------|
+| Pre-entry | **Breakdown** | Yes — if Epics/Stories don't already exist | Approved Feature Brief | JPD item (PROX), Epic(s) (BET/SWAT), User Stories via `skills/breakdown/breakdown.skill.md` | Traceability chain intact before handshake begins |
 | 5.1 | **Handshake Contract** | No | Approved artefact, decision log, all delivery artefacts | Handshake contract `[DRAFT]` | Product and Engineering reviewers both approve |
 
 ## Rules

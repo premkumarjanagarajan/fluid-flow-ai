@@ -45,6 +45,8 @@ Rules:
 
 Sharpened framing with probing follow-ups addressed.
 
+After this step completes, run `skills/assumption-mapping/assumption-mapping.skill.md` before proceeding to KB Validation (Step 1.3). The challenge conversation surfaces the beliefs and unknowns that the assumption map needs to classify.
+
 ## Gate
 
 User acknowledges challenges have been addressed.

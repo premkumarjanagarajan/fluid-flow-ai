@@ -38,6 +38,16 @@ At the start of Define, load the template and begin at the Header. Walk through 
    ```
 5. **Move to the next section** — Only advance when the human explicitly confirms (e.g. "continue", "next", "move on").
 
+### Success Criteria Section — Product Impact Required
+
+When the walkthrough reaches the **Success Criteria** section:
+
+Run `skills/product-impact/product-impact.skill.md` before drafting this section.
+
+Do not accept qualitative goals ("improve UX", "increase engagement") as success criteria. The product-impact skill converts the user's intent into a measurable impact statement that forms the content of this section. Carry the confirmed output directly into the Feature Brief.
+
+If the user tries to skip or defer this section, state: *"Success criteria are a gate requirement — this section cannot be marked N/A. Let me guide you through it quickly."*
+
 ## After All Sections
 
 1. Present the **full artefact** from the top — all sections assembled.

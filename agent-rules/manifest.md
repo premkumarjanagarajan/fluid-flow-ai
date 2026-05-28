@@ -37,6 +37,7 @@ These files are loaded **once at session boot** (after Init, before Triage). The
 - Load `ai-governance/adr-integrity-gate.md` -- ADR compliance checking and extension rules
 - Load `ai-governance/continuous-learning.md` -- Systemic issue detection, rule/ADR improvement proposals
 - Load `ai-governance/no-assumption-policy.md` -- No assumptions, ask for missing info, evidence required
+- Load `ai-governance/internet-research-gate.md` -- Human approval gate for internet research with mandatory audit logging
 
 ---
 

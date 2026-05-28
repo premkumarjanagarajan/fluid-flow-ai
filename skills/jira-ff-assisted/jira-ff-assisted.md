@@ -1,10 +1,10 @@
 ---
 name: jira-ff-assisted
-description: Marks a JIRA issue with the ff-assisted label to indicate Fluid Flow AI participated in the development lifecycle.
+description: Marks a JIRA issue with the ff-assisted label to indicate Fluid Flow AI participated in the development lifecycle. When running in Product Buddy mode, also stamps pb-assisted and pb-v{VERSION} labels for adoption tracking.
 execution: inline
 scope: shared
-version: 1.0
-last-updated: 2026-04-20
+version: 1.1
+last-updated: 2026-05-18
 ---
 
 # JIRA "FF Assisted" Flag
@@ -100,14 +100,76 @@ Call `editJiraIssue` with:
 
 Preserve any existing labels by including them in the array alongside the new `ff-assisted` entry.
 
+### 4b. Product Buddy Mode — Add Additional Labels
+
+**If the current session is running under the Product Buddy agent**, also add the following labels in the same `editJiraIssue` call (combine with Step 4, do not make a separate API call):
+
+| Label | Purpose |
+|-------|---------|
+| `pb-assisted` | Flags that this artefact was created or significantly shaped with Product Buddy |
+| `pb-v{VERSION}` | Records the exact Product Buddy version used (e.g. `pb-v1.13`) |
+
+The current Product Buddy version is defined in the `version` field of the Product Buddy mode instruction file (`fluid-flow-ai`). Always read this value dynamically — do not hardcode it.
+
+**Detection rule:** Product Buddy mode is active when:
+- The session agent is explicitly identified as "Product Buddy", OR
+- The workflow was initiated via the `product-discovery` workflow
+
+**Check existing labels before adding:** If `pb-assisted` is already present, skip adding it again. Always add the versioned label (e.g. `pb-v1.13`) even if a previous version label exists — this allows version transition tracking. Remove any previous `pb-v*` label from the array before adding the current one to avoid label accumulation.
+
+**Combined label array example:**
+```json
+{
+  "labels": ["ff-assisted", "pb-assisted", "pb-v1.13"]
+}
+```
+
 ### 5. Verify and Log
 
 1. Confirm the update succeeded (the response includes `"ff-assisted"` in the labels)
-2. Log the action in the initiative's audit trail:
+2. If Product Buddy mode was active, confirm `pb-assisted` and `pb-v{VERSION}` are also present
+3. Log the action in the initiative's audit trail:
    ```
    [ISO-8601] JIRA FF Assisted: Flagged {JIRA_ISSUE_KEY} (label: ff-assisted)
+   [ISO-8601] Product Buddy: Stamped {JIRA_ISSUE_KEY} (labels: pb-assisted, pb-v{VERSION})
    ```
-3. If the update failed, log the error but do not block the workflow
+4. If the update failed, log the error but do not block the workflow
+
+## Adoption Reporting — Jira Filter & Dashboard
+
+Once `pb-assisted` labels are being stamped, set up a saved filter in Jira to surface all Product Buddy artefacts.
+
+### Saved Filter Query
+
+```
+label = "pb-assisted" ORDER BY created DESC
+```
+
+To filter by a specific version:
+```
+label = "pb-v1.14" ORDER BY created DESC
+```
+
+To see artefacts across all versions:
+```
+label in ("pb-v1.13", "pb-v1.14") ORDER BY created DESC
+```
+
+### Setting Up the Filter
+
+1. In Jira, go to **Filters → View all filters → Create filter**
+2. Switch to **Advanced (JQL)** and paste the query above
+3. Save with a name like `Product Buddy — Adoption Tracker`
+4. Click **Details → Edit permissions** and share with your team
+
+### Dashboard Widget
+
+Add the saved filter to a Jira dashboard as an **Issue Statistics** or **Filter Results** gadget:
+- **Rows:** `Assignee` — shows which PMs/POs are using Product Buddy
+- **Rows:** `Issue Type` — shows which artefact types are most commonly created
+- **Rows:** `Labels` — shows version distribution across artefacts
+
+This gives a live adoption view with zero ongoing effort.
 
 ## Custom Field Upgrade Path
 

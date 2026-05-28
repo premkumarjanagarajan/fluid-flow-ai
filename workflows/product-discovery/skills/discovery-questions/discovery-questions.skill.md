@@ -29,16 +29,23 @@ Generates a structured, topic-specific set of discovery questions to help a Prod
 
 ## Execution
 
-### Conversation Rule (non-negotiable)
+### Conversation Rule
 
-Questions are asked ONE AT A TIME. Never present a list of questions to the user.
+**Before asking the first discovery question**, ask the user their preferred pacing:
 
-Each question must be shaped by the previous answer:
-- Listen to the response
-- Identify what it reveals and what it leaves unclear
-- Ask the next most important question based on what was just said
+> *"One quick preference — how would you like to work through this?*
+> *A) One question at a time — I'll ask, you answer, we go deep on each*
+> *B) Grouped — I'll ask 2–3 related questions together so we move faster"*
 
-The question order from the five categories is a guide, not a script. Skip questions that the user's previous answers have already addressed. Add questions that their answers make newly relevant.
+Default to **A** if no preference is given. Store the choice as `DISCOVERY_PACING` for the session.
+
+**Mode A — One at a time (default):**
+Questions are asked ONE AT A TIME. Each question must be shaped by the previous answer — listen, identify what it reveals and what it leaves unclear, ask the next most important question.
+
+**Mode B — Grouped:**
+Group 2–3 closely related questions from the same category together. Present them as a short numbered list. Never group more than 3 questions. Never mix categories in a single group.
+
+In both modes, the question order from the five categories is a guide, not a script. Skip questions that the user's previous answers have already addressed. Add questions that their answers make newly relevant.
 
 The user should feel they are having a conversation, not filling in a form.
 
